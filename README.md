@@ -33,6 +33,7 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
     
 * Install gems
 ```
+    cd scholarspace-sufia7
     bundle install
 ```
 * If you don't have a separate Solr and Fedora, use the packaged hydra-jetty (you may want to run these with nohup and/or in the background):
