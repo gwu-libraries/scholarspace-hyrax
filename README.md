@@ -23,7 +23,7 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
 
 * Clone this repo
 ```
-    cd \opt
+    cd /opt
     sudo mkdir scholarspace
     sudo chown MYUSER:MYGROUP scholarspace
     cd scholarspace
