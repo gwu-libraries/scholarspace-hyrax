@@ -19,7 +19,7 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
 ```
     sudo apt-get install imagemagick libreoffice git redis-server unzip
 ```
-* Install fits-0.8.5 (follow directions in scholarspace repo.
+* Install fits-0.8.5 (follow directions in scholarspace repo)
 
 * Clone this repo
 ```
@@ -54,3 +54,8 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
     rails s -b 0.0.0.0
 ```
    The app will run on port 3000.  (To run on a different port, specify with the `-p` option.)
+   
+   If you get an error about a pending migration follow the suggested solution:
+```
+   bin/rake db:migrate RAILS_ENV=development
+```
