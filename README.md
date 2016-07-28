@@ -3,7 +3,7 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
 
 ## Install prerequisites
 
-* Install RVM (follow instructions at rvm.io)
+* Install RVM (follow instructions at rvm.io), then `source .bashrc` (or log out and log back in)
 
 * Install Ruby:
 ```
