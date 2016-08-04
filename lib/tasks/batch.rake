@@ -3,7 +3,7 @@ require 'csv'
 require 'json'
 
 namespace :batch do
-  desc "batch ingest from a csv file - used by ERA Admin and ERA Assistants"
+  desc "batch ingest from a csv file - intended for ETD uploads for GW ScholarSpace"
   task :ingest_csv, [:file, :tmp_dir, :mode] => :environment do |t, args|
     begin
       puts "Starting batch ingest"
