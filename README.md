@@ -10,16 +10,22 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
     rvm install ruby-2.3
 ```
 * Install rails
+* (if this fails you can install from the steps at https://rvm.io/rvm/install)
 ```
     gem install rails -v 4.2.6
 ```
-* Install Java 8 (follow directions in scholarspace repo)
-
+* Install Java 8 (use below or follow directions in scholarspace repo)
+```
+    % sudo apt-add-repository ppa:webupd8team/java
+    % sudo apt-get update
+    % sudo apt-get install oracle-java8-installer
+    % sudo apt-get install oracle-java8-set-default
+```
 * Install apt packages
 ```
     sudo apt-get install imagemagick libreoffice git redis-server unzip
 ```
-* Install fits-0.8.5 (follow directions in scholarspace repo)
+* Install fits-0.8.5 (follow directions in scholarspace repo, be sure to change version number to 0.8.5)
 
 * Clone this repo
 ```
@@ -44,6 +50,8 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
    You can check to see if Solr is started by going to port 8983 on your server.
 ```
    fcrepo_wrapper -p 8984
+   OR
+   nohup fcrepo_wrapper -p 8984 &
 ```
    You can check to see if Fedora is started by going to port 8984 on your server.
 
@@ -52,6 +60,8 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
    For development purposes, you can run using `rails s` (shortcut for `rails server`):
 ```
     rails s -b 0.0.0.0
+    OR
+    nohup rails s -b 0.0.0.0 &
 ```
    The app will run on port 3000.  (To run on a different port, specify with the `-p` option.)
    
