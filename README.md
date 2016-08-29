@@ -46,6 +46,8 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
 ```
    mkdir tmp
    solr_wrapper -d solr/config/ --collection_name hydra-development
+   OR
+   nohup solr_wrapper -d solr/config/ --collection_name hydra-development > output.log 2>&1 &
 ```
    You can check to see if Solr is started by going to port 8983 on your server.
 ```
