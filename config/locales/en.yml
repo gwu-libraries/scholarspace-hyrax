@@ -21,3 +21,10 @@
 
 en:
   hello: "Hello world"
+  simple_form:
+    labels:
+      work:
+        # resource_type: "Type of Work"
+        # creator: "Author"
+        # bibliographic_citation: "Previous Publication Information"
+        gw_affiliation: "GW Unit"
