@@ -87,6 +87,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         % sudo apt-get update
         % sudo apt-get install oracle-java8-installer
         % sudo apt-get install oracle-java8-set-default
+        % sudo apt-get install subversion
        
 * Install RVM for multi-users (for installation via SSL and other RVM installation information, refer to https://rvm.io/rvm/install) Installs RVM to /usr/local/rvm
 
@@ -148,17 +149,21 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 * Set up Solr (on the Solr server)
 
         % cd /opt/install
-        % wget http://apache.claz.org/lucene/solr/6.2.0
+        % wget http://apache.claz.org/lucene/solr/6.2.0/solr-6.2.0.tgz
         % tar xzf solr-6.2.0.tgz solr-6.2.0/bin/install_solr_service.sh --strip-components=2
         % sudo ./install_solr_service.sh solr-6.2.0.tgz
 
   Verify Solr is running:
 
         % sudo service solr status
+        
+  Copy the solr/config folder from the repository to /opt/install
+  
+  	% svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/solr
 
   Configure a Solr Core:
 
-        % sudo su - solr -c "/opt/solr/bin/solr create -c scholarspace -n data_driven_schema_configs"
+        % sudo su - solr -c "/opt/solr/bin/solr create -c scholarspace -n /opt/install/solr/config"
         
 * Set up fcrepo with audit support
 
