@@ -7,7 +7,7 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
 
 * Install Ruby:
 ```
-    rvm install ruby-2.3
+    rvm install ruby-2.3.0
 ```
 * Install rails
 * (if this fails you can install from the steps at https://rvm.io/rvm/install)
@@ -95,22 +95,14 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 
         % curl -L https://get.rvm.io | sudo bash -s stable
         % source ~/.rvm/scripts/rvm
-        % rvm install ruby-2.3
+        % rvm install ruby-2.3.0
         % sudo nano /etc/group
         
         Add users to the rvm group
 
-* (Optional) Set up Shibboleth integration on the GW ScholarSpace server:
-
-  Please refer to https://github.com/gwu-libraries/shibboleth for the recommended steps for setting up the Shibboleth integration.
-
-* If Shibboleth has been setup on the GW ScholarSpace Server, enable Shibboleth in the appropriate environment file (ie: config/environments/production.rb):
-
-        % config.shibboleth = true
-
 * Install Rails on the GW ScholarSpace server:
 
-        % gem install rails -v 4.2.6 -N
+        % gem install rails -v 5.0.0.1 -N
         
 * Create the directory structure
 
@@ -171,7 +163,10 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         % wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.6.0/fcrepo-webapp-plus-audit-4.6.0.war
         % cp fcrepo-webapp-plus-audit-4.6.0.war /var/lib/tomcat7/webapps/fcrepo.war
 
-  Replace the web.xml file in /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml with the one from the tomcat_conf/fcrepo-webapp folder in the repo
+* Replace the fcrepo web.xml
+
+  	% svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
+  	% sudo cp tomcat_conf/web_ssl.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
 
 * Ensure tomcat7 library files are (still) all owned by tomcat7
 
@@ -239,11 +234,12 @@ On the GW ScholarSpace server:
 
 * Get the GW ScholarSpace code:
 
-        % git clone https://github.com/gwu-libraries/scholarspace.git
+        % cd /opt/scholarspace
+        % git clone https://github.com/gwu-libraries/scholarspace-sufia7.git
 
 * Install gems
 
-        % cd scholarspace
+        % cd scholarspace-sufia7
         % bundle install --without development --deployment
 
 * Create a postgresql user
@@ -303,37 +299,13 @@ On the GW ScholarSpace server:
 * Run the database migrations
 
         % rake db:migrate RAILS_ENV=production
-        
-* Download the hydra-jetty jar files.  While we won't be running Solr and Fedora from hydra-jetty, we need to copy some of the jar files to the Solr deployment in order for full text indexing to work.
- 
-        % rake sufia:jetty:config
 
-* Move the extraction .jar files from hydra-jetty to your Solr instance (needed for full text indexing)
-
-  If your Solr instance is on the same server as the GW ScholarSpace application, replace the ``/opt/solr/contrib/extraction`` folder with a copy of ``/opt/scholarspace/jetty/solr/lib/contrib/extraction``:
-        
-        % rm -rf /opt/solr/contrib/extraction
-        % cp -R jetty/solr/lib/contrib/extraction /opt/solr/contrib/
-        % sudo service tomcat7 restart
-
-  If your Solr instance is on a different server from the GW ScholarSpace application do the following:
-
-  Download the /opt/scholarspace/jetty/solr/lib/contrib/extraction folder from the GW ScholarSpace application server via SFTP.
-
-  On the Solr server, remove the /opt/solr/contrib/extraction directory that was installed with Solr 4.10.4:
-        
-        % rm -rf /opt/solr/contrib/extraction
-        
-  Upload the extraction folder from hydra-jetty to the server with your Solr instance into: /opt/solr/contrib/
-        
-        % sudo service tomcat7 restart
-        
-* On the GW ScholarSpace server, install fits.sh version 0.6.2 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 0.6.2 download)
+* On the GW ScholarSpace server, install fits.sh version 0.8.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 0.8.5 download)
 
         % cd /usr/local/bin
-        % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-0.6.2.zip -o fits-0.6.2.zip
-        % sudo unzip fits-0.6.2.zip
-        % cd fits-0.6.2
+        % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip -o fits-0.8.5.zip
+        % sudo unzip fits-0.8.5.zip
+        % cd fits-0.8.5
         % sudo chmod a+x fits*.sh
 
 ### Configure ImageMagick policies
@@ -373,8 +345,11 @@ set the following properties in config/initializers/sufia.rb :
   * config.contact_email
   * config.from_email
 
-Copy config/initializers/setup_mail.rb.template to config/initializers/setup_mail.rb .
-Set the SMTP credentials for the user as whom the app will send email.
+  * Create a setup_mail.rb file 
+
+	% cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
+
+  Set the SMTP credentials for the user as whom the app will send email.
 
 ### Start a Redis RESQUE pool
 
@@ -449,6 +424,14 @@ has logged in at least once.
         % cd /opt/scholarspace
         % rake assets:precompile RAILS_ENV=production 
         % sudo service apache2 restart
+        
+### (Optional) Set up Shibboleth integration on the GW ScholarSpace server:
+
+  Please refer to https://github.com/gwu-libraries/shibboleth for the recommended steps for setting up the Shibboleth integration.
+
+* If Shibboleth has been setup on the GW ScholarSpace Server, enable Shibboleth in the appropriate environment file (ie: config/environments/production.rb):
+
+        % config.shibboleth = true
 
 ### (Optional) Add content-admin users <a id="prod-add-content-admin"></a>
 
