@@ -95,7 +95,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 
         % curl -L https://get.rvm.io | sudo bash -s stable
         % source ~/.rvm/scripts/rvm
-        % rvm install ruby-2.2.1
+        % rvm install ruby-2.3
         % sudo nano /etc/group
         
         Add users to the rvm group
@@ -168,8 +168,8 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 * Set up fcrepo with audit support
 
         % cd /opt/install
-        % wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.5.1/fcrepo-webapp-plus-audit-4.5.1.war
-        % cp fcrepo-webapp-plus-audit-4.5.1.war /var/lib/tomcat7/webapps/fcrepo.war
+        % wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.6.0/fcrepo-webapp-plus-audit-4.6.0.war
+        % cp fcrepo-webapp-plus-audit-4.6.0.war /var/lib/tomcat7/webapps/fcrepo.war
 
   Replace the web.xml file in /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml with the one from the tomcat_conf/fcrepo-webapp folder in the repo
 
