@@ -106,7 +106,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 
 * If Shibboleth has been setup on the GW ScholarSpace Server, enable Shibboleth in the appropriate environment file (ie: config/environments/production.rb):
 
-	config.shibboleth = true
+        % config.shibboleth = true
 
 * Install Rails on the GW ScholarSpace server:
 
@@ -159,7 +159,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         
   Copy the solr/config folder from the repository to /opt/install
   
-  	% svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/solr
+        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/solr
 
   Configure a Solr Core:
 
