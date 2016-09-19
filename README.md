@@ -89,7 +89,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         % sudo apt-get install oracle-java8-set-default
         % sudo apt-get install subversion
        
-* Install RVM for multi-users (for installation via SSL and other RVM installation information, refer to https://rvm.io/rvm/install) Installs RVM to `/usr/local/rvm`
+* Install RVM for multi-users
 
    On the GW ScholarSpace server:
 
