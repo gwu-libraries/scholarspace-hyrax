@@ -1,0 +1,76 @@
+# Run Tomcat as this user ID. Not setting this or leaving it blank will use the
+# default of tomcat7.
+TOMCAT7_USER=tomcat7
+
+# Run Tomcat as this group ID. Not setting this or leaving it blank will use
+# the default of tomcat7.
+TOMCAT7_GROUP=tomcat7
+
+# The home directory of the Java development kit (JDK). You need at least
+# JDK version 1.5. If JAVA_HOME is not set, some common directories for 
+# OpenJDK, the Sun JDK, and various J2SE 1.5 versions are tried.
+JAVA_HOME=/usr/lib/jvm/java-8-oracle
+
+# You may pass JVM startup parameters to Java here. If unset, the default
+# options will be: -Djava.awt.headless=true -Xmx128m -XX:+UseConcMarkSweepGC
+#
+# Use "-XX:+UseConcMarkSweepGC" to enable the CMS garbage collector (improved
+# response time). If you use that option and you run Tomcat on a machine with
+# exactly one CPU chip that contains one or two cores, you should also add
+# the "-XX:+CMSIncrementalMode" option.
+JAVA_OPTS="-Djava.awt.headless=true"
+JAVA_OPTS="${JAVA_OPTS} -Dfile.encoding=UTF-8 -server"
+
+#GC configuration
+JAVA_OPTS="${JAVA_OPTS} -XX:+UseConcMarkSweepGC" # for smaller (< 4GB) heaps
+JAVA_OPTS="${JAVA_OPTS} -XX:+CMSClassUnloadingEnabled" # for use with UseConMarkSweepGC
+#JAVA_OPTS="${JAVA_OPTS} -XX:+UseG1GC" # for larger (> 4GB) heaps
+JAVA_OPTS="${JAVA_OPTS} -XX:ConcGCThreads=5"
+JAVA_OPTS="${JAVA_OPTS} -XX:MaxGCPauseMillis=200"
+JAVA_OPTS="${JAVA_OPTS} -XX:+DisableExplicitGC"
+JAVA_OPTS="${JAVA_OPTS} -XX:ParallelGCThreads=20"
+
+#Memory usage
+JAVA_OPTS="${JAVA_OPTS} -Xms1024m"
+JAVA_OPTS="${JAVA_OPTS} -Xmx4096m"
+JAVA_OPTS="${JAVA_OPTS} -Xmx2048m"
+JAVA_OPTS="${JAVA_OPTS} -Xss10m"
+JAVA_OPTS="${JAVA_OPTS} -XX:NewSize=256m"
+JAVA_OPTS="${JAVA_OPTS} -XX:MaxNewSize=256m"
+JAVA_OPTS="${JAVA_OPTS} -XX:MetaspaceSize=256m"
+JAVA_OPTS="${JAVA_OPTS} -XX:MaxMetaspaceSize=512m"
+
+#Fedora settings
+JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.home=/opt/fedora"
+JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.log=WARN"
+JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.log.http.api=WARN"
+JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.audit.container=/audit"
+JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.modeshape.configuration=classpath:/config/jdbc-postgresql/repository.json"
+JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.ispn.configuration=/etc/fcrepo/infinispan.xml"
+JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.ispn.postgresql.host=localhost"
+
+# To enable remote debugging uncomment the following line.
+# You will then be able to use a java debugger on port 8000.
+#JAVA_OPTS="${JAVA_OPTS} -Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
+
+# Java compiler to use for translating JavaServer Pages (JSPs). You can use all
+# compilers that are accepted by Ant's build.compiler property.
+#JSP_COMPILER=javac
+
+# Use the Java security manager? (yes/no, default: no)
+#TOMCAT7_SECURITY=no
+
+# Number of days to keep logfiles in /var/log/tomcat7. Default is 14 days.
+#LOGFILE_DAYS=14
+# Whether to compress logfiles older than today's
+#LOGFILE_COMPRESS=1
+
+# Location of the JVM temporary directory
+# WARNING: This directory will be destroyed and recreated at every startup !
+#JVM_TMP=/tmp/tomcat7-temp
+
+# If you run Tomcat on port numbers that are all higher than 1023, then you
+# do not need authbind.  It is used for binding Tomcat to lower port numbers.
+# NOTE: authbind works only with IPv4.  Do not enable it when using IPv6.
+# (yes/no, default: no)
+#AUTHBIND=no
