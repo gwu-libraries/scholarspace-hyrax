@@ -169,7 +169,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 * Replace the fcrepo `web.xml`
 
         % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
-        % sudo cp tomcat_conf/web_ssl.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
+        % sudo cp tomcat_conf/fcrepo-webapp/web.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
 
 * Ensure tomcat7 library files are (still) all owned by tomcat7
 
