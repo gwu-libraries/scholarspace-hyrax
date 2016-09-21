@@ -115,7 +115,6 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
   On the Solr/Fedora server (if deploying on a separate server - otherwise on the same server):
         
         % mkdir /opt/install
-        % mkdir /opt/solr
         % mkdir /opt/fedora
         % sudo mkdir /var/log/solr
         
@@ -136,7 +135,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 
         % cd /opt/install
         % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
-        % sudo cp tomcat_conf/tomcat /etc/defaults/tomcat
+        % sudo cp tomcat_conf/tomcat7 /etc/defaults/tomcat7
 
   Set the owner of the `/opt/fedora` directory:
         
