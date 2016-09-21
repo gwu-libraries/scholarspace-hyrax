@@ -5,10 +5,7 @@ module CurationConcerns
     self.model_class = ::Work
     self.required_fields = [:title, :resource_type, :creator, :rights]
 
-    self.terms = [:title, :creator, :gw_affiliation, :date_created,
-                  :resource_type, :rights, :description, :keyword,
-                  :identifier, :contributor, :publisher, :language,
-                  :based_near, :related_url, :bibliographic_citation]
+    self.terms += [:resource_type, :gw_affiliation]
 
 #    def primary_terms
 #      [:title, :creator, :rights, :tag, :resource_type, :gw_affiliation]
