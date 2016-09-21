@@ -2,6 +2,26 @@ Rails.application.routes.draw do
   Hydra::BatchEdit.add_routes(self)
   mount Qa::Engine => '/authorities'
 
+  if Rails.application.config.shibboleth == true
+    devise_for :users, {
+      :controllers => {
+        :omniauth_callbacks => 'users/omniauth_callbacks',
+      }, :skip => [ :sessions ]
+    }  
+  
+    devise_scope :users do
+      get 'logout' => 'sessions#destroy', as: :destroy_user_session
+      get 'login' => 'sessions#new', as: :new_user_session
+    end
+
+  else
+    devise_for :users
+
+    devise_scope :user do
+      get "/login" => "devise/sessions#new"
+      delete "/logout" => "devise/session#destroy"
+    end
+  end
   
   mount Blacklight::Engine => '/'
   

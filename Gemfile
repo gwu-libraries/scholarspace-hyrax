@@ -47,6 +47,9 @@ end
 
 gem 'sufia', '7.1.0'
 
+# Use Omniauth-Shibboleth to extend Devise auth framework
+gem 'omniauth-shibboleth'
+
 group :development, :test do
   gem 'solr_wrapper', '>= 0.3'
 end

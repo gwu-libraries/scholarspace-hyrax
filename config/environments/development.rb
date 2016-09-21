@@ -1,6 +1,14 @@
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # Provide Shibboleth as an authentication provider
+  config.shibboleth = false  
+
+  # Enter your Shibboleth login/logout URLs here 
+  # These are relative URLs but, if desired, can be substituted with absolute URLs
+  config.logout_url = "/Shibboleth.sso/Logout"
+  config.login_url = "/users/auth/shibboleth"
+
   # In the development environment your application's code is reloaded on
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
