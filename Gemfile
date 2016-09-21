@@ -45,6 +45,9 @@ group :development do
   gem 'spring'
 end
 
+# Use PostgreSQL as the database for Active Record
+gem 'pg'
+
 gem 'sufia', '7.1.0'
 
 group :development, :test do
