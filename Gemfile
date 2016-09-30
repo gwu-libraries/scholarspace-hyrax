@@ -14,6 +14,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
+# Add Anti Virus protection
+gem 'clamav'
+
 # Use Resque for queuing and job management
 gem 'resque'
 gem 'resque-pool'
