@@ -154,7 +154,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         
   Copy the `solr/config` folder from the repository to `/opt/install`
   
-  	% cd /opt/install
+        % cd /opt/install
         % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/solr
 
   Configure a Solr Core:
@@ -163,14 +163,14 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 	
   Convert the new Solr Core to from a `managed-schema` to `schema.xml` support:
   
-  	% sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
-	% sudo cp /opt/install/solr/conf/schema.xml /var/solr/data/scholarspace/conf/schema.xml
-	% sudo mv /var/solr/data/scholarspace/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.bak
-	% sudo cp /opt/install/solr/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.xml
+        % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
+        % sudo cp /opt/install/solr/conf/schema.xml /var/solr/data/scholarspace/conf/schema.xml
+        % sudo mv /var/solr/data/scholarspace/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.bak
+        % sudo cp /opt/install/solr/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.xml
 	
   Restart Solr:
   	
-	% sudo service solr restart
+        % sudo service solr restart
         
 * Set up fcrepo with audit support
 
