@@ -1,3 +1,5 @@
+require 'resque/server'
+
 Rails.application.routes.draw do
   Hydra::BatchEdit.add_routes(self)
   mount Qa::Engine => '/authorities'
@@ -19,6 +21,14 @@ Rails.application.routes.draw do
   curation_concerns_basic_routes
   curation_concerns_embargo_management
   concern :exportable, Blacklight::Routes::Exportable.new
+  
+  # Administrative URLs
+  namespace :admin do
+    # Job monitoring
+    constraints ResqueAdmin do
+      mount Resque::Server, at: 'queues'
+    end
+  end
 
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
     concerns :exportable
