@@ -402,6 +402,10 @@ set the following properties in `config/initializers/sufia.rb` :
   * Edit `config/initializers/mailboxer.rb` with email account:
   
          config.default_from = 
+	 
+### Make files in `script` executable:
+
+         chmod -R a+x script
 
 ### Start a Redis RESQUE pool
 
