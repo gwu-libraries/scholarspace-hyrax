@@ -116,7 +116,6 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         
         % mkdir /opt/install
         % mkdir /opt/fedora
-        % sudo mkdir /var/log/solr
         
 * Create the necessary user groups and assign folder permissions
 
@@ -364,6 +363,29 @@ On the GW ScholarSpace server:
 
          config.temp_file_base = '/opt/scholarspace/scholarspace_tmp'
 
+### Configure max days between audits
+
+  * Uncomment `config.max_days_between_audits` in `config/initializers/sufia.rb`
+
+         config.max_days_between_audits = 7
+
+### Configure path for libre-office
+
+  * Uncomment `config.libreoffice_path` in `config/initializers/sufia.rb`
+
+         config.libreoffice_path = "soffice"
+
+### Configure derivatives path for Sufia
+
+  * Add `config.derivative_path` to `config/initializers/sufia.rb`
+  
+         config.derivative_path = "/opt/scholarspace_derivatives/"
+  
+  * Create a derivatives folder on your application server:
+
+         % sudo mkdir /opt/scholarspace_derivatives
+         % sudo chown -R scholarspace:scholarspace_group /opt/scholarspace_derivatives
+	 
 ### Configure Contact form emailing
 
   In order to enable the contact form page to send email when the user clicks Send,
@@ -377,6 +399,10 @@ set the following properties in `config/initializers/sufia.rb` :
         % cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
 
   Set the SMTP credentials for the user as whom the app will send email.
+  
+  * Edit `config/initializers/mailboxer.rb` with email account:
+  
+         config.default_from = 
 
 ### Start a Redis RESQUE pool
 
