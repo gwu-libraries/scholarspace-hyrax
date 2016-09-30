@@ -1,0 +1,10 @@
+characterize: 1
+batch_update: 3
+derivatives: 1
+resolrize: 1
+audit: 2
+event: 5
+proxy_deposit: 1
+import_url: 3
+sufia: 1
+"*": 1
