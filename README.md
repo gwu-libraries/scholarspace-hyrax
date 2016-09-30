@@ -392,7 +392,6 @@ On the GW ScholarSpace server:
 set the following properties in `config/initializers/sufia.rb` :
         
          config.contact_email = 
-         config.from_email =
 
   * Create a `setup_mail.rb` file 
 
