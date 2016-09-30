@@ -148,17 +148,29 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         % tar xzf solr-6.2.0.tgz solr-6.2.0/bin/install_solr_service.sh --strip-components=2
         % sudo ./install_solr_service.sh solr-6.2.0.tgz
 
-  Verify Solr is running:
+  Verify Solr started:
 
         % sudo service solr status
         
   Copy the `solr/config` folder from the repository to `/opt/install`
   
+  	% cd /opt/install
         % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/solr
 
   Configure a Solr Core:
 
         % sudo su - solr -c "/opt/solr/bin/solr create -c scholarspace -n /opt/install/solr/config"
+	
+  Convert the new Solr Core to from a `managed-schema` to `schema.xml` support:
+  
+  	% sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
+	% sudo cp /opt/install/solr/conf/schema.xml /var/solr/data/scholarspace/conf/schema.xml
+	% sudo mv /var/solr/data/scholarspace/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.bak
+	% sudo cp /opt/install/solr/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.xml
+	
+  Restart Solr:
+  	
+	% sudo service solr restart
         
 * Set up fcrepo with audit support
 
