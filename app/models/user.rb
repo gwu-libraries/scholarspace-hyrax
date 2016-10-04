@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
       user.update!(email: auth.info.email,
                    display_name: auth.info.first_name + auth.info.last_name,
                    affiliation: auth.extra.raw_info.affiliation,
-	           group_list: auth.extra.raw_info.isMemberOf,
+	           shib_group: auth.extra.raw_info.isMemberOf,
 		   :groups_last_update => DateTime.current,
 		   :shibboleth_id => auth[:extra][:raw_info][:"Shib-Session-ID"])
       user
