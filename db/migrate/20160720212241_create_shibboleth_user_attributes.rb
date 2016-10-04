@@ -4,6 +4,6 @@ class CreateShibbolethUserAttributes < ActiveRecord::Migration
     add_column :users, :shibboleth_id, :string
     add_column :users, :provider, :string
     add_column :users, :shib_group, :string
-    add_column :users, :shib_last_update, :string
+    add_column :users, :shib_last_update, :datetime
   end
 end
