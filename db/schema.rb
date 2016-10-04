@@ -309,6 +309,7 @@ ActiveRecord::Schema.define(version: 20160720212240) do
     t.string   "encrypted_password",     default: "",    null: false
     t.string   "provider"
     t.string   "shibboleth_id"
+    t.string   "shib_group"
     t.string   "uid"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
