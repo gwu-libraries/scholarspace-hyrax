@@ -310,7 +310,7 @@ ActiveRecord::Schema.define(version: 20160720212240) do
     t.string   "provider"
     t.string   "shibboleth_id"
     t.string   "shib_group"
-    t.string   "shib_last_update"
+    t.datetime   "shib_last_update"
     t.string   "uid"
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
