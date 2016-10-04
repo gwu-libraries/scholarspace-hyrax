@@ -1,4 +1,4 @@
-class CreateUsers < ActiveRecord::Migration
+class CreateShibbolethUserAttributes < ActiveRecord::Migration
   def self.up
     add_column :users, :uid, :string
     add_column :users, :shibboleth_id, :string
