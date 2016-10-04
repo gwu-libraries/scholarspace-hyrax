@@ -31,7 +31,6 @@ Rails.application.routes.draw do
     concerns :searchable
   end
 
-  devise_for :users
   mount CurationConcerns::Engine, at: '/'
   resources :welcome, only: 'index'
   root 'sufia/homepage#index'
