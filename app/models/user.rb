@@ -32,7 +32,7 @@ class User < ActiveRecord::Base
                    display_name: auth.info.first_name + auth.info.last_name,
                    affiliation: auth.extra.raw_info.affiliation,
 	           shib_group: auth.extra.raw_info.isMemberOf,
-		   :groups_last_update => DateTime.current,
+		   :shib_last_update => DateTime.current,
 		   :shibboleth_id => auth[:extra][:raw_info][:"Shib-Session-ID"])
       user
     end
