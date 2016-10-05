@@ -52,7 +52,7 @@ class CatalogController < ApplicationController
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     config.add_facet_field solr_name("resource_type", :facetable), label: "Resource Type", limit: 5
-    config.add_facet_field solr_name("creator", :facetable), label: "Author", limit: 5
+    config.add_facet_field solr_name("creator", :facetable), label: "Creator", limit: 5
     config.add_facet_field solr_name("gw_affiliation", :facetable), label: "GW Unit", limit: 5
     config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
     config.add_facet_field solr_name("language", :facetable), label: "Language", limit: 5
@@ -67,7 +67,7 @@ class CatalogController < ApplicationController
     # solr fields to be displayed in the index (search results) view
     #   The ordering of the field names is the order of the display
     config.add_index_field solr_name("title", :stored_searchable), label: "Title", itemprop: 'name', if: false
-    config.add_index_field solr_name("creator", :stored_searchable), label: "Author", itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
+    config.add_index_field solr_name("creator", :stored_searchable), label: "Creator", itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
     config.add_index_field solr_name("description", :stored_searchable), label: "Description", itemprop: 'description', helper_method: :iconify_auto_link
     config.add_index_field solr_name("keyword", :stored_searchable), label: "Keyword", itemprop: 'keywords', link_to_search: solr_name("keyword", :facetable)
     config.add_index_field solr_name("gw_affiliation", :stored_searchable), label: "GW Unit", itemprop: 'gw_affiliation', link_to_search: solr_name("gw_affiliation", :facetable)
@@ -80,7 +80,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("description", :stored_searchable), label: "Description"
     config.add_show_field solr_name("keyword", :stored_searchable), label: "Keyword"
     config.add_show_field solr_name("subject", :stored_searchable), label: "Subject"
-    config.add_show_field solr_name("creator", :stored_searchable), label: "Author"
+    config.add_show_field solr_name("creator", :stored_searchable), label: "Creator"
     config.add_show_field solr_name("gw_affiliation", :stored_searchable), label: "GW Unit"
     config.add_show_field solr_name("contributor", :stored_searchable), label: "Contributor"
     config.add_show_field solr_name("publisher", :stored_searchable), label: "Publisher"
