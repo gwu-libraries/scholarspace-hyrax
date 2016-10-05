@@ -11,9 +11,12 @@ module CurationConcerns
 #      [:title, :creator, :rights, :tag, :resource_type, :gw_affiliation]
 #    end
 
-#    def secondary_terms
-#      terms - primary_terms
-#    end
+    def secondary_terms
+      [:gw_affiliation, :date_created,
+       :description, :keyword,
+       :identifier, :contributor, :publisher, :language,
+       :based_near, :related_url]
+    end
 
   end
 end
