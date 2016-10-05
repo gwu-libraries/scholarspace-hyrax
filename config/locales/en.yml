@@ -41,10 +41,11 @@ en:
   simple_form:
     labels:
       work:
-        resource_type: "Type of Work"
-        creator: "Author"
+        resource_type:          "Type of Work"
+        creator:                "Author"
         bibliographic_citation: "Previous Publication Information"
-        gw_affiliation: "GW Unit"
+        gw_affiliation:         "GW Unit"
+        based_near:             "Location"
     hints:
       work:
         title: 'The name of the work.'
@@ -58,3 +59,19 @@ en:
         date_created: "The year [YYYY] in which the work was generated, e.g. 2015."
         related_url: "A link to a website or other specific content (audio, video, PDF document) related to the work. An example is the URL of a research
 project from which the work was derived."
+  # These seem to affect the /concern/works/item123 view
+  blacklight:
+    search:
+      fields:
+        show:
+          resource_type:    "Type of Work"
+          creator:          "Author"
+          gw_affiliation:   "GW Unit"
+          based_near:       "Location"
+        facet:
+          gw_affiliation_sim:   "GW Unit"
+          resource_type_sim:    "Type of Work"
+          creator_sim:          "Author"
+        index:
+          creator_tesim:        "Author"
+          gw_affiliation_tesim: "GW Unit"
