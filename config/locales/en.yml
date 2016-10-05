@@ -75,3 +75,8 @@ project from which the work was derived."
         index:
           creator_tesim:        "Author"
           gw_affiliation_tesim: "GW Unit"
+  curation_concerns:
+    base:
+      metadata:
+        attribute_name_label:   ""
+        attribute_values_label: ""
