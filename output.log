@@ -1,0 +1,17 @@
+nohup: ignoring input
+Starting Solr 6.1.0 on port 8983 ... /home/ubuntu/.rvm/gems/ruby-2.3.0/gems/solr_wrapper-0.14.2/lib/solr_wrapper/instance.rb:356:in `exec': Failed to execute solr create:  (RuntimeError)
+Creating new core 'hydra-development' using command:
+http://localhost:8983/solr/admin/cores?action=CREATE&name=hydra-development&instanceDir=hydra-development
+
+
+ERROR: Error CREATEing SolrCore 'hydra-development': Unable to create core [hydra-development] Caused by: Lock held by this virtual machine: /opt/scholarspace/scholarspace-sufia7/tmp/solr-development/server/solr/hydra-development/data/index/write.lock
+
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/gems/solr_wrapper-0.14.2/lib/solr_wrapper/instance.rb:154:in `create'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/gems/solr_wrapper-0.14.2/lib/solr_wrapper/instance.rb:211:in `with_collection'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/gems/solr_wrapper-0.14.2/exe/solr_wrapper:109:in `block in <top (required)>'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/gems/solr_wrapper-0.14.2/lib/solr_wrapper/instance.rb:64:in `wrap'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/gems/solr_wrapper-0.14.2/exe/solr_wrapper:108:in `<top (required)>'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/bin/solr_wrapper:23:in `load'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/bin/solr_wrapper:23:in `<main>'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/bin/ruby_executable_hooks:15:in `eval'
+	from /home/ubuntu/.rvm/gems/ruby-2.3.0/bin/ruby_executable_hooks:15:in `<main>'

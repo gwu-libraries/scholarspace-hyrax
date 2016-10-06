@@ -1,0 +1,12 @@
+en:
+  sufia:
+    product_name:       "GW ScholarSpace"
+    product_twitter_handle: "@HydraSphere"
+    institution_name:   "George Washington University"
+#    institution_name_full:   "The Institution Name"
+    account_name:       "GW NetId"
+    directory:
+      suffix:           "@gwu.edu"
+    footer:
+      copyright_html: "<strong>Copyright &copy; 2016 Project Hydra</strong> Licensed under the Apache License, Version 2.0"
+

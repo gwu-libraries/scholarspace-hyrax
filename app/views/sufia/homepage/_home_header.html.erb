@@ -1,0 +1,29 @@
+<div class="marketing-text col-xs-12 col-sm-4">
+  <div class="home-header-box box1">
+    <%#= render "marketing" %>
+    <%#= render partial: "marketing" %>
+    <!-- this needs to move to the partial once it's ready -->
+    <div class="marketing-blurb">
+      <h3>A repository for research at the George Washington University</h3>
+      <p><a href="#">Browse Everything</a></p>
+      <p><a href="#">Browse Our Electronic Theses and Dissertations</a></p>
+      <p><a href="#">Share Your Work</a></p>
+    </div>
+  </div>
+</div>
+<div class="col-xs-12 col-sm-4">
+  <div class="home-header-box box2">
+  </div>
+</div>
+<div class="home_call_action col-xs-12 col-sm-4">
+  <div class="home-header-box box3">
+    <% if @presenter.display_share_button? %>
+      <div class="home_share_work">
+        <%= link_to [:new, Sufia.primary_work_type.model_name.singular_route_key], class: "btn btn-primary btn-lg btn-block", id: "contribute_link" do %>
+          <i class="glyphicon glyphicon-upload"></i> <%= t('sufia.share_button') %>
+        <% end %>
+        <p class="text-center"><a href="/terms/">Terms of Use</a></p>
+      </div>
+    <% end %>
+  </div>
+</div>

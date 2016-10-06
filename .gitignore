@@ -18,3 +18,5 @@
 
 # Ignore sitemap
 public/sitemap.xml
+# Ignore nohup
+nohup.out
