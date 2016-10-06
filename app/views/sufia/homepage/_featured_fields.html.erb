@@ -1,7 +1,6 @@
 <h3>
   <span class="sr-only">Title</span>
-<<<<<<< HEAD
-  <%= link_to truncate(featured.title.first, length: 28, separator: ' '), featured %>
+  <%= link_to truncate(featured.title.first, length: 70, separator: ' '), featured %>
 </h3>
 <div>
   <span class="sr-only">Author</span>
@@ -10,17 +9,6 @@
 <div>
   <span class="sr-only">Type of Work</span>
   <%= link_to_facet_list(featured.resource_type, 'resource_type', 'no resource type specified') %>
-=======
-  <%= link_to truncate(featured.title.first, length: 70, separator: ' '), featured %>
-</h3>
-<div>
-  <span class="sr-only">Depositor</span>
-  <%= link_to_profile featured.depositor("no depositor value") %>
-</div>
-<div>
-  <span class="sr-only">File type</span>
-  <%= link_to_facet_list(featured.resource_type, 'resource_type', 'no resource specified') %>
->>>>>>>     Applied GW custom design
 </div>
 <div>
   <span class="sr-only">Keywords</span>

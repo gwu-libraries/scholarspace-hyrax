@@ -93,8 +93,6 @@ ul.top-nav-links { display: none; }
   font-size: 19px;
 }
 #featured_works .col-sm-3 { padding-right: 2%; }
-/* hiding depositor field */
-#featured_works .col-sm-9 div:nth-child(2) { display: none; }
 /* hiding work type field */
 #featured_works .col-sm-9 div:nth-child(3) { display: none; }
 /* hiding keywords (quick fix to remove commas) */
@@ -152,13 +150,12 @@ ul.top-nav-links { display: none; }
   font-size: 19px;
   margin-top: 2px;
 }
-#recent_docs td a:first-child { display: none; }
 #recent_docs td img { 
   width: 130px;
   border: 1px solid #999;
 }
-#recent_docs p { visibility: hidden; }
-#recent_docs p a {
+#recent_docs p:nth-child(3) { visibility: hidden; }
+#recent_docs p:nth-child(3) a {
   visibility: visible;
   color: #fff;
   display: inline-block;
@@ -167,7 +164,7 @@ ul.top-nav-links { display: none; }
   border-radius: .5em;
   margin-bottom: .5em;
 }
-#recent_docs p a:hover, #featured_docs p a:hover {
+#recent_docs p:nth-child(3) a:hover, #featured_docs p a:hover {
   text-decoration: none;
   color: #337ab7;
   background-color: inherit;
