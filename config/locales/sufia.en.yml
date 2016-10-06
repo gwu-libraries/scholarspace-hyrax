@@ -3,7 +3,7 @@ en:
     product_name:       "GW ScholarSpace"
     product_twitter_handle: "@HydraSphere"
     institution_name:   "George Washington University"
-#    institution_name_full:   "The Institution Name"
+    institution_name_full:   "George Washington University"
     account_name:       "GW NetId"
     directory:
       suffix:           "@gwu.edu"
