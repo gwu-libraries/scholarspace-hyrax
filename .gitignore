@@ -20,3 +20,5 @@
 public/sitemap.xml
 # Ignore nohup
 nohup.out
+nohup.fcrepo.out
+nohup.solr.out
