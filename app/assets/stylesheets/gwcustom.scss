@@ -1,4 +1,4 @@
-/* GW ESP Project customizations, here in manifest to start */
+/* GW ESP Project customizations */
 
 /* MASTHEAD */
 #masthead.navbar-static-top { min-height: 54px; }
@@ -15,7 +15,7 @@ a#logo.navbar-brand:hover { color: #9d9d9d; }
   #masthead .col-md-6 { width: initial; }
 }
 
-/* content container */
+/* CONTENT CONTAINER */
 #content-wrapper {
   max-width: 1200px;
 }
@@ -43,7 +43,7 @@ ul.top-nav-links { display: none; }
   margin: 2em;
   border: 1px solid #ddd;
   border-radius: 15px;
-  padding: 0 1em 1em 1em;
+  padding: 0 1em 1em;
   width: 170%;
   position: absolute;
   z-index: 1001;
