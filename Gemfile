@@ -48,7 +48,7 @@ group :development do
   gem 'spring'
 end
 
-gem 'sufia', '7.1.0'
+gem 'sufia', '7.2.0'
 
 group :development, :test do
   gem 'solr_wrapper', '>= 0.3'
@@ -61,3 +61,5 @@ group :development, :test do
   gem 'fcrepo_wrapper'
   gem 'rspec-rails'
 end
+
+gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'
