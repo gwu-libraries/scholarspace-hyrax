@@ -36,7 +36,7 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
     git clone https://github.com/gwu-libraries/scholarspace-sufia7.git
 ```
    Make sure that `config.fits_path` in `config/initializers/sufia.rb` is set consistent with where you installed fits.  If not, update it.
-    
+
 * Install gems
 ```
     cd scholarspace-sufia7
@@ -64,8 +64,41 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
     nohup rails s -b 0.0.0.0 &
 ```
    The app will run on port 3000.  (To run on a different port, specify with the `-p` option.)
-   
+
    If you get an error about a pending migration follow the suggested solution:
 ```
    bin/rake db:migrate RAILS_ENV=development
+```
+
+## Docker
+To bring up a development instance of ScholarSpace running in a docker container:
+```
+    docker run -d -p 3000:3000 -p 8983:8983 -p 8984:8984 --name scholarspace gwul/scholarspace-dev
+```
+
+To link in your local code:
+```
+    docker run -d -p 3000:3000 -p 8983:8983 -p 8984:8984 --name scholarspace -v <path to your local code>:/opt/scholarspace/scholarspace-sufia7 gwul/scholarspace-dev
+```
+
+To follow the logs of a running development instance:
+```
+    docker logs -f scholarspace
+```
+
+To restart ScholarSpace, kill it and then bring it back up. The command for killing
+it is:
+```
+    docker restart scholarspace
+```
+
+To remove the development instance, kill it and remove it. The command for removing
+it is:
+```
+    docker rm -v scholarspace
+```
+
+On every commit to master, Docker Hub builds a new image. To get the latest image:
+```
+    docker pull gwul/scholarspace-dev
 ```
