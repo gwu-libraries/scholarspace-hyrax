@@ -32,4 +32,8 @@ class SolrDocument
   def gw_affiliation
     self[Solrizer.solr_name('gw_affiliation')]
   end
+
+  def bibliographic_citation
+    self[Solrizer.solr_name('bibliographic_citation')]
+  end
 end

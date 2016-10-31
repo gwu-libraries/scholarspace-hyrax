@@ -67,6 +67,7 @@ project from which the work was derived."
           resource_type:    "Type of Work"
           creator:          "Author"
           gw_affiliation:   "GW Unit"
+          bibliographic_citation: "Previous Publication Information"
           based_near:       "Location"
         facet:
           gw_affiliation_sim:   "GW Unit"
