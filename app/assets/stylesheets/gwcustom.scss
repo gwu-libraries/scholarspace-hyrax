@@ -44,7 +44,7 @@ ul.top-nav-links { display: none; }
   border: 1px solid #ddd;
   border-radius: 15px;
   padding: 0 1em 1em;
-  width: 170%;
+  width: 180%;
   position: absolute;
   z-index: 1001;
   background-color: #fff;
@@ -53,7 +53,16 @@ ul.top-nav-links { display: none; }
 .marketing-blurb h3 {
   margin-top: .5em;
   font-size: 23px;
+  font-weight: bold;
 }
+.sub-blurb {
+  font-size: 1.15em;
+}
+
+@media screen and (max-width:1220px) {
+  .marketing-blurb { width: 277%; }
+}
+
 @media screen and (max-width:767px) {
   .marketing-blurb p {
     margin-bottom: 5px;
