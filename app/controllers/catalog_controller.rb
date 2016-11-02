@@ -6,7 +6,6 @@ class CatalogController < ApplicationController
 
   # These before_filters apply the hydra access controls
   before_filter :enforce_show_permissions, only: :show
-  skip_before_filter :default_html_head
 
   def self.uploaded_field
     solr_name('system_create', :stored_sortable, type: :date)
@@ -71,7 +70,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("description", :stored_searchable), label: "Description", itemprop: 'description', helper_method: :iconify_auto_link
     config.add_index_field solr_name("keyword", :stored_searchable), label: "Keyword", itemprop: 'keywords', link_to_search: solr_name("keyword", :facetable)
     config.add_index_field solr_name("gw_affiliation", :stored_searchable), label: "GW Unit", itemprop: 'gw_affiliation', link_to_search: solr_name("gw_affiliation", :facetable)
-    config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), label: "Date Uploaded", itemprop: 'datePublished'
+    config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), label: "Date Uploaded", itemprop: 'datePublished', helper_method: :human_readable_date
     config.add_index_field solr_name("date_created", :stored_searchable), label: "Date Created", itemprop: 'dateCreated'
 
     # solr fields to be displayed in the show (single result) view
