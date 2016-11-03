@@ -1,8 +1,11 @@
 /* GW ESP Project customizations */
 
+body { min-width: 400px; }
+
 /* MASTHEAD */
 /* hiding Sufia masthead image */
 .image-masthead { display: none; }
+#masthead { margin-bottom: 2em; }
 #masthead.navbar-static-top { min-height: 54px; }
 #masthead .container-fluid { padding-right: inherit; }
 #masthead .libraries-logo img { height: 38px; }
@@ -20,6 +23,7 @@ a#logo.navbar-brand:hover { color: #9d9d9d; }
 /* CONTENT CONTAINER */
 #content-wrapper {
   max-width: 1200px;
+  min-width: 320px;
 }
 
 /* NAVBAR */
@@ -36,6 +40,7 @@ ul.top-nav-links { display: none; }
 #user_utility_links li.user-login { display: none; }
 /* removing gray top and bottom border */
 #home_header {
+  margin-top: -1em;
   margin-bottom: 2em;
   border-top: none;
   border-bottom: none;
@@ -87,7 +92,7 @@ ul.top-nav-links { display: none; }
 
 @media screen and (max-width: 767px) {
   .marketing-blurb { 
-    width: 90%; 
+    width: 89%; 
     position: absolute;
     top: .2em;
     margin-left: 2%;
@@ -188,6 +193,7 @@ ul.top-nav-links { display: none; }
 #feature-block {
   display: flex;
   flex-flow: row wrap;
+  margin-bottom: 1em;
 }
 .feature-block {
   margin: 10px;
