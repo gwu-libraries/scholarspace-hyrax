@@ -1,6 +1,8 @@
 /* GW ESP Project customizations */
 
 /* MASTHEAD */
+/* hiding Sufia masthead image */
+.image-masthead { display: none; }
 #masthead.navbar-static-top { min-height: 54px; }
 #masthead .container-fluid { padding-right: inherit; }
 #masthead .libraries-logo img { height: 38px; }
@@ -36,6 +38,7 @@ ul.top-nav-links { display: none; }
 #user_utility_links li.user-login { display: none; }
 /* removing gray top and bottom border */
 #home_header {
+  margin-bottom: 2em;
   border-top: none;
   border-bottom: none;
 }
