@@ -28,8 +28,6 @@ nav.navbar.navbar-default { display:none; }
 ul.top-nav-links { display: none; }
 
 /* HOME HEADER */
-/* removing background image */
-#home_header { background-image: none; }
 /* hiding "terms of service" */
 #home_header .text-center { display: none; }
 /* hiding "share your work" */
@@ -43,34 +41,32 @@ ul.top-nav-links { display: none; }
   border-bottom: none;
 }
 .marketing-blurb {
-  margin: 2em;
-  border: 1px solid #ddd;
+  margin: 3.4em 2em 0;
   border-radius: 15px;
   padding: 0 1em 1em;
   width: 180%;
   position: absolute;
   z-index: 1001;
   background-color: #fff;
-  opacity: .9;
 }
 .marketing-blurb h3 {
-  margin-top: .5em;
+  margin-top: .7em;
   font-size: 23px;
   font-weight: bold;
+  letter-spacing: -0.5px;
 }
 .sub-blurb {
   font-size: 1.15em;
+}
+
+.home-header-box {
+  opacity: 0.8;
 }
 
 @media screen and (max-width:1220px) {
   .marketing-blurb { width: 277%; }
 }
 
-@media screen and (max-width:767px) {
-  .marketing-blurb p {
-    margin-bottom: 5px;
-  }
-}
 #home_header .home-header-box {
   height: 240px;
   margin-top: 1.8em;
@@ -84,16 +80,21 @@ ul.top-nav-links { display: none; }
 #home_header .box3 {
   background-image: image-url('image_3_370.png');
 }
+
 @media screen and (max-width: 991px) {
   .marketing-blurb { width: 270%; }
 }
+
 @media screen and (max-width: 767px) {
   .marketing-blurb { 
     width: 90%; 
-    position: relative;
-    top: 2em;
-    margin-left: auto;
-    margin-right: auto;
+    position: absolute;
+    top: .2em;
+    margin-left: 2%;
+    margin-right: 2%;
+  }
+  .marketing-blurb p {
+    margin-bottom: 5px;
   }
   #home_header .home-header-box.box2 { display: none; }
   #home_header .home-header-box.box3 { display: none; }
@@ -132,6 +133,7 @@ ul.top-nav-links { display: none; }
   border: 1px solid #999;
   margin-bottom: .8em;
 }
+
 @media screen and (max-width:767px) {
   #featured_works img {
     width: 90px;
