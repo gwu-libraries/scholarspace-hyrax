@@ -49,7 +49,7 @@ ul.top-nav-links { display: none; }
   margin: 3.4em 2em 0;
   border-radius: 15px;
   padding: 0 1em 1em;
-  width: 180%;
+  width: 179%;
   position: absolute;
   z-index: 1001;
   background-color: #fff;
@@ -68,8 +68,8 @@ ul.top-nav-links { display: none; }
   opacity: 0.8;
 }
 
-@media screen and (max-width:1220px) {
-  .marketing-blurb { width: 277%; }
+@media screen and (max-width:1199px) {
+  .marketing-blurb { width: 273%; }
 }
 
 #home_header .home-header-box {
@@ -87,16 +87,19 @@ ul.top-nav-links { display: none; }
 }
 
 @media screen and (max-width: 991px) {
-  .marketing-blurb { width: 270%; }
+  .marketing-blurb { width: 266%; }
 }
 
 @media screen and (max-width: 767px) {
   .marketing-blurb { 
-    width: 89%; 
+    width: calc(100% - 61px); 
     position: absolute;
     top: .2em;
-    margin-left: 2%;
-    margin-right: 2%;
+    margin-left: 14px;
+    margin-right: 14px;
+  }
+  .marketing-blurb h3 {
+    font-size: 20px;
   }
   .marketing-blurb p {
     margin-bottom: 5px;
