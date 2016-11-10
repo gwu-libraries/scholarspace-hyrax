@@ -1,4 +1,4 @@
-/* GW ESP Project customizations */
+/* GW ScholarSpace customizations */
 
 body { min-width: 400px; }
 
@@ -18,6 +18,17 @@ a#logo.navbar-brand:hover { color: #9d9d9d; }
 #search-form-header .input-group { margin-bottom: inherit; }
 @media screen and (max-width:767px) {
   #masthead .col-md-6 { width: initial; }
+}
+/* fixing out-of-bounds issue with narrow views */
+/* first we override the negative margins (-15px) in the navbar-header div */
+.container-fluid > .navbar-header {
+  margin-left: 0;  
+  margin-right: 0;
+}
+/* next we remove the padding (15px) in the logo and hamburger blocks to offset the new margins we just set in the navbar-header container */
+@media screen and (max-width:767px) {
+  .navbar-brand.libraries-logo { padding-left: 0; }
+  .navbar-toggle.collapsed { padding-right: 0; }
 }
 
 /* CONTENT CONTAINER */
@@ -51,7 +62,7 @@ ul.top-nav-links { display: none; }
   padding: 0 1em 1em;
   width: 179%;
   position: absolute;
-  z-index: 1001;
+  z-index: 900;
   background-color: #fff;
 }
 .marketing-blurb h3 {
