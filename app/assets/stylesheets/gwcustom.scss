@@ -25,10 +25,13 @@ a#logo.navbar-brand:hover { color: #9d9d9d; }
   margin-left: 0;  
   margin-right: 0;
 }
-/* next we remove the padding (15px) in the logo and hamburger blocks to offset the new margins we just set in the navbar-header container */
+.container-fluid > .navbar-collapse {
+  margin-right: 0;
+}
+/* next we reduce the padding/margin (15px) in the logo and hamburger blocks to offset the new margins we just set in the navbar-header container */
 @media screen and (max-width:767px) {
   .navbar-brand.libraries-logo { padding-left: 0; }
-  .navbar-toggle.collapsed { padding-right: 0; }
+  .navbar-toggle { margin-right: 5px; }
 }
 
 /* CONTENT CONTAINER */
