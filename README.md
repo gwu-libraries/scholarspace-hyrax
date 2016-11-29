@@ -397,7 +397,7 @@ set the following properties in `config/initializers/sufia.rb` :
 
         % cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
 
-  Set the SMTP credentials for the user as whom the app will send email.
+  Set the SMTP credentials for the user as whom the app will send email.  Make sure that the `user_name` value in `setup_mail.rb` matches the `contact_email` value configured above in `sufia.rb`.
   
   * Edit `config/initializers/mailboxer.rb` with email account:
   
