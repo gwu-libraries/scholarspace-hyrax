@@ -87,6 +87,11 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
+  # Override Sufia about behavior so it's a static page, not a TinyMCE page
+  # Note that this override must occur BEFORE mounting the Sufia engine routes.
+  # Yes, that is somewhat counterintuitive.
+  get 'about', controller: 'static', action: 'about', as: 'about'
+
   # This must be the very last route in the file because it has a catch-all route for 404 errors.
   # This behavior seems to show up only in production mode.
   mount Sufia::Engine => '/'
