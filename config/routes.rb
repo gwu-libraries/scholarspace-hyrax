@@ -87,8 +87,6 @@ Rails.application.routes.draw do
   #     resources :products
   #   end
 
-  Hydra::BatchEdit.add_routes(self)
-  
   # Override Sufia about behavior so it's a static page, not a TinyMCE page
   # Note that this override must occur BEFORE mounting the Sufia engine routes.
   # Yes, that is somewhat counterintuitive.
