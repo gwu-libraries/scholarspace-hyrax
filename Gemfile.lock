@@ -481,6 +481,7 @@ GEM
     simple_form (3.3.1)
       actionpack (> 4, < 5.1)
       activemodel (> 4, < 5.1)
+    sitemap (0.3.3)
     skydrive (1.2.0)
       activesupport
       httmultiparty
@@ -594,6 +595,7 @@ DEPENDENCIES
   rspec-rails
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
+  sitemap
   solr_wrapper (>= 0.3)
   spring
   sqlite3
