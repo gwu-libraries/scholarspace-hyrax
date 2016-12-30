@@ -1,6 +1,10 @@
 class User < ActiveRecord::Base
   # Connects this user object to Hydra behaviors.
   include Hydra::User
+  # Connects this user object to Role-management behaviors.
+  include Hydra::RoleManagement::UserRoles
+
+
   # Connects this user object to Curation Concerns behaviors.
   include CurationConcerns::User
   # Connects this user object to Sufia behaviors.
@@ -26,4 +30,9 @@ class User < ActiveRecord::Base
   def to_s
     email
   end
+
+  def contentadmin?
+    roles.where(name: 'content-admin').exists?
+  end
+
 end

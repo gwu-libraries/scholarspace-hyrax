@@ -12,6 +12,8 @@ Rails.application.routes.draw do
   end
 
   devise_for :users
+  mount Hydra::RoleManagement::Engine => '/'
+
   mount CurationConcerns::Engine, at: '/'
   resources :welcome, only: 'index'
   root 'sufia/homepage#index'

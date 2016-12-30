@@ -50,6 +50,8 @@ end
 
 gem 'sufia', '7.2.0'
 
+gem 'hydra-role-management'
+
 group :development, :test do
   gem 'solr_wrapper', '>= 0.3'
 end
