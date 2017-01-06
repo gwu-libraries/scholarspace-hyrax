@@ -72,69 +72,40 @@ A nearly-vanilla sufia7 app with the potential to be built out as GW ScholarSpac
 
 Installation with Apache, Tomcat 7, and Passenger <a id="prod-install"></a>
 ------------
-Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be deployed on different servers if desired.  If doing so, ensure that firewall ports are opened between the necessary servers and the GW ScholarSpace application server.
+Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be deployed on different servers if desired.  If doing so, ensure that firewall ports are opened between the necessary servers and the GW ScholarSpace application server.  The instructions below will layout the environment as follows:
+
+Repository server: PostgreSQL, Tomcat, Solr, Java
+
+Application server: PostgreSQL, Apache2, Ruby, Rails, Passenger, Redis, Shibboleth
+
+### Repository server setup:
 
 ### Dependencies
 
-* Install ubuntu 14.04 LTS package dependencies:
-
-        % sudo apt-get update
-        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2 tomcat7 libreoffice libcurl4-openssl-dev apache2-threaded-dev libapr1-dev libaprutil1-dev apache2-mpm-worker apache2-threaded-dev subversion
-
-* Install Java 8 for 14.04 (on the Solr/Fedora server):
+* Install Java 8 for 14.04:
 
         % sudo apt-add-repository ppa:webupd8team/java
         % sudo apt-get update
         % sudo apt-get install oracle-java8-installer
         % sudo apt-get install oracle-java8-set-default
-        % sudo apt-get install subversion
-       
-* Install RVM for multi-users
 
-   On the GW ScholarSpace server:
+* Install ubuntu 14.04 LTS package dependencies:
 
-        % curl -L https://get.rvm.io | sudo bash -s stable
-        % source ~/.rvm/scripts/rvm
-        % rvm install ruby-2.3.0
-        % sudo nano /etc/group
-        
-        Add users to the rvm group
-
-* Install Rails on the GW ScholarSpace server:
-
-        % gem install rails -v 4.2.6 -N
+        % sudo apt-get update
+        % sudo apt-get install git postgresql libpq-dev unzip clamav-daemon curl tomcat7 libcurl4-openssl-dev apache2-threaded-dev libapr1-dev libaprutil1-dev apache2-mpm-worker apache2-threaded-dev
         
 * Create the directory structure
 
-  On the GW ScholarSpace server:
-
-        % mkdir /opt/scholarspace
-        % mkdir /opt/install
-        % mkdir /opt/xsendfile
-        
-  On the Solr/Fedora server (if deploying on a separate server - otherwise on the same server):
-        
         % mkdir /opt/install
         % mkdir /opt/fedora
         
-* Create the necessary user groups and assign folder permissions
-
-  On the GW ScholarSpace server:
-
-        % sudo groupadd scholarspace
-        
-        Edit `/etc/group` and add users (including www-data) to the new group
-        
-        % sudo chown $USER:scholarspace /opt/scholarspace
-        % sudo chown www-data:www-data /opt/xsendfile
-        
-* Set up tomcat7 (on the Solr/Fedora server)
+* Set up tomcat7
 
   Configure Java setttings
 
         % cd /opt/install
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
-        % sudo cp tomcat_conf/tomcat7 /etc/defaults/tomcat7
+        Retrieve `tomcat7` from `tomcat_conf/tomcat7` in the GitHub repo
+        % sudo cp tomcat_conf/tomcat7 /etc/default/tomcat7
 
   Set the owner of the `/opt/fedora` directory:
         
@@ -152,9 +123,6 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
         % sudo service solr status
         
   Copy the `solr/config` folder from the repository to `/opt/install`
-  
-        % cd /opt/install
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/solr
 
   Configure a Solr Core:
 
@@ -175,11 +143,13 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 
         % cd /opt/install
         % wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.6.0/fcrepo-webapp-plus-audit-4.6.0.war
-        % cp fcrepo-webapp-plus-audit-4.6.0.war /var/lib/tomcat7/webapps/fcrepo.war
+        % sudo cp fcrepo-webapp-plus-audit-4.6.0.war /var/lib/tomcat7/webapps/fcrepo.war
+        Wait for tomcat to deploy the war file before proceeding to the next step.
 
 * Replace the fcrepo `web.xml`
 
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
+        % cd /opt/install
+        Retrieve `web.xml` from `tomcat_conf/fcrepo-webapp/web.xml` in the GitHub repo
         % sudo cp tomcat_conf/fcrepo-webapp/web.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
 
 * Ensure tomcat7 library files are (still) all owned by tomcat7
@@ -193,7 +163,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 * Replace `tomcat-users.xml` with file from `tomcat_conf` folder in the repo.
 
         % cd /opt/install
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
+        Retrieve `tomcat-users.xml` from `tomcat_conf/tomcat-users.xml` in the GitHub repo
         % sudo cp tomcat_conf/tomcat_users.xml /etc/tomcat7/tomcat_users.xml
   
   Edit `tomcat-users.xml` and replace the "dummypasswords" with your secure passwords.
@@ -202,7 +172,7 @@ Note: Solr, Fedora, PostgreSQL and the GW ScholarSpace application can all be de
 
         % sudo apt-get install postgresql
 
-* Create of backup of the existing Fedora instance (If one exists)
+* (Optional - if creating a new repository skip this step) Create a backup of the existing Fedora instance
 
         % sudo mkdir /opt/fedora_backups
         % sudo chown -R tomcat7:tomcat7 /opt/fedora_backups
@@ -231,7 +201,7 @@ Note the database name for Fedora must be 'ispn'
 * Copy the `infinispan.xml` file from the repo
 
         % cd /opt/install
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
+        Retrieve `infinispan.xml` from `tomcat_conf/fcrepo/infinispan.xml` in the GitHub repo
         % cp tomcat_conf/fcrepo/infinispan.xml /etc/fcrepo/infinispan.xml
         
 Edit this file with your database username and database password
@@ -240,7 +210,7 @@ Edit this file with your database username and database password
 
         % sudo service tomcat7 restart
 
-* Restore the Fedora Backup (If a previous Fedora repository was running on LevelDB)
+* (Optional - only restore a fedora backup if created one earlier) Restore an existing Fedora backup
 
         % curl -X POST -u <FedoraUsername>:<FedoraPassword> --data "/opt/fedora_backups" yourserver.com/fcrepo/rest/fcr:restore
 Validate that the repository has been restored
@@ -248,10 +218,83 @@ Validate that the repository has been restored
 * Restart Tomcat7 Server
 
         % sudo service tomcat7 restart
+        
+### (Optional) Add SSL to Fedora Connections
+These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 and running SSL using the Apache Portable Runtime (APR).
 
-### Install the GW ScholarSpace app:
+* Install Tomcat dependencies
+       
+        % sudo apt-get install libapr1 libapr1-dev libtcnative-1
 
-On the GW ScholarSpace server:
+*  Add the `tomcat7` user to the `ssl-cert` group in `/etc/group`
+
+        % sudo vi /etc/group
+
+*  Generate your SSL certificates and key using the instructions provided here: https://github.com/gwu-libraries/ssl_howto
+
+*  Update the `server.xml` file
+
+        % cd /opt/install
+        Retrieve `server_ssl.xml` from `tomcat_conf/server_ssl.xml` in the GitHub repo
+        % sudo cp tomcat_conf/server_ssl.xml /etc/tomcat7/server.xml
+        
+*  Edit `/etc/tomcat/server.xml` and replace the dummy values for the following lines with your certificates and keys:
+	```
+        SSLCertificateFile="/etc/ssl/certs/yourservername.cer"
+        SSLCertificateChainFile="/etc/ssl/certs/yourservername.cer"
+        SSLCertificateKeyFile="/etc/ssl/private/yourservername.pem"
+	```
+*  Create a symbolic link to `libtcnative1.so` to address a Ubuntu/Tomcat bug
+        
+        % sudo ln -sv /usr/lib/x86_64-linux-gnu/libtcnative-1.so /usr/lib/
+
+*  Replace the `web.xml` files for Fedora with the `web_ssl.xml` files from the repo:
+
+        % cd /opt/install
+        Retrieve `web_ssl.xml` from `tomcat_conf/fcrepo-webapp/web_ssl.xml` in the GitHub repo
+	      % cp tomcat_conf/fcrepo-webapp/web_ssl.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
+
+
+*  Restart Tomcat and test access over HTTPS
+
+        % sudo service tomcat7 restart
+
+### Application server setup:
+
+### Dependencies
+
+* Install ubuntu 14.04 LTS package dependencies:
+
+        % sudo apt-get update
+        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2-threaded-dev apache2-mpm-worker apache2-threaded-dev 
+
+* Install RVM for multi-users
+
+        % curl -L https://get.rvm.io | sudo bash -s stable
+        % source ~/.rvm/scripts/rvm
+        % rvm install ruby-2.3.0
+        % sudo nano /etc/group
+        
+        Add users to the rvm group
+
+* Install Rails:
+
+        % gem install rails -v 4.2.6 -N
+        
+* Create the directory structure
+
+        % mkdir /opt/scholarspace
+        % mkdir /opt/install
+        % mkdir /opt/xsendfile
+        
+* Create the necessary user groups and assign folder permissions
+
+        % sudo groupadd scholarspace
+        
+        Edit `/etc/group` and add users (including www-data) to the new group
+        
+        % sudo chown $USER:scholarspace /opt/scholarspace
+        % sudo chown www-data:www-data /opt/xsendfile
 
 * Get the GW ScholarSpace code:
 
@@ -321,7 +364,7 @@ On the GW ScholarSpace server:
 
         % rake db:migrate RAILS_ENV=production
 
-* On the GW ScholarSpace server, install `fits.sh` version 0.8.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 0.8.5 download)
+* Install `fits.sh` version 0.8.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 0.8.5 download)
 
         % cd /usr/local/bin
         % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip -o fits-0.8.5.zip
@@ -331,10 +374,10 @@ On the GW ScholarSpace server:
 
 ### Configure ImageMagick policies
 
-* On the GW ScholarSpace server, copy `imagemagick_conf/policy.xml` to `/etc/ImageMagick` (overwrite the default `policy.xml`)
+* Copy `imagemagick_conf/policy.xml` to `/etc/ImageMagick` (overwrite the default `policy.xml`)
 
         % cd /opt/install
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/imagemagick_conf
+        Retrieve `policy.xml` from `imagemagick_conf/policy.xml` in the GitHub repo
         % sudo cp /etc/ImageMagick/policy.xml
 
 ### Configure the `minter-state` file path
@@ -385,7 +428,7 @@ On the GW ScholarSpace server:
 
          % sudo mkdir /opt/scholarspace_derivatives
          % sudo chown -R scholarspace:scholarspace_group /opt/scholarspace_derivatives
-	 
+   
 ### Configure Contact form emailing
 
   In order to enable the contact form page to send email when the user clicks Send,
@@ -402,7 +445,7 @@ set the following properties in `config/initializers/sufia.rb` :
   * Edit `config/initializers/mailboxer.rb` with email account:
   
          config.default_from = 
-	 
+   
 ### Make files in `script` executable:
 
          chmod -R a+x script
@@ -443,7 +486,8 @@ has logged in at least once.
         
 * Configure Apache for Passenger
 
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/apache2_conf
+        % cd /opt/install
+        Retrieve `passenger.conf` from  `apache2_conf/passenger.conf` in the GitHub repo
         % sudo cp apache2_conf/passenger.conf /etc/apache2/conf-available/passenger.conf
    
 * Enable the `passenger.conf` file and the rewrite Apache mod
@@ -454,7 +498,9 @@ has logged in at least once.
 
 * Create and enable an Apache2 virtual host
 
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/apache2_conf
+        % cd /opt/install
+        Retrieve `scholarspace.conf` from `apache2_conf/scholarspace.conf` in the GitHub repo
+        Retrieve `scholarspace-ssl.conf` from `apache2_conf/scholarspace-ssl.conf` in the GitHub repo
         % sudo cp apache2_conf/scholarspace.conf /etc/apache/sites-available/scholarspace.conf
         % sudo cp apache2_conf/scholarspace-ssl.conf /etc/apache/sites-available/scholarspace-ssl.conf
 
@@ -557,43 +603,3 @@ to upload items and edit the items that they have uploaded (plus items transferr
   Add a line similar to the following:
 
         0 5 * * * /opt/scholarspace/script/import_stats.sh production
-        
-### (Optional) Add SSL to Fedora Connections
-These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 and running SSL using the Apache Portable Runtime (APR).
-
-* Install Tomcat dependencies
-       
-        % sudo apt-get install libapr1 libapr1-dev libtcnative-1
-
-*  Add the `tomcat7` user to the `ssl-cert` group in `/etc/group`
-
-        % sudo vi /etc/group
-
-*  Generate your SSL certificates and key using the instructions provided here: https://github.com/gwu-libraries/ssl_howto
-
-*  Update the `server.xml` file
-
-        % cd /opt/install
-        % svn checkout https://github.com/gwu-libraries/scholarspace-sufia7/trunk/tomcat_conf
-        % sudo cp tomcat_conf/server_ssl.xml /etc/tomcat7/server.xml
-        
-*  Edit `/etc/tomcat/server.xml` and replace the dummy values for the following lines with your certificates and keys:
-	```
-        SSLCertificateFile="/etc/ssl/certs/yourservername.cer"
-        SSLCertificateChainFile="/etc/ssl/certs/yourservername.cer"
-        SSLCertificateKeyFile="/etc/ssl/private/yourservername.pem"
-	```
-*  Create a symbolic link to `libtcnative1.so` to address a Ubuntu/Tomcat bug
-        
-        % sudo ln -sv /usr/lib/x86_64-linux-gnu/libtcnative-1.so /usr/lib/
-
-*  Replace the `web.xml` files for Fedora with the `web_ssl.xml` files from the repo:
-
-	```
-	% cp tomcat_conf/fcrepo/web_ssl.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
-	% cp tomcat_conf/solr/web_ssl.xml /var/lib/tomcat7/webapps/solr/WEB-INF/web.xml
-	```
-
-*  Restart Tomcat and test access over HTTPS
-
-        % sudo service tomcat7 restart
