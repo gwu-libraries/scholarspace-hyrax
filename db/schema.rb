@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160720212240) do
+ActiveRecord::Schema.define(version: 20161204222308) do
 
   create_table "bookmarks", force: :cascade do |t|
     t.integer  "user_id",       null: false
@@ -117,19 +117,6 @@ ActiveRecord::Schema.define(version: 20160720212240) do
 
   add_index "file_view_stats", ["file_id"], name: "index_file_view_stats_on_file_id"
   add_index "file_view_stats", ["user_id"], name: "index_file_view_stats_on_user_id"
-
-  create_table "follows", force: :cascade do |t|
-    t.integer  "followable_id",                   null: false
-    t.string   "followable_type",                 null: false
-    t.integer  "follower_id",                     null: false
-    t.string   "follower_type",                   null: false
-    t.boolean  "blocked",         default: false, null: false
-    t.datetime "created_at",                      null: false
-    t.datetime "updated_at",                      null: false
-  end
-
-  add_index "follows", ["followable_id", "followable_type"], name: "fk_followables"
-  add_index "follows", ["follower_id", "follower_type"], name: "fk_follows"
 
   create_table "local_authorities", force: :cascade do |t|
     t.string "name"
@@ -241,6 +228,18 @@ ActiveRecord::Schema.define(version: 20160720212240) do
   add_index "qa_local_authority_entries", ["local_authority_id"], name: "index_qa_local_authority_entries_on_local_authority_id"
   add_index "qa_local_authority_entries", ["uri"], name: "index_qa_local_authority_entries_on_uri", unique: true
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+  end
+
+  create_table "roles_users", id: false, force: :cascade do |t|
+    t.integer "role_id"
+    t.integer "user_id"
+  end
+
+  add_index "roles_users", ["role_id", "user_id"], name: "index_roles_users_on_role_id_and_user_id"
+  add_index "roles_users", ["user_id", "role_id"], name: "index_roles_users_on_user_id_and_role_id"
+
   create_table "searches", force: :cascade do |t|
     t.binary   "query_params"
     t.integer  "user_id"
@@ -267,6 +266,13 @@ ActiveRecord::Schema.define(version: 20160720212240) do
   end
 
   add_index "subject_local_authority_entries", ["lowerLabel"], name: "entries_by_lower_label"
+
+  create_table "sufia_features", force: :cascade do |t|
+    t.string   "key",                        null: false
+    t.boolean  "enabled",    default: false, null: false
+    t.datetime "created_at",                 null: false
+    t.datetime "updated_at",                 null: false
+  end
 
   create_table "tinymce_assets", force: :cascade do |t|
     t.string   "file"

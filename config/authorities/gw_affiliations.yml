@@ -1,0 +1,847 @@
+terms:
+  - id: ACCESS Center for Advancement of Research in Distance Education
+    term: ACCESS Center for Advancement of Research in Distance Education
+    active: true
+  - id: Accountancy
+    term: Accountancy
+    active: true
+  - id: Advocacy in the Global Environment
+    term: Advocacy in the Global Environment
+    active: true
+  - id: Africana Studies
+    term: Africana Studies
+    active: true
+  - id: Allergy, Asthma & Sinus Center Breast Care Center
+    term: Allergy, Asthma & Sinus Center Breast Care Center
+    active: true
+  - id: American and Saudi Arabian Dialogue Education Center
+    term: American and Saudi Arabian Dialogue Education Center
+    active: true
+  - id: American Studies
+    term: American Studies
+    active: true
+  - id: Anatomy & Regenerative Biology
+    term: Anatomy & Regenerative Biology
+    active: true
+  - id: Anesthesiology & Critical Care Medicine
+    term: Anesthesiology & Critical Care Medicine
+    active: true
+  - id: Anthropology
+    term: Anthropology
+    active: true
+  - id: Art Therapy
+    term: Art Therapy
+    active: true
+  - id: Asian Studies
+    term: Asian Studies
+    active: true
+  - id: Biochemistry & Molecular Medicine
+    term: Biochemistry & Molecular Medicine
+    active: true
+  - id: Bioinformatics
+    term: Bioinformatics
+    active: true
+  - id: Biological Sciences
+    term: Biological Sciences
+    active: true
+  - id: Biomedical Engineering
+    term: Biomedical Engineering
+    active: true
+  - id: Biostatistics Center
+    term: Biostatistics Center
+    active: true
+  - id: Brazil Initiative
+    term: Brazil Initiative
+    active: true
+  - id: Business & Finance Law
+    term: Business & Finance Law
+    active: true
+  - id: Capitol Archaeological Institute, GW
+    term: Capitol Archaeological Institute, GW
+    active: true
+  - id: Center for Advanced Study of Human Paleobiology
+    term: Center for Advanced Study of Human Paleobiology
+    active: true
+  - id: Center for Applied Developmental Science & Neuroeducation
+    term: Center for Applied Developmental Science & Neuroeducation
+    active: true
+  - id: Center for Biomimetics and Bioinspired Engineering
+    term: Center for Biomimetics and Bioinspired Engineering
+    active: true
+  - id: Center for Economic Research
+    term: Center for Economic Research
+    active: true
+  - id: Center for Equity and Excellence in Education
+    term: Center for Equity and Excellence in Education
+    active: true
+  - id: Center for Excellence in Public Leadership
+    term: Center for Excellence in Public Leadership
+    active: true
+  - id: Center for Injury Prevention & Control
+    term: Center for Injury Prevention & Control
+    active: true
+  - id: Center for Innovative Media
+    term: Center for Innovative Media
+    active: true
+  - id: Center for Intelligent Systems Research
+    term: Center for Intelligent Systems Research
+    active: true
+  - id: Center for International Science and Technology Policy
+    term: Center for International Science and Technology Policy
+    active: true
+  - id: Center for Latin American Issues
+    term: Center for Latin American Issues
+    active: true
+  - id: Center for Law, Economics, and Finance
+    term: Center for Law, Economics, and Finance
+    active: true
+  - id: Center for Otolaryngology Microsurgery Education & Training (COMET)
+    term: Center for Otolaryngology Microsurgery Education & Training (COMET)
+    active: true
+  - id: Center for Pelvic Health
+    term: Center for Pelvic Health
+    active: true
+  - id: Center for Preparedness & Resilience
+    term: Center for Preparedness & Resilience
+    active: true
+  - id: Center for Quantum Computing, Information, Logic & Topology
+    term: Center for Quantum Computing, Information, Logic & Topology
+    active: true
+  - id: Center for Rehabilitation Counseling Research and Education
+    term: Center for Rehabilitation Counseling Research and Education
+    active: true
+  - id: Center for Sexual Health
+    term: Center for Sexual Health
+    active: true
+  - id: Center for Urban and Environmental Research
+    term: Center for Urban and Environmental Research
+    active: true
+  - id: Center for Washington Area Studies
+    term: Center for Washington Area Studies
+    active: true
+  - id: Center on Aging, Health, & Humanities
+    term: Center on Aging, Health, & Humanities
+    active: true
+  - id: Center on Education Policy
+    term: Center on Education Policy
+    active: true
+  - id: Chemistry
+    term: Chemistry
+    active: true
+  - id: China Policy Program
+    term: China Policy Program
+    active: true
+  - id: Civil & Environmental Engineering
+    term: Civil & Environmental Engineering
+    active: true
+  - id: Classical & Near Eastern Languages & Civilizations
+    term: Classical & Near Eastern Languages & Civilizations
+    active: true
+  - id: Classical Acting
+    term: Classical Acting
+    active: true
+  - id: Clinical & Translational Science Institute at Children's National (CTSI-CN)
+    term: Clinical & Translational Science Institute at Children's National (CTSI-CN)
+    active: true
+  - id: Clinical Learning and Simulation Skills (CLASS) Center
+    term: Clinical Learning and Simulation Skills (CLASS) Center
+    active: true
+  - id: Clinical Research & Leadership
+    term: Clinical Research & Leadership
+    active: true
+  - id: Cocoran Arts & Humanities
+    term: Cocoran Arts & Humanities
+    active: true
+  - id: Cocoran Graphic Design
+    term: Cocoran Graphic Design
+    active: true
+  - id: Competition Law Center
+    term: Competition Law Center
+    active: true
+  - id: Computational Biology Institute
+    term: Computational Biology Institute
+    active: true
+  - id: Computer Science
+    term: Computer Science
+    active: true
+  - id: Corcoran Art and the Book
+    term: Corcoran Art and the Book
+    active: true
+  - id: Corcoran Art Education
+    term: Corcoran Art Education
+    active: true
+  - id: Corcoran Digital Media Design
+    term: Corcoran Digital Media Design
+    active: true
+  - id: Corcoran Exhibition Design
+    term: Corcoran Exhibition Design
+    active: true
+  - id: Corcoran Fine Art
+    term: Corcoran Fine Art
+    active: true
+  - id: Corcoran Fine Art Photography
+    term: Corcoran Fine Art Photography
+    active: true
+  - id: Corcoran Interior Architecture and Design
+    term: Corcoran Interior Architecture and Design
+    active: true
+  - id: Corcoran New Media Photojournalism
+    term: Corcoran New Media Photojournalism
+    active: true
+  - id: Corcoran Photojournalism
+    term: Corcoran Photojournalism
+    active: true
+  - id: Corcoran School of the Arts and Design
+    term: Corcoran School of the Arts and Design
+    active: true
+  - id: Counseling & Human Development
+    term: Counseling & Human Development
+    active: true
+  - id: Culture in Global Affairs Program
+    term: Culture in Global Affairs Program
+    active: true
+  - id: Curriculum & Pedagogy
+    term: Curriculum & Pedagogy
+    active: true
+  - id: Cyber Center for National & Economic Security
+    term: Cyber Center for National & Economic Security
+    active: true
+  - id: Cyber Security Policy & Research Institute
+    term: Cyber Security Policy & Research Institute
+    active: true
+  - id: Cybersecurity, Strategy, and Information Management
+    term: Cybersecurity, Strategy, and Information Management
+    active: true
+  - id: Dean Dinwoodey Center for Intellectual Property Studies
+    term: Dean Dinwoodey Center for Intellectual Property Studies
+    active: true
+  - id: Decision Studies
+    term: Decision Studies
+    active: true
+  - id: Dermatology
+    term: Dermatology
+    active: true
+  - id: District of Columbia Developmental Center for AIDS Research, (DC D-CFAR)
+    term: District of Columbia Developmental Center for AIDS Research, (DC D-CFAR)
+    active: true
+  - id: Division of Information Technology
+    term: Division of Information Technology
+    active: true
+  - id: Division of Operations
+    term: Division of Operations
+    active: true
+  - id: Division of Student Affairs
+    term: Division of Student Affairs
+    active: true
+  - id: Documentary Center
+    term: Documentary Center
+    active: true
+  - id: Dr. Cyrus & Myrtle Katzen Cancer Research Center
+    term: Dr. Cyrus & Myrtle Katzen Cancer Research Center
+    active: true
+  - id: Ear, Nose, & Throat Center
+    term: Ear, Nose, & Throat Center
+    active: true
+  - id: East Asian Languages & Literatures
+    term: East Asian Languages & Literatures
+    active: true
+  - id: Economics
+    term: Economics
+    active: true
+  - id: Educational Leadership
+    term: Educational Leadership
+    active: true
+  - id: Eleanor Roosevelt Papers Project
+    term: Eleanor Roosevelt Papers Project
+    active: true
+  - id: Electrical & Computer Engineerin
+    term: Electrical & Computer Engineerin
+    active: true
+  - id: Emergency Medicine
+    term: Emergency Medicine
+    active: true
+  - id: Engineering Management & Systems Engineering
+    term: Engineering Management & Systems Engineering
+    active: true
+  - id: English
+    term: English
+    active: true
+  - id: Environmental & Energy Law
+    term: Environmental & Energy Law
+    active: true
+  - id: Environmental & Occupational Health
+    term: Environmental & Occupational Health
+    active: true
+  - id: Environmental Resource Policy
+    term: Environmental Resource Policy
+    active: true
+  - id: Environmental Studies
+    term: Environmental Studies
+    active: true
+  - id: Epidemiology & Biostatistics
+    term: Epidemiology & Biostatistics
+    active: true
+  - id: Epilepsy Center (SMHS)
+    term: Epilepsy Center (SMHS)
+    active: true
+  - id: Epilepsy Center (MFA)
+    term: Epilepsy Center (MFA)
+    active: true
+  - id: European and Eurasian Studies
+    term: European and Eurasian Studies
+    active: true
+  - id: European Union Research Center
+    term: European Union Research Center
+    active: true
+  - id: Exercise & Nutrition Sciences
+    term: Exercise & Nutrition Sciences
+    active: true
+  - id: Film Studies
+    term: Film Studies
+    active: true
+  - id: Finance (GWSB)
+    term: Finance (GWSB)
+    active: true
+  - id: Finance Division
+    term: Finance Division
+    active: true
+  - id: Fine Arts & Art History
+    term: Fine Arts & Art History
+    active: true
+  - id: First Federal Congress Project
+    term: First Federal Congress Project
+    active: true
+  - id: Forensic Psychology
+    term: Forensic Psychology
+    active: true
+  - id: Forensic Sciences
+    term: Forensic Sciences
+    active: true
+  - id: Geography
+    term: Geography
+    active: true
+  - id: Geological Sciences
+    term: Geological Sciences
+    active: true
+  - id: Global Center for Political Engagement
+    term: Global Center for Political Engagement
+    active: true
+  - id: Global Communication
+    term: Global Communication
+    active: true
+  - id: Global Gender Program
+    term: Global Gender Program
+    active: true
+  - id: Global Health
+    term: Global Health
+    active: true
+  - id: Global Media Institute
+    term: Global Media Institute
+    active: true
+  - id: Global Women's Institute
+    term: Global Women's Institute
+    active: true
+  - id: Government Procurement Law
+    term: Government Procurement Law
+    active: true
+  - id: Graduate School of Political Management
+    term: Graduate School of Political Management
+    active: true
+  - id: GW Cancer Center
+    term: GW Cancer Center
+    active: true
+  - id: GW Cancer Institute
+    term: GW Cancer Institute
+    active: true
+  - id: GW Center for Integrative Medicine
+    term: GW Center for Integrative Medicine
+    active: true
+  - id: GW Cold War Group (GWCW)
+    term: GW Cold War Group (GWCW)
+    active: true
+  - id: GW Disapora Program
+    term: GW Disapora Program
+    active: true
+  - id: GW Heart & Vascular Institute
+    term: GW Heart & Vascular Institute
+    active: true
+  - id: GW HIV/AIDS Institute
+    term: GW HIV/AIDS Institute
+    active: true
+  - id: GW Institute for Neuroscience
+    term: GW Institute for Neuroscience
+    active: true
+  - id: GW Institute for Nuclear Studies
+    term: GW Institute for Nuclear Studies
+    active: true
+  - id: GW Institute for Spirituality & Health (GWish)
+    term: GW Institute for Spirituality & Health (GWish)
+    active: true
+  - id: GW Institute for Massively Parallel Applications and Computing Technology (IMPACT)
+    term: GW Institute for Massively Parallel Applications and Computing Technology (IMPACT)
+    active: true
+  - id: GW Institute of Public Policy
+    term: GW Institute of Public Policy
+    active: true
+  - id: GW Libraries
+    term: GW Libraries
+    active: true
+  - id: Health Policy & Management
+    term: Health Policy & Management
+    active: true
+  - id: Health Policy Forum, National
+    term: Health Policy Forum, National
+    active: true
+  - id: Health Workforce Research Center, GW
+    term: Health Workforce Research Center, GW
+    active: true
+  - id: History
+    term: History
+    active: true
+  - id: Homeland Security Policy Institute
+    term: Homeland Security Policy Institute
+    active: true
+  - id: Human Hookworm Vaccine Initiative / Sabin Vaccine Institute PDP
+    term: Human Hookworm Vaccine Initiative / Sabin Vaccine Institute PDP
+    active: true
+  - id: Human and Organizational Learning
+    term: Human and Organizational Learning
+    active: true
+  - id: Human Services & Social Justice
+    term: Human Services & Social Justice
+    active: true
+  - id: Information Systems & Technology Management
+    term: Information Systems & Technology Management
+    active: true
+  - id: Information, Technology and Globalization Program
+    term: Information, Technology and Globalization Program
+    active: true
+  - id: Instituite for Global and International Studies
+    term: Instituite for Global and International Studies
+    active: true
+  - id: Institute for Biomedical Engineering
+    term: Institute for Biomedical Engineering
+    active: true
+  - id: Institute for Biomedical Sciences
+    term: Institute for Biomedical Sciences
+    active: true
+  - id: Institute for Communitarian Policy Studies
+    term: Institute for Communitarian Policy Studies
+    active: true
+  - id: Institute for Computer Graphics
+    term: Institute for Computer Graphics
+    active: true
+  - id: Institute for Constitutional History
+    term: Institute for Constitutional History
+    active: true
+  - id: Institute for Corporate Responsibility
+    term: Institute for Corporate Responsibility
+    active: true
+  - id: Institute for Crisis, Disaster and Risk Management
+    term: Institute for Crisis, Disaster and Risk Management
+    active: true
+  - id: Institute for Ethnographic Research
+    term: Institute for Ethnographic Research
+    active: true
+  - id: Institute for European, Russian, and Eurasian Studies
+    term: Institute for European, Russian, and Eurasian Studies
+    active: true
+  - id: Institute for Immigrants in America
+    term: Institute for Immigrants in America
+    active: true
+  - id: Institute for Integrating Statistics in Decision Sciences
+    term: Institute for Integrating Statistics in Decision Sciences
+    active: true
+  - id: Institute for International Economic Policy
+    term: Institute for International Economic Policy
+    active: true
+  - id: Institute for Magnetics Research
+    term: Institute for Magnetics Research
+    active: true
+  - id: Institute for Materials Science
+    term: Institute for Materials Science
+    active: true
+  - id: Institute for Mathematical Sciences
+    term: Institute for Mathematical Sciences
+    active: true
+  - id: Institute for MEMS and VLSI Technologies
+    term: Institute for MEMS and VLSI Technologies
+    active: true
+  - id: Institute for Middle East Studies
+    term: Institute for Middle East Studies
+    active: true
+  - id: Institute for Nanotechnology
+    term: Institute for Nanotechnology
+    active: true
+  - id: Institute for Public Diplomacy & Global Communication
+    term: Institute for Public Diplomacy & Global Communication
+    active: true
+  - id: Institute for Reliability and Risk Analysis
+    term: Institute for Reliability and Risk Analysis
+    active: true
+  - id: Institute for Security and Conflict Studies
+    term: Institute for Security and Conflict Studies
+    active: true
+  - id: Institute for Space Policy
+    term: Institute for Space Policy
+    active: true
+  - id: Institute for Sustainability Research, Education and Policy
+    term: Institute for Sustainability Research, Education and Policy
+    active: true
+  - id: Integrated Information, Security, and Technology
+    term: Integrated Information, Security, and Technology
+    active: true
+  - id: Integrative Systems Biology
+    term: Integrative Systems Biology
+    active: true
+  - id: Intellectual Property Law
+    term: Intellectual Property Law
+    active: true
+  - id: Interior Architecture & Design
+    term: Interior Architecture & Design
+    active: true
+  - id: International & Comparitive Law
+    term: International & Comparitive Law
+    active: true
+  - id: International Affairs
+    term: International Affairs
+    active: true
+  - id: International Business
+    term: International Business
+    active: true
+  - id: International Development Studies
+    term: International Development Studies
+    active: true
+  - id: International Science and Technology Policy
+    term: International Science and Technology Policy
+    active: true
+  - id: International Trade and Investment Policy
+    term: International Trade and Investment Policy
+    active: true
+  - id: James F. Humphreys Complex Litigation Center
+    term: James F. Humphreys Complex Litigation Center
+    active: true
+  - id: Journalism & Mass Communication
+    term: Journalism & Mass Communication
+    active: true
+  - id: Judaic Studies
+    term: Judaic Studies
+    active: true
+  - id: Landscape Design
+    term: Landscape Design
+    active: true
+  - id: Latin American and Hemispheric Studies
+    term: Latin American and Hemispheric Studies
+    active: true
+  - id: Latino Health Research Center
+    term: Latino Health Research Center
+    active: true
+  - id: Law Firm Management
+    term: Law Firm Management
+    active: true
+  - id: Legislative Affairs
+    term: Legislative Affairs
+    active: true
+  - id: LGBT Health
+    term: LGBT Health
+    active: true
+  - id: Linguistics
+    term: Linguistics
+    active: true
+  - id: Litigation & Dispute Resolution
+    term: Litigation & Dispute Resolution
+    active: true
+  - id: Management
+    term: Management
+    active: true
+  - id: Marketing
+    term: Marketing
+    active: true
+  - id: Mathematics
+    term: Mathematics
+    active: true
+  - id: McCormick Genomic and Proteomic Center (MGPC)
+    term: McCormick Genomic and Proteomic Center (MGPC)
+    active: true
+  - id: Mechanical & Aerospace Engineering
+    term: Mechanical & Aerospace Engineering
+    active: true
+  - id: Media and Strategic Communication
+    term: Media and Strategic Communication
+    active: true
+  - id: Medicine
+    term: Medicine
+    active: true
+  - id: Medieval and Early Modern European Studies Institute
+    term: Medieval and Early Modern European Studies Institute
+    active: true
+  - id: Microbiology, Immunology, & Tropical Medicine
+    term: Microbiology, Immunology, & Tropical Medicine
+    active: true
+  - id: Middle East Studies
+    term: Middle East Studies
+    active: true
+  - id: Midge Smith Center for Evaluation Effectiveness
+    term: Midge Smith Center for Evaluation Effectiveness
+    active: true
+  - id: Mind-Brain Institute
+    term: Mind-Brain Institute
+    active: true
+  - id: Museum Studies
+    term: Museum Studies
+    active: true
+  - id: Music
+    term: Music
+    active: true
+  - id: National Crash Analysis Center
+    term: National Crash Analysis Center
+    active: true
+  - id: National Security & U.S. Foreign Relations Law
+    term: National Security & U.S. Foreign Relations Law
+    active: true
+  - id: Neurological Surgery
+    term: Neurological Surgery
+    active: true
+  - id: Neurology
+    term: Neurology
+    active: true
+  - id: Obstetrics & Gynecology
+    term: Obstetrics & Gynecology
+    active: true
+  - id: Office of Dean for Academic Affairs
+    term: Office of Dean for Academic Affairs
+    active: true
+  - id: Office of Emergency Management
+    term: Office of Emergency Management
+    active: true
+  - id: Office of Entrepreneurship
+    term: Office of Entrepreneurship
+    active: true
+  - id: Office of Graduate Student Assistantships and Fellowships
+    term: Office of Graduate Student Assistantships and Fellowships
+    active: true
+  - id: Office of Human Research
+    term: Office of Human Research
+    active: true
+  - id: Office of Industry/Corporate Research
+    term: Office of Industry/Corporate Research
+    active: true
+  - id: Office of Laboratory Safety
+    term: Office of Laboratory Safety
+    active: true
+  - id: Office of Non Degree Students
+    term: Office of Non Degree Students
+    active: true
+  - id: Office of Parent Services
+    term: Office of Parent Services
+    active: true
+  - id: Office of Student Opportunities
+    term: Office of Student Opportunities
+    active: true
+  - id: Office of Sustainability
+    term: Office of Sustainability
+    active: true
+  - id: Office of Technology Transfer
+    term: Office of Technology Transfer
+    active: true
+  - id: Office of The General Counsel
+    term: Office of The General Counsel
+    active: true
+  - id: Office of The President
+    term: Office of The President
+    active: true
+  - id: Office of the Provost
+    term: Office of the Provost
+    active: true
+  - id: Office of the Vice President for Research
+    term: Office of the Vice President for Research
+    active: true
+  - id: Office of University Special Events
+    term: Office of University Special Events
+    active: true
+  - id: Ophthalmology
+    term: Ophthalmology
+    active: true
+  - id: Organizational Sciences & Communication
+    term: Organizational Sciences & Communication
+    active: true
+  - id: Orthopaedic Surgery
+    term: Orthopaedic Surgery
+    active: true
+  - id: Paralegal Studies
+    term: Paralegal Studies
+    active: true
+  - id: Partnerships for International Strategies in Asia
+    term: Partnerships for International Strategies in Asia
+    active: true
+  - id: Pathology
+    term: Pathology
+    active: true
+  - id: Peace Studies
+    term: Peace Studies
+    active: true
+  - id: Pediatrics
+    term: Pediatrics
+    active: true
+  - id: Pharmacology & Physiology
+    term: Pharmacology & Physiology
+    active: true
+  - id: Philosophy
+    term: Philosophy
+    active: true
+  - id: Physical Therapy & Health Care Sciences
+    term: Physical Therapy & Health Care Sciences
+    active: true
+  - id: Physician Assistant Studies
+    term: Physician Assistant Studies
+    active: true
+  - id: Physics
+    term: Physics
+    active: true
+  - id: Police and Security Studies
+    term: Police and Security Studies
+    active: true
+  - id: Political Communication
+    term: Political Communication
+    active: true
+  - id: Political Communication and Governance
+    term: Political Communication and Governance
+    active: true
+  - id: Political Management
+    term: Political Management
+    active: true
+  - id: Political Science
+    term: Political Science
+    active: true
+  - id: Prevention & Community Health
+    term: Prevention & Community Health
+    active: true
+  - id: Professional Psychology
+    term: Professional Psychology
+    active: true
+  - id: Project on Humanitarian Governance
+    term: Project on Humanitarian Governance
+    active: true
+  - id: Prostate Cancer Clinic
+    term: Prostate Cancer Clinic
+    active: true
+  - id: Psychiatry & Behavioral Sciences
+    term: Psychiatry & Behavioral Sciences
+    active: true
+  - id: Psychology
+    term: Psychology
+    active: true
+  - id: Public Leadership
+    term: Public Leadership
+    active: true
+  - id: Publishing
+    term: Publishing
+    active: true
+  - id: Radiology
+    term: Radiology
+    active: true
+  - id: Real Estate & Urban Development
+    term: Real Estate & Urban Development
+    active: true
+  - id: Regulatory Studies Center
+    term: Regulatory Studies Center
+    active: true
+  - id: Religion
+    term: Religion
+    active: true
+  - id: Research Center for Neglected Diseases of Poverty
+    term: Research Center for Neglected Diseases of Poverty
+    active: true
+  - id: Rising Powers Initiative
+    term: Rising Powers Initiative
+    active: true
+  - id: Rodham Institute
+    term: Rodham Institute
+    active: true
+  - id: Romance, German & Slavic Languages & Literatures
+    term: Romance, German & Slavic Languages & Literatures
+    active: true
+  - id: Ronald Reagan Institute of Emergency Medicine
+    term: Ronald Reagan Institute of Emergency Medicine
+    active: true
+  - id: School of Media & Public Affairs
+    term: School of Media & Public Affairs
+    active: true
+  - id: School of Nursing
+    term: School of Nursing
+    active: true
+  - id: Security and Safety Leadership
+    term: Security and Safety Leadership
+    active: true
+  - id: Security Policy Studies
+    term: Security Policy Studies
+    active: true
+  - id: Sigur Center for Asian Studies
+    term: Sigur Center for Asian Studies
+    active: true
+  - id: Sociology
+    term: Sociology
+    active: true
+  - id: Solar Institute, GW
+    term: Solar Institute, GW
+    active: true
+  - id: Special Education & Disability Studies
+    term: Special Education & Disability Studies
+    active: true
+  - id: Speech & Hearing Sciences
+    term: Speech & Hearing Sciences
+    active: true
+  - id: Statistics
+    term: Statistics
+    active: true
+  - id: Strategic Management & Public Policy
+    term: Strategic Management & Public Policy
+    active: true
+  - id: Strategic Public Relations
+    term: Strategic Public Relations
+    active: true
+  - id: Student Organization
+    term: Student Organization
+    active: true
+  - id: Surgery
+    term: Surgery
+    active: true
+  - id: Sustainable Urban Planning
+    term: Sustainable Urban Planning
+    active: true
+  - id: Taiwan Education and Research Program
+    term: Taiwan Education and Research Program
+    active: true
+  - id: Theatre & Dance
+    term: Theatre & Dance
+    active: true
+  - id: Trachtenberg School of Public Policy & Public Administration
+    term: Trachtenberg School of Public Policy & Public Administration
+    active: true
+  - id: Trauma Center
+    term: Trauma Center
+    active: true
+  - id: Undergraduate Public Health
+    term: Undergraduate Public Health
+    active: true
+  - id: University Human Resources
+    term: University Human Resources
+    active: true
+  - id: University Writing
+    term: University Writing
+    active: true
+  - id: Urology
+    term: Urology
+    active: true
+  - id: US-Japan Legislative Exchange Program
+    term: US-Japan Legislative Exchange Program
+    active: true
+  - id: W. M. Keck Institute for Proteomics Technology and Applications
+    term: W. M. Keck Institute for Proteomics Technology and Applications
+    active: true
+  - id: Washington Institute of Surgical Education (WISE)
+    term: Washington Institute of Surgical Education (WISE)
+    active: true
+  - id: Women's Studies
+    term: Women's Studies
+    active: true

@@ -1,0 +1,12 @@
+<div>
+  <% if recent_documents.blank? %>
+    <p><%= t('.no_public') %></p>
+  <% else %>
+    <div id="recent_docs">
+      <table class="table table-bordered table-striped">
+        <%= render partial: "recent_document", collection: recent_documents %>
+      </table>
+    </div>
+  <% end %>
+
+</div>

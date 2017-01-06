@@ -30,6 +30,9 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# Use Sitemap to generate sitemap
+gem 'sitemap'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -55,7 +58,9 @@ end
 # Use PostgreSQL as the database for Active Record
 gem 'pg'
 
-gem 'sufia', '7.1.0'
+gem 'sufia', '7.2.0'
+
+gem 'hydra-role-management'
 
 group :development, :test do
   gem 'solr_wrapper', '>= 0.3'
@@ -68,3 +73,5 @@ group :development, :test do
   gem 'fcrepo_wrapper'
   gem 'rspec-rails'
 end
+
+gem 'flipflop', git: 'https://github.com/jcoyne/flipflop.git', branch: 'hydra'

@@ -28,4 +28,12 @@ class SolrDocument
   # Do content negotiation for AF models. 
 
   use_extension( Hydra::ContentNegotiation )
+
+  def gw_affiliation
+    self[Solrizer.solr_name('gw_affiliation')]
+  end
+
+  def bibliographic_citation
+    self[Solrizer.solr_name('bibliographic_citation')]
+  end
 end

@@ -3,7 +3,7 @@
 
 module CurationConcerns
   class WorksController < ApplicationController
-    include CurationConcerns::CurationConcernController
+  include CurationConcerns::CurationConcernController
   # Adds Sufia behaviors to the controller.
   include Sufia::WorksControllerBehavior
 

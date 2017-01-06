@@ -20,4 +20,64 @@
 # available at http://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  sufia:
+    product_name:           "GW ScholarSpace"
+    # product_twitter_handle: "@HydraSphere"
+    institution_name:       "The George Washington University"
+    institution_name_full:  "George Washington University"
+    # account_name:       "My Institution Account Id"
+    directory:
+      suffix:               "@gwu.edu"
+    footer:
+      copyright_html:       "<strong>Copyright &copy; 2016 Project Hydra</strong> Licensed under the Apache License, Version 2.0"
+    search:
+      form:
+        option:
+          all:
+            label_long:     "All of GW ScholarSpace"
+    background_attribution: "Background image courtesy of The George Washington University"
+    deposit_agreement:      "GW ScholarSpace Deposit Agreement"
+    upload_url: "http://library.gwu.edu/scholarspace/submit"
+  simple_form:
+    labels:
+      work:
+        resource_type:          "Type of Work"
+        creator:                "Author"
+        bibliographic_citation: "Previous Publication Information"
+        gw_affiliation:         "GW Unit"
+        based_near:             "Location"
+    hints:
+      work:
+        title: 'The name of the work.'
+        creator: 'The person or group who created the work. Personal names should be entered with the last name first, e.g. "Smith, John".'
+        description: 'Free-text notes about the work itself. Examples include abstract of a paper, summary of a dataset, or description of the work.'
+        publisher: 'The entity responsible for publishing, printing, or manufacturing the final work. Examples could include the journal publisher of an article, the university that houses the center or institute such as The George Washington University, or the research project producing the work.'
+        bibliographic_citation: "Includes citation and link back to original publication and any additional info required by the publisher."
+        gw_affiliation: "Department, Center, Institute, Office, etc. with which this item is associated"
+        language: "The language of the work."
+        keyword: "Words or phrases you select to describe what the work is about. These are used to search for content.  Use the Add button to enter additional terms."
+        date_created: "The year [YYYY] in which the work was generated, e.g. 2015."
+        related_url: "A link to a website or other specific content (audio, video, PDF document) related to the work. An example is the URL of a research
+project from which the work was derived."
+  # These seem to affect the /concern/works/item123 view
+  blacklight:
+    search:
+      fields:
+        show:
+          resource_type:    "Type of Work"
+          creator:          "Author"
+          gw_affiliation:   "GW Unit"
+          bibliographic_citation: "Previous Publication Information"
+          based_near:       "Location"
+        facet:
+          gw_affiliation_sim:   "GW Unit"
+          resource_type_sim:    "Type of Work"
+          creator_sim:          "Author"
+        index:
+          creator_tesim:        "Author"
+          gw_affiliation_tesim: "GW Unit"
+  curation_concerns:
+    base:
+      metadata:
+        attribute_name_label:   ""
+        attribute_values_label: ""

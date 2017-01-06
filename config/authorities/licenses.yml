@@ -1,4 +1,7 @@
 terms:
+    - id: None
+      term: 'No Creative Commons rights have been assigned'
+      active: true
     - id: http://creativecommons.org/licenses/by/3.0/us/
       term: Attribution 3.0 United States
       active: true
@@ -25,4 +28,4 @@ terms:
       active: true
     - id: http://www.europeana.eu/portal/rights/rr-r.html
       term: All rights reserved
-      active: true
+      active: false
