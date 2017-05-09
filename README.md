@@ -122,7 +122,7 @@ Application server: PostgreSQL, Apache2, Ruby, Rails, Passenger, Redis, Shibbole
 
         % sudo service solr status
         
-  Copy the `solr/config` folder from the repository to `/opt/install`
+  Copy the `solr/config` folder from the repository to `/opt/install/solr` 
 
   Configure a Solr Core:
 
@@ -131,9 +131,9 @@ Application server: PostgreSQL, Apache2, Ruby, Rails, Passenger, Redis, Shibbole
   Convert the new Solr Core to from a `managed-schema` to `schema.xml` support:
   
         % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
-        % sudo cp /opt/install/solr/conf/schema.xml /var/solr/data/scholarspace/conf/schema.xml
+        % sudo cp /opt/install/solr/config/schema.xml /var/solr/data/scholarspace/conf/schema.xml
         % sudo mv /var/solr/data/scholarspace/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.bak
-        % sudo cp /opt/install/solr/conf/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.xml
+        % sudo cp /opt/install/solr/config/solrconfig.xml /var/solr/data/scholarspace/conf/solrconfig.xml
 	
   Restart Solr:
   	
