@@ -122,7 +122,7 @@ Application server: PostgreSQL, Apache2, Ruby, Rails, Passenger, Redis, Shibbole
 
         % sudo service solr status
         
-  Copy the `solr/config` folder from the repository to `/opt/install/solr` 
+  Copy the `solr/config` folder from the scholarspace application files to `/opt/install/solr` 
 
   Configure a Solr Core:
 
