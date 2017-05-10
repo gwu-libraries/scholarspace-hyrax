@@ -1,0 +1,10 @@
+es:
+  hyrax:
+    icons:
+      gw_work:     'fa fa-file-text-o'
+    select_type:
+      gw_work:
+        # TODO: translate `human_name` into Spanish
+        name:               "Gw Work"
+        # TODO: translate `human_name` into Spanish
+        description:        "Gw work trabajos"

@@ -3,11 +3,8 @@ class SolrDocument
   include Blacklight::Solr::Document
   include Blacklight::Gallery::OpenseadragonSolrDocument
 
-  # Adds CurationConcerns behaviors to the SolrDocument.
-  include CurationConcerns::SolrDocumentBehavior
-  # Adds Sufia behaviors to the SolrDocument.
-  include Sufia::SolrDocumentBehavior
-
+  # Adds Hyrax behaviors to the SolrDocument.
+  include Hyrax::SolrDocumentBehavior
 
 
   # self.unique_key = 'id'
@@ -28,12 +25,4 @@ class SolrDocument
   # Do content negotiation for AF models. 
 
   use_extension( Hydra::ContentNegotiation )
-
-  def gw_affiliation
-    self[Solrizer.solr_name('gw_affiliation')]
-  end
-
-  def bibliographic_citation
-    self[Solrizer.solr_name('bibliographic_citation')]
-  end
 end

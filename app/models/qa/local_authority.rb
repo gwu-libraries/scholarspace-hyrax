@@ -1,2 +1,2 @@
-class Qa::LocalAuthority < ActiveRecord::Base
+class Qa::LocalAuthority < ApplicationRecord
 end
