@@ -2,7 +2,7 @@
 #  `rails generate hyrax:work GwEtd`
 module Hyrax
   module Actors
-    class GwEtdActor < Hyrax::Actors::BaseActor
+    class GwEtdActor < GwWorkActor
     end
   end
 end
