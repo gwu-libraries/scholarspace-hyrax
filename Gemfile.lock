@@ -543,6 +543,7 @@ GEM
     simple_form (3.5.0)
       actionpack (> 4, < 5.2)
       activemodel (> 4, < 5.2)
+    sitemap (0.3.3)
     skydrive (1.2.0)
       activesupport
       httmultiparty
@@ -559,7 +560,7 @@ GEM
       nokogiri
       stomp
       xml-simple
-    spring (2.0.1)
+    spring (2.0.2)
       activesupport (>= 4.2)
     spring-watcher-listen (2.0.1)
       listen (>= 2.7, < 4.0)
@@ -630,6 +631,7 @@ DEPENDENCIES
   rsolr (~> 1.0)
   rspec-rails
   sass-rails (~> 5.0)
+  sitemap
   solr_wrapper (>= 0.3)
   spring
   spring-watcher-listen (~> 2.0.0)

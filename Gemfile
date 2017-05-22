@@ -64,3 +64,6 @@ group :development, :test do
   gem 'fcrepo_wrapper'
   gem 'rspec-rails'
 end
+
+# See https://github.com/viseztrance/rails-sitemap
+gem 'sitemap'
