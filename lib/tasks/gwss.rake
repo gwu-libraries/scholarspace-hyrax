@@ -88,7 +88,7 @@ namespace :gwss  do
     file_attributes['contributor'] = metadata['contributor'] if metadata['contributor']
     file_attributes['description'] = [metadata['description']] if metadata['description']
     # TBD whether this is the right rights we want to assign to newly uploaded ETDs
-    file_attributes['rights'] = ['http://creativecommons.org/publicdomain/mark/1.0/']
+    file_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
     file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
     file_attributes['language'] = [metadata['language']] if metadata['language']
     # We'll need embargo date
