@@ -40,7 +40,7 @@ namespace :gwss  do
 
 
   desc "ingest an ETD"
-  task :ingest_etd, [:manifest_file, :ingest_id] => :environment do |t, args|
+  task :ingest_etd, [:manifest_file, :files_path, :ingest_id] => :environment do |t, args|
     begin
       # Reference GwWork to work around circular dependency
       # problem that would be caused by referencing GwEtd first
@@ -54,6 +54,7 @@ namespace :gwss  do
         etd_id = ingest(manifest_json)
         # generate_ingest_report(noid_list, investigation_id) 
         puts "Created new GwEtd with id = " + etd_id
+        attach_files(args.files_path, etd_id) 
       else
         puts "file didn't exist - no ingest"
       end
@@ -95,5 +96,21 @@ namespace :gwss  do
     #file_attributes['embargo_release_date'] = metadata['embargo_date'] if metadata['embargo_date']
 
     return file_attributes
+  end
+
+  def attach_files(files_path, etd_id)
+    user = User.find_by_user_key('kerchner@gwu.edu')
+    gwe = GwEtd.find(etd_id)
+    Dir.chdir(files_path)
+    files = Dir.glob('*')
+    files.each do |f|
+      fs = FileSet.new
+      # use the filename as the FileSet title
+      fs.title = [f]
+      actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
+      actor.create_metadata()
+      actor.create_content(File.open(f))
+      actor.attach_file_to_work(gwe)
+    end
   end
 end
