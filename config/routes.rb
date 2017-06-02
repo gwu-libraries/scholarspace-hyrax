@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   
+  get '/etd/:id', to: redirect('/concern/gw_etds/%{id}')
+  get '/etds/:id', to: redirect('/concern/gw_etds/%{id}')
+
   mount Blacklight::Engine => '/'
   
     concern :searchable, Blacklight::Routes::Searchable.new
