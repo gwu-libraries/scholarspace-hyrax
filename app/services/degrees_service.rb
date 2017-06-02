@@ -1,4 +1,4 @@
-# services/gw_affiliations_service.rb
+# services/degrees_service.rb
 module DegreesService
   mattr_accessor :authority
   self.authority = Qa::Authorities::Local.subauthority_for('degrees')
