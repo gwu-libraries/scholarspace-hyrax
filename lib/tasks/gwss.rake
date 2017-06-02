@@ -101,16 +101,20 @@ namespace :gwss  do
   def attach_files(files_path, etd_id)
     user = User.find_by_user_key('kerchner@gwu.edu')
     gwe = GwEtd.find(etd_id)
-    Dir.chdir(files_path)
-    files = Dir.glob('*')
-    files.each do |f|
-      fs = FileSet.new
-      # use the filename as the FileSet title
-      fs.title = [f]
-      actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
-      actor.create_metadata()
-      actor.create_content(File.open(f))
-      actor.attach_file_to_work(gwe)
+    subdirs = ['/primary', '/others']
+    subdirs.each do |subdir|
+      Dir.chdir(files_path+subdir)
+      files = Dir.glob('*')
+        files.each do |f|
+        fs = FileSet.new
+        # use the filename as the FileSet title
+        fs.title = [f]
+        actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
+        actor.create_metadata()
+        actor.create_content(File.open(f))
+        actor.attach_file_to_work(gwe)
+      end
+      Dir.chdir("../..")
     end
   end
 end
