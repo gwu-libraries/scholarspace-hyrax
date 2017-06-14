@@ -67,6 +67,11 @@ namespace :gwss  do
       gwe = GwEtd.new
       gwe.apply_depositor_metadata('kerchner@gwu.edu')
       gwe.attributes = file_attributes
+      if file_attributes['embargo_release_date']
+        gwe.apply_embargo(file_attributes['embargo_release_date'],
+			  Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
+                          Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+      end 
       gwe.id = ActiveFedora::Noid::Service.new.mint
       now = Hyrax::TimeService.time_in_utc
       gwe.date_uploaded = now
@@ -88,12 +93,13 @@ namespace :gwss  do
     file_attributes['keyword'] = metadata['keyword'] if metadata['keyword']
     file_attributes['contributor'] = metadata['contributor'] if metadata['contributor']
     file_attributes['description'] = [metadata['description']] if metadata['description']
+    file_attributes['gw_affiliation'] = [metadata['gw_affiliation']] if metadata['gw_affiliation']
     # TBD whether this is the right rights we want to assign to newly uploaded ETDs
     file_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
     file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
     file_attributes['language'] = [metadata['language']] if metadata['language']
     # We'll need embargo date
-    #file_attributes['embargo_release_date'] = metadata['embargo_date'] if metadata['embargo_date']
+    file_attributes['embargo_release_date'] = metadata['embargo_date'] if metadata['embargo_date']
 
     return file_attributes
   end
