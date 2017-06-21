@@ -59,6 +59,8 @@ namespace :gwss  do
         gwe.apply_embargo(file_attributes['embargo_release_date'],
 			  Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
                           Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+      else
+        gwe.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
       end 
       gwe.id = ActiveFedora::Noid::Service.new.mint
       now = Hyrax::TimeService.time_in_utc
