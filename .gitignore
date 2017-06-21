@@ -13,8 +13,9 @@
 
 # Ignore all logfiles and tempfiles.
 /log/*
+/tmp/*
 !/log/.keep
-/tmp
+!/tmp/.keep
 
-# Ignore sitemap
-public/sitemap.xml
+# Ignore Byebug command history file.
+.byebug_history

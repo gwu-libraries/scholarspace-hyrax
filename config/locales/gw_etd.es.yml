@@ -1,0 +1,10 @@
+es:
+  hyrax:
+    icons:
+      gw_etd:     'fa fa-file-text-o'
+    select_type:
+      gw_etd:
+        # TODO: translate `human_name` into Spanish
+        name:               "Gw Etd"
+        # TODO: translate `human_name` into Spanish
+        description:        "Gw etd trabajos"
