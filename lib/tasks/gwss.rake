@@ -1,5 +1,6 @@
 require 'fileutils'
 require 'json'
+require 'optparse'
 
 namespace :gwss  do
   # adding a logger since it got removed from our gemset
@@ -12,51 +13,38 @@ namespace :gwss  do
     SitemapRegenerateJob.perform_later
   end
 
-  # WARNING:  THIS TASK IS STILL EXPERIMENTAL
-  desc "test ingesting Files and attaching to a work"
-  task :ingest_files => :environment do
+  desc "Ingest an ETD"
+  task :ingest_etd => :environment do |t, args|
     begin
-      user = User.find_by_user_key('kerchner@gwu.edu')
-      GwWork
-      gwe = GwEtd.new
-      gwe.apply_depositor_metadata('kerchner@gwu.edu')
-      gwe.id = ActiveFedora::Noid::Service.new.mint
-      gwe.title = ["An ETD created via upload"]
-      gwe.creator = ["Kerchner, Daniel"]
-      gwe.rights = ['http://creativecommons.org/publicdomain/mark/1.0/']
-      gwe.resource_type = ['Dissertation']
-      fs = FileSet.new
-      fs.title = ['Title of the File Set']
-      # Look at BatchFileSetActor from https://github.com/pulibrary/plum/blob/master/app/jobs/ingest_mets_job.rb
-#      actor = BatchFileSetActor.new(fs, user)
-#      actor.attach_related_object(gwe)
-#      actor.attach_content(File.open('sample.pdf'))
-      actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
-      actor.create_metadata()
-      actor.create_content(File.open('sample.pdf'))
-      actor.attach_file_to_work(gwe)
-    end
-  end
+      options = {}
 
+      op = OptionParser.new
+      op.banner = "Usage: rake gwss:ingest_etd -- --manifest=MFPATH --primaryfile=PFATH --otherfiles=OFPATH"
+      op.on('-mf MFPATH', '--manifest=MFPATH', 'Path to manifest file') { |mfpath| options[:mfpath] = mfpath }
+      op.on('-pf FPATH', '--primaryfile=PFPATH', 'Path to primary attachment file') { |pfpath| options[:pfpath] = pfpath }
+      op.on('-of OFPATH', '--otherfiles=OFPATH', 'Path to folder containing other files') { |ofpath| options[:ofpath] = ofpath }
 
-  desc "ingest an ETD"
-  task :ingest_etd, [:manifest_file, :files_path, :ingest_id] => :environment do |t, args|
-    begin
+      # return `ARGV` with the intended arguments
+      args = op.order!(ARGV) {}
+      op.parse!(args)
+
+      ## uncomment if we decide to throw exceptions for missing options
+      # raise OptionParser::MissingArgument if options[:name].nil?
+
       # Reference GwWork to work around circular dependency
       # problem that would be caused by referencing GwEtd first
       # See articles such as http://neethack.com/2015/04/rails-circular-dependency/
       GwWork
-      manifest_file = args.manifest_file
-      ingest_id = args.ingest_id 
+      manifest_file = options[:mfpath]
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
         etd_id = ingest(manifest_json)
         # generate_ingest_report(noid_list, investigation_id) 
         puts "Created new GwEtd with id = " + etd_id
-        attach_files(args.files_path, etd_id) 
+        attach_files(options[:pfpath], options[:ofpath], etd_id) 
       else
-        puts "file didn't exist - no ingest"
+        puts "Manifest file doesn't exist - no ingest"
       end
     end
   end
@@ -75,9 +63,6 @@ namespace :gwss  do
       gwe.id = ActiveFedora::Noid::Service.new.mint
       now = Hyrax::TimeService.time_in_utc
       gwe.date_uploaded = now
-      # Other attributes likely needing to be set:
-      #  - head[], tail[], state, part_of[], admin_set_id
-      #  Once files are loaded, thumbnail_id and/or representative_id
       gwe.save
       return gwe.id
     end
@@ -98,29 +83,26 @@ namespace :gwss  do
     file_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
     file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
     file_attributes['language'] = [metadata['language']] if metadata['language']
-    # We'll need embargo date
     file_attributes['embargo_release_date'] = metadata['embargo_date'] if metadata['embargo_date']
 
     return file_attributes
   end
 
-  def attach_files(files_path, etd_id)
+  def attach_files(primaryfile_path, otherfiles_path, etd_id)
     user = User.find_by_user_key('kerchner@gwu.edu')
     gwe = GwEtd.find(etd_id)
-    subdirs = ['/primary', '/others']
-    subdirs.each do |subdir|
-      Dir.chdir(files_path+subdir)
-      files = Dir.glob('*')
-        files.each do |f|
-        fs = FileSet.new
-        # use the filename as the FileSet title
-        fs.title = [f]
-        actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
-        actor.create_metadata()
-        actor.create_content(File.open(f))
-        actor.attach_file_to_work(gwe)
-      end
-      Dir.chdir("../..")
+    # add primary file first, other files afterwards
+    files = []
+    files += [primaryfile_path] if primaryfile_path
+    files += Dir.glob(otherfiles_path+'/*') if otherfiles_path
+    files.each do |f|
+      fs = FileSet.new
+      # use the filename as the FileSet title
+      fs.title = [File.basename(f)]
+      actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
+      actor.create_metadata()
+      actor.create_content(File.open(f))
+      actor.attach_file_to_work(gwe)
     end
   end
 end
