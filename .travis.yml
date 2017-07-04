@@ -35,7 +35,7 @@ services:
   - redis-server
 before_script:
   - jdk_switcher use oraclejdk8
- notifications:
+notifications:
    email:
      recipients:
        - "kerchner@gwu.edu"
