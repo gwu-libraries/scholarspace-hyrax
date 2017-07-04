@@ -35,3 +35,10 @@ services:
   - redis-server
 before_script:
   - jdk_switcher use oraclejdk8
+ notifications:
+   email:
+     recipients:
+       - "kerchner@gwu.edu"
+     on_success: "change"
+     on_failure: "always"
+   slack: gwlai:Ll8QuTDbyV9YRIb33bg5RfSD
