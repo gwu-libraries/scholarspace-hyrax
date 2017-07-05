@@ -9,31 +9,49 @@ Some convenient links to have handy:
 - [Hyrax project](http://hyr.ax/)
 - [scholarspace-sufia7 repo](https://github.com/gwu-libraries/scholarspace-sufia7/)
 
+# Application server
+
 ## Install prerequisites
 
-* Install RVM (follow instructions at rvm.io), then `source .bashrc` (or log out and log back in)
+* Install RVM (follow instructions at [http://rvm.io/](rvm.io)), then `source .bashrc` (or log out and log back in)
 
-* Install Ruby:
+* Install ruby
 ```
-    rvm install ruby-2.3.0
+    sudo apt-get install ruby
+```
+* Install the latest stable Ruby 2.3:
+```
+    rvm install 2.3
+    rvm use 2.3
 ```
 * Install rails
 ```
-    gem install rails -v 4.2.6
+    gem install rails -v 5.0.3
 ```
 (if this fails you can install from the steps at https://rvm.io/rvm/install)
+* Install apt packages
+```
+    sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2-threaded-dev apache2-mpm-worker apache2-threaded-dev
+```
 * Install Java 8 (use below or follow directions in scholarspace repo)
 ```
     % sudo apt-add-repository ppa:webupd8team/java
     % sudo apt-get update
     % sudo apt-get install oracle-java8-installer
     % sudo apt-get install oracle-java8-set-default
+
+    Verify that you're running 1.8:
+    % java -version
 ```
-* Install apt packages
-```
-    sudo apt-get install imagemagick libreoffice git redis-server unzip
-```
-* Install fits-0.8.5 (follow directions in scholarspace repo, be sure to change version number to 0.8.5)
+* Install fits-1.0.5 (follow directions in scholarspace repo, be sure to change version number to 1.0.5)
+
+* Install `fits.sh` version 0.8.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 0.8.5 download)
+
+     % cd /usr/local/bin
+     % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip -o fits-1.0.5.zip
+     % sudo unzip fits-1.0.5.zip
+     % cd fits-1.0.5
+     % sudo chmod a+x fits*.sh
 
 * Clone this repo
 ```
