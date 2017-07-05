@@ -70,7 +70,7 @@ Hyrax.config do |config|
   # config.redis_namespace = "hyrax"
 
   # Path to the file characterization tool
-  config.fits_path = "/usr/local/bin/fits-0.8.5/fits.sh"
+  config.fits_path = "/usr/local/bin/fits-1.0.5/fits.sh"
 
   # Path to the file derivatives creation tool
   config.libreoffice_path = "/usr/bin/soffice"
