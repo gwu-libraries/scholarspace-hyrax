@@ -9,11 +9,31 @@ Some convenient links to have handy:
 - [Hyrax project](http://hyr.ax/)
 - [scholarspace-sufia7 repo](https://github.com/gwu-libraries/scholarspace-sufia7/)
 
+# Getting started
+
+The recommended production setup involves two servers.  However, these can be the same server if needed, for example in a development environment.
+- Application server, for the GW ScholarSpace rails app
+- Repository server, for the Hydra repository and Solr interface
+
 # Application server
 
 ## Install prerequisites
 
-* Install RVM (follow instructions at [http://rvm.io/](rvm.io)), then `source .bashrc` (or log out and log back in)
+* Create a scholarspace group and a scholarspace user
+```
+   % sudo groupadd scholarspace
+   % sudo adduser scholarspace --ingroup scholarspace --no-create-home --disabled-login
+
+   Edit `/etc/group` and add both `scholarspace` and `www-data` to the scholarspace group
+```
+
+* Install RVM for multiple users (full instructions at [http://rvm.io/](rvm.io))
+
+        % curl -L https://get.rvm.io | sudo bash -s stable
+        % source ~/.rvm/scripts/rvm
+        % rvm install ruby-2.3.0
+
+        Edit `/etc/group` and add the `scholarspace` user to the rvm group.
 
 * Install ruby
 ```
@@ -43,9 +63,19 @@ Some convenient links to have handy:
     Verify that you're running 1.8:
     % java -version
 ```
-* Install fits-1.0.5 (follow directions in scholarspace repo, be sure to change version number to 1.0.5)
 
-* Install `fits.sh` version 0.8.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 0.8.5 download)
+* Clone this repo
+```
+    cd /opt
+    sudo mkdir scholarspace
+    sudo chown scholarspace:scholarspace scholarspace
+    cd scholarspace
+    git clone https://github.com/gwu-libraries/scholarspace-hyrax.git
+```
+
+  Use `git checkout` to check out the desired tagged release; otherwise, you'll be running `master`.
+
+* Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download)
 
      % cd /usr/local/bin
      % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip -o fits-1.0.5.zip
@@ -53,33 +83,53 @@ Some convenient links to have handy:
      % cd fits-1.0.5
      % sudo chmod a+x fits*.sh
 
-* Clone this repo
-```
-    cd /opt
-    sudo mkdir scholarspace
-    sudo chown MYUSER:MYGROUP scholarspace
-    cd scholarspace
-    git clone https://github.com/gwu-libraries/scholarspace-hyrax.git
-```
-   Make sure that `config.fits_path` in `config/initializers/hyrax.rb` is set consistent with where you installed fits.  If not, update it.
+  Make sure that `config.fits_path` in `config/initializers/hyrax.rb` is set consistent with where you installed fits.  If not, update it.
     
 * Install gems
 ```
     cd scholarspace-hyrax
     bundle install
 ```
-* If you don't have a separate Solr and Fedora, use the packaged hydra-jetty (you may want to run these with nohup and/or in the background):
-```
-   mkdir tmp
-   solr_wrapper -d solr/config/ --collection_name hydra-development
-```
-   You can check to see if Solr is started by going to port 8983 on your server.
-```
-   fcrepo_wrapper -p 8984
-   OR
-   nohup fcrepo_wrapper -p 8984 &
-```
-   You can check to see if Fedora is started by going to port 8984 on your server.
+
+* Create a postgresql user
+
+        % sudo su - postgres
+        (postgres)% psql
+        postgres=# create user YOURDBUSERNAME with createdb password 'YOURSFMDBPASSWORD';
+
+  The result should be:
+
+        CREATE ROLE
+
+* Create three databases (e.g. scholarspace_dev, scholarspace_test, scholarspace_prod)
+
+        postgres=# \q
+        (postgres)% createdb -O YOURDBUSERNAME YOURDEVDBNAME
+        (postgres)% createdb -O YOURDBUSERNAME YOURTESTDBNAME
+        (postgres)% createdb -O YOURDBUSERNAME YOURPRODDBNAME
+        (postgres)% exit
+
+* Create the `database.yml` file
+
+        % cd config
+        % cp database.yml.template database.yml
+
+  Edit `database.yml` to add your specific database names and credentials
+
+* Create the `solr.yml` file
+
+        % cd config
+        % cp solr.yml.template solr.yml
+
+  Edit `solr.yml` to add your specific names and credentials
+
+* Create the `blacklight.yml` file
+
+        % cd config
+        % cp blacklight.yml.template blacklight.yml
+
+  Edit `blacklight.yml` to add your specific names and credentials
+
 
 * Start the rails server
 
