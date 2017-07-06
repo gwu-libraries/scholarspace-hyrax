@@ -17,5 +17,8 @@
 !/log/.keep
 !/tmp/.keep
 
+# Ignore local config files
+config/database.yml
+
 # Ignore Byebug command history file.
 .byebug_history
