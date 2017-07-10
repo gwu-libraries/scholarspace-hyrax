@@ -24,7 +24,7 @@ The recommended production setup involves two servers.  However, these can be th
    % sudo groupadd scholarspace
    % sudo adduser scholarspace --ingroup scholarspace --no-create-home --disabled-login
 
-   Edit `/etc/group` and add both `scholarspace` and `www-data` to the scholarspace group
+   Edit `/etc/group` and add both `scholarspace` and `www-data` to the `scholarspace` group.  Also, add the current user to the `scholarspace` group.
 ```
 
 * Install RVM for multiple users (full instructions at [http://rvm.io/](rvm.io))
@@ -68,10 +68,11 @@ The recommended production setup involves two servers.  However, these can be th
 ```
     cd /opt
     sudo mkdir scholarspace
-    sudo chown scholarspace:scholarspace scholarspace
+    sudo chown $USER:scholarspace scholarspace
     cd scholarspace
     git clone https://github.com/gwu-libraries/scholarspace-hyrax.git
 ```
+TODO: May need to re-chown files in the repo
 
   Use `git checkout` to check out the desired tagged release; otherwise, you'll be running `master`.
 
