@@ -2,7 +2,7 @@ class Ability
   include Hydra::Ability
   
   include Hyrax::Ability
-  self.ability_logic += [:everyone_can_create_curation_concerns]
+  self.ability_logic += [:contentadmins_can_create_curation_concerns]
 
   # Define any customized permissions here.
   def custom_permissions
@@ -21,5 +21,19 @@ class Ability
     if current_user.admin?
       can [:create, :show, :add_user, :remove_user, :index, :edit, :update, :destroy], Role
     end
+
+#    if current_user.contentadmin?
+#      can [:create, :destroy], GwWork
+#      can [:create, :destroy], GwEtd
+#    end
+  end
+
+  def contentadmin_user?
+    current_user.contentadmin?
+  end
+
+  def contentadmins_can_create_curation_concerns
+    return unless contentadmin_user?
+    can :create, curation_concerns_models
   end
 end

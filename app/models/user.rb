@@ -27,4 +27,8 @@ class User < ApplicationRecord
   def to_s
     email
   end
+
+  def contentadmin?
+    roles.where(name: 'content-admin').exists?
+  end
 end
