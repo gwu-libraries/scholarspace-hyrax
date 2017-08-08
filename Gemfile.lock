@@ -820,6 +820,7 @@ GEM
       slop
     legato (0.7.0)
       multi_json
+    libv8 (3.16.14.19-x86_64-linux)
     link_header (0.0.8)
     linkeddata (2.2.3)
       equivalent-xml (~> 0.6)
@@ -997,6 +998,7 @@ GEM
       redis (~> 3.0, >= 3.0.4)
     redlock (0.1.8)
       redis (~> 3, >= 3.0.0)
+    ref (2.0.0)
     representable (3.0.4)
       declarative (< 0.1.0)
       declarative-option (< 0.2.0)
@@ -1110,6 +1112,9 @@ GEM
     sxp (1.0.0)
       rdf (~> 2.0)
     temple (0.8.0)
+    therubyracer (0.12.3)
+      libv8 (~> 3.16.14.15)
+      ref
     thor (0.19.4)
     thread_safe (0.3.6)
     tilt (2.0.8)
@@ -1150,7 +1155,6 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   devise-guests (~> 0.5)
-  execjs
   fcrepo_wrapper
   hydra-role-management
   hyrax (= 1.0.4)
@@ -1167,6 +1171,7 @@ DEPENDENCIES
   spring
   spring-watcher-listen (~> 2.0.0)
   sqlite3
+  therubyracer
   turbolinks (~> 5)
   tzinfo-data
   uglifier (>= 1.3.0)
