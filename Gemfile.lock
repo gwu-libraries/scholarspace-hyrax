@@ -714,6 +714,7 @@ DEPENDENCIES
   coffee-rails (~> 4.2)
   devise
   devise-guests (~> 0.5)
+  execjs
   fcrepo_wrapper
   hydra-role-management
   hyrax (= 1.0.3)
