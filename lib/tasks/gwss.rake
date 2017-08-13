@@ -13,6 +13,15 @@ namespace :gwss  do
     SitemapRegenerateJob.perform_later
   end
 
+  desc "Create GW ScholarSpace user roles"
+  task create_roles: :environment do
+    adminrole = Role.find_or_create_by(name: 'admin')
+    adminrole.save
+
+    contentadminrole = Role.find_or_create_by(name: 'content-admin')
+    contentadminrole.save
+  end
+
   desc "Ingest an ETD"
   task :ingest_etd => :environment do |t, args|
     begin
