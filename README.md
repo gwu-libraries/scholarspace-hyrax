@@ -12,8 +12,78 @@ Some convenient links to have handy:
 # Getting started
 
 The recommended production setup involves two servers.  However, these can be the same server if needed, for example in a development environment.
+- Repository server, for the Fedora repository and Solr interface
 - Application server, for the GW ScholarSpace rails app
-- Repository server, for the Hydra repository and Solr interface
+
+These instructions have been updated for Ubuntu 16.04.
+
+# Repository server
+
+* Install Java 8 for Ubuntu 16.04:
+```
+   % sudo add-apt-repository ppa:webupd8team/java
+   % sudo apt-get update
+   % sudo apt-get install oracle-java8-installer
+```
+   Verify that Java has been installed and is running Java 8:
+```
+   % java -version
+```
+   This should return Java version 1.8.
+   
+   Optionally, you can remove the installer using ```sudo add-apt-repository -r ppa:webupd8team/java```
+   
+* Install Ubuntu needed packages:
+```
+   % sudo apt-get install git postgresql libpq-dev unzip clamav-daemon curl tomcat7 libcurl4-openssl-dev apache2-threaded-dev libapr1-dev libaprutil1-dev apache2-mpm-worker apache2-threaded-dev
+```
+
+* Create needed directories:
+```
+   % sudo mkdir /opt/install
+   % sudo mkdir /opt/fedora; sudo chown tomcat7:tomcat7 /opt/fedora
+   % sudo mkdir /etc/fcrepo
+```
+
+### Tomcat 7 setup
+
+* Configure Tomcat7 Java settings:
+
+  Retrieve ```tomcat_conf/tomcat7``` file from this github repository and overwrite ```/etc/default/tomcat7```
+  
+### Solr setup
+
+* Install Solr:
+
+  % cd /opt/install
+  % wget http://archive.apache.org/dist/lucene/solr/6.4.1/solr-6.4.1.tgz
+  % tar xzf solr-6.4.1.tgz solr-6.4.1/bin/install_solr_service.sh --strip-components=2
+  % sudo ./install_solr_service.sh solr-6.4.1.tgz
+
+* Verify that Solr started
+
+  % sudo service solr status
+
+(TODO: Is this needed any more, in light of below copy from samvera/hyrax/solr_config/conf??)
+* Copy the solr/config folder contents from the scholarspace-hyrax repository to /opt/install/solr/config
+
+* Configure a Solr core:
+
+  % sudo su - solr -c "/opt/solr/bin/solr create -c scholarspace -n /opt/install/solr/config"
+  
+  Convert the new Solr core from `managed-schema` to `schema.xml` support:
+  
+  % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarpsace/conf/managed-schema.bak
+  
+  Copy the `solr_config/conf` contents from the samvera/hyrax repo to `/var/solr/data/scholarspace/conf/`
+  
+  Restart Solr:
+  
+  % sudo service solr restart
+  
+### Set up Fedora with audit support
+  
+# ***RESUME EDITING HERE***
 
 # Application server
 
@@ -23,9 +93,10 @@ The recommended production setup involves two servers.  However, these can be th
 ```
    % sudo groupadd scholarspace
    % sudo adduser scholarspace --ingroup scholarspace --no-create-home --disabled-login
-
-   Edit `/etc/group` and add both `scholarspace` and `www-data` to the `scholarspace` group.  Also, add the current user to the `scholarspace` group.
 ```
+
+  Edit `/etc/group` and add both `scholarspace` and `www-data` to the `scholarspace` group.  Also, add the current user to the `scholarspace` group.
+
 
 * Install RVM for multiple users (full instructions at [http://rvm.io/](rvm.io))
 
@@ -680,4 +751,3 @@ to upload items and edit the items that they have uploaded (plus items transferr
   Add a line similar to the following:
 
         0 5 * * * /opt/scholarspace/script/import_stats.sh production
-
