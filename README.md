@@ -54,35 +54,43 @@ These instructions have been updated for Ubuntu 16.04.
 ### Solr setup
 
 * Install Solr:
-
+```
   % cd /opt/install
   % wget http://archive.apache.org/dist/lucene/solr/6.4.1/solr-6.4.1.tgz
   % tar xzf solr-6.4.1.tgz solr-6.4.1/bin/install_solr_service.sh --strip-components=2
   % sudo ./install_solr_service.sh solr-6.4.1.tgz
-
+```
 * Verify that Solr started
-
+```
   % sudo service solr status
-
+```
 (TODO: Is this needed any more, in light of below copy from samvera/hyrax/solr_config/conf??)
 * Copy the solr/config folder contents from the scholarspace-hyrax repository to /opt/install/solr/config
 
 * Configure a Solr core:
-
+```
   % sudo su - solr -c "/opt/solr/bin/solr create -c scholarspace -n /opt/install/solr/config"
-  
+```  
   Convert the new Solr core from `managed-schema` to `schema.xml` support:
-  
+```  
   % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarpsace/conf/managed-schema.bak
-  
+```  
   Copy the `solr_config/conf` contents from the samvera/hyrax repo to `/var/solr/data/scholarspace/conf/`
   
   Restart Solr:
-  
+```  
   % sudo service solr restart
-  
+``` 
 ### Set up Fedora with audit support
-  
+```
+   % cd /opt/install
+   % wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.7.1/fcrepo-webapp-plus-audit-4.7.1.war
+   % sudo cp fcrepo-webapp-plus-audit-4.7.1.war /var/lib/tomcat7/webapps/fcrepo.war
+```   
+   Wait for tomcat to deploy the war file before proceeding to the next step.  This can be verified by watching `/var/log/tomcat7/catalina.out`
+   
+   Copy the `tomcat_conf/fcrepo-webapp/web.xml` file from the repo to `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml`   
+
 # ***RESUME EDITING HERE***
 
 # Application server
