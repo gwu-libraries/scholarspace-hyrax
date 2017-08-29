@@ -89,8 +89,43 @@ These instructions have been updated for Ubuntu 16.04.
 ```   
    Wait for tomcat to deploy the war file before proceeding to the next step.  This can be verified by watching `/var/log/tomcat7/catalina.out`
    
-   Copy the `tomcat_conf/fcrepo-webapp/web.xml` file from the repo to `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml`   
+   Copy the `tomcat_conf/fcrepo-webapp/web.xml` file from the Github repo to `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml` 
+   
+   Ensure that tomcat7 library files are all still owned by tomcat7
+```
+   % sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7
+```
+   Set up Fedora authentication by copying the `tomcat_conf/tomcat-users.xml` file from the Github repo and overwrite `/etc/tomcat7/tomcat-users.xml`.   Edit `tomcat-users.xml` and replace the dummy passwords with your preferred secure passwords.  (Be sure that your passwords don't contain any characters considered special characters in XML, such as `<`,`>`,`&`,`'`,`"`)
 
+## Set up a PostgreSQL database for Fedora
+
+* Create a postgreSQL database user and database for Fedora
+```
+   % sudo su - postgres
+   (postgres)% psql
+   postgres=# create user YOURDBUSERNAME with createdb password 'YOURDBPASSWORD';
+   postgres=# \q
+   (postgres)% createdb -O YOURDBUSERNAME ispn
+   (postgres)% exit
+```
+Note the database name for Fedora must be `ispn`
+
+* Create a Fedora settings folder
+```
+   % sudo mkdir /etc/fcrepo
+   % sudo chown -R tomcat7:tomcat7 /etc/fcrepo
+```   
+* Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Edit `infinispan.xml` and replace the database username and password with the database username and password created above.
+
+* Restart Tomcat
+```
+   % sudo service tomcat7 restart
+```
+
+* OPTIONAL:  To restore from a Fedora backup:
+```
+   % 
+```
 # ***RESUME EDITING HERE***
 
 # Application server
