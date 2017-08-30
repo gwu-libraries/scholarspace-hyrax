@@ -287,77 +287,73 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
   Paste the secret key into the `secrets.yml` file (for dev and test)
 
-# ***RESUME EDITING HERE***
-
 * Run the database migrations
-
+```
         % rake db:migrate RAILS_ENV=production
-
-* Install `fits.sh` version 0.8.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 0.8.5 download)
-
+```
+* Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
+```
         % cd /usr/local/bin
-        % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-0.8.5.zip -o fits-0.8.5.zip
-        % sudo unzip fits-0.8.5.zip
-        % cd fits-0.8.5
+        % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip -o fits-1.0.5.zip
+        % sudo unzip fits-1.0.5.zip
+        % cd fits-1.0.5
         % sudo chmod a+x fits*.sh
-
-### Configure ImageMagick policies
-
-* Copy `imagemagick_conf/policy.xml` to `/etc/ImageMagick` (overwrite the default `policy.xml`)
-
-        % cd /opt/install
-        Retrieve `policy.xml` from `imagemagick_conf/policy.xml` in the GitHub repo
-        % sudo cp /etc/ImageMagick/policy.xml
+```
 
 ### Configure the `minter-state` file path
 
   * Create a minter folder
-
-        % sudo mkdir /opt/scholarspace/scholarspace_minter
-        % sudo chown -R scholarspace_user:scholarspace_group /opt/scholarspace/scholarspace_minter
-
-  * If an existing `minter-state` file exists in `/tmp/minter-state` copy it to the new folder
-        
-        % cp /tmp/minter-state /opt/scholarspace/scholarspace_minter/
-
-  * Uncomment `config.minter_statefile` in `config/initializers/sufia.rb`
-
-         config.minter_statefile = '/opt/scholarspace/scholarspace_minter/minter-state'
+```
+        % sudo mkdir /opt/scholarspace/scholarspace-minter
+        % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-minter
+```
+    If an existing `minter-state` file exists in `/tmp/minter-state` copy it to the new folder
+```        
+        % cp /tmp/minter-state /opt/scholarspace/scholarspace-minter/
+```
+    Uncomment `config.minter_statefile` in `config/initializers/hyax.rb`
+```
+         config.minter_statefile = '/opt/scholarspace/scholarspace-minter/minter-state'
+```
 
 ### Configure the tmp path
   
   * Create a tmp folder  
-
-        % sudo mkdir /opt/scholarspace/scholarspace_tmp
-        % sudo chown -R scholarspace_user:scholarspace_group /opt/scholarspace/scholarspace_tmp
-
-  * Uncomment `config.temp_file_base` in `config/initializers/sufia.rb`
-
-         config.temp_file_base = '/opt/scholarspace/scholarspace_tmp'
-
+```
+        % sudo mkdir /opt/scholarspace/scholarspace-tmp
+        % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-tmp
+```
+  * Uncomment `config.temp_file_base` in `config/initializers/hyrax.rb`
+```
+         config.temp_file_base = '/opt/scholarspace/scholarspace-mp'
+```
 ### Configure max days between audits
 
-  * Uncomment `config.max_days_between_audits` in `config/initializers/sufia.rb`
-
+  * Uncomment `config.max_days_between_audits` in `config/initializers/hyrax.rb`
+```
          config.max_days_between_audits = 7
+```
 
 ### Configure path for libre-office
 
-  * Uncomment `config.libreoffice_path` in `config/initializers/sufia.rb`
-
-         config.libreoffice_path = "soffice"
-
+  * Uncomment `config.libreoffice_path` in `config/initializers/hyrax.rb`
+```
+         config.libreoffice_path = "/usr/bin/soffice"
+```
 ### Configure derivatives path for Sufia
 
-  * Add `config.derivative_path` to `config/initializers/sufia.rb`
-  
-         config.derivative_path = "/opt/scholarspace_derivatives/"
-  
-  * Create a derivatives folder on your application server:
+   * Create a derivatives folder on your application server:
+```
+         % sudo mkdir /opt/scholarspace/scholarspace-derivatives
+         % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-derivatives
+```	 
+   * Add `config.derivative_path` to `config/initializers/hyrax.rb`
+```
+         config.derivative-path = "/opt/scholarspace/scholarspace-derivatives/"
+```
 
-         % sudo mkdir /opt/scholarspace_derivatives
-         % sudo chown -R scholarspace:scholarspace_group /opt/scholarspace_derivatives
-   
+# ***RESUME EDITING HERE***
+
 ### Configure Contact form emailing
 
   In order to enable the contact form page to send email when the user clicks Send,
