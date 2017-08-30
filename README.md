@@ -97,6 +97,14 @@ These instructions have been updated for Ubuntu 16.04.
 ```
    Set up Fedora authentication by copying the `tomcat_conf/tomcat-users.xml` file from the Github repo and overwrite `/etc/tomcat7/tomcat-users.xml`.   Edit `tomcat-users.xml` and replace the dummy passwords with your preferred secure passwords.  (Be sure that your passwords don't contain any characters considered special characters in XML, such as `<`,`>`,`&`,`'`,`"`)
 
+* OPTIONAL: (If creating a new repository, skip this step) Create a backup of the existing Fedora instance
+```
+    % sudo mkdir /opt/fedora_backups
+    % sudo chown -R tomcat7:tomcat7 /opt/fedora_backups
+    % curl -X POST -u <FedoraUsername>:<FedoraPassword> --data "/opt/fedora_backups" yourserver.com/fcrepo/rest/fcr:backup
+```
+   Verify that a backup was created in `/opt/fedora_backups` before proceeding
+
 ## Set up a PostgreSQL database for Fedora
 
 * Create a postgreSQL database user and database for Fedora
@@ -124,7 +132,53 @@ Note the database name for Fedora must be `ispn`
 
 * OPTIONAL:  To restore from a Fedora backup:
 ```
-   % 
+   % curl -X POST -u <FedoraUsername>:<FedoraPassword> --data "/opt/fedora_backups" yourserver.com/fcrepo/rest/fcr:restore
+```
+   Restart tomcat and validate that the repository has been restored:
+```
+   % sudo service tomcat7 restart
+```
+
+### Optional: Add SSL to Fedora Connections
+These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 and running SSL using the Apache Portable Runtime (APR).
+
+* Install Tomcat dependencies
+```  
+        % sudo apt-get install libapr1 libapr1-dev libtcnative-1
+```
+*  Add the `tomcat7` user to the `ssl-cert` group in `/etc/group`
+```
+        % sudo vi /etc/group
+```
+*  Generate your SSL certificates and key using the instructions provided here: https://github.com/gwu-libraries/ssl_howto
+
+*  Update the `server.xml` file
+```
+        % cd /opt/install
+        Retrieve `server_ssl.xml` from `tomcat_conf/server_ssl.xml` in the GitHub repo
+        % sudo cp tomcat_conf/server_ssl.xml /etc/tomcat7/server.xml
+```        
+*  Edit `/etc/tomcat/server.xml` and replace the dummy values for the following lines with your certificates and keys:
+	```
+        SSLCertificateFile="/etc/ssl/certs/yourservername.cer"
+        SSLCertificateChainFile="/etc/ssl/certs/yourservername.cer"
+        SSLCertificateKeyFile="/etc/ssl/private/yourservername.pem"
+	```
+*  Create a symbolic link to `libtcnative1.so` to address a Ubuntu/Tomcat bug
+```        
+        % sudo ln -sv /usr/lib/x86_64-linux-gnu/libtcnative-1.so /usr/lib/
+```
+*  Replace the `web.xml` files for Fedora with the `web_ssl.xml` files from the repo:
+```
+        % cd /opt/install
+```
+   Retrieve `web_ssl.xml` from `tomcat_conf/fcrepo-webapp/web_ssl.xml` in the GitHub repo
+```
+        % cp tomcat_conf/fcrepo-webapp/web_ssl.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
+```
+*  Restart Tomcat and test access over HTTPS
+```
+        % sudo service tomcat7 restart
 ```
 # ***RESUME EDITING HERE***
 
