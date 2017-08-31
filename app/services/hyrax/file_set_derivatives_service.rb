@@ -57,7 +57,8 @@ module Hyrax
         Hydra::Derivatives::DocumentDerivatives.create(filename,
                                                        outputs: [{ label: :thumbnail, format: 'jpg',
                                                                    size: '200x150>',
-                                                                   url: derivative_url('thumbnail') }])
+                                                                   url: derivative_url('thumbnail'),
+                                                                   layer: 0 }])
         Hydra::Derivatives::FullTextExtract.create(filename,
                                                    outputs: [{ url: uri, container: "extracted_text" }])
       end
