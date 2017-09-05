@@ -325,7 +325,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
   * Uncomment `config.temp_file_base` in `config/initializers/hyrax.rb`
 ```
-         config.temp_file_base = '/opt/scholarspace/scholarspace-mp'
+         config.temp_file_base = '/opt/scholarspace/scholarspace-tmp'
 ```
 ### Configure max days between audits
 
@@ -352,25 +352,28 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
          config.derivative-path = "/opt/scholarspace/scholarspace-derivatives/"
 ```
 
-# ***RESUME EDITING HERE***
-
 ### Configure Contact form emailing
 
   In order to enable the contact form page to send email when the user clicks Send,
 set the following properties in `config/initializers/sufia.rb` :
-        
+```
          config.contact_email = 
+```
 
   * Create a `setup_mail.rb` file 
-
-        % cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
+```
+    % cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
+```
 
   Set the SMTP credentials for the user as whom the app will send email.  Make sure that the `user_name` value in `setup_mail.rb` matches the `contact_email` value configured above in `sufia.rb`.
   
-  * Edit `config/initializers/mailboxer.rb` with email account:
-  
+  * Edit `config/initializers/mailboxer.rb` with email account from which to send messages and notifications:
+```
          config.default_from = 
+```
    
+# ***RESUME EDITING HERE***
+
 ### Make files in `script` executable:
 
          chmod -R a+x script
