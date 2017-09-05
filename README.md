@@ -371,7 +371,70 @@ set the following properties in `config/initializers/sufia.rb` :
 ```
          config.default_from = 
 ```
-   
+
+### Create the user roles
+
+  Run the rake task that creates user roles called `admin` and `content-admin`:
+```
+        % rake gwss:create_roles RAILS_ENV=production
+```
+  At the rails console, add an initial user to the `admin` role.  Make sure that your admin user
+has logged in at least once.
+```
+        % rails c
+        > r = Role.find_by_name('admin')
+        > r.users << User.find_by_user_key('YOUR_ADMIN_USER_EMAIL@gwu.edu')
+        > r.save 
+```
+  We will [add the content-admin users](#prod-add-content-admin) later through the /roles UI.
+  
+### Configure Passenger and Apache2
+
+* Set up Passenger, and create Passenger config for Apache
+```
+        % gem install passenger -v 5.1.7 --no-rdoc --no-ri
+        % passenger-install-apache2-module
+```
+        Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
+```        
+   LoadModule passenger_module /usr/local/rvm/gems/ruby-2.3.3/gems/passenger-5.1.7/buildout/apache2/mod_passenger.so
+   <IfModule mod_passenger.c>
+     PassengerRoot /usr/local/rvm/gems/ruby-2.3.3/gems/passenger-5.1.7
+     PassengerDefaultRuby /usr/local/rvm/gems/ruby-2.3.3/wrappers/ruby
+   </IfModule>	
+```
+    Create `/etc/apache2/conf-available/passenger.conf` using the lines pasted from the Passenger install script.
+    
+* Enable the Apache `passenger.conf` file and the rewrite Apache mod
+```
+        % sudo a2enconf passenger.conf
+        % sudo a2enmod rewrite
+        % sudo service apache2 restart
+```
+* Create and enable an Apache2 virtual host
+
+     Retrieve `scholarspace.conf` from `apache2_conf/scholarspace.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace.conf`
+     Retrieve `scholarspace-ssl.conf` from `apache2_conf/scholarspace-ssl.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace-ssl.conf`.  Adjust paths as needed.
+     
+     Enable modssl:
+```
+        % sudo a2enmod ssl
+```
+
+     Generate certificates and place them in paths referenced in `scholarspace-ssl.conf` (modify the paths in `scholarspace-ssl.conf` if needed).  Cert file names should also match.
+```  
+        % sudo a2dissite 000-default.conf
+        % sudo a2ensite scholarspace.conf
+        % sudo a2ensite scholarspace-ssl.conf
+```        
+* Install `mod_xsendfile`
+```
+        % cd /opt/install
+        % git clone https://github.com/nmaier/mod_xsendfile.git
+        % cd mod_xsendfile
+        % sudo apxs2 -cia mod_xsendfile.c
+        % sudo service apache2 restart
+```
 # ***RESUME EDITING HERE***
 
 ### Make files in `script` executable:
@@ -382,82 +445,21 @@ set the following properties in `config/initializers/sufia.rb` :
 
         % script/restart_resque.sh production
 
-### Create the user roles
-
-  Run the rake task that creates user roles called `admin` and `content-admin`:
-
-        % rake gwss:create_roles RAILS_ENV=production
-
-  At the rails console, add an initial user to the `admin` role.  Make sure that your admin user
-has logged in at least once.
-
-        % rails c
-        > r = Role.find_by_name('admin')
-        > r.users << User.find_by_user_key('YOUR_ADMIN_USER_EMAIL@gwu.edu')
-        > r.save 
-
-  We will [add the content-admin users](#prod-add-content-admin) later through the /roles UI.
-
 ### (Optional) Populate the initial content blocks
 
   Run the rake task that takes the content of the HTML files in config/locales/content_blocks and populates the associated content blocks.  Note that for an existing instance, running this rake task will overwrite any chnages you've made to the content blocks!
 
         % rake gwss:populate_content_blocks RAILS_ENV=production
 
-### Configure Passenger and Apache2
-
-* Set up Passenger
-
-        % gem install passenger -v 5.0.19
-        % passenger-install-apache2-module
-        Select Ruby from the list of languages
-        
-* Configure Apache for Passenger
-
-        % cd /opt/install
-        Retrieve `passenger.conf` from  `apache2_conf/passenger.conf` in the GitHub repo
-        % sudo cp apache2_conf/passenger.conf /etc/apache2/conf-available/passenger.conf
-   
-* Enable the `passenger.conf` file and the rewrite Apache mod
-
-        % sudo a2enconf passenger.conf
-        % sudo a2enmod rewrite
-        % sudo service apache2 restart
-
-* Create and enable an Apache2 virtual host
-
-        % cd /opt/install
-        Retrieve `scholarspace.conf` from `apache2_conf/scholarspace.conf` in the GitHub repo
-        Retrieve `scholarspace-ssl.conf` from `apache2_conf/scholarspace-ssl.conf` in the GitHub repo
-        % sudo cp apache2_conf/scholarspace.conf /etc/apache/sites-available/scholarspace.conf
-        % sudo cp apache2_conf/scholarspace-ssl.conf /etc/apache/sites-available/scholarspace-ssl.conf
-
-  Enable modssl
-
-        % sudo a2enmod ssl
-
-  Generate certificates and place them in paths referenced in `scholarspace-ssl.conf` (modify the paths in `scholarspace-ssl.conf` if needed).  Cert file names should also match.
-  
-        % sudo a2dissite 000-default.conf
-        % sudo a2ensite scholarspace.conf
-        % sudo a2ensite scholarspace-ssl.conf
-        
-* Install `mod_xsendfile` (on the GW Scholarspace application server, if deploying on separate servers)
-
-        % cd /opt/install
-        % git clone https://github.com/nmaier/mod_xsendfile.git
-        % cd mod_xsendfile
-        % sudo apxs2 -cia mod_xsendfile.c
-        % sudo service apache2 restart
 
 ### Final Deployment
 
 * Prepare databases and assets for production
-
-        % cd /opt/scholarspace
+```
+        % cd /opt/scholarspace/scholarspace-hyrax
         % rake assets:precompile RAILS_ENV=production 
         % sudo service apache2 restart
-        
+ ```       
 ### (Optional) Set up Shibboleth integration on the GW ScholarSpace server:
 
   Please refer to https://github.com/gwu-libraries/shibboleth for the recommended steps for setting up the Shibboleth integration.
