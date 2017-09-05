@@ -19,6 +19,10 @@
 
 # Ignore local config files
 config/database.yml
+config/fedora.yml
+config/solr.yml
+config/blacklight.yml
+config/secrets.yml
 
 # Ignore Byebug command history file.
 .byebug_history
