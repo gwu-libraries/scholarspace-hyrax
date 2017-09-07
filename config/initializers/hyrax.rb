@@ -16,10 +16,10 @@ Hyrax.config do |config|
   # config.default_active_workflow_name = 'default'
 
   # Email recipient of messages sent via the contact form
-  # config.contact_email = "repo-admin@example.org"
+  config.contact_email = "CONFIGURE-ME@email.gwu.edu"
 
   # Text prefacing the subject entered in the contact form
-  # config.subject_prefix = "Contact form:"
+  config.subject_prefix = "Contact form:"
 
   # How many notifications should be displayed on the dashboard
   # config.max_notifications_for_dashboard = 5
@@ -46,6 +46,7 @@ Hyrax.config do |config|
 
   # Where to store tempfiles, leave blank for the system temp directory (e.g. /tmp)
   # config.temp_file_base = '/home/developer1'
+  config.temp_file_base = '/opt/scholarspace/scholarspace-tmp'
 
   # Hostpath to be used in Endnote exports
   # config.persistent_hostpath = 'http://localhost/files/'
@@ -65,6 +66,7 @@ Hyrax.config do |config|
 
   # Store identifier minter's state in a file for later replayability
   # config.minter_statefile = '/tmp/minter-state'
+  config.minter_statefile = '/opt/scholarspace/scholarspace-minter/minter-state'
 
   # Prefix for Redis keys
   # config.redis_namespace = "hyrax"
@@ -117,7 +119,7 @@ Hyrax.config do |config|
   # Location on local file system where derivatives will be stored
   # If you use a multi-server architecture, this MUST be a shared volume
   # config.derivatives_path = Rails.root.join('tmp', 'derivatives')
-  config.derivatives_path = '/opt/scholarspace/derivatives'
+  config.derivatives_path = '/opt/scholarspace/scholarspace-derivatives/derivatives'
 
   # Should schema.org microdata be displayed?
   # config.display_microdata = true
