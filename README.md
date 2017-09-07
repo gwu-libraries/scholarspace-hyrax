@@ -183,7 +183,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 # Application server
 
-### Install ependencies
+### Install dependencies
 
 * Install necessary Ubuntu packages:
 ```
