@@ -435,6 +435,19 @@ has logged in at least once.
         % sudo apxs2 -cia mod_xsendfile.c
         % sudo service apache2 restart
 ```
+### Populate the initial content blocks
+
+* Log in as the admin user.  Edit the Above and Help pages; paste in the HTML from the repo **TODO: Add initial HTML to repo**
+
+### Final Deployment
+
+* Prepare databases and assets for production
+```
+        % cd /opt/scholarspace/scholarspace-hyrax
+        % rake assets:precompile RAILS_ENV=production 
+        % sudo service apache2 restart
+ ```    
+ 
 # ***RESUME EDITING HERE***
 
 ### Make files in `script` executable:
@@ -444,22 +457,7 @@ has logged in at least once.
 ### Start a Redis RESQUE pool
 
         % script/restart_resque.sh production
-
-### (Optional) Populate the initial content blocks
-
-  Run the rake task that takes the content of the HTML files in config/locales/content_blocks and populates the associated content blocks.  Note that for an existing instance, running this rake task will overwrite any chnages you've made to the content blocks!
-
-        % rake gwss:populate_content_blocks RAILS_ENV=production
-
-
-### Final Deployment
-
-* Prepare databases and assets for production
-```
-        % cd /opt/scholarspace/scholarspace-hyrax
-        % rake assets:precompile RAILS_ENV=production 
-        % sudo service apache2 restart
- ```       
+   
 ### (Optional) Set up Shibboleth integration on the GW ScholarSpace server:
 
   Please refer to https://github.com/gwu-libraries/shibboleth for the recommended steps for setting up the Shibboleth integration.
