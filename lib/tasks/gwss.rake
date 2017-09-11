@@ -51,8 +51,8 @@ namespace :gwss  do
         manifest_json = JSON.parse(mf.squish)
         etd_id = ingest(manifest_json, options[:depositor])
         # generate_ingest_report(noid_list, investigation_id) 
-        puts "Created new GwEtd with id = " + etd_id
         attach_files(options[:pfpath], options[:oflist], etd_id)
+        puts etd_id
       else
         puts "Manifest file doesn't exist - no ingest"
       end
