@@ -51,7 +51,8 @@ namespace :gwss  do
         manifest_json = JSON.parse(mf.squish)
         etd_id = ingest(manifest_json, options[:depositor])
         # generate_ingest_report(noid_list, investigation_id) 
-        attach_files(options[:pfpath], options[:oflist], etd_id)
+        attach_files(options[:pfpath], options[:oflist],
+                     options[:depositor], etd_id)
         puts etd_id
       else
         puts "Manifest file doesn't exist - no ingest"
@@ -106,13 +107,13 @@ namespace :gwss  do
     return file_attributes
   end
 
-  def attach_files(primaryfile_path, otherfiles_list, etd_id)
-    user = User.find_by_user_key('kerchner@gwu.edu')
+  def attach_files(primaryfile_path, otherfiles_list, depositor, etd_id)
+    user = User.find_by_user_key(depositor)
     gwe = GwEtd.find(etd_id)
     # add primary file first, other files afterwards
     files = []
     files += [primaryfile_path] if primaryfile_path
-    files += otherfiles_list.split(",") if otherfiles_list
+    files += otherfiles_list.split(',') if otherfiles_list
     files.each do |f|
       fs = FileSet.new
       # use the filename as the FileSet title
