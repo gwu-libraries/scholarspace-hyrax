@@ -96,6 +96,8 @@ These instructions have been updated for Ubuntu 16.04.
    % sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7
 ```
    Set up Fedora authentication by copying the `tomcat_conf/tomcat-users.xml` file from the Github repo and overwrite `/etc/tomcat7/tomcat-users.xml`.   Edit `tomcat-users.xml` and replace the dummy passwords with your preferred secure passwords.  (Be sure that your passwords don't contain any characters considered special characters in XML, such as `<`,`>`,`&`,`'`,`"`)
+   
+   Edit `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/jdbc-postgresql/repository.json` to change the database name from `fcrepo` to `ispn`.
 
 * OPTIONAL: (If creating a new repository, skip this step) Create a backup of the existing Fedora instance
 ```
