@@ -35,7 +35,7 @@ These instructions have been updated for Ubuntu 16.04.
    
 * Install necessary Ubuntu packages:
 ```
-   % sudo apt-get install git postgresql libpq-dev unzip clamav-daemon curl tomcat7 libcurl4-openssl-dev apache2-threaded-dev libapr1-dev libaprutil1-dev apache2-mpm-worker apache2-threaded-dev
+   % sudo apt-get install git postgresql libpq-dev unzip clamav-daemon curl tomcat7 libcurl4-openssl-dev libapr1-dev libaprutil1-dev
 ```
 
 * Create needed directories:
@@ -190,7 +190,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 * Install necessary Ubuntu packages:
 ```
         % sudo apt-get update
-        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2-mpm-worker apache2-threaded-dev 
+        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2-dev 
 ```
 * Install RVM for multi-users
 ```
