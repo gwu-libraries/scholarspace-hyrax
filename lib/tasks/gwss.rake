@@ -74,6 +74,9 @@ namespace :gwss  do
       gwe.id = ActiveFedora::Noid::Service.new.mint
       now = Hyrax::TimeService.time_in_utc
       gwe.date_uploaded = now
+
+      etd_admin_set = AdminSet.where(title: "ETDs")[0]
+      gwe.admin_set = etd_admin_set
       gwe.save
       return gwe.id
     end
