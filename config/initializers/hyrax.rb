@@ -109,7 +109,7 @@ Hyrax.config do |config|
   #
   # The banner image. Should be 5000px wide by 1000px tall
   # config.banner_image = 'https://cloud.githubusercontent.com/assets/92044/18370978/88ecac20-75f6-11e6-8399-6536640ef695.jpg'
-  config.banner_image = 'https://gist.githubusercontent.com/kerchner/96b8863e2eeb8900e798f0a7974fb3fb/raw/298c46254cd12b717f29afc3d6c02b939ced0b73/gw-etd17.jpg'
+  config.banner_image = 'https://gist.githubusercontent.com/kerchner/96b8863e2eeb8900e798f0a7974fb3fb/raw/6ac16b6addfef42f213b87ede3389ecb22a30634/gw-etd17.jpg'
 
   # Temporary paths to hold uploads before they are ingested into FCrepo
   # These must be lambdas that return a Pathname. Can be configured separately
