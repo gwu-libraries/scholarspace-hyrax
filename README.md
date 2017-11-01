@@ -7,7 +7,6 @@ A Hyrax app for GW Libraries with:
 Some convenient links to have handy:
 - [Hyrax github repo](https://github.com/samvera/hyrax/)
 - [Hyrax project](http://hyr.ax/)
-- [scholarspace-sufia7 repo](https://github.com/gwu-libraries/scholarspace-sufia7/)
 
 # Getting started
 
