@@ -19,12 +19,18 @@ These instructions have been updated for Ubuntu 16.04.
 
 # Repository server
 
-* Install Java 8 for Ubuntu 16.04:
-```
+* Install Java 8
+
+   - For Ubuntu 16:
+   ```
+   % sudo apt-get install openjdk-8*
+   ```
+   - For Ubuntu 14:
+   ```
    % sudo add-apt-repository ppa:webupd8team/java
    % sudo apt-get update
    % sudo apt-get install oracle-java8-installer
-```
+   ```
    Verify that Java has been installed and is running Java 8:
 ```
    % java -version
