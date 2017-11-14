@@ -80,7 +80,7 @@ These instructions have been updated for Ubuntu 16.04.
 ```  
   Convert the new Solr core from `managed-schema` to `schema.xml` support:
 ```  
-  % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarpsace/conf/managed-schema.bak
+  % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
 ```  
   Copy the `solr_config/conf` contents from the samvera/hyrax repo to `/var/solr/data/scholarspace/conf/`
   
