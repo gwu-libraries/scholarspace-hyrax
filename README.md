@@ -56,6 +56,8 @@ These instructions have been updated for Ubuntu 16.04.
 
   Retrieve ```tomcat_conf/tomcat7``` file from this github repository and overwrite ```/etc/default/tomcat7```
   
+  Make sure that the `JAVA_HOME` value corresponds to the correct Java installation directory.  If not, update `JAVA_HOME`.
+  
 ### Solr setup
 
 * Install Solr:
