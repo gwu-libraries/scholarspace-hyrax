@@ -71,7 +71,7 @@ These instructions have been updated for Ubuntu 16.04.
 ```
   % sudo service solr status
 ```
-(TODO: Is this needed any more, in light of below copy from samvera/hyrax/solr_config/conf??)
+(TODO: Is this needed any more, in light of below copy from samvera/hyrax/solr/config??)
 * Copy the solr/config folder contents from the scholarspace-hyrax repository to /opt/install/solr/config
 
 * Configure a Solr core:
@@ -82,7 +82,7 @@ These instructions have been updated for Ubuntu 16.04.
 ```  
   % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
 ```  
-  Copy the `solr_config/conf` contents from the samvera/hyrax repo to `/var/solr/data/scholarspace/conf/`
+  Copy the `solr/config/` contents from the samvera/hyrax repo to `/var/solr/data/scholarspace/conf/` (this can be accomplished by git clone-ing the hyrax repo, making sure to check out the appropriate tag)
   
   Restart Solr:
 ```  
