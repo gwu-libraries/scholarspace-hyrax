@@ -125,13 +125,22 @@ These instructions have been updated for Ubuntu 16.04.
    (postgres)% createdb -O YOURDBUSERNAME ispn
    (postgres)% exit
 ```
-Note the database name for Fedora must be `ispn`
+   Note the database name for Fedora must be `ispn`
+
+   Edit `/etc/default/tomcat7` and update these settings with the ispn database username and password, replacing the
+   placeholders for these values:
+
+```
+   JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.ispn.postgresql.username=<ADD ISPN DB USERNAME HERE>"
+   JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.ispn.postgresql.password=<ADD ISPN DB PASSWORD HERE>"
+```
+
 
 * Create a Fedora settings folder
 ```
    % sudo mkdir /etc/fcrepo
 ```   
-* Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Edit `infinispan.xml` and replace the database username and password with the database username and password created above.  Set the ownership to tomcat7:
+* Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Set the ownership to tomcat7:
 
 ```
    % sudo chown -R tomcat7:tomcat7 /etc/fcrepo
