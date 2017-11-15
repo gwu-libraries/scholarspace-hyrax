@@ -130,9 +130,12 @@ Note the database name for Fedora must be `ispn`
 * Create a Fedora settings folder
 ```
    % sudo mkdir /etc/fcrepo
+```   
+* Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Edit `infinispan.xml` and replace the database username and password with the database username and password created above.  Set the ownership to tomcat7:
+
+```
    % sudo chown -R tomcat7:tomcat7 /etc/fcrepo
 ```   
-* Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Edit `infinispan.xml` and replace the database username and password with the database username and password created above.
 
 * Restart Tomcat
 ```
