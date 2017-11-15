@@ -211,10 +211,10 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % sudo apt-get update
         % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2-dev 
 ```
-* Install RVM for multi-users
+* Install RVM for multi-users.  If the GPG signature verification fails at this step, just follow the instructions in the warning in order to fetch the public key.
 ```
         % curl -L https://get.rvm.io | sudo bash -s stable
-        % source ~/.rvm/scripts/rvm
+        % source /etc/profile.d/rvm.sh
         % rvm install ruby-2.3.3
 ```        
 
