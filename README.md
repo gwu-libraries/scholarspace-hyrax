@@ -236,7 +236,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
         % sudo adduser --disabled-password scholarspace
 ```        
-        This also creates a `scholarspace` group.  Edit `/etc/group` and add users (including www-data) to the new `scholarspace` group.  Additionally, add the scholarspace user to the `rvm` group.
+   This also creates a `scholarspace` group.  Edit `/etc/group` and add users (including `www-data`) to the new `scholarspace` group.  Additionally, add the `scholarspace` user to the `rvm` group.
 ```        
         % sudo chown scholarspace:scholarspace /opt/scholarspace
         % sudo chown www-data:www-data /opt/xsendfile
