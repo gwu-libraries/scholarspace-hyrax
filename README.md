@@ -256,7 +256,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % cd scholarspace-hyrax
         % bundle install --without development --deployment
 ```	
-	More information on the meaning of these bundle install options can be found at http://bundler.io/v1.15/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
+  More information on the meaning of these bundle install options can be found at http://bundler.io/v1.15/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
 
 * Create a postgresql user for scholarspace
 ```
@@ -288,21 +288,21 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % cd config
         % cp solr.yml.template solr.yml
 ```
-  Edit `solr.yml` to add your specific names and credentials
+  Edit `solr.yml` to add the URL of the Solr instance(s).
 
 * Create the `blacklight.yml` file
 ```
         % cd config
         % cp blacklight.yml.template blacklight.yml
 ```
-  Edit `blacklight.yml` to add your specific names and credentials
+  Edit `blacklight.yml` to add the URL of the Solr instance(s).
 
 * Create the `fedora.yml` file
 ```
         % cd config
         % cp fedora.yml.template fedora.yml
 ```
-  Edit `fedora.yml` to add your specific Fedora repository names and credentials
+  Edit `fedora.yml` to add the URL of the Fedora repository(/-ies).
 
 * Create the secure secret key. In production, put this in your environment, not in the file.
 ```
@@ -327,16 +327,16 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 ### Configure the `minter-state` file path
 
-  * Create a minter folder
+* Create a minter folder
 ```
         % sudo mkdir /opt/scholarspace/scholarspace-minter
         % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-minter
 ```
-    If an existing `minter-state` file exists in `/tmp/minter-state` copy it to the new folder
+  If an existing `minter-state` file exists in `/tmp/minter-state` copy it to the new folder
 ```        
         % cp /tmp/minter-state /opt/scholarspace/scholarspace-minter/
 ```
-    Uncomment `config.minter_statefile` in `config/initializers/hyax.rb`
+  Verify that `config.minter_statefile` in `config/initializers/hyax.rb` matches the minter directory as specified above.
 ```
          config.minter_statefile = '/opt/scholarspace/scholarspace-minter/minter-state'
 ```
