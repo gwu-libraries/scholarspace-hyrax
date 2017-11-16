@@ -372,9 +372,9 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
          % sudo mkdir /opt/scholarspace/scholarspace-derivatives
          % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-derivatives
 ```	 
-   * Add `config.derivative_path` to `config/initializers/hyrax.rb`
+   * Add `config.derivatives_path` to `config/initializers/hyrax.rb`
 ```
-         config.derivative-path = "/opt/scholarspace/scholarspace-derivatives/"
+         config.derivatives_path = "/opt/scholarspace/scholarspace-derivatives/"
 ```
 
 ### Configure Contact form emailing
