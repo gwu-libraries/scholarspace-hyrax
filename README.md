@@ -256,7 +256,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % cd scholarspace-hyrax
         % bundle install --without development --deployment
 ```	
-	More information on the meaning of these bundle install options can be found at http://bundler.io/v1.15/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
+  More information on the meaning of these bundle install options can be found at http://bundler.io/v1.15/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
 
 * Create a postgresql user for scholarspace
 ```
@@ -288,21 +288,21 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % cd config
         % cp solr.yml.template solr.yml
 ```
-  Edit `solr.yml` to add your specific names and credentials
+  Edit `solr.yml` to add the URL of the Solr instance(s).
 
 * Create the `blacklight.yml` file
 ```
         % cd config
         % cp blacklight.yml.template blacklight.yml
 ```
-  Edit `blacklight.yml` to add your specific names and credentials
+  Edit `blacklight.yml` to add the URL of the Solr instance(s).
 
 * Create the `fedora.yml` file
 ```
         % cd config
         % cp fedora.yml.template fedora.yml
 ```
-  Edit `fedora.yml` to add your specific Fedora repository names and credentials
+  Edit `fedora.yml` to add the URL of the Fedora repository(/-ies).
 
 * Create the secure secret key. In production, put this in your environment, not in the file.
 ```
@@ -327,16 +327,16 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 ### Configure the `minter-state` file path
 
-  * Create a minter folder
+* Create a minter folder
 ```
         % sudo mkdir /opt/scholarspace/scholarspace-minter
         % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-minter
 ```
-    If an existing `minter-state` file exists in `/tmp/minter-state` copy it to the new folder
+  If an existing `minter-state` file exists in `/tmp/minter-state` copy it to the new folder
 ```        
         % cp /tmp/minter-state /opt/scholarspace/scholarspace-minter/
 ```
-    Uncomment `config.minter_statefile` in `config/initializers/hyax.rb`
+  Verify that `config.minter_statefile` in `config/initializers/hyax.rb` matches the minter directory as specified above.
 ```
          config.minter_statefile = '/opt/scholarspace/scholarspace-minter/minter-state'
 ```
@@ -372,9 +372,9 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
          % sudo mkdir /opt/scholarspace/scholarspace-derivatives
          % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-derivatives
 ```	 
-   * Add `config.derivative_path` to `config/initializers/hyrax.rb`
+   * Add `config.derivatives_path` to `config/initializers/hyrax.rb`
 ```
-         config.derivative-path = "/opt/scholarspace/scholarspace-derivatives/"
+         config.derivatives_path = "/opt/scholarspace/scholarspace-derivatives/"
 ```
 
 ### Configure Contact form emailing
@@ -397,22 +397,6 @@ set the following properties in `config/initializers/sufia.rb` :
          config.default_from = 
 ```
 
-### Create the user roles
-
-  Run the rake task that creates user roles called `admin` and `content-admin`:
-```
-        % rake gwss:create_roles RAILS_ENV=production
-```
-  At the rails console, add an initial user to the `admin` role.  Make sure that your admin user
-has logged in at least once.
-```
-        % rails c
-        > r = Role.find_by_name('admin')
-        > r.users << User.find_by_user_key('YOUR_ADMIN_USER_EMAIL@gwu.edu')
-        > r.save 
-```
-  We will [add the content-admin users](#prod-add-content-admin) later through the /roles UI.
-  
 ### Configure Passenger and Apache2
 
 * Set up Passenger, and create Passenger config for Apache
@@ -420,7 +404,7 @@ has logged in at least once.
         % gem install passenger -v 5.1.7 --no-rdoc --no-ri
         % passenger-install-apache2-module
 ```
-        Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
+   Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
 ```        
    LoadModule passenger_module /usr/local/rvm/gems/ruby-2.3.3/gems/passenger-5.1.7/buildout/apache2/mod_passenger.so
    <IfModule mod_passenger.c>
@@ -428,26 +412,26 @@ has logged in at least once.
      PassengerDefaultRuby /usr/local/rvm/gems/ruby-2.3.3/wrappers/ruby
    </IfModule>	
 ```
-    Create `/etc/apache2/conf-available/passenger.conf` using the lines pasted from the Passenger install script.
+  Create `/etc/apache2/conf-available/passenger.conf` using the lines pasted from the Passenger install script.
     
 * Enable the Apache `passenger.conf` file and the rewrite Apache mod
 ```
-        % sudo a2enconf passenger.conf
+        % sudo a2enconf passenger
         % sudo a2enmod rewrite
         % sudo service apache2 restart
 ```
 * Create and enable an Apache2 virtual host
 
-     Retrieve `scholarspace.conf` from `apache2_conf/scholarspace.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace.conf`
+  Retrieve `scholarspace.conf` from `apache2_conf/scholarspace.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace.conf`
      
-     Retrieve `scholarspace-ssl.conf` from `apache2_conf/scholarspace-ssl.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace-ssl.conf`.  Adjust paths as needed.
+  Retrieve `scholarspace-ssl.conf` from `apache2_conf/scholarspace-ssl.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace-ssl.conf`.  Adjust paths as needed.
      
-     Enable modssl:
+  Enable modssl:
 ```
         % sudo a2enmod ssl
 ```
 
-     Generate certificates and place them in paths referenced in `scholarspace-ssl.conf` (modify the paths in `scholarspace-ssl.conf` if needed).  Cert file names should also match.
+  Generate certificates and place them in paths referenced in `scholarspace-ssl.conf` (modify the paths in `scholarspace-ssl.conf` if needed).  Cert file names should also match.
 ```  
         % sudo a2dissite 000-default.conf
         % sudo a2ensite scholarspace.conf
@@ -461,9 +445,6 @@ has logged in at least once.
         % sudo apxs2 -cia mod_xsendfile.c
         % sudo service apache2 restart
 ```
-### Populate the initial content blocks
-
-* Log in as the admin user.  Edit the Above and Help pages; paste in the HTML from the repo **TODO: Add initial HTML to repo**
 
 ### Final Deployment
 
@@ -472,7 +453,28 @@ has logged in at least once.
         % cd /opt/scholarspace/scholarspace-hyrax
         % rake assets:precompile RAILS_ENV=production 
         % sudo service apache2 restart
- ```    
+```    
+ 
+### Create the user roles
+
+  Run the rake task that creates user roles called `admin` and `content-admin`:
+```
+        % rake gwss:create_roles RAILS_ENV=production
+```
+  At the rails console, add an initial user to the `admin` role.  Make sure that your admin user
+has logged in at least once via the app's web UI (which should now be working).
+```
+        % RAILS_ENV=production rails c
+        > r = Role.find_by_name('admin')
+        > r.users << User.find_by_user_key('YOUR_ADMIN_USER_EMAIL@gwu.edu')
+        > r.save 
+```
+  We can [add the content-admin users](#prod-add-content-admin) as desired through the /roles UI.
+
+### Populate the initial content blocks
+
+* Log in as the admin user.  Edit the Above and Help pages; paste in the HTML from the repo **TODO: Add initial HTML to repo**
+
  
 # ***RESUME EDITING HERE***
 
