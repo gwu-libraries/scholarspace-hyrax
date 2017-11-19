@@ -19,4 +19,11 @@ Hydra.configure do |config|
   #
   # Specify the user model
   # config.user_model = 'User'
+  #
+  # DWK set this based on deprecation warning:
+  # DEPRECATION WARNING: You must set 'config.user_key_field = Devise.authentication_keys.first' 
+  # in your config/initializer/hydra_config.rb file. The default value will be
+  # removed inihydra-access-controls 12. (called from user_key_field at
+  # /opt/scholarspace/scholarspace-hyrax/vendor/bundle/ruby/2.3.0/gems/hydra-access-controls-10.5.0/lib/hydra/config.rb:39)
+  config.user_key_field = Devise.authentication_keys.first
 end
