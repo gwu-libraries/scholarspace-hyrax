@@ -1,7 +1,19 @@
 terms:
-  - id: PhD
-    term: PhD
+  - id: Ph.D.
+    term: Ph.D.
     active: true
-  - id: Master of Science
-    term: Master of Science
+  - id: M.S.
+    term: M.S.
+    active: true
+  - id: M.A.
+    term: M.A.
+    active: true
+  - id: LL.M.
+    term: LL.M.
+    active: true
+  - id: Ed.D.
+    term: Ed.D.
+    active: true
+  - id: M.F.A.
+    term: M.F.A.
     active: true
