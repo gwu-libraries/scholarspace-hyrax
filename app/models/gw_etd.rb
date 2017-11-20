@@ -13,7 +13,15 @@ class GwEtd < ActiveFedora::Base
     index.as :stored_searchable, :facetable
   end
 
-  property :degree, predicate: ::RDF::URI.new("http://scholarspace.library.gwu.edu/ns#degrees"), multiple: false do |index|
+  property :degree, predicate: ::RDF::URI.new("http://scholarspace.library.gwu.edu/ns#degree"), multiple: false do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :advisor, predicate: ::RDF::URI.new("http://scholarspace.library.gwu.edu/ns#advisor") do |index|
+    index.as :stored_searchable, :facetable
+  end
+
+  property :committee_member, predicate: ::RDF::URI.new("http://scholarspace.library.gwu.edu/ns#committee_member") do |index|
     index.as :stored_searchable, :facetable
   end
 end

@@ -1,0 +1,5 @@
+<% # app/views/records/edit_fields/_advisor.html.erb %>
+<%= f.input :advisor, as: :multi_value, required: f.object.required?(key),
+    input_html: { class: 'form-control', multiple: true }
+%>
+

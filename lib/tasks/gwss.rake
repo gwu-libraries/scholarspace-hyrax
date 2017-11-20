@@ -93,6 +93,8 @@ namespace :gwss  do
     file_attributes['contributor'] = metadata['contributor'] if metadata['contributor']
     file_attributes['description'] = [metadata['description']] if metadata['description']
     file_attributes['gw_affiliation'] = [metadata['gw_affiliation']] if metadata['gw_affiliation']
+    file_attributes['advisor'] = [metadata['advisors']] if metadata['advisors']
+    file_attributes['committee_member'] = [metadata['committee_members']] if metadata['committee_members']
     # TBD whether this is the right rights we want to assign to newly uploaded ETDs
     file_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
     file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
