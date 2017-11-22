@@ -1,0 +1,5 @@
+<% # app/views/records/edit_fields/_committee_member.html.erb %>
+<%= f.input :committee_member, as: :multi_value, required: f.object.required?(key),
+    input_html: { class: 'form-control', multiple: true }
+%>
+
