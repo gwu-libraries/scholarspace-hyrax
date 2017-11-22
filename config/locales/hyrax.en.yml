@@ -20,14 +20,17 @@ en:
     upload_url: "http://library.gwu.edu/scholarspace/submit"
   simple_form:
     labels:
-      work:
+      defaults:
         resource_type:          "Type of Work"
         creator:                "Author"
         bibliographic_citation: "Previous Publication Information"
         gw_affiliation:         "GW Unit"
         based_near:             "Location"
+        degree:                 "Degree"
+        advisor:                "Advisor"
+        committee_member:       "Committee Member"
     hints:
-      work:
+      defaults:
         title: 'The name of the work.'
         creator: 'The person or group who created the work. Personal names should be entered with the last name first, e.g. "Smith, John".'
         description: 'Free-text notes about the work itself. Examples include abstract of a paper, summary of a dataset, or description of the work.'
@@ -39,6 +42,9 @@ en:
         date_created: "The year [YYYY] in which the work was generated, e.g. 2015."
         related_url: "A link to a website or other specific content (audio, video, PDF document) related to the work. An example is the URL of a research
 project from which the work was derived."
+        degree: "Degree earned"
+        advisor: "Thesis/Dissertation advisor(s)"
+        committee_member: "Thesis/Dissertation committee member(s)"
   blacklight:
     search:
       fields:
@@ -46,9 +52,15 @@ project from which the work was derived."
           resource_type:    "Type of Work"
           creator:          "Author"
           gw_affiliation:   "GW Unit"
+          degree:           "Degree"
+          advisor:          "Advisor"
+          committee_member: "Committee Member(s)"
           bibliographic_citation: "Previous Publication Information"
           based_near:       "Location"
         facet:
           gw_affiliation_sim:   "GW Unit"
+          degree_sim:           "Degree"
+          advisor_sim:          "Advisor"
+          committee_member_sim: "Committee Member"
           resource_type_sim:    "Type of Work"
           creator_sim:          "Author"
