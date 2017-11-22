@@ -28,10 +28,10 @@ namespace :gwss  do
       options = {}
 
       op = OptionParser.new
-      op.banner = "Usage: rake gwss:ingest_etd -- --manifest=MFPATH --primaryfile=PFATH --otherfiles=OFPATH --depositor=DEPOSITOR"
+      op.banner = "Usage: rake gwss:ingest_etd -- --manifest=MFPATH --primaryfile=PFPATH --otherfiles=OFLIST --depositor=DEPOSITOR"
       op.on('-mf MFPATH', '--manifest=MFPATH', 'Path to manifest file') { |mfpath| options[:mfpath] = mfpath }
       op.on('-pf FPATH', '--primaryfile=PFPATH', 'Path to primary attachment file') { |pfpath| options[:pfpath] = pfpath }
-      op.on('-of OFPATH', '--otherfiles=OFPATH', 'Path to folder containing other files') { |ofpath| options[:ofpath] = ofpath }
+      op.on('-of OFLIST', '--otherfiles=OFLIST', 'Comma-separated list of paths to supplemental files') { |oflist| options[:oflist] = oflist }
       op.on('-dep DEPOSITOR', '--depositor=DEPOSITOR', 'Scholarspace ID (e.g. email) of depositor') { |depositor| options[:depositor] = depositor }
 
       # return `ARGV` with the intended arguments
@@ -52,7 +52,7 @@ namespace :gwss  do
         etd_id = ingest(manifest_json, options[:depositor])
         # generate_ingest_report(noid_list, investigation_id) 
         puts "Created new GwEtd with id = " + etd_id
-        attach_files(options[:pfpath], options[:ofpath], etd_id) 
+        attach_files(options[:pfpath], options[:oflist], etd_id)
       else
         puts "Manifest file doesn't exist - no ingest"
       end
@@ -106,13 +106,13 @@ namespace :gwss  do
     return file_attributes
   end
 
-  def attach_files(primaryfile_path, otherfiles_path, etd_id)
+  def attach_files(primaryfile_path, otherfiles_list, etd_id)
     user = User.find_by_user_key('kerchner@gwu.edu')
     gwe = GwEtd.find(etd_id)
     # add primary file first, other files afterwards
     files = []
     files += [primaryfile_path] if primaryfile_path
-    files += Dir.glob(otherfiles_path+'/*') if otherfiles_path
+    files += otherfiles_list.split(",") if otherfiles_list
     files.each do |f|
       fs = FileSet.new
       # use the filename as the FileSet title
