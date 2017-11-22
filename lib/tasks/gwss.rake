@@ -28,10 +28,11 @@ namespace :gwss  do
       options = {}
 
       op = OptionParser.new
-      op.banner = "Usage: rake gwss:ingest_etd -- --manifest=MFPATH --primaryfile=PFATH --otherfiles=OFPATH"
+      op.banner = "Usage: rake gwss:ingest_etd -- --manifest=MFPATH --primaryfile=PFATH --otherfiles=OFPATH --depositor=DEPOSITOR"
       op.on('-mf MFPATH', '--manifest=MFPATH', 'Path to manifest file') { |mfpath| options[:mfpath] = mfpath }
       op.on('-pf FPATH', '--primaryfile=PFPATH', 'Path to primary attachment file') { |pfpath| options[:pfpath] = pfpath }
       op.on('-of OFPATH', '--otherfiles=OFPATH', 'Path to folder containing other files') { |ofpath| options[:ofpath] = ofpath }
+      op.on('-dep DEPOSITOR', '--depositor=DEPOSITOR', 'Scholarspace ID (e.g. email) of depositor') { |depositor| options[:depositor] = depositor }
 
       # return `ARGV` with the intended arguments
       args = op.order!(ARGV) {}
@@ -48,7 +49,7 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        etd_id = ingest(manifest_json)
+        etd_id = ingest(manifest_json, options[:depositor])
         # generate_ingest_report(noid_list, investigation_id) 
         puts "Created new GwEtd with id = " + etd_id
         attach_files(options[:pfpath], options[:ofpath], etd_id) 
@@ -58,11 +59,11 @@ namespace :gwss  do
     end
   end
 
-  def ingest(metadata)
+  def ingest(metadata, depositor)
     begin
       file_attributes = read_metadata(metadata)
       gwe = GwEtd.new
-      gwe.apply_depositor_metadata('kerchner@gwu.edu')
+      gwe.apply_depositor_metadata(depositor)
       gwe.attributes = file_attributes
       if file_attributes['embargo_release_date']
         gwe.apply_embargo(file_attributes['embargo_release_date'],
@@ -93,8 +94,9 @@ namespace :gwss  do
     file_attributes['contributor'] = metadata['contributor'] if metadata['contributor']
     file_attributes['description'] = [metadata['description']] if metadata['description']
     file_attributes['gw_affiliation'] = [metadata['gw_affiliation']] if metadata['gw_affiliation']
-    file_attributes['advisor'] = [metadata['advisors']] if metadata['advisors']
-    file_attributes['committee_member'] = [metadata['committee_members']] if metadata['committee_members']
+    file_attributes['degree'] = metadata['degree'] if metadata['degree']
+    file_attributes['advisor'] = metadata['advisors'] if metadata['advisors']
+    file_attributes['committee_member'] = metadata['committee_members'] if metadata['committee_members']
     # TBD whether this is the right rights we want to assign to newly uploaded ETDs
     file_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
     file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
