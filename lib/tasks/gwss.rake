@@ -28,11 +28,12 @@ namespace :gwss  do
       options = {}
 
       op = OptionParser.new
-      op.banner = "Usage: rake gwss:ingest_etd -- --manifest=MFPATH --primaryfile=PFPATH --otherfiles=OFLIST --depositor=DEPOSITOR"
+      op.banner = "Usage: rake gwss:ingest_etd -- --manifest=MFPATH --primaryfile=PFPATH --otherfiles=OFLIST --depositor=DEPOSITOR --update-item-id=UPDATEID"
       op.on('-mf MFPATH', '--manifest=MFPATH', 'Path to manifest file') { |mfpath| options[:mfpath] = mfpath }
       op.on('-pf FPATH', '--primaryfile=PFPATH', 'Path to primary attachment file') { |pfpath| options[:pfpath] = pfpath }
       op.on('-of OFLIST', '--otherfiles=OFLIST', 'Comma-separated list of paths to supplemental files') { |oflist| options[:oflist] = oflist }
       op.on('-dep DEPOSITOR', '--depositor=DEPOSITOR', 'Scholarspace ID (e.g. email) of depositor') { |depositor| options[:depositor] = depositor }
+      op.on('--update-item-id[=UPDATEID]', 'Update Item ID') { |updateid| options[:updateid] = updateid }
 
       # return `ARGV` with the intended arguments
       args = op.order!(ARGV) {}
@@ -49,20 +50,37 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        etd_id = ingest(manifest_json, options[:depositor])
+        etd_id = ingest(manifest_json, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
-        puts "Created new GwEtd with id = " + etd_id
-        attach_files(options[:pfpath], options[:oflist], etd_id)
+        attach_files(options[:pfpath], options[:oflist],
+                     options[:depositor], etd_id)
+        puts etd_id
       else
         puts "Manifest file doesn't exist - no ingest"
       end
     end
   end
 
-  def ingest(metadata, depositor)
+  def ingest(metadata, depositor, updateid)
     begin
       file_attributes = read_metadata(metadata)
-      gwe = GwEtd.new
+      gwe = nil
+      if updateid.nil?
+        gwe = GwEtd.new
+        gwe.id = ActiveFedora::Noid::Service.new.mint
+      else
+        gwe = GwEtd.find(updateid)
+        # delete existing files; we'll "overwrite" with new ones
+        # TODO: Unfortunately, this will have the effect that links
+        # to individual files won't be persistent if the ETD is updated
+        # To solve this, we'd need a scheme for matching up updated files
+        # with existing files (perhaps by file name?)
+        fsets = gwe.file_sets
+        fsets.each do |fs|
+          fs.delete  
+        end
+      end
+
       gwe.apply_depositor_metadata(depositor)
       gwe.attributes = file_attributes
       if file_attributes['embargo_release_date']
@@ -72,7 +90,6 @@ namespace :gwss  do
       else
         gwe.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
       end 
-      gwe.id = ActiveFedora::Noid::Service.new.mint
       now = Hyrax::TimeService.time_in_utc
       gwe.date_uploaded = now
 
@@ -106,13 +123,13 @@ namespace :gwss  do
     return file_attributes
   end
 
-  def attach_files(primaryfile_path, otherfiles_list, etd_id)
-    user = User.find_by_user_key('kerchner@gwu.edu')
+  def attach_files(primaryfile_path, otherfiles_list, depositor, etd_id)
+    user = User.find_by_user_key(depositor)
     gwe = GwEtd.find(etd_id)
     # add primary file first, other files afterwards
     files = []
     files += [primaryfile_path] if primaryfile_path
-    files += otherfiles_list.split(",") if otherfiles_list
+    files += otherfiles_list.split(',') if otherfiles_list
     files.each do |f|
       fs = FileSet.new
       # use the filename as the FileSet title
