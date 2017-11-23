@@ -50,7 +50,7 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        etd_id = ingest(manifest_json, options[:depositor], options[:updateid)
+        etd_id = ingest(manifest_json, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
         attach_files(options[:pfpath], options[:oflist],
                      options[:depositor], etd_id)
@@ -78,6 +78,8 @@ namespace :gwss  do
         fsets = gwe.file_sets
         fsets.each do |fs|
           fs.delete  
+        end
+      end
 
       gwe.apply_depositor_metadata(depositor)
       gwe.attributes = file_attributes
