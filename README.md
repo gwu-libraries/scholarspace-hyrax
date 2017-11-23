@@ -471,6 +471,10 @@ has logged in at least once via the app's web UI (which should now be working).
 ```
   We can [add the content-admin users](#prod-add-content-admin) as desired through the /roles UI.
 
+### Create `ETDs` admin set
+
+* Log in as the admin user.  Navigate to the Administrative page, and create an Administrative set called `ETDs`.
+
 ### Populate the initial content blocks
 
 * Log in as the admin user.  Edit the Above and Help pages; paste in the HTML from the repo **TODO: Add initial HTML to repo**
