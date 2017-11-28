@@ -521,12 +521,6 @@ to upload items and edit the items that they have uploaded (plus items transferr
  
          config.citations = true
 
-### (Optional) Enable office document derivatives
-
- * Uncomment the following line in `config/initializers/sufia.rb`
- 
-         config.libreoffice_path = "soffice"
-
 ### (Optional) Add Google Analytics
 
 * Enable Google Analytics in `config/initializers/sufia.rb` by editing the following lines:
