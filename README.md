@@ -507,7 +507,7 @@ has logged in at least once via the app's web UI (which should now be working).
 * Select the content-admin role, and add each of the users to whom you wish to grant content-admin rights.  These users should now be able
 to upload items and edit the items that they have uploaded (plus items transferred or proxied to them).
 
-* Note that removing users from roles through the /roles interface is still (as of Hyrax 1.0.05) broken, and must be accomplished through the rails console.
+* Note that removing users from roles through the /roles interface is still (as of Hyrax 1.0.5) broken, and must be accomplished through the rails console.
 
 ### (Optional) Enable weekly file audits
 
