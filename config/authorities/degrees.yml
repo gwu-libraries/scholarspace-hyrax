@@ -1,6 +1,12 @@
 terms:
+  - id: D.Engr.
+    term: D.Engr.
+    active: true
   - id: D.Sc.
     term: D.Sc.
+    active: true
+  - id: Dr.P.H.
+    term: Dr.P.H.
     active: true
   - id: Ed.D.
     term: Ed.D.
