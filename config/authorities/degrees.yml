@@ -17,6 +17,9 @@ terms:
   - id: M.A.
     term: M.A.
     active: true
+  - id: M.A.T.
+    term: M.A.T.
+    active: true
   - id: M.F.A.
     term: M.F.A.
     active: true
