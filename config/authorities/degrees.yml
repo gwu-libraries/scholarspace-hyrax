@@ -20,6 +20,9 @@ terms:
   - id: M.A.T.
     term: M.A.T.
     active: true
+  - id: M.B.A.
+    term: M.B.A.
+    active: true
   - id: M.F.A.
     term: M.F.A.
     active: true
