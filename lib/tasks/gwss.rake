@@ -50,10 +50,11 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        etd_id = ingest(manifest_json, options[:depositor], options[:updateid])
+        item_attributes = read_metadata(manifest_json)
+        etd_id = ingest(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
         attach_files(options[:pfpath], options[:oflist],
-                     options[:depositor], etd_id)
+                     options[:depositor], item_attributes['embargo_release_date'], etd_id)
         puts etd_id
       else
         puts "Manifest file doesn't exist - no ingest"
@@ -61,9 +62,8 @@ namespace :gwss  do
     end
   end
 
-  def ingest(metadata, depositor, updateid)
+  def ingest(item_attributes, depositor, updateid)
     begin
-      file_attributes = read_metadata(metadata)
       gwe = nil
       if updateid.nil?
         gwe = GwEtd.new
@@ -82,14 +82,8 @@ namespace :gwss  do
       end
 
       gwe.apply_depositor_metadata(depositor)
-      gwe.attributes = file_attributes
-      if file_attributes['embargo_release_date']
-        gwe.apply_embargo(file_attributes['embargo_release_date'],
-			  Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
-                          Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-      else
-        gwe.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-      end 
+      gwe.attributes = item_attributes
+      gwe.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
       now = Hyrax::TimeService.time_in_utc
       gwe.date_uploaded = now
 
@@ -123,7 +117,7 @@ namespace :gwss  do
     return file_attributes
   end
 
-  def attach_files(primaryfile_path, otherfiles_list, depositor, etd_id)
+  def attach_files(primaryfile_path, otherfiles_list, depositor, embargo_release_date, etd_id)
     user = User.find_by_user_key(depositor)
     gwe = GwEtd.find(etd_id)
     # add primary file first, other files afterwards
@@ -138,6 +132,12 @@ namespace :gwss  do
       actor.create_metadata()
       actor.create_content(File.open(f))
       actor.attach_file_to_work(gwe)
+      if embargo_release_date
+        fs.apply_embargo(embargo_release_date,
+                      Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
+                      Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
+      end
+      fs.save
     end
   end
 end
