@@ -26,6 +26,12 @@ terms:
   - id: M.F.A.
     term: M.F.A.
     active: true
+  - id: M.F.S.
+    term: M.F.S.
+    active: true
+  - id: M.P.H.
+    term: M.P.H.
+    active: true
   - id: M.P.S.
     term: M.P.S.
     active: true
