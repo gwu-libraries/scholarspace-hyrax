@@ -51,11 +51,12 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("contributor", :facetable), label: "Contributor", limit: 5
     config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
     config.add_facet_field solr_name("subject", :facetable), label: "Subject", limit: 5
-    config.add_facet_field solr_name("language", :facetable), label: "Language", limit: 5
-    config.add_facet_field solr_name("based_near", :facetable), label: "Location", limit: 5
-    config.add_facet_field solr_name("publisher", :facetable), label: "Publisher", limit: 5
-    config.add_facet_field solr_name("file_format", :facetable), label: "File Format", limit: 5
-    config.add_facet_field solr_name('member_of_collections', :symbol), limit: 5, label: 'Collections'
+    config.add_facet_field solr_name("date_created", :facetable), label: "Year", limit: 5
+    # config.add_facet_field solr_name("language", :facetable), label: "Language", limit: 5
+    # config.add_facet_field solr_name("based_near", :facetable), label: "Location", limit: 5
+    # config.add_facet_field solr_name("publisher", :facetable), label: "Publisher", limit: 5
+    # config.add_facet_field solr_name("file_format", :facetable), label: "File Format", limit: 5
+    # config.add_facet_field solr_name('member_of_collections', :symbol), limit: 5, label: 'Collections'
 
     # The generic_type isn't displayed on the facet list
     # It's used to give a label to the filter that comes from the user profile
