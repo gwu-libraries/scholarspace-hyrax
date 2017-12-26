@@ -479,7 +479,12 @@ has logged in at least once via the app's web UI (which should now be working).
 
 * Log in as the admin user.  Edit the Above and Help pages; paste in the HTML from the repo **TODO: Add initial HTML to repo**
 
+### (Optional) Enable citation pages
+
+ * Uncomment the following line in `config/initializers/sufia.rb` and set to `true`
  
+         config.citations = true
+
 # ***RESUME EDITING HERE***
 
 ### Make files in `script` executable:
@@ -509,17 +514,6 @@ to upload items and edit the items that they have uploaded (plus items transferr
 
 * Note that removing users from roles through the /roles interface is still (as of Hyrax 1.0.5) broken, and must be accomplished through the rails console.
 
-### (Optional) Enable weekly file audits
-
- * Uncomment the following line in `config/initializers/sufia.rb`
- 
-         config.max_days_between_audits = 7
-
-### (Optional) Enable citation pages
-
- * Uncomment the following line in `config/initializers/sufia.rb` and set to `true`
- 
-         config.citations = true
 
 ### (Optional) Add Google Analytics
 
