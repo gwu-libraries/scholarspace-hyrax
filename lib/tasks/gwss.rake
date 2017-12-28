@@ -89,6 +89,7 @@ namespace :gwss  do
 
       etd_admin_set = AdminSet.where(title: "ETDs")[0]
       gwe.admin_set = etd_admin_set
+      gwe.set_edit_groups(["content-admin"],[])
       gwe.save
       return gwe.id
     end
@@ -137,6 +138,7 @@ namespace :gwss  do
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
       end
+      fs.set_edit_groups(["content-admin"],[])
       fs.save
     end
   end
