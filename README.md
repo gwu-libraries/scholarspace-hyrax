@@ -485,6 +485,10 @@ has logged in at least once via the app's web UI (which should now be working).
  
          config.citations = true
 
+### Post-deployment
+
+ * [Add content-admin users](https://github.com/gwu-libraries/scholarspace-hyrax/wiki/Adding-content-admin-users)
+
 # ***RESUME EDITING HERE***
 
 ### Make files in `script` executable:
@@ -502,17 +506,6 @@ has logged in at least once via the app's web UI (which should now be working).
 * If Shibboleth has been setup on the GW ScholarSpace Server, enable Shibboleth in the appropriate environment file (ie: `config/environments/production.rb`):
 
          config.shibboleth = true
-
-### (Optional) Add content-admin users <a id="prod-add-content-admin"></a>
-
-* Ask each of the content-admin users to log in to the application at least once.  Right now they will have read-only rights.
-
-* Log in as an admin user, and navigate to /roles
-
-* Select the content-admin role, and add each of the users to whom you wish to grant content-admin rights.  These users should now be able
-to upload items and edit the items that they have uploaded (plus items transferred or proxied to them).
-
-* Note that removing users from roles through the /roles interface is still (as of Hyrax 1.0.5) broken, and must be accomplished through the rails console.
 
 
 ### (Optional) Add Google Analytics
