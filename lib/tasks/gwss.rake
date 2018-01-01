@@ -144,7 +144,7 @@ namespace :gwss  do
   end
 
   desc "Reindex everything"
-  task reindex_all: :environment do
+  task reindex_everything: :environment do
     ActiveFedora::Base.reindex_everything
   end
 end
