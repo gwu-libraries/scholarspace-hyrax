@@ -488,29 +488,10 @@ has logged in at least once via the app's web UI (which should now be working).
 ### Post-deployment
 
  * [Add content-admin users](https://github.com/gwu-libraries/scholarspace-hyrax/wiki/Adding-content-admin-users)
-
-# ***RESUME EDITING HERE***
-
-### Make files in `script` executable:
-
-         chmod -R a+x script
-
-### Start a Redis RESQUE pool
-
-        % script/restart_resque.sh production
    
-### (Optional) Set up Shibboleth integration on the GW ScholarSpace server:
+### (NEEDS REFRESH - see [#83](https://github.com/gwu-libraries/scholarspace-hyrax/issues/83)) (Optional) Add Google Analytics
 
-  Please refer to https://github.com/gwu-libraries/shibboleth for the recommended steps for setting up the Shibboleth integration.
-
-* If Shibboleth has been setup on the GW ScholarSpace Server, enable Shibboleth in the appropriate environment file (ie: `config/environments/production.rb`):
-
-         config.shibboleth = true
-
-
-### (Optional) Add Google Analytics
-
-* Enable Google Analytics in `config/initializers/sufia.rb` by editing the following lines:
+* Enable Google Analytics in `config/initializers/hyrax.rb` by editing the following lines:
 
          # Enable displaying usage statistics in the UI
          # Defaults to FALSE
@@ -527,13 +508,13 @@ has logged in at least once via the app's web UI (which should now be working).
 
         % cp config/analytics.yml.template config/analytics.yml
 
-* Populate the `analyitcs.yml` file with your Google Analyitcs credentials.  See: https://github.com/projecthydra/sufia#analytics-and-usage-statistics for setup details.  Note that sufia seems to expect the .p12 file version of the private key, rather than the json version.
+* Populate the `analyitcs.yml` file with your Google Analyitcs credentials.  See: https://github.com/samvera/hyrax/wiki/Hyrax-Management-Guide#analytics-and-usage-statistics for setup details.  Note that Hyrax seems to expect the .p12 file version of the private key, rather than the json version.
 
 * Set up a cron job to import GA stats nightly
 
   Test the script to make sure that it can run successfully.  Make sure the script has execute permissions.  Your `analytics.yml` file must also be set up correctly in order for the script to succeed.
 
-        % cd /opt/scholarspace/script
+        % cd /opt/scholarspace/scholarspace-hyrax/script
         % sudo chmod +x import_stats.sh
         % ./import_stats.sh production
 
@@ -543,5 +524,13 @@ has logged in at least once via the app's web UI (which should now be working).
 
   Add a line similar to the following:
 
-        0 5 * * * /opt/scholarspace/script/import_stats.sh production
+        0 5 * * * /opt/scholarspace/scholarspace-hyrax/script/import_stats.sh production
+
+### (NEEDS REFRESH - see [#11](https://github.com/gwu-libraries/scholarspace-hyrax/issues/11)) (Optional) Set up Shibboleth integration on the GW ScholarSpace server:
+
+  Please refer to https://github.com/gwu-libraries/shibboleth for the recommended steps for setting up the Shibboleth integration.
+
+* If Shibboleth has been setup on the GW ScholarSpace Server, enable Shibboleth in the appropriate environment file (ie: `config/environments/production.rb`):
+
+         config.shibboleth = true
 
