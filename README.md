@@ -225,7 +225,9 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 * Install Rails:
 ```
         % gem install rails -v 5.0.4 -N
-```      
+```    
+  Also, add `export rvmsudo_secure_path=1` to your user's `.bashrc` file.  This will avoid a warning when running `rvmsudo`.
+
 * Create directories
 ```
         % mkdir /opt/scholarspace
@@ -444,6 +446,16 @@ set the following properties in `config/initializers/sufia.rb` :
         % cd mod_xsendfile
         % sudo apxs2 -cia mod_xsendfile.c
         % sudo service apache2 restart
+```
+
+### (Optional) Install etd-loader
+
+* Install the **etd-loader** application in `/opt/etd-loader` as per instructions at https://github.com/gwu-libraries/etd-loader
+
+* When configuring `config.py`, ensure that it contains the following values:
+```
+ingest_path = "/opt/scholarspace/scholarspace-hyrax"
+ingest_command = "rake RAILS_ENV=production gwss:ingest_etd"
 ```
 
 ### Final Deployment
