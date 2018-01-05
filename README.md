@@ -76,13 +76,13 @@ These instructions have been updated for Ubuntu 16.04.
 ```
   % sudo su - solr -c "/opt/solr/bin/solr create -c scholarspace -n /opt/install/solr/config"
 ```  
-  Convert the new Solr core from `managed-schema` to `schema.xml` support:
+* Convert the new Solr core from `managed-schema` to `schema.xml` support:
 ```  
   % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
 ```  
-  Copy the `solr/config/` contents from the [samvera/hyrax repo](https://github.com/samvera/hyrax/tree/v1.0.5/solr/config) to `/var/solr/data/scholarspace/conf/` (this can be accomplished by git clone-ing the hyrax repo, making sure to check out the appropriate tag)
+* Copy the `solr/config/` contents from the [samvera/hyrax repo](https://github.com/samvera/hyrax/tree/v1.0.5/solr/config) to `/var/solr/data/scholarspace/conf/` (this can be accomplished by git clone-ing the hyrax repo, making sure to check out the appropriate tag)
   
-  Restart Solr:
+* Restart Solr:
 ```  
   % sudo service solr restart
 ``` 
