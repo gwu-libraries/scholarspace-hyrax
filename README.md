@@ -60,7 +60,7 @@ These instructions have been updated for Ubuntu 16.04.
   
 ### Solr setup
 
-* Install Solr:
+* Install Solr (may require `sudo`):
 ```
   % cd /opt/install
   % wget http://archive.apache.org/dist/lucene/solr/6.4.1/solr-6.4.1.tgz
