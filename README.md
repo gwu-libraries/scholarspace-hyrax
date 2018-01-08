@@ -50,7 +50,7 @@ These instructions have been updated for Ubuntu 16.04.
    % sudo mkdir /etc/fcrepo
 ```
 
-### Tomcat 7 setup
+## Tomcat 7 setup
 
 * Configure Tomcat7 Java settings:
 
@@ -58,7 +58,7 @@ These instructions have been updated for Ubuntu 16.04.
   
   Make sure that the `JAVA_HOME` value corresponds to the correct Java installation directory.  If not, update `JAVA_HOME`.
   
-### Solr setup
+## Solr setup
 
 * Install Solr (may require `sudo`):
 ```
@@ -86,25 +86,14 @@ These instructions have been updated for Ubuntu 16.04.
 ```  
   % sudo service solr restart
 ``` 
-### Set up Fedora with audit support
-```
-   % cd /opt/install
-   % wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.7.1/fcrepo-webapp-plus-audit-4.7.1.war
-   % sudo cp fcrepo-webapp-plus-audit-4.7.1.war /var/lib/tomcat7/webapps/fcrepo.war
-```   
-   Wait for tomcat to deploy the war file before proceeding to the next step.  This can be verified by watching `/var/log/tomcat7/catalina.out`
-   
-   Copy the `tomcat_conf/fcrepo-webapp/web.xml` file from the Github repo to `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml` 
-   
-   Ensure that tomcat7 library files are all still owned by tomcat7
-```
-   % sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7
-```
-   Set up Fedora authentication by copying the `tomcat_conf/tomcat-users.xml` file from the Github repo and overwrite `/etc/tomcat7/tomcat-users.xml`.   Edit `tomcat-users.xml` and replace the dummy passwords with your preferred secure passwords.  (Be sure that your passwords don't contain any characters considered special characters in XML, such as `<`,`>`,`&`,`'`,`"`)
-   
-   Edit `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/jdbc-postgresql/repository.json` to change the database name from `fcrepo` to `ispn`.
 
-* OPTIONAL: (If creating a new repository, skip this step) Create a backup of the existing Fedora instance
+## Fedora setup
+
+### Optional: Back up existing Fedora
+
+*  If creating a new repository, skip this step.
+
+   Create a backup of the existing Fedora instance
 ```
     % sudo mkdir /opt/fedora_backups
     % sudo chown -R tomcat7:tomcat7 /opt/fedora_backups
@@ -112,7 +101,7 @@ These instructions have been updated for Ubuntu 16.04.
 ```
    Verify that a backup was created in `/opt/fedora_backups` before proceeding
 
-## Set up a PostgreSQL database for Fedora
+### Set up a PostgreSQL database for Fedora
 
 * Create a postgreSQL database user and database for Fedora
 ```
@@ -129,25 +118,46 @@ These instructions have been updated for Ubuntu 16.04.
    placeholders for these values:
 
 ```
-   JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.ispn.postgresql.username=<ADD ISPN DB USERNAME HERE>"
-   JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.ispn.postgresql.password=<ADD ISPN DB PASSWORD HERE>"
+   JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.postgresql.username=<ADD ISPN DB USERNAME HERE>"
+   JAVA_OPTS="${JAVA_OPTS} -Dfcrepo.postgresql.password=<ADD ISPN DB PASSWORD HERE>"
 ```
 
-
-* Create a Fedora settings folder
+### Create a Fedora settings folder
 ```
    % sudo mkdir /etc/fcrepo
-```   
+``` 
 * Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Set the ownership to tomcat7:
 
 ```
    % sudo chown -R tomcat7:tomcat7 /etc/fcrepo
+``` 
+
+### Set up Fedora with audit support
+
+* Copy fcrepo WAR file to tomcat7
+```
+   % cd /opt/install
+   % wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.7.1/fcrepo-webapp-plus-audit-4.7.1.war
+   % sudo cp fcrepo-webapp-plus-audit-4.7.1.war /var/lib/tomcat7/webapps/fcrepo.war
 ```   
+* Wait for tomcat to deploy the war file before proceeding to the next step.  This can be verified by watching `/var/log/tomcat7/catalina.out`
+   
+* Copy the `tomcat_conf/fcrepo-webapp/web.xml` file from the Github repo to `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml` 
+   
+* Ensure that tomcat7 library files are all still owned by tomcat7
+```
+   % sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7
+```
+* Set up Fedora authentication by copying the `tomcat_conf/tomcat-users.xml` file from the Github repo and overwrite `/etc/tomcat7/tomcat-users.xml`.   Edit `tomcat-users.xml` and replace the dummy passwords with your preferred secure passwords.  (Be sure that your passwords don't contain any characters considered special characters in XML, such as `<`,`>`,`&`,`'`,`"`)
+   
+* Edit `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/jdbc-postgresql/repository.json` to change the database name from `fcrepo` to `ispn`.
 
 * Restart Tomcat
 ```
    % sudo service tomcat7 restart
 ```
+  Check `/var/log/tomcat7/catalina.out` to ensure that tomcat7 restarted and deployed fcrepo with no errors.
+
 
 * OPTIONAL:  To restore from a Fedora backup:
 ```
@@ -177,7 +187,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         Retrieve `server_ssl.xml` from `tomcat_conf/server_ssl.xml` in the GitHub repo
         % sudo cp tomcat_conf/server_ssl.xml /etc/tomcat7/server.xml
 ```        
-*  Edit `/etc/tomcat/server.xml` and replace the dummy values for the following lines with your certificates and keys:
+*  Edit `/etc/tomcat7/server.xml` and replace the dummy values for the following lines with your certificates and keys:
 	```
         SSLCertificateFile="/etc/ssl/certs/yourservername.cer"
         SSLCertificateChainFile="/etc/ssl/certs/yourservername.cer"
