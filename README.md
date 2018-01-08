@@ -394,7 +394,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
          config.libreoffice_path = "/usr/bin/soffice"
 ```
-### Configure derivatives path for Sufia
+### Configure derivatives path for Hyrax
 
    * Create a derivatives folder on your application server:
 ```
@@ -409,7 +409,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ### Configure Contact form emailing
 
   In order to enable the contact form page to send email when the user clicks Send,
-set the following properties in `config/initializers/sufia.rb` :
+set the following properties in `config/initializers/hyrax.rb` :
 ```
          config.contact_email = 
 ```
@@ -419,7 +419,7 @@ set the following properties in `config/initializers/sufia.rb` :
     % cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
 ```
 
-  Set the SMTP credentials for the user as whom the app will send email.  Make sure that the `user_name` value in `setup_mail.rb` matches the `contact_email` value configured above in `sufia.rb`.
+  Set the SMTP credentials for the user as whom the app will send email.  Make sure that the `user_name` value in `setup_mail.rb` matches the `contact_email` value configured above in `hyrax.rb`.
   
   * Edit `config/initializers/mailboxer.rb` with email account from which to send messages and notifications:
 ```
