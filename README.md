@@ -333,13 +333,18 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
   (For a dev or test environment, paste secret keys into the `secrets.yml` file.)
   For a production environment, as root, add the following to the bottom of `/etc/profile`, substituting the actual key value that you copied above:
 ```
-  export SECRET_KEY_BASE=<the secret key you generated above>
+        export SECRET_KEY_BASE=<the secret key you generated above>
 ```
 
 * Run the database migrations
 ```
         % rake db:migrate RAILS_ENV=production
 ```
+  If you get an error about rake versions, this can be resolved with:
+```
+        gem install rake -v 12.0.0   # or other desired version
+```
+
 * Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
 ```
         % cd /usr/local/bin
