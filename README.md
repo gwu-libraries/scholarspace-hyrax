@@ -225,6 +225,8 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % source /etc/profile.d/rvm.sh
 ```
    Edit `/etc/group` and add yourself (and any other users who will need to run rvm) to the `rvm` system group.
+   
+   Log out, then log back in.
   
 * Install Ruby:
 ```
