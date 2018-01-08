@@ -255,20 +255,26 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
 * Get the GW ScholarSpace code:
 ```
-        % cd /opt/scholarspace
+        % sudo su - scholarspace
+	% cd /opt/scholarspace
         % git clone https://github.com/gwu-libraries/scholarspace-hyrax.git
 ```
   Check out the desired tag, where `TAGNUMBER` might be, for example, `1.0`:
 ```
-        % git checkout TAGNUMBER
+        % cd scholarspace-hyrax
+	% git checkout TAGNUMBER
 ```
 
 * Install gems
 ```
-        % cd scholarspace-hyrax
         % bundle install --without development --deployment
 ```	
   More information on the meaning of these bundle install options can be found at http://bundler.io/v1.15/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
+  
+  Return to your user account:
+```
+        % exit
+```
 
 * Create a postgresql user for scholarspace
 ```
