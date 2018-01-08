@@ -217,7 +217,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 * Install necessary Ubuntu packages:
 ```
         % sudo apt-get update
-        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2-dev ffmpeg gnupg2
+        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2 apache2-dev ffmpeg gnupg2
 ```
 * Install RVM for multi-users.  If the GPG signature verification fails at this step, just follow the instructions in the warning in order to fetch the public key.
 ```
@@ -431,7 +431,7 @@ set the following properties in `config/initializers/hyrax.rb` :
 * Set up Passenger, and create Passenger config for Apache
 ```
         % gem install passenger -v 5.1.7 --no-rdoc --no-ri
-        % passenger-install-apache2-module
+        % rvmsudo passenger-install-apache2-module
 ```
    Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
 ```        
