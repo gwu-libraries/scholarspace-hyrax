@@ -465,7 +465,9 @@ set the following properties in `config/initializers/hyrax.rb` :
         % sudo a2dissite 000-default.conf
         % sudo a2ensite scholarspace.conf
         % sudo a2ensite scholarspace-ssl.conf
-```        
+```
+  If you are not implementing Shibboleth, you MUST remove the lines in `scholarspace-ssl.conf` referencing shibboleth.
+
 * Install `mod_xsendfile`
 ```
         % cd /opt/install
@@ -520,7 +522,7 @@ has logged in at least once via the app's web UI (which should now be working).
 
 ### (Optional) Enable citation pages
 
- * Uncomment the following line in `config/initializers/sufia.rb` and set to `true`
+ * Uncomment the following line in `config/initializers/hyrax.rb` and set to `true`
  
          config.citations = true
 
