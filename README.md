@@ -296,39 +296,45 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
 * Create the `database.yml` file
 ```
-        % cd config
+        % sudo su - scholarspace
+	% cd config
         % cp database.yml.template database.yml
 ```
   Edit `database.yml` to add your specific database names and credentials
 
 * Create the `solr.yml` file
 ```
-        % cd config
         % cp solr.yml.template solr.yml
 ```
   Edit `solr.yml` to add the URL of the Solr instance(s).
 
 * Create the `blacklight.yml` file
 ```
-        % cd config
         % cp blacklight.yml.template blacklight.yml
 ```
   Edit `blacklight.yml` to add the URL of the Solr instance(s).
 
 * Create the `fedora.yml` file
 ```
-        % cd config
         % cp fedora.yml.template fedora.yml
 ```
   Edit `fedora.yml` to add the URL of the Fedora repository(/-ies).
 
 * Create the secure secret key. In production, put this in your environment, not in the file.
 ```
-        % cd config
-        % cp secrets.yml.template secrets.yml
-        % rake secret
+        % cd ..
+	% bundle exec rake secret
 ```
-  Paste the secret key into the `secrets.yml` file (for dev and test)
+  Copy the key to your clipboard.
+```
+	% cd config
+        % cp secrets.yml.template secrets.yml
+```
+  (For a dev or test environment, paste secret keys into the `secrets.yml` file.)
+  For a production environment, as root, add the following to the bottom of `/etc/profile`, substituting the actual key value that you copied above:
+```
+  export SECRET_KEY_BASE=<the secret key you generated above>
+```
 
 * Run the database migrations
 ```
