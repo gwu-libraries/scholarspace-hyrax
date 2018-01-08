@@ -365,7 +365,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```        
         % cp /tmp/minter-state /opt/scholarspace/scholarspace-minter/
 ```
-  Verify that `config.minter_statefile` in `config/initializers/hyax.rb` matches the minter directory as specified above.
+  Verify that `config.minter_statefile` in `config/initializers/hyax.rb` matches the path of the new minter directory:
 ```
          config.minter_statefile = '/opt/scholarspace/scholarspace-minter/minter-state'
 ```
@@ -377,7 +377,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % sudo mkdir /opt/scholarspace/scholarspace-tmp
         % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-tmp
 ```
-  * Uncomment `config.temp_file_base` in `config/initializers/hyrax.rb`
+  * Verify that `config.temp_file_base` in `config/initializers/hyrax.rb` matches the path of the new tmp directory:
 ```
          config.temp_file_base = '/opt/scholarspace/scholarspace-tmp'
 ```
