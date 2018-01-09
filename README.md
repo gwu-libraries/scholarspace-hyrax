@@ -318,7 +318,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
         % cp fedora.yml.template fedora.yml
 ```
-  Edit `fedora.yml` to add the URL of the Fedora repository(/-ies).
+  Edit `fedora.yml` to add the URL of the Fedora repository(/-ies).  Make sure to add the password you configured in `tomcat-users.xml` when setting up Fedora.
 
 * Create the secure secret key. In production, put this in your environment, not in the file.
 ```
