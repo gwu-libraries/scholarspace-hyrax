@@ -495,7 +495,15 @@ has logged in at least once via the app's web UI (which should now be working).
 
 ### Create `ETDs` admin set
 
-* Log in as the admin user.  Navigate to the Administrative page, and create an Administrative set called `ETDs`.
+* First, create the default administrative set (Hyrax won't allow you to create any admin sets until you've created this first one):
+
+```
+        % su - scholarspace
+        % cd /opt/scholarspace/scholarspace-hyrax
+        % RAILS_ENV=production rake hyrax:default_admin_set:create
+```
+
+* Log in to the application as the admin user.  Navigate to the Administrative page, and create an Administrative set called `ETDs`.
 
 ### Populate the initial content blocks
 
