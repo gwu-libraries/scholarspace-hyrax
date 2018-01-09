@@ -217,7 +217,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 * Install necessary Ubuntu packages:
 ```
         % sudo apt-get update
-        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2-dev ffmpeg gnupg2
+        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2 apache2-dev ffmpeg gnupg2
 ```
 * Install RVM for multi-users.  If the GPG signature verification fails at this step, just follow the instructions in the warning in order to fetch the public key.
 ```
@@ -255,20 +255,26 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
 * Get the GW ScholarSpace code:
 ```
-        % cd /opt/scholarspace
+        % sudo su - scholarspace
+	% cd /opt/scholarspace
         % git clone https://github.com/gwu-libraries/scholarspace-hyrax.git
 ```
   Check out the desired tag, where `TAGNUMBER` might be, for example, `1.0`:
 ```
-        % git checkout TAGNUMBER
+        % cd scholarspace-hyrax
+	% git checkout TAGNUMBER
 ```
 
 * Install gems
 ```
-        % cd scholarspace-hyrax
         % bundle install --without development --deployment
 ```	
   More information on the meaning of these bundle install options can be found at http://bundler.io/v1.15/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
+  
+  Return to your user account:
+```
+        % exit
+```
 
 * Create a postgresql user for scholarspace
 ```
@@ -290,44 +296,55 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
 * Create the `database.yml` file
 ```
-        % cd config
+        % sudo su - scholarspace
+	% cd config
         % cp database.yml.template database.yml
 ```
   Edit `database.yml` to add your specific database names and credentials
 
 * Create the `solr.yml` file
 ```
-        % cd config
         % cp solr.yml.template solr.yml
 ```
   Edit `solr.yml` to add the URL of the Solr instance(s).
 
 * Create the `blacklight.yml` file
 ```
-        % cd config
         % cp blacklight.yml.template blacklight.yml
 ```
   Edit `blacklight.yml` to add the URL of the Solr instance(s).
 
 * Create the `fedora.yml` file
 ```
-        % cd config
         % cp fedora.yml.template fedora.yml
 ```
   Edit `fedora.yml` to add the URL of the Fedora repository(/-ies).
 
 * Create the secure secret key. In production, put this in your environment, not in the file.
 ```
-        % cd config
-        % cp secrets.yml.template secrets.yml
-        % rake secret
+        % cd ..
+	% bundle exec rake secret
 ```
-  Paste the secret key into the `secrets.yml` file (for dev and test)
+  Copy the key to your clipboard.
+```
+	% cd config
+        % cp secrets.yml.template secrets.yml
+```
+  (For a dev or test environment, paste secret keys into the `secrets.yml` file.)
+  For a production environment, as root, add the following to the bottom of `/etc/profile`, substituting the actual key value that you copied above:
+```
+        export SECRET_KEY_BASE=<the secret key you generated above>
+```
 
 * Run the database migrations
 ```
         % rake db:migrate RAILS_ENV=production
 ```
+  If you get an error about rake versions, this can be resolved with:
+```
+        % gem install rake -v 12.0.0   # or other desired version
+```
+
 * Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
 ```
         % cd /usr/local/bin
@@ -348,7 +365,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```        
         % cp /tmp/minter-state /opt/scholarspace/scholarspace-minter/
 ```
-  Verify that `config.minter_statefile` in `config/initializers/hyax.rb` matches the minter directory as specified above.
+  Verify that `config.minter_statefile` in `config/initializers/hyax.rb` matches the path of the new minter directory:
 ```
          config.minter_statefile = '/opt/scholarspace/scholarspace-minter/minter-state'
 ```
@@ -360,7 +377,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
         % sudo mkdir /opt/scholarspace/scholarspace-tmp
         % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-tmp
 ```
-  * Uncomment `config.temp_file_base` in `config/initializers/hyrax.rb`
+  * Verify that `config.temp_file_base` in `config/initializers/hyrax.rb` matches the path of the new tmp directory:
 ```
          config.temp_file_base = '/opt/scholarspace/scholarspace-tmp'
 ```
@@ -377,7 +394,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
          config.libreoffice_path = "/usr/bin/soffice"
 ```
-### Configure derivatives path for Sufia
+### Configure derivatives path for Hyrax
 
    * Create a derivatives folder on your application server:
 ```
@@ -392,7 +409,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ### Configure Contact form emailing
 
   In order to enable the contact form page to send email when the user clicks Send,
-set the following properties in `config/initializers/sufia.rb` :
+set the following properties in `config/initializers/hyrax.rb` :
 ```
          config.contact_email = 
 ```
@@ -402,7 +419,7 @@ set the following properties in `config/initializers/sufia.rb` :
     % cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
 ```
 
-  Set the SMTP credentials for the user as whom the app will send email.  Make sure that the `user_name` value in `setup_mail.rb` matches the `contact_email` value configured above in `sufia.rb`.
+  Set the SMTP credentials for the user as whom the app will send email.  Make sure that the `user_name` value in `setup_mail.rb` matches the `contact_email` value configured above in `hyrax.rb`.
   
   * Edit `config/initializers/mailboxer.rb` with email account from which to send messages and notifications:
 ```
@@ -414,7 +431,7 @@ set the following properties in `config/initializers/sufia.rb` :
 * Set up Passenger, and create Passenger config for Apache
 ```
         % gem install passenger -v 5.1.7 --no-rdoc --no-ri
-        % passenger-install-apache2-module
+        % rvmsudo passenger-install-apache2-module
 ```
    Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
 ```        
@@ -448,7 +465,9 @@ set the following properties in `config/initializers/sufia.rb` :
         % sudo a2dissite 000-default.conf
         % sudo a2ensite scholarspace.conf
         % sudo a2ensite scholarspace-ssl.conf
-```        
+```
+  If you are not implementing Shibboleth, you MUST remove the lines in `scholarspace-ssl.conf` referencing shibboleth.
+
 * Install `mod_xsendfile`
 ```
         % cd /opt/install
@@ -511,7 +530,7 @@ has logged in at least once via the app's web UI (which should now be working).
 
 ### (Optional) Enable citation pages
 
- * Uncomment the following line in `config/initializers/sufia.rb` and set to `true`
+ * Uncomment the following line in `config/initializers/hyrax.rb` and set to `true`
  
          config.citations = true
 
