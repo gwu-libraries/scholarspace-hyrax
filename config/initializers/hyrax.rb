@@ -25,7 +25,7 @@ Hyrax.config do |config|
   # config.max_notifications_for_dashboard = 5
 
   # How frequently should a file be audited
-  # config.max_days_between_audits = 7
+  config.max_days_between_audits = 7
 
   # Enable displaying usage statistics in the UI
   # Defaults to false

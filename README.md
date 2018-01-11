@@ -381,12 +381,6 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
          config.temp_file_base = '/opt/scholarspace/scholarspace-tmp'
 ```
-### Configure max days between audits
-
-  * Uncomment `config.max_days_between_audits` in `config/initializers/hyrax.rb`
-```
-         config.max_days_between_audits = 7
-```
 
 ### Configure path for libre-office
 
@@ -408,20 +402,14 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 ### Configure Contact form emailing
 
-  In order to enable the contact form page to send email when the user clicks Send,
-set the following properties in `config/initializers/hyrax.rb` :
+  * In `config/initializers/hyrax.rb`, set the email to which contact form submissions will be sent:
 ```
          config.contact_email = 
 ```
 
-  * Create a `setup_mail.rb` file 
-```
-    % cp config/initializers/setup_mail.rb.template config/initializers/setup_mail.rb
-```
-
-  Set the SMTP credentials for the user as whom the app will send email.  Make sure that the `user_name` value in `setup_mail.rb` matches the `contact_email` value configured above in `hyrax.rb`.
+  * Configure the account from which contact form emails will be sent, in `config/environments/production.rb` (or other desired environment), by configuring the user name and password in the `config.action_mailer.smtp_settings` block.
   
-  * Edit `config/initializers/mailboxer.rb` with email account from which to send messages and notifications:
+  * (Optional) Edit `config/initializers/mailboxer.rb` with email account from which to send messages and notifications:
 ```
          config.default_from = 
 ```
