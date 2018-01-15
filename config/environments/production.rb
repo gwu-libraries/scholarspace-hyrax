@@ -94,4 +94,7 @@ Rails.application.configure do
 
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
+
+  # Base for permanent URL links presented on item page
+  config.permanent_url_base = "https://scholarspace-etds.library.gwu.edu/"
 end
