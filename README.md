@@ -7,6 +7,7 @@ A Hyrax app for GW Libraries with:
 Some convenient links to have handy:
 - [Hyrax github repo](https://github.com/samvera/hyrax/)
 - [Hyrax project](http://hyr.ax/)
+- [Hyrax developer knowledge base](http://samvera.github.io/)
 
 # Getting started
 
