@@ -50,11 +50,12 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        item_attributes = read_metadata(manifest_json)
+        item_attributes = read_item_metadata(manifest_json)
         etd_id = ingest(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
+        embargo_attributes = read_embargo_info(manifest_json)
         attach_files(options[:pfpath], options[:oflist],
-                     options[:depositor], item_attributes['embargo_release_date'], etd_id)
+                     options[:depositor], embargo_attributes, etd_id)
         puts etd_id
       else
         puts "Manifest file doesn't exist - no ingest"
@@ -95,7 +96,7 @@ namespace :gwss  do
     end
   end
 
-  def read_metadata(metadata)
+  def read_item_metadata(metadata)
     # BatchIngestLogger.info "Get the metadata for the object"
     file_attributes = {}
     # resource_type will need some logic around it, TBD
@@ -113,12 +114,21 @@ namespace :gwss  do
     file_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
     file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
     file_attributes['language'] = [metadata['language']] if metadata['language']
-    file_attributes['embargo_release_date'] = metadata['embargo_date'] if metadata['embargo_date']
 
     return file_attributes
   end
 
-  def attach_files(primaryfile_path, otherfiles_list, depositor, embargo_release_date, etd_id)
+  def read_embargo_info(metadata)
+    embargo_info = {}
+    embargo_info['embargo'] = metadata['embargo'] == true ? true : false
+    if embargo_info['embargo'] == true
+      embargo_info['embargo_release_date'] = metadata['embargo_release_date'].nil? ? '2100-01-01' : metadata['embargo_release_date']
+    end
+
+    return embargo_info
+  end
+
+  def attach_files(primaryfile_path, otherfiles_list, depositor, embargo_attributes, etd_id)
     user = User.find_by_user_key(depositor)
     gwe = GwEtd.find(etd_id)
     # add primary file first, other files afterwards
@@ -133,8 +143,8 @@ namespace :gwss  do
       actor.create_metadata()
       actor.create_content(File.open(f))
       actor.attach_file_to_work(gwe)
-      if embargo_release_date
-        fs.apply_embargo(embargo_release_date,
+      if embargo_attributes['embargo'] == true
+        fs.apply_embargo(embargo_attributes['embargo_release_date'],
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
       end
