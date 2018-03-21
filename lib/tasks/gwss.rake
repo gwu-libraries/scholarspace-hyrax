@@ -33,6 +33,7 @@ namespace :gwss  do
       op.on('-pf FPATH', '--primaryfile=PFPATH', 'Path to primary attachment file') { |pfpath| options[:pfpath] = pfpath }
       op.on('-of OFLIST', '--otherfiles=OFLIST', 'Comma-separated list of paths to supplemental files') { |oflist| options[:oflist] = oflist }
       op.on('-dep DEPOSITOR', '--depositor=DEPOSITOR', 'Scholarspace ID (e.g. email) of depositor') { |depositor| options[:depositor] = depositor }
+      op.on('--set-item-id[=UPDATEID]', 'Set Item ID') { |setid| options[:setid] = setid }
       op.on('--update-item-id[=UPDATEID]', 'Update Item ID') { |updateid| options[:updateid] = updateid }
 
       # return `ARGV` with the intended arguments
@@ -51,7 +52,7 @@ namespace :gwss  do
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
         item_attributes = read_etd_metadata(manifest_json)
-        work_id = ingest_work(item_attributes, options[:depositor], options[:updateid])
+        work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
         attach_files(options[:pfpath], options[:oflist],
@@ -103,12 +104,15 @@ namespace :gwss  do
     end
   end
 
-  def ingest_work(item_attributes, depositor, updateid)
+  def ingest_work(item_attributes, depositor, updateid, setid)
     begin
       gww = nil
       if updateid.nil?
         gww = GwWork.new
-        gww.id = ActiveFedora::Noid::Service.new.mint
+        if setid.nil?
+          gww.id = ActiveFedora::Noid::Service.new.mint
+        else
+          gww.id = setid
       else
         gww = GwWork.find(updateid)
         # delete existing files; we'll "overwrite" with new ones

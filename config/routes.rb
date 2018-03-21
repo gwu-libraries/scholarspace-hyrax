@@ -2,6 +2,9 @@ Rails.application.routes.draw do
   
   get '/etd/:id', to: redirect('/concern/gw_etds/%{id}')
   get '/etds/:id', to: redirect('/concern/gw_etds/%{id}')
+  get '/files/:id', to: redirect('concern/gw_works/%{id}')
+  get '/works/:id', to: redirect('concern/gw_works/%{id}')
+  get '/work/:id', to: redirect('concern/gw_works/%{id}')
 
   mount Blacklight::Engine => '/'
   
