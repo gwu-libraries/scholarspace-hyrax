@@ -389,6 +389,9 @@ terms:
   - id: GW Program on Extremism
     term: GW Program on Extremism
     active: true
+  - id: GW Undergraduate Review
+    term: GW Undergraduate Review
+    active: true
   - id: Health Policy & Management
     term: Health Policy & Management
     active: true
