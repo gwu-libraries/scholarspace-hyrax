@@ -526,6 +526,18 @@ has logged in at least once via the app's web UI (which should now be working).
 ### Post-deployment
 
  * [Add content-admin users](https://github.com/gwu-libraries/scholarspace-hyrax/wiki/Adding-content-admin-users)
+ 
+ * Set up log rotation.  `production.log` can grow quite large, quite quickly, without any sort of compression and/or rotation configured.  A typical `logrotate` configuration would entail adding a configuration file into `/etc/logrotate.d/`.  For example, create a file in `/etc/logrotate.d/` called `scholarspace-hyrax` containing the following:
+ ```
+ /opt/scholarspace/scholarspace-hyrax/log/production.log {
+        daily
+        missingok
+        rotate 10
+        compress
+        notifempty
+        create 664 scholarspace scholarspace
+}
+```
    
 ### (NEEDS REFRESH - see [#83](https://github.com/gwu-libraries/scholarspace-hyrax/issues/83)) (Optional) Add Google Analytics
 
