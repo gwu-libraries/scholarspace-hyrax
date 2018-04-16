@@ -62,6 +62,7 @@ namespace :gwss  do
         puts "Manifest file doesn't exist - no ingest"
       end
     end
+  end
 
   desc "Ingest an ETD"
   task :ingest_etd => :environment do |t, args|
@@ -113,6 +114,7 @@ namespace :gwss  do
           gww.id = ActiveFedora::Noid::Service.new.mint
         else
           gww.id = setid
+        end
       else
         gww = GwWork.find(updateid)
         # delete existing files; we'll "overwrite" with new ones
