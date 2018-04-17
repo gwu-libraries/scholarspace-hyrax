@@ -534,6 +534,7 @@ has logged in at least once via the app's web UI (which should now be working).
         missingok
         rotate 10
         compress
+	delaycompress
         notifempty
         create 664 scholarspace scholarspace
 }
