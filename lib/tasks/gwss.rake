@@ -51,7 +51,7 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        item_attributes = read_etd_metadata(manifest_json)
+        item_attributes = manifest_json
         work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
@@ -92,7 +92,15 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        item_attributes = read_etd_metadata(manifest_json)
+        item_attributes = manifest_json
+        # Since we're going to embargo the file, not the item:
+        item_attributes.delete('embargo') if 'embargo' in item_attributes
+        item_attributes.delete('embargo_release_date') if 'embargo' in item_attributes
+        # resource_type may need more logic around it, TBD
+        item_attributes['resource_type'] = ['Dissertation']
+        # TBD whether this is the right rights we want to assign to newly uploaded ETDs
+        item_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
+
         etd_id = ingest_etd(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
@@ -173,46 +181,6 @@ namespace :gwss  do
       gwe.save
       return gwe.id
     end
-  end
-
-  def read_etd_metadata(metadata)
-    # BatchIngestLogger.info "Get the metadata for the object"
-    file_attributes = {}
-    # resource_type will need some logic around it, TBD
-    file_attributes['resource_type'] = ['Dissertation']
-    file_attributes['title'] = [metadata['title']] if metadata['title']
-    file_attributes['creator'] = [metadata['creator']] if metadata['creator']
-    file_attributes['keyword'] = metadata['keyword'] if metadata['keyword']
-    file_attributes['contributor'] = metadata['contributor'] if metadata['contributor']
-    file_attributes['description'] = [metadata['description']] if metadata['description']
-    file_attributes['gw_affiliation'] = metadata['gw_affiliation'] if metadata['gw_affiliation']
-    file_attributes['degree'] = metadata['degree'] if metadata['degree']
-    file_attributes['advisor'] = metadata['advisors'] if metadata['advisors']
-    file_attributes['committee_member'] = metadata['committee_members'] if metadata['committee_members']
-    # TBD whether this is the right rights we want to assign to newly uploaded ETDs
-    file_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
-    file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
-    file_attributes['language'] = [metadata['language']] if metadata['language']
-
-    return file_attributes
-  end
-
-  def read_work_metadata(metadata)
-    # BatchIngestLogger.info "Get the metadata for the object"
-    file_attributes = {}
-    file_attributes['resource_type'] = metadata['resource_type']
-    file_attributes['title'] = [metadata['title']] if metadata['title']
-    file_attributes['creator'] = [metadata['creator']] if metadata['creator']
-    file_attributes['keyword'] = metadata['keyword'] if metadata['keyword']
-    file_attributes['contributor'] = metadata['contributor'] if metadata['contributor']
-    file_attributes['description'] = [metadata['description']] if metadata['description']
-    file_attributes['gw_affiliation'] = metadata['gw_affiliation'] if metadata['gw_affiliation']
-    # TBD whether this is the right rights we want to assign to newly uploaded ETDs
-    file_attributes['rights'] = metadata['rights']
-    file_attributes['date_created'] = [metadata['date_created']] if metadata['date_created']
-    file_attributes['language'] = [metadata['language']] if metadata['language']
-
-    return file_attributes
   end
 
   def read_embargo_info(metadata)
