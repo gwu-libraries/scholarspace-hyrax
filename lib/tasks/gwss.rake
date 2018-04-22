@@ -94,8 +94,11 @@ namespace :gwss  do
         manifest_json = JSON.parse(mf.squish)
         item_attributes = manifest_json
         # Since we're going to embargo the file, not the item:
-        item_attributes.delete('embargo') if 'embargo' in item_attributes
-        item_attributes.delete('embargo_release_date') if 'embargo' in item_attributes
+        item_attributes.delete('embargo')
+        item_attributes.delete('embargo_release_date')
+        if manifest_json['degree']
+          item_attributes['degree'] = manifest_json['degree'][0]
+        end
         # resource_type may need more logic around it, TBD
         item_attributes['resource_type'] = ['Dissertation']
         # TBD whether this is the right rights we want to assign to newly uploaded ETDs
