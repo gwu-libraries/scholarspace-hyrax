@@ -40,23 +40,28 @@ namespace :gwss  do
       args = op.order!(ARGV) {}
       op.parse!(args)
 
-      ## uncomment if we decide to throw exceptions for missing options
-      # raise OptionParser::MissingArgument if options[:name].nil?
+      raise OptionParser::MissingArgument if options[:mfpath].nil?
+      raise OptionParser::MissingArgument if options[:pfpath].nil?
+      raise OptionParser::MissingArgument if options[:depositor].nil?
 
-      # Reference GwWork to work around circular dependency
-      # problem that would be caused by referencing GwEtd first
-      # See articles such as http://neethack.com/2015/04/rails-circular-dependency/
-      GwWork
       manifest_file = options[:mfpath]
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        item_attributes = manifest_json
+        item_attributes = manifest_json.dup
+        item_attributes.delete('embargo')
+        item_attributes.delete('embargo_release_date')
+        # TODO: We're still going to have problems rendering the new item
+        #       if the rights value is not in the list in config/authorities/licenses.yml
+        if manifest_json['rights'] == ['None']
+          item_attributes.delete('rights')
+        end
         work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
-        attach_files(options[:pfpath], options[:oflist],
-                     options[:depositor], embargo_attributes, etd_id)
+        gww = GwWork.find(work_id)
+        attach_files(gww, options[:pfpath], options[:oflist],
+                     options[:depositor], embargo_attributes)
         puts work_id
       else
         puts "Manifest file doesn't exist - no ingest"
@@ -81,8 +86,9 @@ namespace :gwss  do
       args = op.order!(ARGV) {}
       op.parse!(args)
 
-      ## uncomment if we decide to throw exceptions for missing options
-      # raise OptionParser::MissingArgument if options[:name].nil?
+      raise OptionParser::MissingArgument if options[:mfpath].nil?
+      raise OptionParser::MissingArgument if options[:pfpath].nil?
+      raise OptionParser::MissingArgument if options[:depositor].nil?
 
       # Reference GwWork to work around circular dependency
       # problem that would be caused by referencing GwEtd first
@@ -92,7 +98,7 @@ namespace :gwss  do
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
         manifest_json = JSON.parse(mf.squish)
-        item_attributes = manifest_json
+        item_attributes = manifest_json.dup
         # Since we're going to embargo the file, not the item:
         item_attributes.delete('embargo')
         item_attributes.delete('embargo_release_date')
@@ -107,8 +113,9 @@ namespace :gwss  do
         etd_id = ingest_etd(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
-        attach_files(options[:pfpath], options[:oflist],
-                     options[:depositor], embargo_attributes, etd_id)
+        gwe = GwEtd.find(etd_id)
+        attach_files(gwe, options[:pfpath], options[:oflist],
+                     options[:depositor], embargo_attributes)
         puts etd_id
       else
         puts "Manifest file doesn't exist - no ingest"
@@ -149,6 +156,8 @@ namespace :gwss  do
       gww.admin_set = work_admin_set
       gww.set_edit_groups(["content-admin"],[])
       gww.save
+      puts "GWW ID IS: "
+      puts gww.id
       return gww.id
     end
   end
@@ -196,9 +205,8 @@ namespace :gwss  do
     return embargo_info
   end
 
-  def attach_files(primaryfile_path, otherfiles_list, depositor, embargo_attributes, etd_id)
+  def attach_files(work, primaryfile_path, otherfiles_list, depositor, embargo_attributes)
     user = User.find_by_user_key(depositor)
-    gwe = GwEtd.find(etd_id)
     # add primary file first, other files afterwards
     files = []
     files += [primaryfile_path] if primaryfile_path
@@ -206,11 +214,12 @@ namespace :gwss  do
     files.each do |f|
       fs = FileSet.new
       # use the filename as the FileSet title
+      fs.id = ActiveFedora::Noid::Service.new.mint
       fs.title = [File.basename(f)]
       actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
       actor.create_metadata()
       actor.create_content(File.open(f))
-      actor.attach_file_to_work(gwe)
+      actor.attach_file_to_work(work)
       if embargo_attributes['embargo'] == true
         fs.apply_embargo(embargo_attributes['embargo_release_date'],
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
