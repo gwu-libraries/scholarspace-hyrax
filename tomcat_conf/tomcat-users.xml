@@ -27,4 +27,5 @@
   <role rolename="fedoraAdmin"/>
   <user username="scholarspace" password="dummypassword" roles="fedoraAdmin"/>
   <user username="fedoraAdmin" password="dummypassword" roles="fedoraAdmin"/>
+  <user username="fedoraAudit" password="dummypassword" roles="fedoraAudit"/>
 </tomcat-users>
