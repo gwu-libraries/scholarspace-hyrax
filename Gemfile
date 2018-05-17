@@ -7,7 +7,7 @@ end
 
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.0.2'
+gem 'rails', '~> 5.0.7'
 # Use sqlite3 as the dev/test database for Active Record
 gem 'sqlite3'
 # Use pg as the production database for Active Record
@@ -54,7 +54,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'hyrax', '1.0.5'
+gem 'hyrax', '2.0.1'
 
 gem 'hydra-role-management'
 
