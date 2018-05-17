@@ -25,7 +25,7 @@ Hyrax.config do |config|
   # config.max_notifications_for_dashboard = 5
 
   # How frequently should a file be audited
-  config.max_days_between_audits = 7
+  config.max_days_between_fixity_checks = 7
 
   # Enable displaying usage statistics in the UI
   # Defaults to false
@@ -99,7 +99,7 @@ Hyrax.config do |config|
   config.work_requires_files = false
 
   # Should a button with "Share my work" show on the front page to all users (even those not logged in)?
-  config.always_display_share_button = false
+  config.display_share_button_when_not_logged_in = false
 
   # The user who runs batch jobs. Update this if you aren't using emails
   # config.batch_user_key = 'batchuser@example.com'
