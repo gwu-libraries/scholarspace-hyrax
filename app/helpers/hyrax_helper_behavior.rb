@@ -1,11 +1,9 @@
-# coding: utf-8
 module Hyrax
   module HyraxHelperBehavior
     include Hyrax::CitationsBehavior
     include ERB::Util # provides html_escape
     include Hyrax::TitleHelper
     include Hyrax::FileSetHelper
-    include Hyrax::SearchPathsHelper
     include Hyrax::AbilityHelper
     include Hyrax::UrlHelper
     include Hyrax::EmbargoHelper
@@ -17,7 +15,15 @@ module Hyrax
     # Which translations are available for the user to select
     # @return [Hash<String,String>] locale abbreviations as keys and flags as values
     def available_translations
-      { 'en' => 'English', 'es' => 'Español', 'zh' => '中文' }
+      {
+        'de' => 'Deutsch',
+        'en' => 'English',
+        'es' => 'Español',
+        'fr' => 'Français',
+        'it' => 'Italiano',
+        'pt-BR' => 'Português do Brasil',
+        'zh' => '中文'
+      }
     end
 
     delegate :name, :name_full, to: :institution, prefix: :institution
@@ -39,11 +45,21 @@ module Hyrax
       "https://www.zotero.org/users/#{zotero_user_id}"
     end
 
-    # Only Chrome supports this
-    # @return [Boolean]
-    # @todo Replace uses with more granular client-side detection (as jQuery-fileuploader already does)
-    def browser_supports_directory_upload?
-      user_agent.include? 'Chrome'
+    # @param [User] user
+    def render_notifications(user:)
+      mailbox = UserMailbox.new(user)
+      unread_notifications = mailbox.unread_count
+      link_to(hyrax.notifications_path,
+              'aria-label' => mailbox.label(params[:locale]),
+              class: 'notify-number') do
+        capture do
+          concat content_tag(:span, '', class: 'fa fa-bell')
+          concat "\n"
+          concat content_tag(:span,
+                             unread_notifications,
+                             class: count_classes_for(unread_notifications))
+        end
+      end
     end
 
     # @param [ProxyDepositRequest] req
@@ -163,16 +179,16 @@ module Hyrax
       end
     end
 
-    def iconify_auto_link_and_truncate(field)
+    def iconify_auto_link(field, show_link = true)
       if field.is_a? Hash
         options = field[:config].separator_options || {}
         text = field[:value].to_sentence(options)
       else
         text = field
       end
-      text = truncate(text, :length => 300, :separator => ' ')
       # this block is only executed when a link is inserted;
       # if we pass text containing no links, it just returns text.
+      text = truncate(text, :length => 300, :separator => ' ')
       auto_link(html_escape(text)) do |value|
         "<span class='glyphicon glyphicon-new-window'></span>#{('&nbsp;' + value) if show_link}"
       end
@@ -191,14 +207,22 @@ module Hyrax
              end
       return user_or_key if user.nil?
       text = user.respond_to?(:name) ? user.name : user_or_key
-      link_to text, Hyrax::Engine.routes.url_helpers.profile_path(user)
+      link_to text, Hyrax::Engine.routes.url_helpers.user_path(user)
     end
 
     # A Blacklight index field helper_method
-    # @param [Hash] options from blacklight helper_method invocation. Maps rights URIs to links with labels.
-    # @return [ActiveSupport::SafeBuffer] rights statement links, html_safe
+    # @param [Hash] options from blacklight helper_method invocation. Maps license URIs to links with labels.
+    # @return [ActiveSupport::SafeBuffer] license links, html_safe
     def license_links(options)
       service = Hyrax::LicenseService.new
+      options[:value].map { |right| link_to service.label(right), right }.to_sentence.html_safe
+    end
+
+    # A Blacklight index field helper_method
+    # @param [Hash] options from blacklight helper_method invocation. Maps rights statement URIs to links with labels.
+    # @return [ActiveSupport::SafeBuffer] rights statement links, html_safe
+    def rights_statement_links(options)
+      service = Hyrax::RightsStatementService.new
       options[:value].map { |right| link_to service.label(right), right }.to_sentence.html_safe
     end
 
@@ -240,20 +264,35 @@ module Hyrax
         request.user_agent || ''
       end
 
+      def count_classes_for(unread_count)
+        'count label '.tap do |classes|
+          classes << if unread_count.zero?
+                       'invisible label-default'
+                     else
+                       'label-danger'
+                     end
+        end
+      end
+
+      # rubocop:disable Metrics/MethodLength
       def search_action_for_dashboard
         case params[:controller]
-        when "hyrax/my/works"
-          hyrax.dashboard_works_path
         when "hyrax/my/collections"
-          hyrax.dashboard_collections_path
+          hyrax.my_collections_path
         when "hyrax/my/shares"
           hyrax.dashboard_shares_path
         when "hyrax/my/highlights"
           hyrax.dashboard_highlights_path
-        else
+        when "hyrax/dashboard/works"
           hyrax.dashboard_works_path
+        when "hyrax/dashboard/collections"
+          hyrax.dashboard_collections_path
+        else
+          # hyrax/my/works controller and default cases.
+          hyrax.my_works_path
         end
       end
+      # rubocop:enable Metrics/MethodLength
 
       # @param [ActionController::Parameters] params first argument for Blacklight::SearchState.new
       # @param [Hash] facet
@@ -270,4 +309,3 @@ module Hyrax
       end
   end
 end
-
