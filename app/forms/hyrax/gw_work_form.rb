@@ -3,7 +3,7 @@
 module Hyrax
   class GwWorkForm < Hyrax::Forms::WorkForm
     self.model_class = ::GwWork
-    self.required_fields = [:title, :resource_type, :creator, :rights]
+    self.required_fields = [:title, :resource_type, :creator, :rights_statement]
     self.terms += [:resource_type, :gw_affiliation]
 
     def secondary_terms
