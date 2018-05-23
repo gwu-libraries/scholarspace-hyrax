@@ -2,7 +2,6 @@
 #  `rails generate hyrax:work GwEtd`
 class GwEtd < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
-  include ::Hyrax::BasicMetadata
   # Change this to restrict which works can be added as a child.
   # self.valid_child_concerns = []
   validates :title, presence: { message: 'Your work must have a title.' }
@@ -24,4 +23,6 @@ class GwEtd < ActiveFedora::Base
   property :committee_member, predicate: ::RDF::URI.new("http://scholarspace.library.gwu.edu/ns#committee_member") do |index|
     index.as :stored_searchable, :facetable
   end
+
+  include ::Hyrax::BasicMetadata
 end
