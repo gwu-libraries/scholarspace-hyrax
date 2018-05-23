@@ -24,6 +24,10 @@ Hyrax.config do |config|
   # How many notifications should be displayed on the dashboard
   # config.max_notifications_for_dashboard = 5
 
+  # NOTE: Added per Hyrax v2.0.0 upgrade notes.  Setting to false
+  #       to silence warnings
+  config.realtime_notifications = false
+
   # How frequently should a file be audited
   config.max_days_between_fixity_checks = 7
 
