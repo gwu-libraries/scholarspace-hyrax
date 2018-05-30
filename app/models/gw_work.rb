@@ -3,7 +3,7 @@
 class GwWork < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
 
-  self.indexer = GwWorkIndexer
+  # self.indexer = GwWorkIndexer
   # Change this to restrict which works can be added as a child.
   # self.valid_child_concerns = []
   validates :title, presence: { message: 'Your work must have a title.' }

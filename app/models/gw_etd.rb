@@ -4,7 +4,7 @@ class GwEtd < ActiveFedora::Base
   include ::Hyrax::WorkBehavior
   # Change this to restrict which works can be added as a child.
   # self.valid_child_concerns = []
-  self.indexer = GwEtdIndexer
+  # self.indexer = GwEtdIndexer
 
   validates :title, presence: { message: 'Your work must have a title.' }
   
