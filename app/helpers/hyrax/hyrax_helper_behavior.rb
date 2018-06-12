@@ -179,16 +179,16 @@ module Hyrax
       end
     end
 
-    def iconify_auto_link(field, show_link = true)
+    def iconify_auto_link_and_truncate(field)
       if field.is_a? Hash
         options = field[:config].separator_options || {}
         text = field[:value].to_sentence(options)
       else
         text = field
       end
+      text = truncate(text, :length => 300, :separator => ' ')
       # this block is only executed when a link is inserted;
       # if we pass text containing no links, it just returns text.
-      text = truncate(text, :length => 300, :separator => ' ')
       auto_link(html_escape(text)) do |value|
         "<span class='glyphicon glyphicon-new-window'></span>#{('&nbsp;' + value) if show_link}"
       end
