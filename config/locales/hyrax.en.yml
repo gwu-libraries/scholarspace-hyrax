@@ -29,6 +29,7 @@ en:
         degree:                 "Degree"
         advisor:                "Advisor"
         committee_member:       "Committee Member"
+        permanent_url:          "Persistent URL"
     hints:
       defaults:
         title: 'The name of the work.'
@@ -57,6 +58,7 @@ project from which the work was derived."
           committee_member: "Committee Member(s)"
           bibliographic_citation: "Previous Publication Information"
           based_near:       "Location"
+          permanent_url:    "Persistent URL"
         facet:
           gw_affiliation_sim:   "GW Unit"
           degree_sim:           "Degree"
