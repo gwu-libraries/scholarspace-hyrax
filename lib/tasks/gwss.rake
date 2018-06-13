@@ -55,7 +55,10 @@ namespace :gwss  do
         #       if the rights value is not in the list in config/authorities/licenses.yml
         if manifest_json['rights'] == ['None']
           item_attributes.delete('rights')
+        else
+          item_attributes['license'] = item_attributes('rights')
         end
+        
         work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
@@ -108,7 +111,7 @@ namespace :gwss  do
         # resource_type may need more logic around it, TBD
         item_attributes['resource_type'] = ['Dissertation']
         # TBD whether this is the right rights we want to assign to newly uploaded ETDs
-        item_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
+        item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
 
         etd_id = ingest_etd(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
@@ -219,7 +222,7 @@ namespace :gwss  do
       actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
       actor.create_metadata()
       actor.create_content(File.open(f))
-      actor.attach_file_to_work(work)
+      actor.attach_to_work(work)
       if embargo_attributes['embargo'] == true
         fs.apply_embargo(embargo_attributes['embargo_release_date'],
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
