@@ -51,13 +51,17 @@ namespace :gwss  do
         item_attributes = manifest_json.dup
         item_attributes.delete('embargo')
         item_attributes.delete('embargo_release_date')
-        # TODO: We're still going to have problems rendering the new item
-        #       if the rights value is not in the list in config/authorities/licenses.yml
+        
+        # dc:rights
         if manifest_json['rights'] == ['None']
-          item_attributes.delete('rights')
+          item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
         else
           item_attributes['license'] = item_attributes('rights')
         end
+        item_attributes.delete('rights')
+
+        # edm:rights
+        item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
         
         work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid])
         # generate_ingest_report(noid_list, investigation_id) 
@@ -110,8 +114,14 @@ namespace :gwss  do
         end
         # resource_type may need more logic around it, TBD
         item_attributes['resource_type'] = ['Dissertation']
-        # TBD whether this is the right rights we want to assign to newly uploaded ETDs
+
+        # dc:rights
         item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
+        item_attributes.delete('rights')
+
+        # edm:rights
+#        item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
+        item_attributes['rights_statement'] = ['http://library.gwu.edu/']
 
         etd_id = ingest_etd(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
