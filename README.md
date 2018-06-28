@@ -431,6 +431,11 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
    </IfModule>	
 ```
   Create `/etc/apache2/conf-available/passenger.conf` using the lines pasted from the Passenger install script.
+
+  Add the following line into `passenger.conf`:
+
+        PassengerAllowEncodedSlashes on
+
     
 * Enable the Apache `passenger.conf` file and the rewrite Apache mod
 ```
@@ -440,9 +445,9 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
 * Create and enable an Apache2 virtual host
 
-  Retrieve `scholarspace.conf` from `apache2_conf/scholarspace.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace.conf`
+  Retrieve `scholarspace.conf` from `apache_conf/scholarspace.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace.conf`
      
-  Retrieve `scholarspace-ssl.conf` from `apache2_conf/scholarspace-ssl.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace-ssl.conf`.  Adjust paths as needed.
+  Retrieve `scholarspace-ssl.conf` from `apache_conf/scholarspace-ssl.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace-ssl.conf`.  Adjust paths as needed.
      
   Enable modssl:
 ```
