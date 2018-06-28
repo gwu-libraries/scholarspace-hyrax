@@ -165,8 +165,10 @@ namespace :gwss  do
       now = Hyrax::TimeService.time_in_utc
       gww.date_uploaded = now
 
-      work_admin_set = AdminSet.where(title: "Works")[0]
-      gww.admin_set = work_admin_set
+      # Add to Default Administrative Set
+      default_admin_set_id = AdminSet.find_or_create_default_admin_set_id
+      default_admin_set = AdminSet.find(default_admin_set_id)
+      gww.admin_set = default_admin_set
       gww.set_edit_groups(["content-admin"],[])
       gww.save
       puts "GWW ID IS: "
