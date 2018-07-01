@@ -415,6 +415,13 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
          config.default_from = 
 ```
 
+### Configure geonames username
+
+  * In `config/initializers/hyrax.rb`, set the geonames username:
+```
+         config.geonames_username =
+```
+
 ### Configure Passenger and Apache2
 
 * Set up Passenger, and create Passenger config for Apache
