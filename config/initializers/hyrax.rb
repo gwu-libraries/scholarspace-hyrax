@@ -25,7 +25,14 @@ Hyrax.config do |config|
   # config.max_notifications_for_dashboard = 5
 
   # How frequently should a file be audited
-  config.max_days_between_audits = 7
+  config.max_days_between_fixity_checks = 7
+
+  # Options to control the file uploader
+  # config.uploader = {
+  #   limitConcurrentUploads: 6,
+  #   maxNumberOfFiles: 100,
+  #   maxFileSize: 500.megabytes
+  # }
 
   # Enable displaying usage statistics in the UI
   # Defaults to false
@@ -77,12 +84,19 @@ Hyrax.config do |config|
   # Path to the file derivatives creation tool
   config.libreoffice_path = "/usr/bin/soffice"
 
+  # Option to enable/disable full text extraction from PDFs
+  # Default is true, set to false to disable full text extraction
+  # config.extract_full_text = true
+
   # How many seconds back from the current time that we should show by default of the user's activity on the user's dashboard
   # config.activity_to_show_default_seconds_since_now = 24*60*60
 
   # Hyrax can integrate with Zotero's Arkivo service for automatic deposit
   # of Zotero-managed research items.
   # config.arkivo_api = false
+
+  # Stream realtime notifications to users in the browser
+  config.realtime_notifications = false
 
   # Location autocomplete uses geonames to search for named regions
   # Username for connecting to geonames
@@ -99,7 +113,7 @@ Hyrax.config do |config|
   config.work_requires_files = false
 
   # Should a button with "Share my work" show on the front page to all users (even those not logged in)?
-  config.always_display_share_button = false
+  config.display_share_button_when_not_logged_in = false
 
   # The user who runs batch jobs. Update this if you aren't using emails
   # config.batch_user_key = 'batchuser@example.com'
@@ -140,15 +154,13 @@ Hyrax.config do |config|
   #   @see Hyrax::LicenseService for implementation details
   # config.license_service_class = Hyrax::LicenseService
 
-  # Labels for permission levels
-  # config.permission_levels = { "Choose Access" => "none", "View/Download" => "read", "Edit" => "edit" }
+  # Labels for display of permission levels
+  # config.permission_levels = { "View/Download" => "read", "Edit access" => "edit" }
 
+  # Labels for permission level options used in dropdown menus
+  # config.permission_options = { "Choose Access" => "none", "View/Download" => "read", "Edit" => "edit" }
   # Labels for owner permission levels
   # config.owner_permission_levels = { "Edit Access" => "edit" }
-
-  # Returns a lambda that takes a hash of attributes and returns a string of the model
-  # name. This is called by the batch upload process
-  # config.model_to_create = ->(_attributes) { Hyrax.primary_work_type.model_name.name }
 
   # Path to the ffmpeg tool
   # config.ffmpeg_path = 'ffmpeg'
@@ -194,6 +206,22 @@ Hyrax.config do |config|
   rescue Errno::ENOENT
     config.browse_everything = nil
   end
+
+  ## Whitelist all directories which can be used to ingest from the local file
+  # system.
+  #
+  # Any file, and only those, that is anywhere under one of the specified
+  # directories can be used by CreateWithRemoteFilesActor to add local files
+  # to works. Files uploaded by the user are handled separately and the
+  # temporary directory for those need not be included here.
+  #
+  # Default value includes BrowseEverything.config['file_system'][:home] if it
+  # is set, otherwise default is an empty list. You should only need to change
+  # this if you have custom ingestions using CreateWithRemoteFilesActor to
+  # ingest files from the file system that are not part of the BrowseEverything
+  # mount point.
+  #
+  # config.whitelisted_ingest_dirs = []
 end
 
 Date::DATE_FORMATS[:standard] = "%m/%d/%Y"

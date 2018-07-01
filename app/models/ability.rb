@@ -36,4 +36,13 @@ class Ability
     return unless contentadmin_user?
     can :create, curation_concerns_models
   end
+
+  def curation_concerns_permissions
+    # user can version if they can edit
+    alias_action :versions, to: :update
+    alias_action :file_manager, to: :update
+
+    can :index, Hydra::AccessControls::Embargo
+    can :index, Hydra::AccessControls::Lease
+  end
 end

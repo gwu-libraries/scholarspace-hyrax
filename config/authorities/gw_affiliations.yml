@@ -611,6 +611,9 @@ terms:
   - id: Neurology
     term: Neurology
     active: true
+  - id: New Media Photojournalism
+    term: New Media Photojournalism
+    active: true
   - id: Obstetrics & Gynecology
     term: Obstetrics & Gynecology
     active: true

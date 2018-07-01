@@ -10,9 +10,9 @@
 <%= presenter.attribute_to_html(:related_url, render_as: :external_link) %>
 <%= presenter.attribute_to_html(:resource_type, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:source) %>
-<%= presenter.attribute_to_html(:rights_statement) %>
+<%= presenter.attribute_to_html(:rights_statement, render_as: :rights_statement) %>
 <%= presenter.attribute_to_html(:gw_affiliation, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:degree, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:advisor, render_as: :faceted) %>
 <%= presenter.attribute_to_html(:committee_member, render_as: :faceted) %>
-<%= presenter.attribute_to_html(:permanent_url, label: "Permanent URL", render_as: :external_link) %>
+<%= presenter.attribute_to_html(:permanent_url, render_as: :external_link) %>

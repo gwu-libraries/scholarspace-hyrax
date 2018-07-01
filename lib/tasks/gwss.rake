@@ -51,11 +51,18 @@ namespace :gwss  do
         item_attributes = manifest_json.dup
         item_attributes.delete('embargo')
         item_attributes.delete('embargo_release_date')
-        # TODO: We're still going to have problems rendering the new item
-        #       if the rights value is not in the list in config/authorities/licenses.yml
+        
+        # dc:rights
         if manifest_json['rights'] == ['None']
-          item_attributes.delete('rights')
+          item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
+        else
+          item_attributes['license'] = item_attributes('rights')
         end
+        item_attributes.delete('rights')
+
+        # edm:rights
+        item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
+        
         work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
@@ -107,8 +114,14 @@ namespace :gwss  do
         end
         # resource_type may need more logic around it, TBD
         item_attributes['resource_type'] = ['Dissertation']
-        # TBD whether this is the right rights we want to assign to newly uploaded ETDs
-        item_attributes['rights'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
+
+        # dc:rights
+        item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
+        item_attributes.delete('rights')
+
+        # edm:rights
+#        item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
+        item_attributes['rights_statement'] = ['http://library.gwu.edu/']
 
         etd_id = ingest_etd(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
@@ -152,8 +165,10 @@ namespace :gwss  do
       now = Hyrax::TimeService.time_in_utc
       gww.date_uploaded = now
 
-      work_admin_set = AdminSet.where(title: "Works")[0]
-      gww.admin_set = work_admin_set
+      # Add to Default Administrative Set
+      default_admin_set_id = AdminSet.find_or_create_default_admin_set_id
+      default_admin_set = AdminSet.find(default_admin_set_id)
+      gww.admin_set = default_admin_set
       gww.set_edit_groups(["content-admin"],[])
       gww.save
       puts "GWW ID IS: "
@@ -219,7 +234,7 @@ namespace :gwss  do
       actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
       actor.create_metadata()
       actor.create_content(File.open(f))
-      actor.attach_file_to_work(work)
+      actor.attach_to_work(work)
       if embargo_attributes['embargo'] == true
         fs.apply_embargo(embargo_attributes['embargo_release_date'],
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,

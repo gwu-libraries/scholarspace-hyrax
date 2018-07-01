@@ -1,15 +1,15 @@
 en:
   hyrax:
     product_name:           "GW ScholarSpace ETDs"
-    # product_twitter_handle: "@HydraSphere"
+    product_twitter_handle: ""
     institution_name:       "The George Washington University"
     institution_name_full:  "George Washington University"
     # account_name:       "My Institution Account Id"
     directory:
       suffix:               "@gwu.edu"
     footer:
-      copyright_html:       "<strong>Copyright &copy; 2016 Project Hydra</strong> Licensed under the Apache License, Version 2.0"
-      service_html: A service of <a href="http://projecthydra.org/" class="navbar-link" target="_blank">Project Hydra</a>.
+      copyright_html:       "<strong>Copyright &copy; 2017 Samvera</strong> Licensed under the Apache License, Version 2.0"
+      service_html: A service of <a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera</a>.
     search:
       form:
         option:
@@ -29,6 +29,7 @@ en:
         degree:                 "Degree"
         advisor:                "Advisor"
         committee_member:       "Committee Member"
+        permanent_url:          "Persistent URL"
     hints:
       defaults:
         title: 'The name of the work.'
@@ -57,6 +58,7 @@ project from which the work was derived."
           committee_member: "Committee Member(s)"
           bibliographic_citation: "Previous Publication Information"
           based_near:       "Location"
+          permanent_url:    "Persistent URL"
         facet:
           gw_affiliation_sim:   "GW Unit"
           degree_sim:           "Degree"
