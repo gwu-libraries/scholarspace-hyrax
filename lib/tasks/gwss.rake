@@ -171,8 +171,7 @@ namespace :gwss  do
       gww.admin_set = default_admin_set
       gww.set_edit_groups(["content-admin"],[])
       gww.save
-      puts "GWW ID IS: "
-      puts gww.id
+
       return gww.id
     end
   end
