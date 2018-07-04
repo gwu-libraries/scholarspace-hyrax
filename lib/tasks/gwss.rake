@@ -120,8 +120,7 @@ namespace :gwss  do
         item_attributes.delete('rights')
 
         # edm:rights
-#        item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
-        item_attributes['rights_statement'] = ['http://library.gwu.edu/']
+        item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
 
         etd_id = ingest_etd(item_attributes, options[:depositor], options[:updateid])
         # generate_ingest_report(noid_list, investigation_id) 
