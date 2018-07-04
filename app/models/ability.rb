@@ -34,10 +34,7 @@ class Ability
 
   def contentadmins_can_create_curation_concerns
     return unless contentadmin_user?
-    can :create, curation_concerns_models
-  end
-
-  def curation_concerns_permissions
+    can [:index, :show, :edit, :create], curation_concerns_models
     # user can version if they can edit
     alias_action :versions, to: :update
     alias_action :file_manager, to: :update
