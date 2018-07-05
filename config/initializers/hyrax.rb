@@ -16,7 +16,7 @@ Hyrax.config do |config|
   # config.default_active_workflow_name = 'default'
 
   # Email recipient of messages sent via the contact form
-  config.contact_email = "CONFIGURE-ME@email.gwu.edu"
+  config.contact_email = "kerchner@email.gwu.edu"
 
   # Text prefacing the subject entered in the contact form
   config.subject_prefix = "Contact form:"
@@ -100,7 +100,7 @@ Hyrax.config do |config|
 
   # Location autocomplete uses geonames to search for named regions
   # Username for connecting to geonames
-  # config.geonames_username = ''
+  config.geonames_username = 'gwscholarspace'
 
   # Should the acceptance of the licence agreement be active (checkbox), or
   # implied when the save button is pressed? Set to true for active
@@ -123,7 +123,8 @@ Hyrax.config do |config|
   #
   # The banner image. Should be 5000px wide by 1000px tall
   # config.banner_image = 'https://cloud.githubusercontent.com/assets/92044/18370978/88ecac20-75f6-11e6-8399-6536640ef695.jpg'
-  config.banner_image = 'https://gist.githubusercontent.com/kerchner/96b8863e2eeb8900e798f0a7974fb3fb/raw/6ac16b6addfef42f213b87ede3389ecb22a30634/gw-etd17.jpg'
+  # config.banner_image = 'https://gist.githubusercontent.com/kerchner/96b8863e2eeb8900e798f0a7974fb3fb/raw/6ac16b6addfef42f213b87ede3389ecb22a30634/gw-etd17.jpg'
+  config.banner_image = 'https://raw.githubusercontent.com/gwu-libraries/scholarspace/v1.6.0/app/assets/images/gw-scholarspace-1.jpg'
 
   # Temporary paths to hold uploads before they are ingested into FCrepo
   # These must be lambdas that return a Pathname. Can be configured separately
