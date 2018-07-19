@@ -35,6 +35,9 @@ namespace :gwss  do
       op.on('-dep DEPOSITOR', '--depositor=DEPOSITOR', 'Scholarspace ID (e.g. email) of depositor') { |depositor| options[:depositor] = depositor }
       op.on('--set-item-id[=UPDATEID]', 'Set Item ID') { |setid| options[:setid] = setid }
       op.on('--update-item-id[=UPDATEID]', 'Update Item ID') { |updateid| options[:updateid] = updateid }
+      op.on('--private', 'Ingest and create with Private visibility') do
+        options[:private] = true
+      end
 
       # return `ARGV` with the intended arguments
       args = op.order!(ARGV) {}
@@ -56,14 +59,14 @@ namespace :gwss  do
         if manifest_json['rights'] == ['None']
           item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
         else
-          item_attributes['license'] = item_attributes('rights')
+          item_attributes['license'] = manifest_json['rights']
         end
         item_attributes.delete('rights')
 
         # edm:rights
         item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
         
-        work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid])
+        work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid], options[:private])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
         gww = GwWork.find(work_id)
@@ -135,7 +138,7 @@ namespace :gwss  do
     end
   end
 
-  def ingest_work(item_attributes, depositor, updateid, setid)
+  def ingest_work(item_attributes, depositor, updateid, setid, visibility_private)
     begin
       gww = nil
       if updateid.nil?
@@ -160,7 +163,11 @@ namespace :gwss  do
 
       gww.apply_depositor_metadata(depositor)
       gww.attributes = item_attributes
-      gww.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      if visibility_private
+        gww.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+      else
+        gww.visibility = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+      end
       now = Hyrax::TimeService.time_in_utc
       gww.date_uploaded = now
 
@@ -168,7 +175,7 @@ namespace :gwss  do
       default_admin_set_id = AdminSet.find_or_create_default_admin_set_id
       default_admin_set = AdminSet.find(default_admin_set_id)
       gww.admin_set = default_admin_set
-      gww.set_edit_groups(["content-admin"],[])
+      # gww.set_edit_groups(["content-admin"],[])
       gww.save
 
       return gww.id
@@ -202,7 +209,7 @@ namespace :gwss  do
 
       etd_admin_set = AdminSet.where(title: "ETDs")[0]
       gwe.admin_set = etd_admin_set
-      gwe.set_edit_groups(["content-admin"],[])
+      # gwe.set_edit_groups(["content-admin"],[])
       gwe.save
       return gwe.id
     end
@@ -238,7 +245,7 @@ namespace :gwss  do
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
       end
-      fs.set_edit_groups(["content-admin"],[])
+      # fs.set_edit_groups(["content-admin"],[])
       fs.save
     end
   end
