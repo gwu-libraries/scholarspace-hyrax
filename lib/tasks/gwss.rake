@@ -56,12 +56,13 @@ namespace :gwss  do
         item_attributes.delete('embargo_release_date')
         
         # dc:rights
-        if manifest_json['rights'] == ['None']
+        # There are some items with extraneous 'None' values; remove these
+        licenses = manifest_json['license'] - ['None']
+        if licenses.length == 0
           item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
         else
-          item_attributes['license'] = manifest_json['rights']
+          item_attributes['license'] = licenses
         end
-        item_attributes.delete('rights')
 
         # edm:rights
         item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
