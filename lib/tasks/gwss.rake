@@ -175,7 +175,7 @@ namespace :gwss  do
       default_admin_set_id = AdminSet.find_or_create_default_admin_set_id
       default_admin_set = AdminSet.find(default_admin_set_id)
       gww.admin_set = default_admin_set
-      # gww.set_edit_groups(["content-admin"],[])
+      gww.set_edit_groups(["content-admin"],[])
       gww.save
 
       return gww.id
@@ -209,7 +209,7 @@ namespace :gwss  do
 
       etd_admin_set = AdminSet.where(title: "ETDs")[0]
       gwe.admin_set = etd_admin_set
-      # gwe.set_edit_groups(["content-admin"],[])
+      gwe.set_edit_groups(["content-admin"],[])
       gwe.save
       return gwe.id
     end
@@ -245,7 +245,7 @@ namespace :gwss  do
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE,
                       Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
       end
-      # fs.set_edit_groups(["content-admin"],[])
+      fs.set_edit_groups(["content-admin"],[])
       fs.save
     end
   end
