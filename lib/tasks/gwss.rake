@@ -57,7 +57,7 @@ namespace :gwss  do
         
         # dc:rights
         # There are some items with extraneous 'None' values; remove these
-        licenses = manifest_json['license'] - ['None']
+        licenses = (manifest_json['license'] or []) - ['None']
         if licenses.length == 0
           item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
         else
