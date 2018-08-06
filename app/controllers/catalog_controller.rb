@@ -42,7 +42,7 @@ class CatalogController < ApplicationController
     # solr fields that will be treated as facets by the blacklight application
     #   The ordering of the field names is the order of the display
     # config.add_facet_field solr_name("human_readable_type", :facetable), label: "Type", limit: 5
-    # config.add_facet_field solr_name("resource_type", :facetable), label: "Resource Type", limit: 5
+    config.add_facet_field solr_name("resource_type", :facetable), label: "Resource Type", limit: 5
     config.add_facet_field solr_name("creator", :facetable), label: "Author", limit: 5
     config.add_facet_field solr_name("gw_affiliation", :facetable), label: "GW Unit", limit: 5
     config.add_facet_field solr_name("degree", :facetable), label: "Degree", limit: 5
@@ -89,7 +89,7 @@ class CatalogController < ApplicationController
     # config.add_index_field solr_name("date_created", :stored_searchable), label: "Date Created", itemprop: 'dateCreated'
     # config.add_index_field solr_name("rights_statement", :stored_searchable), label: "Rights Statement", helper_method: :license_links
     # config.add_index_field solr_name("license", :stored_searchable), label: "License", helper_method: :license_links
-    # config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type", link_to_search: solr_name("resource_type", :facetable)
+    config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type", link_to_search: solr_name("resource_type", :facetable)
     # config.add_index_field solr_name("file_format", :stored_searchable), label: "File Format", link_to_search: solr_name("file_format", :facetable)
     # config.add_index_field solr_name("identifier", :stored_searchable), label: "Identifier", helper_method: :index_field_link, field_name: 'identifier'
     config.add_index_field solr_name("embargo_release_date", :stored_sortable, type: :date), label: "Embargo release date", helper_method: :human_readable_date
