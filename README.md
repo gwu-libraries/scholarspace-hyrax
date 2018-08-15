@@ -551,6 +551,10 @@ has logged in at least once via the app's web UI (which should now be working).
         create 664 scholarspace scholarspace
 }
 ```
+
+ * Configure colors.  As the admin user, go to the admin dashboard --> Settings --> Appearance.  Set the Header background color to `004165`
+ 
+ * Also under Settings, add back Pages and Content Blocks 
    
 ### (NEEDS REFRESH - see [#83](https://github.com/gwu-libraries/scholarspace-hyrax/issues/83)) (Optional) Add Google Analytics
 
