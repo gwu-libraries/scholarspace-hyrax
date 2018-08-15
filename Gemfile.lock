@@ -336,7 +336,7 @@ GEM
       select2-rails (~> 3.5)
       signet
       tinymce-rails (~> 4.1)
-    i18n (1.0.1)
+    i18n (1.1.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     jbuilder (2.7.0)
@@ -456,7 +456,7 @@ GEM
       connection_pool (~> 2.2)
     nio4r (2.3.1)
     noid (0.9.0)
-    nokogiri (1.8.2)
+    nokogiri (1.8.4)
       mini_portile2 (~> 2.3.0)
     oauth (0.5.4)
     oauth2 (1.4.0)
@@ -693,7 +693,7 @@ GEM
     thor (0.20.0)
     thread_safe (0.3.6)
     tilt (2.0.8)
-    tinymce-rails (4.7.13)
+    tinymce-rails (4.8.2)
       railties (>= 3.1.1)
     turbolinks (5.1.1)
       turbolinks-source (~> 5.1)
@@ -751,4 +751,4 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 BUNDLED WITH
-   1.16.2
+   1.16.3
