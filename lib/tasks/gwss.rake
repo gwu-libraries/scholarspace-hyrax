@@ -117,7 +117,7 @@ namespace :gwss  do
           item_attributes['degree'] = manifest_json['degree'][0]
         end
         # resource_type may need more logic around it, TBD
-        item_attributes['resource_type'] = ['Dissertation']
+        item_attributes['resource_type'] = ['Thesis or Dissertation']
 
         # dc:rights
         item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
