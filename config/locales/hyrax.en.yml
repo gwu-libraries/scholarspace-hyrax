@@ -21,6 +21,9 @@ en:
     toolbar:
       profile:
         login:  "Staff login"
+    visibility:
+      open:
+         text: Open Access
   simple_form:
     labels:
       defaults:
