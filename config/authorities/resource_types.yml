@@ -7,6 +7,8 @@ terms:
     term: Book
   - id: Capstone Project
     term: Capstone Project
+  - id: Commentary
+    term: Commentary
   - id: Conference Proceeding
     term: Conference Proceeding
   - id: Dataset
@@ -37,5 +39,7 @@ terms:
     term: Thesis or Dissertation
   - id: Video
     term: Video
+  - id: Working Paper
+    term: Working Paper
   - id: Other
     term: Other
