@@ -5,6 +5,8 @@ terms:
     term: Audio
   - id: Book
     term: Book
+  - id: Book Review
+    term: Book Review
   - id: Capstone Project
     term: Capstone Project
   - id: Commentary
