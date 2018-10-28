@@ -23,6 +23,8 @@ terms:
     term: Map or Cartographic Material
   - id: Masters Thesis
     term: Masters Thesis
+  - id: Meeting Minutes
+    term: Meeting Minutes
   - id: Part of Book
     term: Part of Book
   - id: Poster
