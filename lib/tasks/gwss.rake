@@ -35,16 +35,14 @@ namespace :gwss  do
       op.on('-dep DEPOSITOR', '--depositor=DEPOSITOR', 'Scholarspace ID (e.g. email) of depositor') { |depositor| options[:depositor] = depositor }
       op.on('--set-item-id[=UPDATEID]', 'Set Item ID') { |setid| options[:setid] = setid }
       op.on('--update-item-id[=UPDATEID]', 'Update Item ID') { |updateid| options[:updateid] = updateid }
-      op.on('--private', 'Ingest and create with Private visibility') do
-        options[:private] = true
-      end
+      op.on('--skip-file-updates', 'If upload, do not delete existing files') { options[:skip_file_updates] = true }
+      op.on('--private', 'Ingest and create with Private visibility') { options[:private] = true }
 
       # return `ARGV` with the intended arguments
       args = op.order!(ARGV) {}
       op.parse!(args)
 
       raise OptionParser::MissingArgument if options[:mfpath].nil?
-      raise OptionParser::MissingArgument if options[:pfpath].nil?
       raise OptionParser::MissingArgument if options[:depositor].nil?
 
       manifest_file = options[:mfpath]
@@ -67,12 +65,14 @@ namespace :gwss  do
         # edm:rights
         item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
         
-        work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid], options[:private])
+        work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid], options[:private], options[:skip_file_updates])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
         gww = GwWork.find(work_id)
-        attach_files(gww, options[:pfpath], options[:oflist],
-                     options[:depositor], embargo_attributes)
+        unless !options[:updateid].nil? && options[:skip_file_updates]
+          attach_files(gww, options[:pfpath], options[:oflist],
+                       options[:depositor], embargo_attributes)
+        end
         puts work_id
       else
         puts "Manifest file doesn't exist - no ingest"
@@ -139,7 +139,7 @@ namespace :gwss  do
     end
   end
 
-  def ingest_work(item_attributes, depositor, updateid, setid, visibility_private)
+  def ingest_work(item_attributes, depositor, updateid, setid, visibility_private, skip_file_updates)
     begin
       gww = nil
       if updateid.nil?
@@ -156,9 +156,11 @@ namespace :gwss  do
         # to individual files won't be persistent if the ETD is updated
         # To solve this, we'd need a scheme for matching up updated files
         # with existing files (perhaps by file name?)
-        fsets = gww.file_sets
-        fsets.each do |fs|
-          fs.delete  
+        unless skip_file_updates
+          fsets = gww.file_sets
+          fsets.each do |fs|
+            fs.delete
+          end
         end
       end
 
