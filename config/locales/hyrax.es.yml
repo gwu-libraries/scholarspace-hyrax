@@ -52,7 +52,7 @@ es:
     footer:
       copyright_html: "<strong>Copyright &copy; 2017 Samvera</strong> bajo licencia de Apache, Version 2.0"
       service_html: Un servicio de <a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera/a>.
-    institution_name: institución
-    institution_name_full: El nombre de la institución
-    product_name: Hyrax
-    product_twitter_handle: "@SamveraRepo"
+    institution_name: The George Washington University
+    institution_name_full: George Washington University
+    product_name: GW ScholarSpace
+    product_twitter_handle: ""
