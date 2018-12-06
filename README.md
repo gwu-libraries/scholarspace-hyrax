@@ -391,10 +391,11 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
 ### Configure derivatives path for Hyrax
 
-   * Create a derivatives folder on your application server:
+   * Create a derivatives folder on your application server, writeable to any user in the scholarspace group:
 ```
          % sudo mkdir /opt/scholarspace/scholarspace-derivatives
          % sudo chown -R scholarspace:scholarspace /opt/scholarspace/scholarspace-derivatives
+	 % sudo chmod 775 -R /opt/scholarspace/scholarspace-derivatives
 ```	 
    * Add `config.derivatives_path` to `config/initializers/hyrax.rb`
 ```
