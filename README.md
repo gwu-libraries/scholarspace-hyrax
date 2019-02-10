@@ -553,7 +553,7 @@ has logged in at least once via the app's web UI (which should now be working).
 }
 ```
 
- * Configure colors.  As the admin user, go to the admin dashboard --> Settings --> Appearance.  Set the Header background color to `004165`
+ * Configure colors.  As the admin user, go to the admin dashboard --> Settings --> Appearance.  Set the Header background color to `004165` (You will need to select the color sliders, then RGB sliders, then enter the hex code in the Hex Color # box.)
  
  * Also under Settings, add back Pages and Content Blocks 
    
