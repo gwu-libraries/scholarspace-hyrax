@@ -56,19 +56,33 @@ project from which the work was derived."
     search:
       fields:
         show:
-          resource_type:    "Type of Work"
-          creator:          "Author"
-          gw_affiliation:   "GW Unit"
-          degree:           "Degree"
-          advisor:          "Advisor"
-          committee_member: "Committee Member(s)"
-          bibliographic_citation: "Previous Publication Information"
-          based_near:       "Location"
-          permanent_url:    "Persistent URL"
+          resource_type_tesim:          Type of Work
+          based_near_tesim:             Location
+          contributor_tesim:            Contributor
+          creator_tesim:                Author
+          description_tesim:            Description
+          gw_affiliation_tesim:         GW Unit
+          degree_tesim:                 Degree
+          advisor_tesim:                Advisor
+          committee_member_tesim:       Committee Member(s)
+          bibliographic_citation_tesim: Previous Publication Information
+          permanent_url_tesim:          Persistent URL
+        index:
+          resource_type_tesim:          Type of Work
+          based_near_tesim:             Location
+          contributor_tesim:            Contributor
+          creator_tesim:                Author
+          description_tesim:            Description
+          gw_affiliation_tesim:         GW Unit
+          degree_tesim:                 Degree
+          advisor_tesim:                Advisor
+          committee_member_tesim:       Committee Member(s)
+          bibliographic_citation_tesim: Previous Publication Information
+          permanent_url_tesim:          Persistent URL
         facet:
-          gw_affiliation_sim:   "GW Unit"
-          degree_sim:           "Degree"
-          advisor_sim:          "Advisor"
-          committee_member_sim: "Committee Member"
-          resource_type_sim:    "Type of Work"
-          creator_sim:          "Author"
+          gw_affiliation_sim:   GW Unit
+          degree_sim:           Degree
+          advisor_sim:          Advisor
+          committee_member_sim: Committee Member
+          resource_type_sim:    Type of Work
+          creator_sim:          Author
