@@ -1,15 +1,15 @@
-    <tr>
-      <td class="col-sm-2">
-        <%= link_to [main_app, recent_document] do %>
-          <%= render_thumbnail_tag recent_document, { width: 45 }, suppress_link: true %>
-        <% end %>
-      </td>
-      <td>
+<li class="recent-item">
+    <div class="row">
+      <div class="col-sm-12">
+        <span class="sr-only"><%= t('hyrax.homepage.recently_uploaded.document.title_label') %></span>
         <h3>
-          <span class="sr-only">Title</span><%= link_to truncate(recent_document.to_s, length: 40, separator: ' '), [main_app, recent_document] %>
+          <%= link_to [main_app, recent_document] do %>
+            <%= render_thumbnail_tag(recent_document, {width: 90}, {suppress_link: true}) + recent_document.to_s %>
+          <% end %>
         </h3>
-        <p>
-          <span class="sr-only">Keywords</span><%= link_to_facet_list(recent_document.keyword, 'keyword', 'no keywords specified').html_safe %>
+        <p class="recent-field">
+          <span class="recent-label"><%= t('hyrax.homepage.recently_uploaded.document.keyword_label') %>:</span> <%= link_to_facet_list(recent_document.keyword, 'keyword', t('hyrax.homepage.recently_uploaded.document.keyword_missing')).html_safe %>
         </p>
-      </td>
-    </tr>
+      </div>
+    </div>
+</li>
