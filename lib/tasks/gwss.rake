@@ -145,7 +145,7 @@ namespace :gwss  do
       if updateid.nil?
         gww = GwWork.new
         if setid.nil?
-          gww.id = ActiveFedora::Noid::Service.new.mint
+          gww.id = Noid::Rails::Service.new.mint
         else
           gww.id = setid
         end
@@ -190,7 +190,7 @@ namespace :gwss  do
       gwe = nil
       if updateid.nil?
         gwe = GwEtd.new
-        gwe.id = ActiveFedora::Noid::Service.new.mint
+        gwe.id = Noid::Rails::Service.new.mint
       else
         gwe = GwEtd.find(updateid)
         # delete existing files; we'll "overwrite" with new ones
@@ -237,7 +237,7 @@ namespace :gwss  do
     files.each do |f|
       fs = FileSet.new
       # use the filename as the FileSet title
-      fs.id = ActiveFedora::Noid::Service.new.mint
+      fs.id = Noid::Rails::Service.new.mint
       fs.title = [File.basename(f)]
       actor = ::Hyrax::Actors::FileSetActor.new(fs, user)
       actor.create_metadata()
