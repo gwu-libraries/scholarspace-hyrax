@@ -4,9 +4,10 @@ content_block:
   <<: *default
   menubar: false
   toolbar1: styleselect | bold italic | link image | undo redo
-  toolbar2: table | fullscreen | uploadimage
+  toolbar2: table | fullscreen | uploadimage | code
   plugins:
     - table
     - fullscreen
+    - code
 custom:
   <<: *default
