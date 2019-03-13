@@ -53,6 +53,9 @@ terms:
   - id: Brazil Initiative
     term: Brazil Initiative
     active: true
+  - id: Burns Law Library
+    term: Burns Law Library
+    active: true
   - id: Business & Finance Law
     term: Business & Finance Law
     active: true
@@ -365,6 +368,9 @@ terms:
   - id: GW Heart & Vascular Institute
     term: GW Heart & Vascular Institute
     active: true
+  - id: GW Historical Review
+    term: GW Historical Review
+    active: true
   - id: GW HIV/AIDS Institute
     term: GW HIV/AIDS Institute
     active: true
@@ -383,11 +389,17 @@ terms:
   - id: GW Institute of Public Policy
     term: GW Institute of Public Policy
     active: true
+  - id: GW Law School
+    term: GW Law School
+    active: true
   - id: GW Libraries
     term: GW Libraries
     active: true
   - id: GW Program on Extremism
     term: GW Program on Extremism
+    active: true
+  - id: GW Undergraduate Law Review
+    term: GW Undergraduate Law Review
     active: true
   - id: GW Undergraduate Review
     term: GW Undergraduate Review
@@ -511,6 +523,9 @@ terms:
     active: true
   - id: International Affairs
     term: International Affairs
+    active: true
+  - id: International Affairs Review
+    term: International Affairs Review
     active: true
   - id: International Business
     term: International Business
@@ -710,6 +725,9 @@ terms:
   - id: Police and Security Studies
     term: Police and Security Studies
     active: true
+  - id: Policy Perspectives
+    term: Policy Perspectives
+    active: true
   - id: Political Communication
     term: Political Communication
     active: true
@@ -859,4 +877,7 @@ terms:
     active: true
   - id: Women's Studies
     term: Women's Studies
+    active: true
+  - id: Wooden Teeth
+    term: Wooden Teeth
     active: true
