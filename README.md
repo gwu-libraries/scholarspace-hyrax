@@ -4,6 +4,8 @@ A Hyrax app for GW Libraries with:
 - two item types: GwWork and GwEtd
 - roles: admin, content-admin
 
+The public application is accessible at [https://scholarspace.library.gwu.edu/](https://scholarspace.library.gwu.edu)
+
 Some convenient links to have handy:
 - [Hyrax github repo](https://github.com/samvera/hyrax/)
 - [Hyrax project](http://hyr.ax/)
