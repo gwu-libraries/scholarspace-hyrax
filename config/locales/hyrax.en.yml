@@ -17,7 +17,7 @@ en:
             label_long:     "All of GW ScholarSpace"
     background_attribution: "Background image courtesy of The George Washington University"
     deposit_agreement:      "GW ScholarSpace Deposit Agreement"
-    upload_url: "http://library.gwu.edu/scholarspace/submit"
+    upload_url: "https://docs.google.com/forms/d/e/1FAIpQLSfasnzb2NjLsw7YRBvEJcw1GCfSsY6DVqvF3sdKlWs2uvEP2w/viewform?usp=sf_link"
     toolbar:
       profile:
         login:  "Staff login"
