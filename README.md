@@ -64,6 +64,7 @@ These instructions have been updated for Ubuntu 16.04.
 ## Solr setup
 
 * Install Solr (may require `sudo`):
+
 NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2.4.1 instance works with Solr 7.7.1, so it is likely to work with a new instance of GW ScholarSpace.  Current (as of GW ScholarSpace v1.2.0) prod and test instances are running Solr 6.4.1 and should be upgraded at a later date.
 ```
   % cd /opt/install
