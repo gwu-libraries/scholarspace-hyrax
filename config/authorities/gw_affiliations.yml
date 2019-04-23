@@ -59,6 +59,9 @@ terms:
   - id: Business & Finance Law
     term: Business & Finance Law
     active: true
+  - id: Cancer Biology
+    term: Cancer Biology
+    active: true
   - id: Capitol Archaeological Institute, GW
     term: Capitol Archaeological Institute, GW
     active: true
@@ -109,6 +112,9 @@ terms:
     active: true
   - id: Center for Quantum Computing, Information, Logic & Topology
     term: Center for Quantum Computing, Information, Logic & Topology
+    active: true
+  - id: Center for Real Estate and Urban Analysis
+    term: Center for Real Estate and Urban Analysis
     active: true
   - id: Center for Rehabilitation Counseling Research and Education
     term: Center for Rehabilitation Counseling Research and Education
@@ -319,6 +325,9 @@ terms:
     active: true
   - id: Forensic Sciences
     term: Forensic Sciences
+    active: true
+  - id: Genomics and Bioinformatics
+    term: Genomics and Bioinformatics
     active: true
   - id: Geography
     term: Geography
@@ -625,6 +634,9 @@ terms:
     active: true
   - id: Neurology
     term: Neurology
+    active: true
+  - id: Neuroscience
+    term: Neuroscience
     active: true
   - id: New Media Photojournalism
     term: New Media Photojournalism
