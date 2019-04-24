@@ -27,19 +27,11 @@ These instructions have been updated for Ubuntu 16.04.
    ```
    % sudo apt-get install openjdk-8*
    ```
-   - For Ubuntu 14:
-   ```
-   % sudo add-apt-repository ppa:webupd8team/java
-   % sudo apt-get update
-   % sudo apt-get install oracle-java8-installer
-   ```
    Verify that Java has been installed and is running Java 8:
 ```
    % java -version
 ```
    This should return Java version 1.8.
-   
-   Optionally, you can remove the installer using ```sudo add-apt-repository -r ppa:webupd8team/java```
    
 * Install necessary Ubuntu packages:
 ```
@@ -65,7 +57,7 @@ These instructions have been updated for Ubuntu 16.04.
 
 * Install Solr (may require `sudo`):
 
-NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2.4.1 instance works with Solr 7.7.1, so it is likely to work with a new instance of GW ScholarSpace.  Current (as of GW ScholarSpace v1.2.0) prod and test instances are running Solr 6.4.1 and should be upgraded at a later date.
+NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2.5.0 instance works with Solr 7.7.1, so it is likely to work with a new instance of GW ScholarSpace.  Current (as of GW ScholarSpace v1.2.0) prod and test instances are running Solr 6.4.1 and should be upgraded at a later date.
 ```
   % cd /opt/install
   % wget http://archive.apache.org/dist/lucene/solr/6.4.1/solr-6.4.1.tgz
@@ -85,7 +77,7 @@ NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2
 ```  
   % sudo mv /var/solr/data/scholarspace/conf/managed-schema /var/solr/data/scholarspace/conf/managed-schema.bak
 ```  
-* Copy the `solr/config/` contents from the [samvera/hyrax repo](https://github.com/samvera/hyrax/tree/v1.0.5/solr/config) to `/var/solr/data/scholarspace/conf/` (this can be accomplished by git clone-ing the hyrax repo, making sure to check out the appropriate tag)
+* Copy the `solr/config/` contents from the [samvera/hyrax repo](https://github.com/samvera/hyrax/tree/v2.0.3/solr/config) to `/var/solr/data/scholarspace/conf/` (this can be accomplished by git clone-ing the hyrax repo, making sure to check out the appropriate tag)
   
 * Restart Solr:
 ```  
@@ -235,11 +227,11 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
   
 * Install Ruby:
 ```
-        % rvm install ruby-2.3.3
+        % rvm install ruby-2.5.5
 ```        
 * Install Rails:
 ```
-        % gem install rails -v 5.0.4 -N
+        % gem install rails -v 5.1.7 -N
 ```    
   Also, add `export rvmsudo_secure_path=1` to your user's `.bashrc` file.  This will avoid a warning when running `rvmsudo`.
 
@@ -264,7 +256,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 	% cd /opt/scholarspace
         % git clone https://github.com/gwu-libraries/scholarspace-hyrax.git
 ```
-  Check out the desired tag, where `TAGNUMBER` might be, for example, `1.0`:
+  Check out the desired tag, where `TAGNUMBER` might be, for example, `1.2.0`:
 ```
         % cd scholarspace-hyrax
 	% git checkout TAGNUMBER
@@ -272,9 +264,10 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 * Install gems
 ```
+        % gem install bundler
         % bundle install --without development --deployment
 ```	
-  More information on the meaning of these bundle install options can be found at http://bundler.io/v1.15/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
+  More information on the meaning of these bundle install options can be found at https://bundler.io/v2.0/man/bundle-install.1.html .  For a development environment, to install development gems as well, omit the `--without development` option.
   
   Return to your user account:
 ```
@@ -347,7 +340,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 ```
   If you get an error about rake versions, this can be resolved with:
 ```
-        % gem install rake -v 12.0.0   # or other desired version
+        % gem install rake -v 12.3.2   # or other desired version
 ```
 
 * Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
@@ -431,16 +424,16 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 * Set up Passenger, and create Passenger config for Apache
 ```
-        % gem install passenger -v 5.1.7 --no-rdoc --no-ri
+        % gem install passenger -v 5.3.7
         % rvmsudo passenger-install-apache2-module
 ```
    Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
 ```        
-   LoadModule passenger_module /usr/local/rvm/gems/ruby-2.3.3/gems/passenger-5.1.7/buildout/apache2/mod_passenger.so
-   <IfModule mod_passenger.c>
-     PassengerRoot /usr/local/rvm/gems/ruby-2.3.3/gems/passenger-5.1.7
-     PassengerDefaultRuby /usr/local/rvm/gems/ruby-2.3.3/wrappers/ruby
-   </IfModule>	
+LoadModule passenger_module /usr/local/rvm/gems/ruby-2.5.5/gems/passenger-5.3.7/buildout/apache2/mod_passenger.so
+<IfModule mod_passenger.c>
+  PassengerRoot /usr/local/rvm/gems/ruby-2.5.5/gems/passenger-5.3.7
+  PassengerDefaultRuby /usr/local/rvm/gems/ruby-2.5.5/wrappers/ruby
+</IfModule>
 ```
   Create `/etc/apache2/conf-available/passenger.conf` using the lines pasted from the Passenger install script.
 
