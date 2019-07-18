@@ -63,8 +63,9 @@ namespace :gwss  do
         end
 
         # edm:rights
-        item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
-        
+        # turn this scalar value into a single-valued list
+        item_attributes['rights_statement'] = [manifest_json['rights_statement']]
+
         work_id = ingest_work(item_attributes, options[:depositor], options[:updateid], options[:setid], options[:private], options[:skip_file_updates])
         # generate_ingest_report(noid_list, investigation_id) 
         embargo_attributes = read_embargo_info(manifest_json)
@@ -120,10 +121,12 @@ namespace :gwss  do
         item_attributes['resource_type'] = ['Thesis or Dissertation']
 
         # dc:rights
+        # Always set this license for ETDs
         item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
         item_attributes.delete('rights')
 
         # edm:rights
+        # Always set this rights statement for ETDs
         item_attributes['rights_statement'] = ['http://rightsstatements.org/vocab/InC/1.0/']
 
         etd_id = ingest_etd(item_attributes, options[:depositor], options[:updateid])
