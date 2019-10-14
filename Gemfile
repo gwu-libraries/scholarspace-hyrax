@@ -12,6 +12,8 @@ gem 'rails', '~> 5.1.7'
 gem 'sqlite3', '~> 1.3.0'
 # Use pg as the production database for Active Record
 gem 'pg'
+# Use sitemap
+gem 'sitemap'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
 # Use SCSS for stylesheets
