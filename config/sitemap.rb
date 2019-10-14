@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-Sitemap::Generator.instance.load(host: 'gwscholarspace-test2.wrlc.org', protocol: 'https') do
+Sitemap::Generator.instance.load(host: 'scholarspace.library.gwu.edu', protocol: 'https') do
   path :root, priority: 1, change_frequency: 'weekly'
   path :search_catalog, priority: 1, change_frequency: 'weekly'
 
