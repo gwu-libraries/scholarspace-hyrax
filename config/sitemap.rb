@@ -10,7 +10,7 @@ Sitemap::Generator.instance.load(host: 'scholarspace.library.gwu.edu', protocol:
             priority: 1, change_frequency: 'weekly'
   end
   GwEtd.where(read_group => 'public').each do |f|
-    literal Rails.application.routes.url_helpers.hyrax_gw_etds_path(f, action: 'show'),
+    literal Rails.application.routes.url_helpers.hyrax_gw_etd_path(f, action: 'show'),
             priority: 1, change_frequency: 'weekly'
   end
 end
