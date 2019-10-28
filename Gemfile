@@ -13,6 +13,7 @@ gem 'sqlite3', '~> 1.3.0'
 # Use pg as the production database for Active Record
 gem 'pg'
 # Use sitemap
+# See https://github.com/viseztrance/rails-sitemap
 gem 'sitemap'
 # Use Puma as the app server
 gem 'puma', '~> 3.7'
@@ -78,6 +79,3 @@ group :development, :test do
 end
 
 gem 'riiif', '~> 2.0'
-
-# See https://github.com/viseztrance/rails-sitemap
-gem 'sitemap'
