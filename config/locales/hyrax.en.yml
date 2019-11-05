@@ -53,6 +53,10 @@ project from which the work was derived."
         degree: "Degree earned"
         advisor: "Thesis/Dissertation advisor(s)"
         committee_member: "Thesis/Dissertation committee member(s)"
+  activefedora:
+    models:
+      gw_work: GW Work
+      gw_etd: Electronic Thesis/Dissertation
   blacklight:
     search:
       fields:
