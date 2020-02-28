@@ -512,7 +512,7 @@ GEM
     power_converter (0.1.2)
     public_suffix (3.1.0)
     pul_uv_rails (2.0.1)
-    puma (3.12.1)
+    puma (3.12.3)
     qa (2.2.0)
       activerecord-import
       deprecation
@@ -787,7 +787,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5, < 3.2)
   pg
-  puma (~> 3.7)
+  puma (~> 3.12)
   rails (~> 5.1.7)
   riiif (~> 2.0)
   rsolr (>= 1.0)
