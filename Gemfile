@@ -16,7 +16,7 @@ gem 'pg'
 # See https://github.com/viseztrance/rails-sitemap
 gem 'sitemap'
 # Use Puma as the app server
-gem 'puma', '~> 3.7'
+gem 'puma', '~> 3.12'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -60,7 +60,7 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'hyrax', '2.6.0'
+gem 'hyrax', '2.7.0'
 
 gem 'hydra-role-management'
 
