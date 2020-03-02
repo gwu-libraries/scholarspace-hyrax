@@ -794,7 +794,7 @@ DEPENDENCIES
   jquery-rails
   listen (~> 3.0.5, < 3.2)
   pg
-  puma (~> 3.7)
+  puma (~> 3.12)
   rails (~> 5.1.7)
   riiif (~> 2.0)
   rsolr (>= 1.0)
