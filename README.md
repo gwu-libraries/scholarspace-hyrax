@@ -346,8 +346,9 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 * Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
 ```
         % cd /usr/local/bin
-        % sudo curl http://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip -o fits-1.0.5.zip
-        % sudo unzip fits-1.0.5.zip
+        % sudo wget https://github.com/harvard-lts/fits/archive/1.0.5.zip
+        % sudo unzip 1.0.5.zip
+	% sudo rm 1.0.5.zip
         % cd fits-1.0.5
         % sudo chmod a+x fits*.sh
 ```
