@@ -155,6 +155,9 @@ terms:
   - id: Clinical Learning and Simulation Skills (CLASS) Center
     term: Clinical Learning and Simulation Skills (CLASS) Center
     active: true
+  - id: Clinical Psychology
+    term: Clinical Psychology
+    active: true
   - id: Clinical Research & Leadership
     term: Clinical Research & Leadership
     active: true
