@@ -209,19 +209,21 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 # Application server
 
+Start with an Ubuntu 18 server.
+
 ### Install dependencies
 
 * Install necessary Ubuntu packages:
 ```
         % sudo apt-get update
-        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libapache2-mod-shib2  libreoffice libcurl4-openssl-dev apache2 apache2-dev ffmpeg gnupg2
+        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libreoffice libcurl4-openssl-dev apache2 apache2-dev ffmpeg gnupg2
 ```
 * Install RVM for multi-users.  If the GPG signature verification fails at this step, just follow the instructions in the warning in order to fetch the public key.
 ```
         % curl -L https://get.rvm.io | sudo bash -s stable
         % source /etc/profile.d/rvm.sh
 ```
-   Edit `/etc/group` and add yourself (and any other users who will need to run rvm) to the `rvm` system group.
+   Edit `/etc/group` and add yourself (and any other users who will need to run rvm) to the `rvm` system group.  You may then need to log back out and back in as that user.
    
    Log out, then log back in.
   
@@ -346,9 +348,9 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 * Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
 ```
         % cd /usr/local/bin
-        % sudo wget https://github.com/harvard-lts/fits/archive/1.0.5.zip
-        % sudo unzip 1.0.5.zip
-	% sudo rm 1.0.5.zip
+        % sudo wget https://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip
+        % sudo unzip fits-1.0.5.zip
+	% sudo rm fits-1.0.5.zip
         % cd fits-1.0.5
         % sudo chmod a+x fits*.sh
 ```
@@ -383,7 +385,7 @@ These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 
 
 ### Configure path for libre-office
 
-  * Uncomment `config.libreoffice_path` in `config/initializers/hyrax.rb`
+  * Verify that `config.libreoffice_path` in `config/initializers/hyrax.rb` is as follows:
 ```
          config.libreoffice_path = "/usr/bin/soffice"
 ```
@@ -451,9 +453,9 @@ LoadModule passenger_module /usr/local/rvm/gems/ruby-2.5.5/gems/passenger-5.3.7/
 ```
 * Create and enable an Apache2 virtual host
 
-  Retrieve `scholarspace.conf` from `apache_conf/scholarspace.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace.conf`
+  Retrieve `scholarspace.conf` from `apache_conf/scholarspace.conf` in the GitHub repo; copy to `/etc/apache2/sites-available/scholarspace.conf`
      
-  Retrieve `scholarspace-ssl.conf` from `apache_conf/scholarspace-ssl.conf` in the GitHub repo; copy to `/etc/apache/sites-available/scholarspace-ssl.conf`.  Adjust paths as needed.
+  Retrieve `scholarspace-ssl.conf` from `apache_conf/scholarspace-ssl.conf` in the GitHub repo; copy to `/etc/apache2/sites-available/scholarspace-ssl.conf`.  Adjust paths as needed.
      
   Enable modssl:
 ```
@@ -487,6 +489,11 @@ ingest_path = "/opt/scholarspace/scholarspace-hyrax"
 ingest_command = "rake RAILS_ENV=production gwss:ingest_etd"
 ```
 
+### Set policy for file uploads
+
+  Edit `/etc/ImageMagick-6/policy.xml` to allow/disallow file types that may be processed
+for derivatives.  For example, to allow PDF files, remove the line that blocks PDF files.
+
 ### Final Deployment
 
 * Prepare databases and assets for production
@@ -511,6 +518,7 @@ has logged in at least once via the app's web UI (which should now be working).
         > r.save 
 ```
   We can [add the content-admin users](#prod-add-content-admin) as desired through the /roles UI.
+
 
 ### Create `ETDs` admin set
 
