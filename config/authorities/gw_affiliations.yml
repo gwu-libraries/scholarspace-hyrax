@@ -29,6 +29,9 @@ terms:
   - id: Anthropology
     term: Anthropology
     active: true
+  - id: Applied Social Psychology
+    term: Applied Social Psychology
+    active: true
   - id: Art Therapy
     term: Art Therapy
     active: true
@@ -166,6 +169,9 @@ terms:
     active: true
   - id: Cocoran Graphic Design
     term: Cocoran Graphic Design
+    active: true
+  - id: Cognitive Neuroscience
+    term: Cognitive Neuroscience
     active: true
   - id: Competition Law Center
     term: Competition Law Center
@@ -439,6 +445,9 @@ terms:
     active: true
   - id: Human Services & Social Justice
     term: Human Services & Social Justice
+    active: true
+  - id: Industrial-Organizational Psychology
+    term: Industrial-Organizational Psychology
     active: true
   - id: Information Systems & Technology Management
     term: Information Systems & Technology Management
