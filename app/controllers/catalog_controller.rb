@@ -77,7 +77,7 @@ class CatalogController < ApplicationController
     config.add_index_field solr_name("creator", :stored_searchable), label: "Author", itemprop: 'creator', link_to_search: solr_name("creator", :facetable)
     config.add_index_field solr_name("keyword", :stored_searchable), label: "Keyword", itemprop: 'keywords', link_to_search: solr_name("keyword", :facetable)
     config.add_index_field solr_name("gw_affiliation", :stored_searchable), label: "GW Unit", itemprop: 'gw_affiliation', link_to_search: solr_name("gw_affiliation", :facetable)
-    config.add_index_field solr_name("doi", :stored_searchable), label: "DOI", itemprop: 'DOI', link_to_search: solr_name("DOI")
+    # config.add_index_field solr_name("doi", :stored_searchable), label: "DOI", itemprop: 'DOI', link_to_search: solr_name("DOI")
     config.add_index_field solr_name("degree", :stored_searchable), label: "Degree", itemprop: 'degree', link_to_search: solr_name("degree", :facetable)
     config.add_index_field solr_name("advisor", :stored_searchable), label: "Advisor", itemprop: 'advisor', link_to_search: solr_name("advisor", :facetable)
     config.add_index_field solr_name("committee_member", :stored_searchable), label: "Committee Member(s)", itemprop: 'committee_member', link_to_search: solr_name("committee_member", :facetable)
