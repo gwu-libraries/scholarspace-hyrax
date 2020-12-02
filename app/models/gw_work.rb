@@ -12,5 +12,9 @@ class GwWork < ActiveFedora::Base
     index.as :stored_searchable, :facetable
   end
 
+  property :doi, predicate: ::RDF::URI.new('http://scholarspace.library.gwu.edu/ns#doi') do |index|
+    index.as :stored_searchable
+  end
+
   include ::Hyrax::BasicMetadata
 end

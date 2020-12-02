@@ -32,6 +32,7 @@ en:
         creator:                "Author"
         bibliographic_citation: "Previous Publication Information"
         gw_affiliation:         "GW Unit"
+        doi:                    "DOI (Digital Object Identifier)"
         based_near:             "Location"
         degree:                 "Degree"
         advisor:                "Advisor"
@@ -45,6 +46,7 @@ en:
         publisher: 'The entity responsible for publishing, printing, or manufacturing the final work. Examples could include the journal publisher of an article, the university that houses the center or institute such as The George Washington University, or the research project producing the work.'
         bibliographic_citation: "Includes citation and link back to original publication and any additional info required by the publisher."
         gw_affiliation: "Department, Center, Institute, Office, etc. with which this item is associated"
+        doi: "Digital Object Identifier URL link"
         language: "The language of the work."
         keyword: "Words or phrases you select to describe what the work is about. These are used to search for content.  Use the Add button to enter additional terms."
         date_created: "The year [YYYY] in which the work was generated, e.g. 2015."
@@ -67,6 +69,7 @@ project from which the work was derived."
           creator:                      Author
           description_tesim:            Description
           gw_affiliation:               GW Unit
+          doi:                          DOI
           degree:                       Degree
           advisor:                      Advisor
           committee_member:             Committee Member(s)
@@ -74,6 +77,7 @@ project from which the work was derived."
           permanent_url:                Persistent URL
         facet:
           gw_affiliation_sim:   GW Unit
+          doi_sim:              DOI
           degree_sim:           Degree
           advisor_sim:          Advisor
           committee_member_sim: Committee Member

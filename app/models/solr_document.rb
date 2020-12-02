@@ -30,6 +30,10 @@ class SolrDocument
     self[Solrizer.solr_name('gw_affiliation')]
   end
 
+  def doi
+    self[Solrizer.solr_name('doi')]
+  end
+
   def degree
     self[Solrizer.solr_name('degree')]
   end
