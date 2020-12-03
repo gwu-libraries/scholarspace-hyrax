@@ -45,4 +45,12 @@ class SolrDocument
   def committee_member
     self[Solrizer.solr_name('committee_member')]
   end
+
+  def volume
+    self[Solrizer.solr_name('volume')]
+  end
+
+  def issue
+    self[Solrizer.solr_name('issue')]
+  end
 end

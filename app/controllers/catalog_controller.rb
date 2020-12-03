@@ -121,6 +121,8 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("gw_affiliation", :stored_searchable), label: "GW Unit"
     config.add_show_field solr_name("doi", :stored_searchable), label: "DOI"
     config.add_show_field solr_name("bibliographic_citation", :stored_searchable), label: "Previous Publication Information"
+    config.add_show_field solr_name("volume", :stored_searchable), label: "Volume Number"
+    config.add_show_field solr_name("issue", :stored_searchable), label: "Issue Number"
     config.add_show_field solr_name("degree", :stored_searchable), label: "Degree"
     config.add_show_field solr_name("advisor", :stored_searchable), label: "Advisor"
     config.add_show_field solr_name("committee_member", :stored_searchable), label: "Committee Member"

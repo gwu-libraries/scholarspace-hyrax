@@ -1,0 +1,10 @@
+zh:
+  hyrax:
+    icons:
+      gw_journal_issue:     'fa fa-file-text-o'
+    select_type:
+      gw_journal_issue:
+        # TODO: translate `human_name` into Chinese
+        description:        "Gw journal issue 作品"
+        name:               "Gw Journal Issue"
+        # TODO: translate `human_name` into Chinese
