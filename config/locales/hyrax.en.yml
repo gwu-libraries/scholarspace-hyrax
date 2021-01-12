@@ -37,6 +37,8 @@ en:
         degree:                 "Degree"
         advisor:                "Advisor"
         committee_member:       "Committee Member"
+        volume:                 "Volume Number"
+        issue:                  "Issue Number"
         permanent_url:          "Persistent URL"
     hints:
       defaults:
@@ -55,6 +57,8 @@ project from which the work was derived."
         degree: "Degree earned"
         advisor: "Thesis/Dissertation advisor(s)"
         committee_member: "Thesis/Dissertation committee member(s)"
+        volume: "Volume number"
+        issue: "Issue number"
   activefedora:
     models:
       gw_work: GW Work
@@ -73,6 +77,8 @@ project from which the work was derived."
           degree:                       Degree
           advisor:                      Advisor
           committee_member:             Committee Member(s)
+          volume:                       Volume Number
+          issue:                        Issue Number
           bibliographic_citation:       Previous Publication Information
           permanent_url:                Persistent URL
         facet:
@@ -81,5 +87,7 @@ project from which the work was derived."
           degree_sim:           Degree
           advisor_sim:          Advisor
           committee_member_sim: Committee Member
+          volume_sim:           Volume Number
+          issue_sim:            Issue Number
           resource_type_sim:    Type of Work
           creator_sim:          Author

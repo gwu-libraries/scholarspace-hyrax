@@ -1,0 +1,8 @@
+pt-BR:
+  hyrax:
+    icons:
+      gw_journal_issue:     'fa fa-file-text-o'
+    select_type:
+      gw_journal_issue:
+        description:        "Gw journal issue trabalhos"
+        name:               "Gw Journal Issue"
