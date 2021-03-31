@@ -4,3 +4,7 @@ Disallow: /catalog*
 Disallow: /users*
 Disallow: /*?file=thumbnail$
 Sitemap: https://scholarspace.library.gwu.edu/sitemap.xml
+User-agent: PetalBot
+Disallow: /
+User-agent: SemrushBot
+Disallow: /
