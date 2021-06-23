@@ -437,6 +437,9 @@ terms:
   - id: History
     term: History
     active: true
+  - id: Higher Education Administration
+    term: Higher Education Administration
+    active: true
   - id: Homeland Security Policy Institute
     term: Homeland Security Policy Institute
     active: true
