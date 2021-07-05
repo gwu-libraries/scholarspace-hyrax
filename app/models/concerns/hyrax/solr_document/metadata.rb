@@ -54,6 +54,7 @@ module Hyrax
         attribute :read_groups, Solr::Array, ::Ability.read_group_field
         attribute :collection_ids, Solr::Array, 'collection_ids_tesim'
         attribute :admin_set, Solr::Array, solr_name('admin_set')
+        attribute :member_ids, Solr::Array, "member_ids_ssim"
         attribute :member_of_collection_ids, Solr::Array, solr_name('member_of_collection_ids', :symbol)
         attribute :description, Solr::Array, solr_name('description')
         attribute :title, Solr::Array, solr_name('title')
@@ -76,14 +77,15 @@ module Hyrax
         attribute :rendering_ids, Solr::Array, solr_name(Hyrax.config.rendering_predicate.value.split(/#|\/|,/).last, :symbol)
         attribute :thumbnail_id, Solr::String, solr_name('hasRelatedImage', :symbol)
         attribute :thumbnail_path, Solr::String, CatalogController.blacklight_config.index.thumbnail_field
-        attribute :label, Solr::String, solr_name('label')
-        attribute :file_format, Solr::String, solr_name('file_format')
-        attribute :suppressed?, Solr::String, solr_name('suppressed', Solrizer::Descriptor.new(:boolean, :stored, :indexed))
 
-        attribute :date_modified, Solr::Date, solr_name('date_modified', :stored_sortable, type: :date)
-        attribute :date_uploaded, Solr::Date, solr_name('date_uploaded', :stored_sortable, type: :date)
-        attribute :create_date, Solr::Date, solr_name('system_create', :stored_sortable, type: :date)
-        attribute :modified_date, Solr::Date, solr_name('system_modified', :stored_sortable, type: :date)
+        attribute :label, Solr::String, "label_tesim"
+        attribute :file_format, Solr::String, "file_format_tesim"
+        attribute :suppressed?, Solr::String, "suppressed_bsi"
+        attribute :original_file_id, Solr::String, "original_file_id_ssi"
+        attribute :date_modified, Solr::Date, "date_modified_dtsi"
+        attribute :date_uploaded, Solr::Date, "date_uploaded_dtsi"
+        attribute :create_date, Solr::Date, "system_create_dtsi"
+        attribute :modified_date, Solr::Date, "system_modified_dtsi"
         attribute :embargo_release_date, Solr::Date, Hydra.config.permissions.embargo.release_date
         attribute :lease_expiration_date, Solr::Date, Hydra.config.permissions.lease.expiration_date
       end

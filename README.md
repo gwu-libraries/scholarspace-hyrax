@@ -17,7 +17,7 @@ The recommended production setup involves two servers.  However, these can be th
 - Repository server, for the Fedora repository and Solr interface
 - Application server, for the GW ScholarSpace rails app
 
-These instructions have been updated for Ubuntu 16.04.
+Currently these instructions are for an Ubuntu 16.04 repository server, and an Ubuntu 18.04 application server.
 
 # Repository server
 
@@ -229,11 +229,11 @@ Start with an Ubuntu 18 server.
   
 * Install Ruby:
 ```
-        % rvm install ruby-2.5.5
+        % rvm install ruby-2.7.3
 ```        
 * Install Rails:
 ```
-        % gem install rails -v 5.1.7 -N
+        % gem install rails -v 5.2.6 -N
 ```    
   Also, add `export rvmsudo_secure_path=1` to your user's `.bashrc` file.  This will avoid a warning when running `rvmsudo`.
 
@@ -342,16 +342,16 @@ Start with an Ubuntu 18 server.
 ```
   If you get an error about rake versions, this can be resolved with:
 ```
-        % gem install rake -v 12.3.2   # or other desired version
+        % gem install rake -v 13.0.3   # or other desired version
 ```
 
-* Install `fits.sh` version 1.0.5 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.0.5 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
+* Install `fits.sh` version 1.5.0 (check [FITS](http://projects.iq.harvard.edu/fits/downloads) for the latest 1.5.0 download).  Also check the [Hyrax repo](https://github.com/samvera/hyrax/blob/main/documentation/developing-your-hyrax-based-app.md#prerequisites) to verify the latest recommended version of FITS for use with Hyrax.
 ```
         % cd /usr/local/bin
-        % sudo wget https://projects.iq.harvard.edu/files/fits/files/fits-1.0.5.zip
-        % sudo unzip fits-1.0.5.zip
-	% sudo rm fits-1.0.5.zip
-        % cd fits-1.0.5
+        % sudo wget https://github.com/harvard-lts/fits/releases/download/1.5.0/fits-1.5.0.zip
+        % sudo unzip fits-1.5.0.zip -d fits-1.5.0
+	% sudo rm fits-1.5.0.zip
+        % cd fits-1.5.0
         % sudo chmod a+x fits*.sh
 ```
 
@@ -427,15 +427,15 @@ Start with an Ubuntu 18 server.
 
 * Set up Passenger, and create Passenger config for Apache
 ```
-        % gem install passenger -v 5.3.7
+        % gem install passenger -v 6.0.9
         % rvmsudo passenger-install-apache2-module
 ```
    Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
 ```        
-LoadModule passenger_module /usr/local/rvm/gems/ruby-2.5.5/gems/passenger-5.3.7/buildout/apache2/mod_passenger.so
+LoadModule passenger_module /usr/local/rvm/gems/ruby-2.7.3/gems/passenger-6.0.9/buildout/apache2/mod_passenger.so
 <IfModule mod_passenger.c>
-  PassengerRoot /usr/local/rvm/gems/ruby-2.5.5/gems/passenger-5.3.7
-  PassengerDefaultRuby /usr/local/rvm/gems/ruby-2.5.5/wrappers/ruby
+  PassengerRoot /usr/local/rvm/gems/ruby-2.7.3/gems/passenger-6.0.9
+  PassengerDefaultRuby /usr/local/rvm/gems/ruby-2.7.3/wrappers/ruby
 </IfModule>
 ```
   Create `/etc/apache2/conf-available/passenger.conf` using the lines pasted from the Passenger install script.
@@ -613,3 +613,6 @@ has logged in at least once via the app's web UI (which should now be working).
 
          config.shibboleth = true
 
+## Note about ghostscript and ImageMagick
+
+Hyrax can be ficky about versions of ghostscript and ImageMagick.  A working combination seems to be:  ghostscript 9.26 with ImageMagick 6.9.7-4
