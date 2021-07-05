@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  mount Riiif::Engine => 'images', as: :riiif if Hyrax.config.iiif_image_server?
+  mount BrowseEverything::Engine => '/browse'
   
   get '/etd/:id', to: redirect('/concern/gw_etds/%{id}')
   get '/etds/:id', to: redirect('/concern/gw_etds/%{id}')
@@ -8,7 +10,7 @@ Rails.application.routes.draw do
 
   mount Blacklight::Engine => '/'
   
-    concern :searchable, Blacklight::Routes::Searchable.new
+  concern :searchable, Blacklight::Routes::Searchable.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :searchable
