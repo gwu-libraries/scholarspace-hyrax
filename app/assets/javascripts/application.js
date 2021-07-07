@@ -22,3 +22,4 @@
 
 //= require_tree .
 //= require hyrax
+//= require cookies_eu

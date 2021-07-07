@@ -1,0 +1,18 @@
+<% if cookies && cookies['cookie_eu_consented'] != 'true' %>
+  <div class="cookies-eu js-cookies-eu" style="background:#0073aa;max-width:100%;border-top:0px;z-index:9999">
+    <div class="cookies-eu-content-holder" style="padding:10px 20px;">
+      <p style="color:#ffffff;">
+        <span>
+GW uses cookies and other technology on our websites to improve your website experience and to better understand how you use our websites. Visit GW’s <a href="https://www.gwu.edu/privacy-policy" target="_blank" style="color:#ffffff;text-decoration:underline">Website Privacy Notice</a> to learn more about how GW uses cookies and, if you should choose, how to disable them. I understand that by clicking <strong>“I consent”</strong> and continuing to use this website, I agree to GW’s use of cookies.
+        </span>
+      <p>
+    </div>
+    <div class="cookies-eu-button-holder">
+    <button class="cookies-eu-ok js-cookies-eu-ok btn btn-lg" style="background-color:#dcdcdc;color:#444444;font-weight:normal;font-size:16px;padding:6px 11px;"> I consent. </button>
+    <% if defined?(link).present? %>
+      <a href="<%= link %>" class="cookies-eu-link" target="<%= defined?(target).present? ? target : '' %>"> <%= t('cookies_eu.learn_more') %> </a>
+    <% end %>
+    </div>
+  </div>
+<% end %>
+<div>

@@ -172,6 +172,8 @@ GEM
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.9)
     connection_pool (2.2.5)
+    cookies_eu (1.7.7)
+      js_cookie_rails (~> 2.2.0)
     crass (1.0.6)
     declarative (0.0.20)
     deprecation (1.1.0)
@@ -455,6 +457,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-ui-rails (6.0.1)
       railties (>= 3.2.16)
+    js_cookie_rails (2.2.0)
+      railties (>= 3.1)
     json (2.5.1)
     json-canonicalization (0.2.1)
     json-ld (3.1.9)
@@ -875,6 +879,7 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  cookies_eu
   devise
   devise-guests (~> 0.6)
   fcrepo_wrapper
