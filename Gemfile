@@ -85,3 +85,5 @@ group :development, :test do
 end
 
 gem 'riiif', '~> 2.0'
+
+gem 'cookies_eu'
