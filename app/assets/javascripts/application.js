@@ -20,6 +20,7 @@
 //= require dataTables/bootstrap/3/jquery.dataTables.bootstrap
 //= require blacklight/blacklight
 
+//= require bulkrax/application
 //= require_tree .
 //= require hyrax
 //= require cookies_eu

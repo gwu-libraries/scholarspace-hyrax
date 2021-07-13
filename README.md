@@ -215,8 +215,8 @@ Start with an Ubuntu 18 server.
 
 * Install necessary Ubuntu packages:
 ```
-        % sudo apt-get update
-        % sudo apt-get install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libreoffice libcurl4-openssl-dev apache2 apache2-dev ffmpeg gnupg2
+        % sudo apt update
+        % sudo apt install git postgresql libpq-dev redis-server unzip clamav-daemon curl imagemagick libreoffice libcurl4-openssl-dev apache2 apache2-dev ffmpeg gnupg2 libxml2 libxml2-dev
 ```
 * Install RVM for multi-users.  If the GPG signature verification fails at this step, just follow the instructions in the warning in order to fetch the public key.
 ```
