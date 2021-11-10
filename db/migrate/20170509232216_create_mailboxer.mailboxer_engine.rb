@@ -1,5 +1,5 @@
 # This migration comes from mailboxer_engine (originally 20110511145103)
-class CreateMailboxer < ActiveRecord::Migration
+class CreateMailboxer < ActiveRecord::Migration[5.0]
   def self.up
   #Tables
     #Conversations
@@ -11,7 +11,7 @@ class CreateMailboxer < ActiveRecord::Migration
     #Receipts
     create_table :mailboxer_receipts do |t|
       t.references :receiver, :polymorphic => true
-      t.column :notification_id, :integer, :null => false
+      t.column :notification_id, :integer, :null => false 
       t.column :is_read, :boolean, :default => false
       t.column :trashed, :boolean, :default => false
       t.column :deleted, :boolean, :default => false
@@ -28,7 +28,7 @@ class CreateMailboxer < ActiveRecord::Migration
       t.column :conversation_id, :integer
       t.column :draft, :boolean, :default => false
       t.string :notification_code, :default => nil
-      t.references :notified_object, :polymorphic => true
+      t.references :notified_object, :polymorphic => true, index: { name: 'mailboxer_notifications_notified_object' }
       t.column :attachment, :string
       t.column :updated_at, :datetime, :null => false
       t.column :created_at, :datetime, :null => false

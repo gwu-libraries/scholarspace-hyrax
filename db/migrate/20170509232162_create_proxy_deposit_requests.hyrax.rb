@@ -1,5 +1,5 @@
 # This migration comes from hyrax (originally 20160328222227)
-class CreateProxyDepositRequests < ActiveRecord::Migration
+class CreateProxyDepositRequests < ActiveRecord::Migration[5.0]
   def change
     create_table :proxy_deposit_requests do |t|
       t.string :generic_file_id, null: false
@@ -11,7 +11,5 @@ class CreateProxyDepositRequests < ActiveRecord::Migration
       t.text :receiver_comment
       t.timestamps null: false
     end
-    add_index :proxy_deposit_requests, :receiving_user_id
-    add_index :proxy_deposit_requests, :sending_user_id
   end
 end
