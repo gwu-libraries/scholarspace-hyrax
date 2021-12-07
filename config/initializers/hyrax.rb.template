@@ -74,14 +74,14 @@ Hyrax.config do |config|
   # config.noid_minter_class = ActiveFedora::Noid::Minter::Db
 
   # Store identifier minter's state in a file for later replayability
+  # This is only relevant if the minter_class (above) is set to file
   # config.minter_statefile = '/tmp/minter-state'
-  config.minter_statefile = '/opt/scholarspace/scholarspace-minter/minter-state'
 
   # Prefix for Redis keys
   # config.redis_namespace = "hyrax"
 
   # Path to the file characterization tool
-  config.fits_path = "/usr/local/bin/fits-1.0.5/fits.sh"
+  config.fits_path = "/usr/local/bin/fits-1.5.0/fits.sh"
 
   # Path to the file derivatives creation tool
   config.libreoffice_path = "/usr/bin/soffice"
@@ -102,7 +102,7 @@ Hyrax.config do |config|
 
   # Location autocomplete uses geonames to search for named regions
   # Username for connecting to geonames
-  config.geonames_username = 'gwscholarspace'
+  # config.geonames_username = '' # insert username here
 
   # Should the acceptance of the licence agreement be active (checkbox), or
   # implied when the save button is pressed? Set to true for active

@@ -294,6 +294,14 @@ Start with an Ubuntu 18 server.
         (postgres)% createdb -O YOURDBUSERNAME YOURPRODDBNAME
         (postgres)% exit
 ```
+* Create the `hyrax.rb` file
+```
+        sudo su - scholarspace
+	cd config/initializers
+        cp hyrax.rb.template hyrax.rb
+```
+  Customize `hyrax.rb` as needed.
+
 * Create the `database.yml` file
 ```
         % sudo su - scholarspace
@@ -356,6 +364,8 @@ Start with an Ubuntu 18 server.
 ```
 
 ### Configure the `minter-state` file path
+
+TODO: Currently minter-state is actually using the database, not a file.
 
 * Create a minter folder
 ```
