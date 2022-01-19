@@ -7,9 +7,11 @@
     id: "file_download",
     data: { label: file_set.id },
     target: "_new" %>
-  <p /><%= link_to 'Report an accessibility issue with this item',
+  <% if Rails.configuration.respond_to?(:accessibility_url) %>
+    <p /><%= link_to t('hyrax.accessibility.link_label'),
     Rails.configuration.accessibility_url % {gwss_item_url: u(@presenter.permanent_url)},
     id: "accessibility_form",
     target: "_new" %> 
+  <% end %>
 <% end %>
 </div>
