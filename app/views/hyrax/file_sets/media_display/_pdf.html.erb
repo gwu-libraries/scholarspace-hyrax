@@ -11,10 +11,12 @@
               target: :_blank,
               id: "file_download",
               data: { label: file_set.id } %>
-  <p /><%= link_to 'Report an accessibility issue with this item',
-              Rails.configuration.accessibility_url % {gwss_item_url: u(@presenter.permanent_url)},
-              id: "accessibility_form",
-              target: "_new" %> 
+  <% if Rails.configuration.respond_to?(:accessibility_url) %>
+    <p /><%= link_to t('hyrax.accessibility.link_label'),
+      Rails.configuration.accessibility_url % {gwss_item_url: u(@presenter.permanent_url)},
+      id: "accessibility_form",
+      target: "_new" %>
+  <% end %> 
 </div>
 <% else %>
 <div>
