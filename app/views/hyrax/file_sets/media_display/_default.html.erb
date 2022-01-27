@@ -2,13 +2,14 @@
 <div class="no-preview">
 <%= t('hyrax.works.show.no_preview') %>
 <% if Hyrax.config.display_media_download_link? %>
-  <p /><%= link_to t('hyrax.file_set.show.download'),
+  <p/><%= link_to t('hyrax.file_set.show.download'),
     hyrax.download_path(file_set),
     id: "file_download",
     data: { label: file_set.id },
+    class: "btn-lg",
     target: "_new" %>
   <% if Rails.configuration.respond_to?(:accessibility_url) %>
-    <p /><%= link_to t('hyrax.accessibility.link_label'),
+    <p class="accessibility-form-link"/><%= link_to t('hyrax.accessibility.link_label'),
     Rails.configuration.accessibility_url % {gwss_item_url: u(@presenter.permanent_url)},
     id: "accessibility_form",
     target: "_new" %> 

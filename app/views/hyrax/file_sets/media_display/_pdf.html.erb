@@ -10,9 +10,10 @@
               hyrax.download_path(file_set),
               target: :_blank,
               id: "file_download",
-              data: { label: file_set.id } %>
+              data: { label: file_set.id },
+              class: "btn-lg" %>
   <% if Rails.configuration.respond_to?(:accessibility_url) %>
-    <p /><%= link_to t('hyrax.accessibility.link_label'),
+    <p class="accessibility-form-link"/><%= link_to t('hyrax.accessibility.link_label'),
       Rails.configuration.accessibility_url % {gwss_item_url: u(@presenter.permanent_url)},
       id: "accessibility_form",
       target: "_new" %>
