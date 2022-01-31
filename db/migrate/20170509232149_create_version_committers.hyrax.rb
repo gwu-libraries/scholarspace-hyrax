@@ -1,5 +1,5 @@
 # This migration comes from hyrax (originally 20160328222152)
-class CreateVersionCommitters < ActiveRecord::Migration
+class CreateVersionCommitters < ActiveRecord::Migration[5.0]
   def self.up
     create_table :version_committers do |t|
       t.string :obj_id
