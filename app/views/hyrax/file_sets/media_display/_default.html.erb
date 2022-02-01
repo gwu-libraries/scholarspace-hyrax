@@ -6,7 +6,7 @@
     hyrax.download_path(file_set),
     id: "file_download",
     data: { label: file_set.id },
-    class: "btn-lg",
+    class: "btn btn-primary",
     target: "_new" %>
   <% if Rails.configuration.respond_to?(:accessibility_url) %>
     <p class="accessibility-form-link"/><%= link_to t('hyrax.accessibility.link_label'),
