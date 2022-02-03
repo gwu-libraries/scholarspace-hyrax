@@ -34,19 +34,19 @@ Bulkrax.setup do |config|
   #     "Bulkrax::OaiDcParser" => { **individual field mappings go here*** }
   #   }
   config.field_mappings['Bulkrax::CsvParser'] = {
-    "contributor" => { from: ["contributor"] },
+    "contributor" => { from: ["contributor", split: ';' ] },
     "creator" => { from: ["creator"], split: "; " },
-    "date_created" => { from: ["date_created"] },
-    "description" => { from: ["description"] },
-    "identifier" => { from: ["identifier"] },
+    "date_created" => { from: ["date_created"], split: ';'  },
+    "description" => { from: ["description"], split: ';'  },
+    "identifier" => { from: ["identifier"], split: ';'  },
     "related_url" => { from: ["related_url"] },
     "rights_statement" => { from: ["rights_statement"] },
-    "license" => { from: ["license"] }, 
+    "license" => { from: ["license"], split: ';'  }, 
      "source_identifier" => { from: ["source_identifier"] },
-    "keyword" => { from: ["keyword"] },
+    "keyword" => { from: ["keyword"], split: ';' },
     "title" => { from: ["title"] },
-    "resource_type" => { from: ["resource_type"] },
-    "gw_affiliation" => { from: ["gw_affiliation"] },
+    "resource_type" => { from: ["resource_type"], split: ';'  },
+    "gw_affiliation" => { from: ["gw_affiliation"], split: ';'  },
     'parents' => { from: ['parents'], related_parents_field_mapping: true },
     'children' => { from: ['children'], related_children_field_mapping: true }
   }
