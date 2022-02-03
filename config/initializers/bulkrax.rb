@@ -46,8 +46,10 @@ Bulkrax.setup do |config|
     "keyword" => { from: ["keyword"] },
     "title" => { from: ["title"] },
     "resource_type" => { from: ["resource_type"] },
-    "gw_affiliation" => { from: ["gw_affiliation"] } 
-}
+    "gw_affiliation" => { from: ["gw_affiliation"] },
+    'parents' => { from: ['parents'], related_parents_field_mapping: true },
+    'children' => { from: ['children'], related_children_field_mapping: true }
+  }
 
   # Add to, or change existing mappings as follows
   #   e.g. to exclude date
