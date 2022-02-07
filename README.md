@@ -580,7 +580,7 @@ for derivatives.  For example, to allow PDF files, remove the line that blocks P
   ```
   bundle exec whenever
   ```
-  Use the output provided by `whenever` to create a cron job.  A recommended approach is to (as the `scholarspace` user, run `crontab -e` to edit the cron jobs.  Your crontab might include a job that looks like this:
+  Use the output provided by `whenever` to create a cron job.  A recommended approach is to (as the `scholarspace` user) run `crontab -e` to edit the cron jobs.  Your crontab might include a job that looks like this:
   ```
 # m h  dom mon dow   command
 0 0 * * * /bin/bash -l -c 'cd /opt/scholarspace/scholarspace-hyrax && RAILS_ENV=production bundle exec rake gwss:sitemap_queue_generate --silent >> /opt/scholarspace/scholarspace-hyrax/log/wheneveroutput.log 2>&1'
