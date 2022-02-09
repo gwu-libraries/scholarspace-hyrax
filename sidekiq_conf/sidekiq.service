@@ -59,7 +59,7 @@ WorkingDirectory=/opt/scholarspace/scholarspace-hyrax
 # ExecStart=/home/deploy/.rvm/gems/ruby-2.6.5@gemset-name/wrappers/bundle exec sidekiq -e production
 # If you use rvm in production with gemset and ruby version/gemset is specified in .ruby-version,
 # .ruby-gemsetor or .rvmrc file in the working directory
-ExecStart=/usr/local/rvm/bin/rvm in /opt/scholarspace/scholarspace-hyrax do bundle exec sidekiq -e production -q ingest -q default -q event -q import -q export
+ExecStart=/usr/local/rvm/bin/rvm in /opt/scholarspace/scholarspace-hyrax all do bundle exec sidekiq -e production -q ingest -q default -q event -q import -q export
 
 # Use `systemctl kill -s TSTP sidekiq` to quiet the Sidekiq process
 
@@ -73,7 +73,8 @@ ExecStart=/usr/local/rvm/bin/rvm in /opt/scholarspace/scholarspace-hyrax do bund
 # Greatly reduce Ruby memory fragmentation and heap usage
 # https://www.mikeperham.com/2018/04/25/taming-rails-memory-bloat/
 Environment=MALLOC_ARENA_MAX=2
-
+# For production environments, SECRET_KEY_BASE value  goes here
+Environment=SECRET_KEY_BASE=
 # if we crash, restart
 RestartSec=1
 Restart=on-failure
