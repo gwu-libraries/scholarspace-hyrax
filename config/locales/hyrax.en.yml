@@ -11,6 +11,8 @@ en:
     footer:
       copyright_html:       '<strong>Copyright &copy; 2020 <a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera</a></strong> Licensed under the Apache License, Version 2.0'
       service_html:         'A service of <a href="https://lai.gwu.edu/" class="navbar-link" target="_blank">GW Libraries and Academic Innovation</a>'
+    accessibility:
+      link_label: 'Report an accessibility issue with this item' 
     search:
       form:
         option:
@@ -25,6 +27,8 @@ en:
     visibility:
       open:
          text: Open Access
+    contact_form:
+      notice: Please use this form to report a problem using GW ScholarSpace, to request a consultation with the GW LAI Scholarly Communications team, or to share feedback.
   simple_form:
     labels:
       defaults:

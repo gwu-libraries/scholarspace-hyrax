@@ -1,0 +1,29 @@
+
+<% if Hyrax.config.display_media_download_link? %>
+<div>
+  <h2 class="sr-only"><%= t('hyrax.file_set.show.downloadable_content.heading') %></h2>
+  <%= image_tag thumbnail_url(file_set),
+                class: "representative-media",
+                alt: "",
+                role: "presentation" %>
+  <%= link_to t('hyrax.file_set.show.downloadable_content.pdf_link'),
+              hyrax.download_path(file_set),
+              target: :_blank,
+              id: "file_download",
+              data: { label: file_set.id },
+              class: "btn btn-primary" %>
+  <% if Rails.configuration.respond_to?(:accessibility_url) %>
+    <p class="accessibility-form-link"/><%= link_to t('hyrax.accessibility.link_label'),
+      Rails.configuration.accessibility_url % {gwss_item_url: u(@presenter.permanent_url)},
+      id: "accessibility_form",
+      target: "_new" %>
+  <% end %> 
+</div>
+<% else %>
+<div>
+  <%= image_tag thumbnail_url(file_set),
+                class: "representative-media",
+                alt: "",
+                role: "presentation" %>
+</div>
+<% end %>
