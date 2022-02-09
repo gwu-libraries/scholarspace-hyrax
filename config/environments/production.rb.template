@@ -53,7 +53,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  # config.active_job.queue_adapter     = :resque
+  config.active_job.queue_adapter     = :sidekiq
   # config.active_job.queue_name_prefix = "scholarspace_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
@@ -98,7 +98,7 @@ Rails.application.configure do
   # Base for permanent URL links presented on item page
   config.permanent_url_base = "https://scholarspace.library.gwu.edu/"
 
-    # URL template for link to GW LAI accessibility form
+  # URL template for link to GW LAI accessibility form
   config.accessibility_url = "https://library.gwu.edu/found-problem?type_of_problem=a11y&a11y_problem_type=item&url=%{gwss_item_url}"
 
 end
