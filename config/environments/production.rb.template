@@ -96,5 +96,5 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   # Base for permanent URL links presented on item page
-  config.permanent_url_base = "https://scholarspace-etds.library.gwu.edu/"
+  config.permanent_url_base = "https://scholarspace.library.gwu.edu/"
 end
