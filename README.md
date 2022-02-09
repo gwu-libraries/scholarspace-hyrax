@@ -352,6 +352,10 @@ Start with an Ubuntu 18 server.
   ```
           export SECRET_KEY_BASE=<the secret key you generated above>
   ```
+  Additionally, add it to the `sidekiq_conf/sidekiq.service` file, to the line that sets the environment variable:
+  ```
+  Environment=SECRET_KEY_BASE=
+  ```
 
 * Run the database migrations.
   ```
