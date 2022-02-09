@@ -1,0 +1,6 @@
+queues:
+  - default
+  - import
+  - export
+
+concurrency: 3

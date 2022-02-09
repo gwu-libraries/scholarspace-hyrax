@@ -518,6 +518,13 @@ TODO: Currently minter-state is actually using the database, not a file.
 Edit `/etc/ImageMagick-6/policy.xml` to allow/disallow file types that may be processed
 for derivatives.  For example, to allow PDF files, remove the line that blocks PDF files.
 
+### Set up Sidekiq as a daemon process
+
+*  Copy `sidekiq_conf/sidekiq.service` to `/lib/systemd/system` and set ownership to root.  Verify that the application path, rvm path, and queue names in `sidekiq.service` are consistent with the current deployment locations and queue names.
+*  You may need to start Sidekiq using `sudo service sidekiq start` after this initial setup.  This should not be necessary after system reboots.
+*  Make sure that `production.rb` is set to use sidekiq as the `queue_adapter` as per `production.rb.template`
+
+
 ### Final Deployment
 
 * Prepare databases and assets for production

@@ -18,7 +18,7 @@ module Scholarspace
       g.test_framework :rspec, :spec => true
     end
 
-    config.active_job.queue_adapter = :inline
+    config.active_job.queue_adapter = :sidekiq
 
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers

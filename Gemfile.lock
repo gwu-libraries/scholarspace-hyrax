@@ -820,6 +820,10 @@ GEM
       rdf-xsd (~> 3.1)
       sparql (~> 3.1)
       sxp (~> 1.1)
+    sidekiq (6.4.1)
+      connection_pool (>= 2.2.2)
+      rack (~> 2.0)
+      redis (>= 4.2.0)
     signet (0.16.0)
       addressable (~> 2.8)
       faraday (>= 0.17.3, < 2.0)
@@ -936,11 +940,13 @@ DEPENDENCIES
   pg
   puma (~> 4.3.8)
   rails (~> 5.2.6)
+  redis (~> 4.0)
   riiif (~> 2.0)
   rsolr (>= 1.0, < 3)
   rspec-rails
   sass-rails (~> 5.0)
   selenium-webdriver
+  sidekiq (~> 6)
   sitemap
   solr_wrapper (>= 0.3)
   spring
