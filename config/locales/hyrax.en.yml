@@ -27,6 +27,8 @@ en:
     visibility:
       open:
          text: Open Access
+    contact_form:
+      notice: Please use this form to report a problem using GW ScholarSpace, to request a consultation with the GW LAI Scholarly Communications team, or to share feedback.
   simple_form:
     labels:
       defaults:
