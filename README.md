@@ -584,6 +584,18 @@ for derivatives.  For example, to allow PDF files, remove the line that blocks P
   ```
   bundle exec rake gwss:sitemap_queue_generate RAILS_ENV=production
   ```
+
+  * Set up cron job for sitemap generation
+
+  Run `whenever` to read `config/schedule.rb` and generate the recommended command with which to configure the cron job.
+  ```
+  bundle exec whenever
+  ```
+  Use the output provided by `whenever` to create a cron job.  A recommended approach is to (as the `scholarspace` user) run `crontab -e` to edit the cron jobs.  Your crontab might include a job that looks like this:
+  ```
+# m h  dom mon dow   command
+0 0 * * * /bin/bash -l -c 'cd /opt/scholarspace/scholarspace-hyrax && RAILS_ENV=production bundle exec rake gwss:sitemap_queue_generate --silent >> /opt/scholarspace/scholarspace-hyrax/log/wheneveroutput.log 2>&1'
+  ```
  
   * Set up log rotation.  `production.log` can grow quite large, quite quickly, without any sort of compression and/or rotation configured.  A typical `logrotate` configuration would entail adding a configuration file into `/etc/logrotate.d/`.  For example, create a file in `/etc/logrotate.d/` called `scholarspace-hyrax` containing the following:
   ```

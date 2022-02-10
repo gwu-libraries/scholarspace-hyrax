@@ -93,4 +93,6 @@ gem 'bulkrax', '2.1.1'
 
 gem 'willow_sword', github: 'notch8/willow_sword'
 
+gem 'whenever'
+
 gem 'sidekiq', '~>6'
