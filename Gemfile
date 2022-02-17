@@ -4,7 +4,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.7.3'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 5.2.6'
+gem 'rails', '~> 5.2.6.2'
 # Use sqlite3 as the database for Active Record
 gem "sqlite3", "~> 1.3.0"
 # Use pg as the production database for Active Record
@@ -89,7 +89,7 @@ gem 'riiif', '~> 2.0'
 gem 'cookies_eu'
 
 #gem 'bulkrax', git: 'https://github.com/samvera-labs/bulkrax.git'
-gem 'bulkrax', '2.2.0'
+gem 'bulkrax', '2.2.2'
 
 gem 'willow_sword', github: 'notch8/willow_sword'
 
