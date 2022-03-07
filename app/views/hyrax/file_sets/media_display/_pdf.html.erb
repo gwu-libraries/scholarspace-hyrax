@@ -12,7 +12,7 @@
               id: "file_download",
               data: { label: file_set.id },
               class: "btn btn-primary" %>
-  <% if Rails.configuration.respond_to?(:accessibility_url) %>
+  <% if (Rails.configuration.respond_to?(:accessibility_url)) && (@presenter.respond_to?(:permanent_url)) %>
     <p class="accessibility-form-link"/><%= link_to t('hyrax.accessibility.link_label'),
       Rails.configuration.accessibility_url % {gwss_item_url: u(@presenter.permanent_url)},
       id: "accessibility_form",
