@@ -242,7 +242,7 @@ Start with an Ubuntu 18 server.
   ```
 * Install Rails:
   ```
-          gem install rails -v 5.2.6 -N
+          gem install rails -v 5.2.7 -N
   ```
   Also, add `export rvmsudo_secure_path=1` to your user's `.bashrc` file.  This will avoid a warning when running `rvmsudo`.
 
