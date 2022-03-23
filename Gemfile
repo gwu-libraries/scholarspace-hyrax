@@ -89,7 +89,7 @@ gem 'riiif', '~> 2.0'
 gem 'cookies_eu'
 
 #gem 'bulkrax', git: 'https://github.com/samvera-labs/bulkrax.git'
-gem 'bulkrax', '2.2.2'
+gem 'bulkrax', '2.3.0'
 
 gem 'willow_sword', github: 'notch8/willow_sword'
 
