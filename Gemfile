@@ -96,3 +96,5 @@ gem 'willow_sword', github: 'notch8/willow_sword'
 gem 'whenever'
 
 gem 'sidekiq', '~>6'
+# For OAI-PHM
+gem 'blacklight_oai_provider', '~>6.1.1'

@@ -1,6 +1,8 @@
 class CatalogController < ApplicationController
   include Hydra::Catalog
   include Hydra::Controller::ControllerBehavior
+  #include Blacklight::Catalog
+  include BlacklightOaiProvider::Controller
 
   # This filter applies the hydra access controls
   before_action :enforce_show_permissions, only: :show
@@ -26,6 +28,9 @@ class CatalogController < ApplicationController
     # Show gallery view
     config.view.gallery.partials = [:index_header, :index]
     config.view.slideshow.partials = [:index]
+
+    # OAI-PHM
+    config.oai = OAI_CONFIG
 
     # Because too many times on Samvera tech people raise a problem regarding a failed query to SOLR.
     # Often, it's because they inadvertantly exceeded the character limit of a GET request.

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 class SolrDocument
   include Blacklight::Solr::Document
+  include BlacklightOaiProvider::SolrDocument
+
   include Blacklight::Gallery::OpenseadragonSolrDocument
 
   # Adds Hyrax behaviors to the SolrDocument.
@@ -25,6 +27,15 @@ class SolrDocument
   # Do content negotiation for AF models. 
 
   use_extension( Hydra::ContentNegotiation )
+
+  field_semantics.merge!(
+    title: Solrizer.solr_name('title'),
+    creator: Solrizer.solr_name('creator'),
+    description: Solrizer.solr_name('description'),
+    publisher: Solrizer.solr_name('publisher'),
+    identifier: Solrizer.solr_name('doi'),
+    subject: Solrizer.solr_name('keyword')
+  )
 
   def gw_affiliation
     self[Solrizer.solr_name('gw_affiliation')]

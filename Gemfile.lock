@@ -134,6 +134,9 @@ GEM
       bootstrap-sass (~> 3.0)
       openseadragon (>= 0.2.0)
       rails
+    blacklight_oai_provider (6.1.1)
+      blacklight (~> 6.0)
+      oai (~> 1.0)
     bootsnap (1.9.1)
       msgpack (~> 1.0)
     bootstrap-sass (3.4.1)
@@ -923,6 +926,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  blacklight_oai_provider (~> 6.1.1)
   bootsnap (>= 1.1.0)
   bootstrap-sass (~> 3.0)
   bulkrax (= 2.3.0)
