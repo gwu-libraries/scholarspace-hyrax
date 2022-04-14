@@ -4,8 +4,7 @@
   <h2 class="sr-only"><%= t('hyrax.file_set.show.downloadable_content.heading') %></h2>
   <%= image_tag thumbnail_url(file_set),
                 class: "representative-media",
-                #alt: "",
-                alt: file_set.title,
+                alt: "",
                 role: "presentation" %>
   <% if file_set.visibility == 'open' %>
     <%= link_to t('hyrax.file_set.show.downloadable_content.pdf_link'),

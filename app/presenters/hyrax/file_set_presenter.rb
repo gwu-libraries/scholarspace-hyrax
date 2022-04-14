@@ -25,6 +25,7 @@ module Hyrax
     delegate :has?, :first, :fetch, to: :solr_document
 
     # Metadata Methods
+    # Added visibility for use in file_sets/media_display views
     delegate :title, :label, :description, :creator, :contributor, :subject,
              :publisher, :language, :date_uploaded,
              :embargo_release_date, :lease_expiration_date,
