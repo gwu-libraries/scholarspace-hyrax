@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   mount Bulkrax::Engine, at: '/'
   mount Riiif::Engine => 'images', as: :riiif if Hyrax.config.iiif_image_server?
   mount BrowseEverything::Engine => '/browse'
@@ -11,9 +12,12 @@ Rails.application.routes.draw do
 
   mount Blacklight::Engine => '/'
   
+  concern :exportable, Blacklight::Routes::Exportable.new
   concern :searchable, Blacklight::Routes::Searchable.new
+  concern :oai_provider, BlacklightOaiProvider::Routes.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
+    concerns :oai_provider
     concerns :searchable
   end
 
@@ -25,7 +29,6 @@ Rails.application.routes.draw do
   resources :welcome, only: 'index'
   root 'hyrax/homepage#index'
   curation_concerns_basic_routes
-  concern :exportable, Blacklight::Routes::Exportable.new
 
   resources :solr_documents, only: [:show], path: '/catalog', controller: 'catalog' do
     concerns :exportable
