@@ -615,7 +615,7 @@ GEM
     noid-rails (3.0.3)
       actionpack (>= 5.0.0, < 7)
       noid (~> 0.9)
-    nokogiri (1.13.3-x86_64-linux)
+    nokogiri (1.13.4-x86_64-linux)
       racc (~> 1.4)
     nokogumbo (2.0.5)
       nokogiri (~> 1.8, >= 1.8.4)
@@ -640,7 +640,7 @@ GEM
     power_converter (0.1.2)
     public_suffix (4.0.6)
     pul_uv_rails (2.0.1)
-    puma (4.3.11)
+    puma (4.3.12)
       nio4r (~> 2.0)
     qa (5.8.1)
       activerecord-import
