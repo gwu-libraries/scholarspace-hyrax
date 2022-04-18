@@ -12,7 +12,7 @@ OAI_CONFIG =
             limit: 25,            # number of records returned with each request, default: 15
             #supported_formats: ['oai_dc'],
             set_fields: [
-            { label: 'type', solr_field: 'human_readable_type_tesim' }
+            { label: 'type', solr_field: 'has_model_ssim' }
           ]
 
         },

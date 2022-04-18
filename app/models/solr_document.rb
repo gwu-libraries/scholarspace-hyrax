@@ -31,11 +31,23 @@ class SolrDocument
   field_semantics.merge!(
     title: Solrizer.solr_name('title'),
     creator: Solrizer.solr_name('creator'),
+    contributor: Solrizer.solr_name('contributor'),
     description: Solrizer.solr_name('description'),
     publisher: Solrizer.solr_name('publisher'),
     identifier: Solrizer.solr_name('doi'),
     subject: Solrizer.solr_name('keyword')
   )
+  # Overriding Blacklight::::Document::SemanticFields#to_smemantic_fields
+  def to_semantic_values
+    @semantic_value_hash = super
+    # Look up the advisor field
+    advisor = self[Solrizer.solr_name('advisor')] 
+    if advisor
+      # replicates value construction from original method to ensure values as an array
+      @semantic_value_hash[:contributor] = advisor.flatten.compact
+    end
+    @semantic_value_hash
+  end
 
   def gw_affiliation
     self[Solrizer.solr_name('gw_affiliation')]
