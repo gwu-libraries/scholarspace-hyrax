@@ -95,6 +95,11 @@ module Hyrax
       current_ability.can?(:edit, id) || current_ability.can?(:destroy, id) || current_ability.can?(:download, id)
     end
 
+    # Adding method to create permanent URL for file_set view, for accessibility form
+    def permanent_url
+      Scholarspace::Application.config.permanent_url_base + "concern/file_sets/#{id}"
+    end
+
     private
 
       def link_presenter_class
