@@ -5,7 +5,7 @@ module Hyrax
   class GwJournalIssueForm < GwWorkForm
     self.model_class = ::GwJournalIssue
     self.required_fields = [:title]
-    self.terms += [:creator, :license, :rights_statement, :resource_type, :volume, :issue, :gw_affiliation, :doi, :bibliographic_citation]
+    self.terms += [:resource_type, :volume, :issue, :gw_affiliation, :doi, :bibliographic_citation]
 
     def secondary_terms
       super + [:creator, :license, :rights_statement, :volume, :issue]
