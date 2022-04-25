@@ -4,11 +4,11 @@ module Hyrax
   # Generated form for GwJournalIssue
   class GwJournalIssueForm < GwWorkForm
     self.model_class = ::GwJournalIssue
-    self.required_fields = [:title, :creator, :license, :rights_statement]
+    self.required_fields = [:title]
     self.terms += [:resource_type, :volume, :issue, :gw_affiliation, :doi, :bibliographic_citation]
 
     def secondary_terms
-      super + [:volume, :issue]
+      super + [:creator, :license, :rights_statement, :volume, :issue]
     end
   end
 end
