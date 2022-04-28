@@ -35,7 +35,11 @@ class SolrDocument
     description: Solrizer.solr_name('description'),
     publisher: Solrizer.solr_name('publisher'),
     identifier: Solrizer.solr_name('doi'),
-    subject: Solrizer.solr_name('keyword')
+    subject: Solrizer.solr_name('keyword'),
+    date: Solrizer.solr_name('date_created'),
+    language: Solrizer.solr_name('language'),
+    #advisor: Solrizer.solr_name('advisor')
+    type: Solrizer.solr_name('resource_type')
   )
   # Overriding Blacklight::::Document::SemanticFields#to_smemantic_fields
   def to_semantic_values
