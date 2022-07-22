@@ -221,6 +221,10 @@ GEM
     docopt (0.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     draper (4.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -468,7 +472,7 @@ GEM
       signet
       solrizer (>= 3.4, < 5)
       tinymce-rails (~> 4.1)
-    i18n (1.10.0)
+    i18n (1.12.0)
       concurrent-ruby (~> 1.0)
     ice_nine (0.11.2)
     iiif-image-api (0.2.0)
@@ -479,7 +483,7 @@ GEM
     iso8601 (0.9.1)
     jbuilder (2.11.3)
       activesupport (>= 5.0.0)
-    jmespath (1.5.0)
+    jmespath (1.6.1)
     jquery-datatables-rails (3.4.0)
       actionpack (>= 3.1)
       jquery-rails
@@ -601,7 +605,7 @@ GEM
     mini_mime (1.1.2)
     mini_racer (0.5.0)
       libv8-node (~> 16.10.0.0)
-    minitest (5.15.0)
+    minitest (5.16.2)
     msgpack (1.4.2)
     multi_json (1.15.0)
     multi_xml (0.6.0)
@@ -615,7 +619,7 @@ GEM
     noid-rails (3.0.3)
       actionpack (>= 5.0.0, < 7)
       noid (~> 0.9)
-    nokogiri (1.13.4-x86_64-linux)
+    nokogiri (1.13.7-x86_64-linux)
       racc (~> 1.4)
     nokogumbo (2.0.5)
       nokogiri (~> 1.8, >= 1.8.4)
@@ -652,7 +656,7 @@ GEM
       rails (>= 5.0, < 6.2)
       rdf
     racc (1.6.0)
-    rack (2.2.3)
+    rack (2.2.4)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
     rails (5.2.7)
@@ -742,6 +746,8 @@ GEM
     rdf-xsd (3.1.1)
       rdf (~> 3.1)
       rexml (~> 3.2)
+    recaptcha (5.10.0)
+      json
     redic (1.5.3)
       hiredis
     redis (4.6.0)
@@ -894,7 +900,7 @@ GEM
       railties (>= 3.1)
     typhoeus (1.4.0)
       ethon (>= 0.9.0)
-    tzinfo (1.2.9)
+    tzinfo (1.2.10)
       thread_safe (~> 0.1)
     uber (0.1.0)
     uglifier (4.2.0)
@@ -937,6 +943,7 @@ DEPENDENCIES
   cookies_eu
   devise
   devise-guests (~> 0.6)
+  dotenv-rails
   fcrepo_wrapper
   hydra-role-management
   hyrax (= 2.9.6)
@@ -947,6 +954,7 @@ DEPENDENCIES
   pg
   puma (~> 4.3)
   rails (~> 5.2.7)
+  recaptcha
   redis (~> 4.0)
   riiif (~> 2.0)
   rsolr (>= 1.0, < 3)

@@ -451,6 +451,15 @@ TODO: Currently minter-state is actually using the database, not a file.
           config.geonames_username =
   ```
 
+### Configure ReCAPTCHA
+
+* Log in to the Google domain using the Google account that should have access to managing ReCAPTCHA API keys.  Create ReCAPTCHA API keys at the [ReCAPTCHA admin console](https://www.google.com/recaptcha/admin).  Register a new site (at https://www.google.com/recaptcha/admin/create).  Select the ReCAPTCHA v2 "I'm not a robot" Checkbox type.
+* In `/opt/scholarspace/scholarspace-hyrax/.env`, set the ReCAPTCHA API keys:
+```
+   RECAPTCHA_SITE_KEY=
+   RECAPTCHA_SECRET_KEY=
+```
+
 ### Configure Passenger and Apache2
 
 * Set up Passenger, and create Passenger config for Apache
