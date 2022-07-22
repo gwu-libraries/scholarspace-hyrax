@@ -221,6 +221,10 @@ GEM
     docopt (0.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.7.6)
+    dotenv-rails (2.7.6)
+      dotenv (= 2.7.6)
+      railties (>= 3.2)
     draper (4.0.2)
       actionpack (>= 5.0)
       activemodel (>= 5.0)
@@ -742,6 +746,8 @@ GEM
     rdf-xsd (3.1.1)
       rdf (~> 3.1)
       rexml (~> 3.2)
+    recaptcha (5.10.0)
+      json
     redic (1.5.3)
       hiredis
     redis (4.6.0)
@@ -937,6 +943,7 @@ DEPENDENCIES
   cookies_eu
   devise
   devise-guests (~> 0.6)
+  dotenv-rails
   fcrepo_wrapper
   hydra-role-management
   hyrax (= 2.9.6)
@@ -947,6 +954,7 @@ DEPENDENCIES
   pg
   puma (~> 4.3)
   rails (~> 5.2.7)
+  recaptcha
   redis (~> 4.0)
   riiif (~> 2.0)
   rsolr (>= 1.0, < 3)
