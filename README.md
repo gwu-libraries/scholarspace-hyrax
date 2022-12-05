@@ -464,20 +464,20 @@ TODO: Currently minter-state is actually using the database, not a file.
 
 * Set up Passenger, and create Passenger config for Apache
   ```
-          gem install passenger -v 6.0.9
+          gem install passenger -v 6.0.14
           rvmsudo passenger-install-apache2-module
   ```
    Select Ruby from the list of languages.  The install script will direct you to copy several lines for the Apache configuration.  They will look something similar to:
   ```  
-  LoadModule passenger_module /usr/local/rvm/gems/ruby-2.7.3/gems/passenger-6.0.9/buildout/apache2/mod_passenger.so
+  LoadModule passenger_module /usr/local/rvm/gems/ruby-2.7.3/gems/passenger-6.0.14/buildout/apache2/mod_passenger.so
   <IfModule mod_passenger.c>
-    PassengerRoot /usr/local/rvm/gems/ruby-2.7.3/gems/passenger-6.0.9
+    PassengerRoot /usr/local/rvm/gems/ruby-2.7.3/gems/passenger-6.0.14
     PassengerDefaultRuby /usr/local/rvm/gems/ruby-2.7.3/wrappers/ruby
   </IfModule>
   ```
   Create `/etc/apache2/conf-available/passenger.conf` using the lines pasted from the Passenger install script.
 
-  Add the following line into `passenger.conf`:
+  Add the following line into `passenger.conf` (below the `<IfModule></IfModule>` node):
 
         PassengerAllowEncodedSlashes on
 

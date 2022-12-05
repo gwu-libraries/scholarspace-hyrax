@@ -23,6 +23,11 @@ module Scholarspace
     # Settings in config/environments/* take precedence over those specified here.
     # Application configuration should go into files in config/initializers
     # -- all .rb files in that directory are automatically loaded.
+   
+    # DWK added 05-Dec-2022 to resolve error of the form
+    # "Psych::DisallowedClass (Tried to load unspecified class: ActiveSupport::HashWithIndifferentAccess"
+    # Ref: https://stackoverflow.com/questions/71332602/upgrading-to-ruby-3-1-causes-psychdisallowedclass-exception-when-using-yaml-lo
+    config.active_record.yaml_column_permitted_classes = [ActiveSupport::HashWithIndifferentAccess]
   end
  
 end
