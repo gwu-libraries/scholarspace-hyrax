@@ -479,6 +479,8 @@ GEM
       activesupport
     iiif_manifest (0.5.0)
       activesupport (>= 4)
+    invisible_captcha (2.0.0)
+      rails (>= 5.0)
     io-like (0.3.1)
     iso8601 (0.9.1)
     jbuilder (2.11.3)
@@ -959,6 +961,7 @@ DEPENDENCIES
   fcrepo_wrapper
   hydra-role-management
   hyrax (= 2.9.6)
+  invisible_captcha
   jbuilder (~> 2.5)
   jquery-rails
   listen (>= 3.0.5, < 3.2)

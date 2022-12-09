@@ -36,6 +36,15 @@ module Hyrax
     # response to the user.
     def after_deliver; end
 
+#    def honeypot_fields
+#    {
+#      :my_custom_comment_body => 'Do not fill in this field, sucka!',
+#      :another_thingy => 'Really... do not fill out!'
+#    }
+#    end
+    
+    invisible_captcha only: [:create, :update], honeypot: :gwsshoney
+    
     private
 
       def build_contact_form
