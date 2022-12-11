@@ -102,3 +102,5 @@ gem 'blacklight_oai_provider', '~>6.1.1'
 gem 'dotenv-rails'
 
 gem 'recaptcha'
+
+gem 'invisible_captcha'

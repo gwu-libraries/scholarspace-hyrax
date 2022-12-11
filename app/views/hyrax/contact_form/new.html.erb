@@ -15,7 +15,7 @@
 <% end %>
 
 <%= form_for @contact_form, url: hyrax.contact_form_index_path,
-                            html: { class: 'form-horizontal' } do |f| %>
+                            html: { class: 'form-horizontal'} do |f| %>
   <%= f.text_field :contact_method, class: 'hide' %>
   <div class="form-group">
     <%= f.label :category, t('hyrax.contact_form.type_label'), class: "col-sm-2 control-label" %>
@@ -39,6 +39,7 @@
   <div class="form-group">
     <%= f.label :subject, t('hyrax.contact_form.subject_label'), class: "col-sm-2 control-label" %>
     <div class="col-sm-10"><%= f.text_field :subject, class: 'form-control', required: true %></div>
+    <%= f.invisible_captcha :gwsshoney %>
   </div>
 
   <div class="form-group">
