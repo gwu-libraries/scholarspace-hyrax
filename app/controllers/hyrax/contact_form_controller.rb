@@ -1,3 +1,4 @@
+require 'dotenv/load'
 module Hyrax
   class ContactFormController < ApplicationController
     before_action :build_contact_form
@@ -6,7 +7,7 @@ module Hyrax
     def new; end
 
     def create
-      success = verify_recaptcha(action: 'contact', minimum_score: ENV['RECAPTCHA_MINIMUM_SCORE'], secret_key: ENV['RECAPTCHA_SECRET_KEY_V3'])
+      success = verify_recaptcha(action: 'contact', minimum_score: ENV['RECAPTCHA_MINIMUM_SCORE'].to_f, secret_key: ENV['RECAPTCHA_SECRET_KEY_V3'])
       checkbox_success = verify_recaptcha unless success
       if success || checkbox_success
         ContactMailer.contact(@contact_form).deliver_now
