@@ -6,4 +6,4 @@ collection:
   persist: true
   dir: solr/config/
   name: hydra-development
-version: 6.6.1
+version: 7.7.1

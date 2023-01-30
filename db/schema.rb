@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version:  2020_11_17_220007) do
+ActiveRecord::Schema.define(version: 2022_01_19_213325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,11 +36,10 @@ ActiveRecord::Schema.define(version:  2020_11_17_220007) do
     t.text "parsed_metadata"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "last_error"
     t.datetime "last_error_at"
     t.datetime "last_succeeded_at"
     t.string "importerexporter_type", default: "Bulkrax::Importer"
-    t.index ["importerexporter_id"], name: "index_bulkrax_entries_on_importerexporter_id"
+    t.integer "import_attempts", default: 0
   end
 
   create_table "bulkrax_exporter_runs", force: :cascade do |t|
@@ -65,7 +64,6 @@ ActiveRecord::Schema.define(version:  2020_11_17_220007) do
     t.string "export_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "last_error"
     t.datetime "last_error_at"
     t.datetime "last_succeeded_at"
     t.date "start_date"
@@ -87,9 +85,14 @@ ActiveRecord::Schema.define(version:  2020_11_17_220007) do
     t.integer "processed_collections", default: 0
     t.integer "failed_collections", default: 0
     t.integer "total_collection_entries", default: 0
-    t.integer "processed_children", default: 0
-    t.integer "failed_children", default: 0
+    t.integer "processed_relationships", default: 0
+    t.integer "failed_relationships", default: 0
     t.text "invalid_records"
+    t.integer "processed_file_sets", default: 0
+    t.integer "failed_file_sets", default: 0
+    t.integer "total_file_set_entries", default: 0
+    t.integer "processed_works", default: 0
+    t.integer "failed_works", default: 0
     t.index ["importer_id"], name: "index_bulkrax_importer_runs_on_importer_id"
   end
 
@@ -105,7 +108,6 @@ ActiveRecord::Schema.define(version:  2020_11_17_220007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "validate_only"
-    t.text "last_error"
     t.datetime "last_error_at"
     t.datetime "last_succeeded_at"
     t.index ["user_id"], name: "index_bulkrax_importers_on_user_id"
@@ -114,7 +116,7 @@ ActiveRecord::Schema.define(version:  2020_11_17_220007) do
   create_table "bulkrax_statuses", force: :cascade do |t|
     t.string "status_message"
     t.string "error_class"
-    t.string "error_message"
+    t.text "error_message"
     t.text "error_backtrace"
     t.integer "statusable_id"
     t.string "statusable_type"
@@ -333,6 +335,7 @@ ActiveRecord::Schema.define(version:  2020_11_17_220007) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["permission_template_id", "agent_id", "agent_type", "access"], name: "uk_permission_template_accesses", unique: true
+    t.index ["permission_template_id"], name: "index_permission_template_accesses_on_permission_template_id"
   end
 
   create_table "permission_templates", id: :serial, force: :cascade do |t|
@@ -669,7 +672,6 @@ ActiveRecord::Schema.define(version:  2020_11_17_220007) do
     t.index ["work_id"], name: "index_work_view_stats_on_work_id"
   end
 
- 
   add_foreign_key "bulkrax_exporter_runs", "bulkrax_exporters", column: "exporter_id"
   add_foreign_key "bulkrax_importer_runs", "bulkrax_importers", column: "importer_id"
   add_foreign_key "collection_type_participants", "hyrax_collection_types"
