@@ -52,5 +52,8 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.permanent_url_base = "https://scholarspace-etds.library.gwu.edu/"
+  # config.permanent_url_base = "https://scholarspace-etds.library.gwu.edu/"
+  config.permanent_url_base = "http://localhost:3000/"
+
+  config.active_job.queue_adapter = :inline
 end

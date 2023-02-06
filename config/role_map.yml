@@ -3,6 +3,9 @@ development:
     - archivist1@example.com
   admin:
     - kerchner@gwu.edu
+    - admin@example.com
+  content-admin:
+    - content_admin@example.com
 
 test:
   archivist:
