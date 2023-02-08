@@ -53,6 +53,7 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'pry'
 end
 
 group :test do
@@ -82,6 +83,7 @@ gem 'devise-guests', '~> 0.6'
 group :development, :test do
   gem 'fcrepo_wrapper'
   gem 'rspec-rails'
+  gem 'launchy'
 end
 
 gem 'riiif', '~> 2.0'

@@ -1,4 +1,5 @@
 Hyrax.config do |config|
+  config.iiif_image_server = true
   # Injected via `rails g hyrax:work GwWork`
   config.register_curation_concern :gw_work
   # Injected via `rails g hyrax:work GwEtd`
