@@ -67,7 +67,7 @@ class SolrDocument
                         'gw_affiliation' => ' (GW Affiliation).'
                         }
     # Determine resource type
-    if self[Solrizer.solr_name('resource_type')].include? 'Thesis or Dissertation'
+    if self.fetch(Solrizer.solr_name('resource_type'), []).include? 'Thesis or Dissertation'
       # Get advisors and committee members 
       contributors = contributor_terms.map do |field_name, relator_term|
         add_relator_terms(field_name, relator_term, subfield: true)
