@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <web-app xmlns="http://java.sun.com/xml/ns/javaee"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-	version="3.0">
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+        version="3.0">
 
-	<display-name>Fedora 4</display-name>
+        <display-name>Fedora 4</display-name>
 
-	<context-param>
-		<param-name>contextConfigLocation</param-name>
-		<param-value>WEB-INF/classes/spring/master.xml</param-value>
-	</context-param>
+        <context-param>
+                <param-name>contextConfigLocation</param-name>
+                <param-value>WEB-INF/classes/spring/master.xml</param-value>
+        </context-param>
 
-	<listener>
-		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
+        <listener>
+                <listener-class>org.fcrepo.http.commons.FedoraContextLoaderListener</listener-class>
+        </listener>
 
   <servlet>
     <servlet-name>jersey-servlet</servlet-name>
@@ -29,13 +29,21 @@
   </servlet>
 
   <servlet-mapping>
-		<servlet-name>jersey-servlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+                <servlet-name>jersey-servlet</servlet-name>
+                <url-pattern>/rest/*</url-pattern>
 
-	</servlet-mapping>
+        </servlet-mapping>
 
-  <!--Uncomment section below to enable Basic-Authentication-->
+  <filter>
+    <filter-name>ETagFilter</filter-name>
+    <filter-class>org.springframework.web.filter.ShallowEtagHeaderFilter</filter-class>
+  </filter>
 
+  <filter-mapping>
+    <filter-name>ETagFilter</filter-name>
+    <url-pattern>/static/*</url-pattern>
+  </filter-mapping>
+	<!--Uncomment section below to enable Basic-Authentication-->
   <security-constraint>
     <web-resource-collection>
       <web-resource-name>Fedora4</web-resource-name>
@@ -55,29 +63,6 @@
       <transport-guarantee>NONE</transport-guarantee>
     </user-data-constraint>
   </security-constraint>
-  
-  <security-role>
-    <role-name>fedoraAdmin</role-name>
-  </security-role>
-
-  <security-constraint>
-    <web-resource-collection>
-      <web-resource-name>Fedora4</web-resource-name>
-      <url-pattern>/*</url-pattern>
-      <http-method>HEAD</http-method>
-      <http-method>GET</http-method>
-    </web-resource-collection>
-    <auth-constraint>
-      <role-name>fedoraAudit</role-name>
-    </auth-constraint>
-    <user-data-constraint>
-      <transport-guarantee>NONE</transport-guarantee>
-    </user-data-constraint>
-  </security-constraint>
-
-  <security-role>
-    <role-name>fedoraAudit</role-name>
-  </security-role>
 
   <login-config>
     <auth-method>BASIC</auth-method>
