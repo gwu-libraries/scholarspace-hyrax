@@ -17,13 +17,13 @@ The recommended production setup involves two servers.  However, these can be th
 - Repository server, for the Fedora repository and Solr interface
 - Application server, for the GW ScholarSpace rails app
 
-Currently these instructions are for an Ubuntu 16.04 repository server, and an Ubuntu 18.04 application server.
+Currently these instructions are for an Ubuntu 20.04 repository server, and an Ubuntu 20.04 application server.
 
 # Repository server
 
 * Install Java 8
 
-  - For Ubuntu 16:
+  - For Ubuntu 20:
     ```
       sudo apt-get install openjdk-8*
     ```
@@ -35,21 +35,21 @@ Currently these instructions are for an Ubuntu 16.04 repository server, and an U
    
 * Install necessary Ubuntu packages:
   ```
-      sudo apt-get install git postgresql libpq-dev unzip clamav-daemon curl tomcat7 libcurl4-openssl-dev libapr1-dev libaprutil1-dev
+      sudo apt-get install git postgresql libpq-dev unzip clamav-daemon curl tomcat8 libcurl4-openssl-dev libapr1-dev libaprutil1-dev
   ```
 
 * Create needed directories:
   ```
     sudo mkdir /opt/install
-    sudo mkdir /opt/fedora; sudo chown tomcat7:tomcat7 /opt/fedora
+    sudo mkdir /opt/fedora; sudo chown tomcat8:tomcat8 /opt/fedora
     sudo mkdir /etc/fcrepo
   ```
 
-## Tomcat 7 setup
+## Tomcat 8 setup
 
-* Configure Tomcat7 Java settings:
+* Configure Tomcat8 Java settings:
 
-  Retrieve ```tomcat_conf/tomcat7``` file from this github repository and overwrite ```/etc/default/tomcat7```
+  Retrieve ```tomcat_conf/tomcat8``` file from this github repository and overwrite ```/etc/default/tomcat8```
   
   Make sure that the `JAVA_HOME` value corresponds to the correct Java installation directory.  If not, update `JAVA_HOME`.
   
@@ -99,7 +99,7 @@ NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2
   Create a backup of the existing Fedora instance
   ```
       sudo mkdir /opt/fedora_backups
-      sudo chown -R tomcat7:tomcat7 /opt/fedora_backups
+      sudo chown -R tomcat8:tomcat8 /opt/fedora_backups
       curl -X POST -u <FedoraUsername>:<FedoraPassword> --data "/opt/fedora_backups" yourserver.com/fcrepo/rest/fcr:backup
   ```
   Verify that a backup was created in `/opt/fedora_backups` before proceeding
@@ -117,7 +117,7 @@ NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2
   ```
    Note the database name for Fedora must be `ispn`
 
-   Edit `/etc/default/tomcat7` and update these settings with the ispn database username and password, replacing the
+   Edit `/etc/default/tomcat8` and update these settings with the ispn database username and password, replacing the
    placeholders for these values:
 
   ```
@@ -129,37 +129,37 @@ NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2
   ```
     sudo mkdir /etc/fcrepo
   ```
-* Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Set the ownership to tomcat7:
+* Copy `tomcat_conf/fcrepo/infinispan.xml` from the Github repo to `/etc/fcrepo/infinispan.xml`.  Set the ownership to tomcat8:
 
   ```
-    sudo chown -R tomcat7:tomcat7 /etc/fcrepo
+    sudo chown -R tomcat8:tomcat8 /etc/fcrepo
   ``` 
 
-### Set up Fedora with audit support
+### Set up Fedora webapp
 
-* Copy fcrepo WAR file to tomcat7
+* Copy fcrepo WAR file to tomcat8
   ```
     cd /opt/install
-    wget https://github.com/fcrepo4-exts/fcrepo-webapp-plus/releases/download/fcrepo-webapp-plus-4.7.1/fcrepo-webapp-plus-audit-4.7.1.war
-    sudo cp fcrepo-webapp-plus-audit-4.7.1.war /var/lib/tomcat7/webapps/fcrepo.war
+    wget https://github.com/fcrepo/fcrepo/releases/download/fcrepo-4.7.1/fcrepo-webapp-4.7.1.war
+    sudo cp fcrepo-webapp-4.7.1.war /var/lib/tomcat8/webapps/fcrepo.war
   ```
-* Wait for tomcat to deploy the war file before proceeding to the next step.  This can be verified by watching `/var/log/tomcat7/catalina.out`
+* Wait for tomcat to deploy the war file before proceeding to the next step.  This can be verified by watching `/var/log/tomcat8/catalina.out`
    
-* Copy the `tomcat_conf/fcrepo-webapp/web.xml` file from the Github repo to `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml` 
+* Copy the `tomcat_conf/fcrepo-webapp/web.xml` file from the Github repo to `/var/lib/tomcat8/webapps/fcrepo/WEB-INF/web.xml` 
    
-* Ensure that tomcat7 library files are all still owned by tomcat7
+* Ensure that tomcat8 library files are all still owned by tomcat8
   ```
-    sudo chown -R tomcat7:tomcat7 /var/lib/tomcat7
+    sudo chown -R tomcat8:tomcat8 /var/lib/tomcat8
   ```
-* Set up Fedora authentication by copying the `tomcat_conf/tomcat-users.xml` file from the Github repo and overwrite `/etc/tomcat7/tomcat-users.xml`.   Edit `tomcat-users.xml` and replace the dummy passwords with your preferred secure passwords.  (Be sure that your passwords don't contain any characters considered special characters in XML, such as `<`,`>`,`&`,`'`,`"`)
+* Set up Fedora authentication by copying the `tomcat_conf/tomcat-users.xml` file from the Github repo and overwrite `/etc/tomcat8/tomcat-users.xml`.   Edit `tomcat-users.xml` and replace the dummy passwords with your preferred secure passwords.  (Be sure that your passwords don't contain any characters considered special characters in XML, such as `<`,`>`,`&`,`'`,`"`)
    
-* Edit `/var/lib/tomcat7/webapps/fcrepo/WEB-INF/classes/config/jdbc-postgresql/repository.json` to change the database name from `fcrepo` to `ispn`.
+* Edit `/var/lib/tomcat8/webapps/fcrepo/WEB-INF/classes/config/jdbc-postgresql/repository.json` to change the database name from `fcrepo` to `ispn`.
 
 * Restart Tomcat
   ```
-    sudo service tomcat7 restart
+    sudo service tomcat8 restart
   ```
-  Check `/var/log/tomcat7/catalina.out` to ensure that tomcat7 restarted and deployed fcrepo with no errors.
+  Check `/var/log/tomcat8/catalina.out` to ensure that tomcat8 restarted and deployed fcrepo with no errors.
 
 
 * OPTIONAL:  To restore from a Fedora backup:
@@ -168,52 +168,7 @@ NOTE: While GW ScholarSpace has not been tested with Solr 7.7.1, a plain Hyrax 2
   ```
     Restart tomcat and validate that the repository has been restored:
   ```
-    sudo service tomcat7 restart
-  ```
-
-### Optional: Add SSL to Fedora Connections
-These instructions are for redirecting port 8080 traffic on Tomcat to port 8443 and running SSL using the Apache Portable Runtime (APR).
-
-* Install Tomcat dependencies
-  ```
-         sudo apt-get install libapr1 libapr1-dev libtcnative-1
-  ```
-
-* Add the `tomcat7` user to the `ssl-cert` group in `/etc/group`
-  ```
-          sudo vi /etc/group
-  ```
-*  Generate your SSL certificates and key using the instructions provided here: https://github.com/gwu-libraries/ssl_howto
-
-*  Update the `server.xml` file
-
-           cd /opt/install
-
-    Retrieve `server_ssl.xml` from `tomcat_conf/server_ssl.xml` in the GitHub repo:
-
-           sudo cp tomcat_conf/server_ssl.xml /etc/tomcat7/server.xml
-
-* Edit `/etc/tomcat7/server.xml` and replace the dummy values for the following lines with your certificates and keys:
-	```
-        SSLCertificateFile="/etc/ssl/certs/yourservername.cer"
-        SSLCertificateChainFile="/etc/ssl/certs/yourservername.cer"
-        SSLCertificateKeyFile="/etc/ssl/private/yourservername.pem"
-	```
-* Create a symbolic link to `libtcnative1.so` to address a Ubuntu/Tomcat bug
-  ```
-          sudo ln -sv /usr/lib/x86_64-linux-gnu/libtcnative-1.so /usr/lib/
-  ```
-* Replace the `web.xml` files for Fedora with the `web_ssl.xml` files from the repo:
-  ```
-          cd /opt/install
-  ```
-  Retrieve `web_ssl.xml` from `tomcat_conf/fcrepo-webapp/web_ssl.xml` in the GitHub repo
-  ```
-          cp tomcat_conf/fcrepo-webapp/web_ssl.xml /var/lib/tomcat7/webapps/fcrepo/WEB-INF/web.xml
-  ```
-  *  Restart Tomcat and test access over HTTPS
-  ```
-          sudo service tomcat7 restart
+    sudo service tomcat8 restart
   ```
 
 # Application server
