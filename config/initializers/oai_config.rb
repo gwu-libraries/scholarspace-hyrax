@@ -10,7 +10,7 @@ OAI_CONFIG =
         },
         document: {
             limit: 25,            # number of records returned with each request, default: 15
-            #supported_formats: ['oai_dc'],
+            supported_formats: ['oai_dc', 'oai_dc_etd'],
             set_fields: [
             { label: 'type', solr_field: 'has_model_ssim' }
           ]

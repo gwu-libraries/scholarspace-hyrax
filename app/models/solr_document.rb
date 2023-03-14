@@ -23,7 +23,7 @@ class SolrDocument
   # and Blacklight::Document::SemanticFields#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
-
+  use_extension(Hyrax::SolrDocument::DublinCoreEtd)
   # Do content negotiation for AF models. 
 
   use_extension( Hydra::ContentNegotiation )
@@ -38,56 +38,14 @@ class SolrDocument
     subject: Solrizer.solr_name('keyword'),
     date: Solrizer.solr_name('date_created'),
     language: Solrizer.solr_name('language'),
-    type: Solrizer.solr_name('resource_type')
+    type: Solrizer.solr_name('resource_type'),
+    advisor: Solrizer.solr_name('advisor'),
+    committee_member: Solrizer.solr_name('committee_member'),
+    gw_affiliation: Solrizer.solr_name('gw_affiliation'),
+    degree: Solrizer.solr_name('degree')
   )
-  def add_relator_terms(field_name, relator_term, subfield: false)
-    # Returns an array of strings consisting of the SolrDocument value for the given Solr field name, along with the specified relator term and, if present, the field value in the $$Q subfield location (for Primo VE hyperlink display)
-    # Using .try because the field might be nil
-    field_ary = self[Solrizer.solr_name(field_name)].try(:map) do |field_value| 
-      if subfield
-        "#{field_value}#{relator_term}$$Q#{field_value}"
-      else
-        "#{field_value}#{relator_term}"
-      end
-    end
-    field_ary
-  end
-  # Overriding Blacklight::::Document::SemanticFields#to_smemantic_fields
-  # in order to provide custom metadata for exporting theses/dissertations
-  def to_semantic_values
-    @semantic_value_hash = super
-    # Mapping for adding relator terms to DC fields for specific fields in the SolrDocument
-    # Including standard DC field so that we don't override those values
-    contributor_terms = {'contributor' => '',
-                        'advisor' => ', advisor.',
-                        'committee_member' => ', committee member.'
-                        }
-    description_terms = {'description' => '',
-                        'degree' => ' (Degree).',
-                        'gw_affiliation' => ' (GW Affiliation).'
-                        }
-    # Determine resource type
-    if self.fetch(Solrizer.solr_name('resource_type'), []).include? 'Thesis or Dissertation'
-      # Get advisors and committee members 
-      contributors = contributor_terms.map do |field_name, relator_term|
-        add_relator_terms(field_name, relator_term, subfield: true)
-      end
-      # Get degree and affiliation & add to description field  
-      description = description_terms.map do |field_name, relator_term|
-        add_relator_terms(field_name, relator_term)
-      end
-      # Add the repository identifier to the DC metadata (by default it's part of the header, but we can't apply Primo norm rules to the header)
-      identifier = "#{OAI_CONFIG[:provider][:record_prefix]}:#{self['id']}"
-      # Merge as new hash with existing field semantics
-      # Using compact to remove any nils
-      @semantic_value_hash.merge!(
-        contributor: contributors.flatten.compact,
-        description: description.flatten.compact,
-        identifier: Array(identifier)
-      )
-    end
-    @semantic_value_hash
-  end
+  
+  
 
   def gw_affiliation
     self[Solrizer.solr_name('gw_affiliation')]
