@@ -23,7 +23,7 @@ class SolrDocument
   # and Blacklight::Document::SemanticFields#to_semantic_values
   # Recommendation: Use field names from Dublin Core
   use_extension(Blacklight::Document::DublinCore)
-
+  use_extension(Hyrax::SolrDocument::DublinCoreEtd)
   # Do content negotiation for AF models. 
 
   use_extension( Hydra::ContentNegotiation )
@@ -31,11 +31,21 @@ class SolrDocument
   field_semantics.merge!(
     title: Solrizer.solr_name('title'),
     creator: Solrizer.solr_name('creator'),
+    contributor: Solrizer.solr_name('contributor'),
     description: Solrizer.solr_name('description'),
     publisher: Solrizer.solr_name('publisher'),
     identifier: Solrizer.solr_name('doi'),
-    subject: Solrizer.solr_name('keyword')
+    subject: Solrizer.solr_name('keyword'),
+    date: Solrizer.solr_name('date_created'),
+    language: Solrizer.solr_name('language'),
+    type: Solrizer.solr_name('resource_type'),
+    advisor: Solrizer.solr_name('advisor'),
+    committee_member: Solrizer.solr_name('committee_member'),
+    gw_affiliation: Solrizer.solr_name('gw_affiliation'),
+    degree: Solrizer.solr_name('degree')
   )
+  
+  
 
   def gw_affiliation
     self[Solrizer.solr_name('gw_affiliation')]

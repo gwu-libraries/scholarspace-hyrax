@@ -326,3 +326,5 @@ class CatalogController < ApplicationController
     false
   end
 end
+
+BlacklightOaiProvider::SolrDocumentProvider.register_format(Metadata::DublinCoreEtd.instance)
