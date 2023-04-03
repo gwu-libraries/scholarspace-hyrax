@@ -3,7 +3,6 @@ OAI_CONFIG =
         provider: {
             repository_name: 'GW ScholarSpace',
             #repository_url: 'http://localhost/catalog/oai',     # todo: can we get this from the other places that use the base url?
-            #repository_url: 'https://ec2-3-137-137-212.us-east-2.compute.amazonaws.com',
             record_prefix: 'oai:scholarspace.library.gwu.edu',
             admin_email: 'schol_comm@gwu.edu',
             sample_id: 'z316q1572'

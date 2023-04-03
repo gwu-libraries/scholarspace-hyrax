@@ -529,6 +529,8 @@ GEM
     kaminari_route_prefix (0.1.1)
       kaminari (~> 1.0)
     language_list (1.2.1)
+    launchy (2.5.2)
+      addressable (~> 2.8)
     ld-patch (3.1.3)
       ebnf (~> 2.1)
       rdf (~> 3.1)
@@ -655,6 +657,9 @@ GEM
     pg (1.2.3)
     posix-spawn (0.3.15)
     power_converter (0.1.2)
+    pry (0.14.2)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     public_suffix (4.0.6)
     pul_uv_rails (2.0.1)
     puma (4.3.12)
@@ -964,9 +969,11 @@ DEPENDENCIES
   invisible_captcha
   jbuilder (~> 2.5)
   jquery-rails
+  launchy
   listen (>= 3.0.5, < 3.2)
   mini_racer
   pg
+  pry
   puma (~> 4.3)
   rails (~> 5.2.8.1)
   recaptcha
