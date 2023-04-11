@@ -29,6 +29,17 @@ en:
          text: Open Access
     contact_form:
       notice: Please use this form to report a problem using GW ScholarSpace, to request a consultation with the GW LAI Scholarly Communications team, or to share feedback.
+    file_set:
+      show:
+        downloadable_content:
+          pdf_new_tab: "View PDF in Browser"
+          pdf_download: "Download PDF"
+          default_new_tab: "View in Browser"
+          default_download: "Download"
+          image_new_tab: "Open in Browser"
+          image_download: "Download"
+          office_doc_new_tab: "Open in Browser"
+          office_doc_download: "Download"
   simple_form:
     labels:
       defaults:

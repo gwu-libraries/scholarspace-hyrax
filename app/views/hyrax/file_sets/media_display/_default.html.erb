@@ -2,8 +2,14 @@
 <div class="no-preview">
 <%= t('hyrax.works.show.no_preview') %>
 <% if (Hyrax.config.display_media_download_link?) && (file_set.visibility == 'open') %>
-  <p/><%= link_to t('hyrax.file_set.show.download'),
-    hyrax.download_path(file_set),
+  <p/><%= link_to t('hyrax.file_set.show.downloadable_content.default_download'),
+    hyrax.download_path(file_set, :disposition => "attachment"),
+    id: "file_download",
+    data: { label: file_set.id },
+    class: "btn btn-primary",
+    target: "_new" %>
+  <p/><%= link_to t('hyrax.file_set.show.downloadable_content.default_new_tab'),
+    hyrax.download_path(file_set, :disposition => "inline"),
     id: "file_download",
     data: { label: file_set.id },
     class: "btn btn-primary",
