@@ -45,7 +45,7 @@ class SolrDocument
     degree: Solrizer.solr_name('degree')
   )
   
-  self.timestamp_key = "date_uploaded_dtsi"
+  #self.timestamp_key = "date_uploaded_dtsi"
 
   def gw_affiliation
     self[Solrizer.solr_name('gw_affiliation')]
