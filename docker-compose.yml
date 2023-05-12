@@ -30,9 +30,9 @@ services:
   pg-hyrax:
     image: postgres:10.22-alpine
     environment:
-      - POSTGRES_USER=$HYRAX_PG_USER
-      - POSTGRES_PASSWORD=$HYRAX_PG_PASSWORD
-      - POSTGRES_DB=$HYRAX_DB
+      - POSTGRES_USER=$HYRAX_DB_USER
+      - POSTGRES_PASSWORD=$HYRAX_DB_PASSWORD
+      - POSTGRES_DB=$HYRAX_DB_PROD
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - db-hyrax:/var/lib/postgresql/data
@@ -42,6 +42,8 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile-solr
+    environment:
+      - SOLR_CORE
     # Use this to map to an external volume/existing Solr index
     volumes:
       - /var/solr/data:/opt/solr/server/solr/mycores
