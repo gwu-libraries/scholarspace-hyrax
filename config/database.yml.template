@@ -16,5 +16,5 @@ production:
   <<: *default
 
 test:
-  database:<%= ENV["HYRAX_DB_TEST"] %>
+  database: <%= ENV["HYRAX_DB_TEST"] %>
   <<: *default
