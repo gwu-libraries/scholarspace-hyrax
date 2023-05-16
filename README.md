@@ -626,3 +626,66 @@ for derivatives.  For example, to allow PDF files, remove the line that blocks P
 ## Note about ghostscript and ImageMagick
 
 Hyrax can be ficky about versions of ghostscript and ImageMagick.  A working combination seems to be:  ghostscript 9.26 with ImageMagick 6.9.7-4
+
+# Installation with Docker (beta)
+
+The Dockerized version of the ScholarSpace app uses the following images:
+
+| Component | Image Name | Version | Source |
+| --------- | ---------- | ------- | ------ | 
+| Fedora server | ghcr.io/samvera/fcrepo4 | 4.7.5 | https://github.com/samvera-labs/docker-fcrepo | 
+| Postgres (for Fedora) | postgres | latest | https://hub.docker.com/_/postgres |
+| Postgres (for Hyrax) | postgres | 10.22-alpine | https://hub.docker.com/_/postgres |
+| Solr | library/solr | 6.4.2-alpine | Dockerfile-solr |
+| Rails app | scholarspace | latest | Dockerfile |
+
+## Notes on images
+
+### Fedora server
+- The current version in production is 4.7.1. Docker image is slightly ahead.
+- The Docker image uses Jetty, not Tomcat. Configuring authenticatiomn for Jetty requires a different process, documented [here](https://wiki.lyrasis.org/display/FEDORA474/How+to+Configure+Servlet+Container+Authentication) and with examples in the `docker-fcrepo` repository. 
+- **TO DO: configure secure authentication, if desired**
+- **TO DO: test with content from production**
+
+### Postgres
+- Currently, separate postgres containers are used for the Fedora and Rails databases. This may be desirable for migration purposes, i.e., if the two databases in production are running on different versions of postrgres. 
+- To migrate the Rails and Fedora databases, the best approach is probably a backup/restore from production.
+  - Start the container.
+  - Copy the backup file to the postgres Docker volume: `docker cp backup.sql [db-container-name]:/tmp`.
+  - Open an interactive session in the container: `docker exec -it [db-container-name] /bin/bash`.
+  - Perform the restore, using the database user appropriate to the database: `psql -U [scholarspace|fedoraproduser] -d [gwss-prod|fcrepo]`.∂
+- **TO DO: test migration from production**
+
+### Solr
+- The Solr container is configured to run a script on startup that checks for the existence of a named Solr core (provided as an environment variable). 
+- If the core does not exist, it will be created, and the ScholarSpace schema will be applied.
+- To use an existing core (migration), do the following (before starting the container):
+  - Place a copy of the parent core directory (i.e., scholarspace) in `/var/solr/data` on the Docker host. 
+  - Grant ownership to the container's Solr user:  `chown -R 8983:8983 var/solr/data`
+**TO DO: test with core from production**
+
+### Rails app
+- The image is built from the official Phusion/Passenger [image](https://github.com/phusion/passenger-docker/tree/rel-2.5.0).
+- ScholarSpace dependencies are installed at build time.
+- The version of Ruby is 2.7.3 (to match production).
+- Instead of Apache, the image uses Nginx with Passenger (since that was preconfigured).
+- Files like `config/initializers/hyrax.rb` have been refactored to use environment variables where possible in order to minimize manual configuration.
+- When the container starts, it runs the Passenger/Nginx process in the foreground (by default). To acces the container (e.g., in order to use the Rails console), run `docker exec --user scholarspace [container-name] bash -l`. (Setting the `scholarspace` user and running `bash -l` are necessary to ensure that the RVM paths load correctly.)
+
+## Running with docker-compose
+
+- The `docker-compose.yml` file defines a set of services corresponding to the images above. 
+- Environment variables should be provided in a `.env` file within the same directory. (See `example.env`).
+- Start the application containers by running `docker-compose up -d`.
+- Several startup tasks necessary for initializing the ScholarSpace application can be run from a provided shell script.
+  - To run the script, first start the containers. 
+  - Use `docker ps` to identify the name of the container corresponding to the app server. It's probably something like `scholarspace-hyrax_app-server_1`. 
+  - Run this command to execute the script: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/scholarspace-hyrax-startup.sh [OPTIONS]"` where OPTIONS is one or more of the following:
+    - `--load-schema`: create the initial Rails app database
+    - `--run-migrations`: run database migrations
+    - `--precompile-assets`: precompile static assets
+    - `--create-role`: create default app roles (if they don't already exist)
+    - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
+    - `--create-secret`: generate the Rails app secret 
+  - You can string multiple command-line options together, provided you **enclose the entire string, including the path to the script, in quotation marks**.
+   

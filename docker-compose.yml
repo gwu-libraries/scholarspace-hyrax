@@ -1,0 +1,95 @@
+version: '3.6'
+
+services:
+  fedora:
+    image: ghcr.io/samvera/fcrepo4:4.7.5
+    hostname: fedora-hyrax
+    # Use this map to external volume
+    volumes:
+       - /data/fedora:/data
+    ports:
+      - 8984:8080
+    environment:
+      JAVA_OPTIONS: '-Xmx4096m -Xms1024m -Dfcrepo.modeshape.configuration=classpath:/config/jdbc-postgresql/repository.json -Dfcrepo.postgresql.host=pg-fcrepo -Dfcrepo.postgresql.port=5432 -Dfcrepo.postgresql.username=${FEDORA_PG_USER} -Dfcrepo.postgresql.password=${FEDORA_PG_PASSWORD} -Dfcrepo.properties.management=relaxed'
+      MODESHAPE_CONFIG: 'classpath:/config/jdbc-postgresql/repository.json'
+    networks:
+      - fedora
+    depends_on:
+      - pg-fcrepo
+    restart: always
+  pg-fcrepo:
+    image: postgres:latest
+    hostname: pg-fcrepo
+    restart: always
+    environment:
+      - POSTGRES_USER=$FEDORA_PG_USER
+      - POSTGRES_PASSWORD=$FEDORA_PG_PASSWORD
+      - POSTGRES_DB=$FEDORA_DB
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - db:/var/lib/postgresql/data
+    networks:
+      - fedora
+  pg-hyrax:
+    image: postgres:10.22-alpine
+    hostname: pg-hyrax
+    environment:
+      - POSTGRES_USER=$HYRAX_DB_USER
+      - POSTGRES_PASSWORD=$HYRAX_DB_PASSWORD
+      - POSTGRES_DB=$HYRAX_DB_PROD
+      - POSTGRES_HOST_AUTH_METHOD=trust
+    volumes:
+      - db-hyrax:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+    networks:
+      - hyrax
+  solr:
+    build: 
+      context: .
+      dockerfile: Dockerfile-solr
+    hostname: solr-hyrax
+    environment:
+      - SOLR_CORE
+    # Use this to map to an external volume/existing Solr index
+    volumes:
+      - /var/solr/data:/opt/solr/server/solr/mycores
+    ports:
+      - 8983:8983
+    networks:
+      - hyrax
+  app-server:
+    #image: scholarspace:latest
+    build:
+      context: .
+      args:
+        - RAILS_ENV
+    depends_on: 
+      - solr
+      - pg-hyrax
+      - fedora
+    env_file: .env
+    networks:
+      - hyrax
+      - fedora
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - app-hyrax:/opt/scholarspace
+    restart: always
+
+volumes:
+  db:
+  db-hyrax:
+  app-hyrax:
+networks:
+  hyrax:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-hyrax
+  fedora:
+    driver: bridge
+    driver_opts:
+      com.docker.network.bridge.name: br-fedora
+
