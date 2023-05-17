@@ -964,6 +964,7 @@ DEPENDENCIES
   devise-guests (~> 0.6)
   dotenv-rails
   fcrepo_wrapper
+  ffi (~> 1.15)
   hydra-role-management
   hyrax (= 2.9.6)
   invisible_captcha
@@ -1001,4 +1002,4 @@ RUBY VERSION
    ruby 2.7.3p183
 
 BUNDLED WITH
-   2.2.31
+   2.4.13
