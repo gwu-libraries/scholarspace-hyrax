@@ -40,8 +40,6 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - db-hyrax:/var/lib/postgresql/data
-    ports:
-      - 5432:5432
     networks:
       - hyrax
   solr:
@@ -56,6 +54,12 @@ services:
       - /var/solr/data:/opt/solr/server/solr/mycores
     ports:
       - 8983:8983
+    networks:
+      - hyrax
+  redis:
+    image: 'redis:5-alpine'
+    hostname: redis-hyrax
+    command: redis-server
     networks:
       - hyrax
   app-server:

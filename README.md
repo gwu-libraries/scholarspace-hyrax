@@ -687,5 +687,13 @@ The Dockerized version of the ScholarSpace app uses the following images:
     - `--create-role`: create default app roles (if they don't already exist)
     - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
     - `--create-secret`: generate the Rails app secret 
+    - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
   - You can string multiple command-line options together, provided you **enclose the entire string, including the path to the script, in quotation marks**.
    
+- To restart Passenger, the behavior seems to differ depending on whether one is running with RAILS_ENV=development or RAILS_ENV=production. In the former case, Passenger can be restarted by the scholarspace user; the `app-init.sh` script includes a line to accomplish this automatically on completion of any Rake tasks, etc. In a production environment, Passenger requires root permissions to restart; this can be achieved by running `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`
+
+### Development tips
+- To avoid typing a long string whenever you want to access the Hyrax app container, you can assign an alias, using the `docker ps` command to identify the app container automatically, like so:
+`alias hyrax-container="docker exec -it --user scholarspace $(docker ps --filter 'name=app' -q) bash -l"`
+- Likewise, an alias to restart Passenger in the app container would look liks this (if running the app in production, omit the `--user scholarspace` option and use the root directory (`/`) as the path to the app): 
+`alias restart-hyrax="docker exec --user scholarspace $(docker ps --filter 'name=app' -q) bash -lc 'passenger-config restart-app /opt/scholarspace-scholarspace-hyrax'"` 

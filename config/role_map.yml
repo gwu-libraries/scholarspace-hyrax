@@ -2,7 +2,7 @@ development:
   archivist:
     - archivist1@example.com
   admin:
-    - kerchner@gwu.edu
+    - dsmith@gwu.edu
 
 test:
   archivist:

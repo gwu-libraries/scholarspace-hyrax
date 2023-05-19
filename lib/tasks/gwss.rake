@@ -30,6 +30,16 @@ namespace :gwss  do
     contentadminrole.save
   end
 
+  desc "Add a user to the admin role"
+  task :add_admin_role => :environment do
+    # Expect this variable to be set when running from the command line
+    if ENV["admin_user"]
+      r = Role.find_by_name("admin")
+      r.users << User.find_by_user_key(ENV["admin_user"])
+      r.save
+    end
+  end
+
   desc "Ingest a Work"
   task :ingest_work => :environment do |t, args|
     begin
