@@ -16,23 +16,11 @@ RUN wget https://github.com/harvard-lts/fits/releases/download/1.5.0/fits-1.5.0.
 # bash -lc is necessary per the configuration of the base image 
 RUN bash -lc "rvm remove ruby-2.7.7 && rvm install ruby-2.7.3 && gem install rails -v 5.2.7 -N"
 
-# Moving to a runtime script to allow synchronization with ownership outside the container
-# Create scholarspace user/group with ID's (from .env with docker-compose, 999 as default)
-# Assign group memberships for Apache & scholarspace users
-#RUN groupadd -r scholarspace --gid=${SCHOLARSPACE_GID:-999} \
-#     && useradd -r -g scholarspace -m --uid=${SCHOLARSPACE_UID:-999} scholarspace \
-#     && usermod -aG scholarspace www-data \
-#     && usermod -aG rvm scholarspace 
-
 # Hyrax directories
-RUN mkdir /opt/install \
-#    && mkdir /opt/xsendfile \
-    && mkdir -p /opt/scholarspace/scholarspace-hyrax \ 
+RUN mkdir -p /opt/scholarspace/scholarspace-hyrax \ 
     && mkdir /opt/scholarspace/scholarspace-tmp \
     && mkdir /opt/scholarspace/scholarspace-minter \
     && mkdir /opt/scholarspace/scholarspace-derivatives \
-#    && chown www-data:www-data /opt/xsendfile \
-#    && chown -R scholarspace:scholarspace /opt/scholarspace \
     && chmod 775 -R /opt/scholarspace/scholarspace-derivatives
 
 # Nginx configuration
@@ -40,10 +28,8 @@ COPY nginx_conf/scholarspace.conf /etc/nginx/sites-enabled/scholarspace.conf
 # Enable Nginx with new configuration
 RUN rm /etc/nginx/sites-enabled/default && rm -f /etc/service/nginx/down
 
-# install app dependencies as scholarspace user
 
 WORKDIR /opt/scholarspace/scholarspace-hyrax
-
 # Switch to bash shell so that we can use the source command
 SHELL ["/bin/bash", "-c"]
 
@@ -53,18 +39,15 @@ RUN source ./docker/scripts/rvm-wrapper.sh && rm /usr/bin/ruby2.7 \
     && create_rvm_wrapper_script ruby2.7 ruby-2.7.3 ruby
 # Compile it for Passenger
 RUN ruby2.7 -S passenger-config build-native-support 
-#        && setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
 # Copy Gemfile separately, so that we don't have to rebuild this stage every time we change another file
-#COPY --chown=scholarspace:scholarspace Gemfile Gemfile.lock ./
 COPY Gemfile Gemfile.lock ./
-#USER scholarspace
 # Used to create the correct file in config/environments 
 ARG RAILS_ENV
-
 # Install dependencies and finalize Hyrax setup
+# Running without development; installing as development seems to cause some issues
 RUN gem install bundler \
-    && bundle install --deployment 
+    && bundle install --without development --deployment 
 
 # Copy app files
 COPY . ./
@@ -72,7 +55,5 @@ COPY . ./
 RUN chmod +x docker/scripts/*.sh \
     && bash -lc "docker/scripts/hyrax-config.sh"
 
-# This seems inelegant, but the my_init script requires root permissions
-#USER root
 # Script that creates the scholarspace user
 CMD ["bash", "-l", "docker/scripts/scholarspace-setup.sh"]

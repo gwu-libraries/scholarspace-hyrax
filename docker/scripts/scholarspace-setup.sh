@@ -11,5 +11,10 @@ groupadd -r scholarspace --gid=${SCHOLARSPACE_GID:-999} \
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
+case $1 in 
+  sidekiq)
+  echo "Starting sidekiq"
+  exec bundle exec sidekiq ;;
+esac
 echo "Starting Passenger..."
 exec /sbin/my_init

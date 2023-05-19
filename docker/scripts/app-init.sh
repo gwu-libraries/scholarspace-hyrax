@@ -37,6 +37,7 @@ do
          *) echo >&2 "Invalid option: $opt"; exit 1;;
     esac
     # Restart passenger after making any changes
+    # Note that this will only work if *not* running in development
     passenger-config restart-app /opt/scholarspace/scholarspace-hyrax
 done
 

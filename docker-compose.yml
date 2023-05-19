@@ -20,7 +20,6 @@ services:
   pg-fcrepo:
     image: postgres:latest
     hostname: pg-fcrepo
-    restart: always
     environment:
       - POSTGRES_USER=$FEDORA_PG_USER
       - POSTGRES_PASSWORD=$FEDORA_PG_PASSWORD
@@ -30,6 +29,7 @@ services:
       - db:/var/lib/postgresql/data
     networks:
       - fedora
+    restart: always
   pg-hyrax:
     image: postgres:10.22-alpine
     hostname: pg-hyrax
@@ -42,6 +42,7 @@ services:
       - db-hyrax:/var/lib/postgresql/data
     networks:
       - hyrax
+    restart: always
   solr:
     build: 
       context: .
@@ -56,18 +57,32 @@ services:
       - 8983:8983
     networks:
       - hyrax
+    restart: always
   redis:
     image: 'redis:5-alpine'
     hostname: redis-hyrax
     command: redis-server
     networks:
       - hyrax
-  app-server:
-    #image: scholarspace:latest
-    build:
+    restart: always
+  sidekiq:
+    image: hyrax-app
+    build: 
       context: .
       args:
         - RAILS_ENV
+    command: ["bash", "-l", "docker/scripts/scholarspace-setup.sh", "sidekiq"]
+    depends_on: 
+      - redis
+    env_file: .env
+    volumes: 
+      - /opt/scholarspace:/opt/scholarspace
+    networks:
+      - hyrax
+      - fedora
+    restart: always
+  app-server:
+    image: hyrax-app
     depends_on: 
       - solr
       - pg-hyrax
@@ -83,7 +98,6 @@ services:
       #- app-hyrax:/opt/scholarspace
       - /opt/scholarspace:/opt/scholarspace # For development
     restart: always
-
 volumes:
   db:
   db-hyrax:
