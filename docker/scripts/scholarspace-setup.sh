@@ -6,15 +6,18 @@ groupadd -r scholarspace --gid=${SCHOLARSPACE_GID:-999} \
      && useradd -r -g scholarspace -m --uid=${SCHOLARSPACE_UID:-999} scholarspace \
      && usermod -aG scholarspace www-data \
      && usermod -aG rvm scholarspace \
-     && chown -R scholarspace:scholarspace /opt/scholarspace
+     && chown -R scholarspace:scholarspace /opt/scholarspace \
+     && chmod 775 -R /opt/scholarspace/scholarspace-derivatives
 
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
-case $1 in 
-  sidekiq)
+if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
+then
   echo "Starting sidekiq"
-  exec bundle exec sidekiq ;;
-esac
+  exec /sbin/my_init -- bash -lc "bundle exec sidekiq"
+fi
 echo "Starting Passenger..."
+# Enable Nginx
+rm -f /etc/service/nginx/down
 exec /sbin/my_init

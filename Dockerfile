@@ -26,10 +26,13 @@ RUN mkdir -p /opt/scholarspace/scholarspace-hyrax \
 # Nginx configuration
 COPY nginx_conf/scholarspace.conf /etc/nginx/sites-enabled/scholarspace.conf
 # Enable Nginx with new configuration
-RUN rm /etc/nginx/sites-enabled/default && rm -f /etc/service/nginx/down
-
+RUN rm /etc/nginx/sites-enabled/default
 
 WORKDIR /opt/scholarspace/scholarspace-hyrax
+
+# Default ImageMagick configuration (to allow PDF's)
+COPY ./docker/imagemagick/policy.xml /etc/ImageMagick-6/policy.xml
+
 # Switch to bash shell so that we can use the source command
 SHELL ["/bin/bash", "-c"]
 

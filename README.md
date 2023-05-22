@@ -635,20 +635,24 @@ The Dockerized version of the ScholarSpace app uses the following images:
 | --------- | ---------- | ------- | ------ | 
 | Fedora server | ghcr.io/samvera/fcrepo4 | 4.7.5 | https://github.com/samvera-labs/docker-fcrepo | 
 | Postgres (for Fedora) | postgres | latest | https://hub.docker.com/_/postgres |
-| Postgres (for Hyrax) | postgres | 10.22-alpine | https://hub.docker.com/_/postgres |
+| Postgres (for Hyrax) | postgres | 9.5.25-alpine | https://hub.docker.com/_/postgres |
 | Solr | library/solr | 6.4.2-alpine | Dockerfile-solr |
-| Rails app | scholarspace | latest | Dockerfile |
+| Rails app | scholarspace-app | latest | Dockerfile | 
+| Redis server | redis | 5-alpine | https://hub.docker.com/_/redis |
+| Sidekiq | scholarspace-app | latest | Dockerfile |
 
 ## Notes on images
 
 ### Fedora server
-- The current version in production is 4.7.1. Docker image is slightly ahead.
+- The current version in production is 4.7.1. The Docker image is slightly ahead.
 - The Docker image uses Jetty, not Tomcat. Configuring authenticatiomn for Jetty requires a different process, documented [here](https://wiki.lyrasis.org/display/FEDORA474/How+to+Configure+Servlet+Container+Authentication) and with examples in the `docker-fcrepo` repository. 
 - **TO DO: configure secure authentication, if desired**
 - **TO DO: test with content from production**
 
 ### Postgres
 - Currently, separate postgres containers (each with their own Docker volume) are used for the Fedora and Rails databases. This may be desirable for migration purposes, i.e., if the two databases in production are running on different versions of postrgres. 
+- The Fedora postgres container is currently using the `latest` release of the image, but we should fix this to a specific version in production.
+- The Rails/Hyrax postrgres container is using a version pinned to the version in use in production.
 - To migrate the Rails and Fedora databases, the best approach is probably a backup/restore from production.
   - Start the container.
   - Copy the backup file to the postgres Docker volume: `docker cp backup.sql [db-container-name]:/tmp`.
@@ -658,19 +662,23 @@ The Dockerized version of the ScholarSpace app uses the following images:
 
 ### Solr
 - The Solr container is configured to run a script on startup that checks for the existence of a named Solr core (provided as an environment variable). 
+- This image uses a base image that is one point release ahead of the version of Solr deployed in production (6.4.2 vs. 6.4.1). This is done to leverage an organization of the 6.4.2 package that makes it more straightforward to implement the custom Hyrax schema. 
 - If the core does not exist, it will be created, and the ScholarSpace schema will be applied.
 - To use an existing core (migration), do the following (before starting the container):
   - Place a copy of the parent core directory (i.e., scholarspace) in `/var/solr/data` on the Docker host. 
   - Grant ownership to the container's Solr user:  `chown -R 8983:8983 var/solr/data`
 **TO DO: test with core from production**
 
-### Rails app
+### Rails/Hyrax app
 - The image is built from the official Phusion/Passenger [image](https://github.com/phusion/passenger-docker/tree/rel-2.5.0).
 - ScholarSpace dependencies are installed at build time.
 - The version of Ruby is 2.7.3 (to match production).
 - Instead of Apache, the image uses Nginx with Passenger (since that was preconfigured).
-- Files like `config/initializers/hyrax.rb` have been refactored to use environment variables where possible in order to minimize manual configuration.
+- Files like `config/initializers/hyrax.rb` have been refactored to use environment variables where possible in order to minimize manual configuration. **When loading code from outside the container, these files will be overwritten by default.**
 - When the container starts, it runs the Passenger/Nginx process in the foreground (by default). To acces the container (e.g., in order to use the Rails console), run `docker exec --user scholarspace [container-name] bash -l`. (Setting the `scholarspace` user and running `bash -l` are necessary to ensure that the RVM paths load correctly.)
+
+### Sidekiq
+- This container uses the same image as the Hyrax app, but instead of running Nginx, it runs the Sidekiq gem. 
 
 ## Running with docker-compose
 
@@ -686,14 +694,34 @@ The Dockerized version of the ScholarSpace app uses the following images:
     - `--precompile-assets`: precompile static assets
     - `--create-role`: create default app roles (if they don't already exist)
     - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
-    - `--create-secret`: generate the Rails app secret 
+    - `--create-secret`: generate the Rails app secret. 
     - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
+    - `--create-sitemap`: enqueue the Rake task to generate a sitemap 
   - You can string multiple command-line options together, provided you **enclose the entire string, including the path to the script, in quotation marks**.
    
-- To restart Passenger, the behavior seems to differ depending on whether one is running with RAILS_ENV=development or RAILS_ENV=production. In the former case, Passenger can be restarted by the scholarspace user; the `app-init.sh` script includes a line to accomplish this automatically on completion of any Rake tasks, etc. In a production environment, Passenger requires root permissions to restart; this can be achieved by running `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`
+- To restart Passenger, the behavior seems to differ depending on whether one is running with RAILS_ENV=development or RAILS_ENV=production. In the former case, Passenger can be restarted by the scholarspace user; the `app-init.sh` script includes a line to accomplish this automatically on completion of any Rake tasks, etc. In a production environment, Passenger requires root permissions to restart; this can be achieved by running `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. (Note that you can restart the Passenger app only after visiting the site at least once since launching the container. Otherwise, Passenger complains that there are not sites configured.)
 
 ### Development tips
-- To avoid typing a long string whenever you want to access the Hyrax app container, you can assign an alias, in `~/.bash_alias` file, using the `docker ps` command to identify the app container automatically, like so:
+- To avoid typing a long string whenever you want to access the Hyrax app container, you can assign an alias, in the `~/.bash_alias` file, using the `docker ps` command to identify the app container, like so:
 `alias hyrax-container='docker exec -it --user scholarspace $(docker ps --filter "name=app" -q) bash -l'`
 - Likewise, an alias to restart Passenger in the app container (in production): 
 `alias restart-hyrax='docker exec $(docker ps --filter 'name=app' -q) bash -lc "passenger-config restart-app /"'` 
+- To facilitate recreating the entire app & environment from scratch (fresh install), you could use a script like the following:
+```
+#!/bin/bash
+
+echo "Recreating Fedora and Solr directories"
+rm -r /data/fedora && mkdir /data/fedora 
+rm -r /var/solr/data && mkdir /var/solr/data && chown -R 8983:8983 /var/solr/data
+echo "Cleaning up ScholarSpace files"
+rm -r /opt/scholarspace/scholarspace-derivatives/derivatives
+echo "Removing Docker volumes"
+docker volume rm $(docker volume ls -q)
+
+```
+After bringing down the containers, run this script (with `sudo`) to clear out all persistent storage, including the Rails database, before bringing back up the containers. 
+
+## Status & Unresolved Issues
+- Most features are working correctly: creation of accounts, creating of the default and ETDs admin sets, creation of new works, creation of collections, search & faceting, editing of works, uploading of files, bulk uploading with Bulkrax import.
+- A possible bug: Admin Sets in this implementation appear as `Private`, even though child works added to these sets can be made `Open Access` (and are visible without logging in, as expected). But I believe Admin Sets should appear as `Public`/`Open Access` by default.
+

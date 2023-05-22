@@ -1,7 +1,7 @@
 #!/bin/bash
 # Contains Rake commands useful for initializing the app
 # This script should be run as the scholarspace user, not root
-# To run a container from the scholarspace image: docker exec -it --user scholarspace [app-container-name] bash -lc "app-init.sh [script-options]"
+# To run a container from the scholarspace image: docker exec -it --user scholarspace [app-container-name] bash -lc "docker/scripts/app-init.sh [script-options]"
 # Otherwise, the RVM environment will not be loaded
 set -e
 while [[ $# -gt 0 ]] && [[ $1 == "--"* ]] 
@@ -34,10 +34,17 @@ do
             echo "Creating secret key"
             secret=$(bundle exec rake secret)
             echo "Key is $secret" ;;
+        "--create-sitemap")
+            echo "Generating sitemap"
+            bundle exec rake gwss:sitemap_queue_generate ;;
          *) echo >&2 "Invalid option: $opt"; exit 1;;
     esac
     # Restart passenger after making any changes
-    # Note that this will only work if *not* running in development
-    passenger-config restart-app /opt/scholarspace/scholarspace-hyrax
+    # Note that this will only work if running in development
+    if [ $RAILS_ENV = "development" ] 
+    then
+        echo "Restarting Passenger"
+        passenger-config restart-app /opt/scholarspace/scholarspace-hyrax
+    fi
 done
 

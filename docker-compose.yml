@@ -31,7 +31,7 @@ services:
       - fedora
     restart: always
   pg-hyrax:
-    image: postgres:10.22-alpine
+    image: postgres:9.5.25-alpine
     hostname: pg-hyrax
     environment:
       - POSTGRES_USER=$HYRAX_DB_USER
@@ -50,7 +50,7 @@ services:
     hostname: solr-hyrax
     environment:
       - SOLR_CORE
-    # Use this to map to an external volume/existing Solr index
+    # Use this to map to an external volume/existing Solr core
     volumes:
       - /var/solr/data:/opt/solr/server/solr/mycores
     ports:
@@ -66,7 +66,7 @@ services:
       - hyrax
     restart: always
   sidekiq:
-    image: hyrax-app
+    image: scholarspace-app
     build: 
       context: .
       args:
@@ -76,13 +76,14 @@ services:
       - redis
     env_file: .env
     volumes: 
-      - /opt/scholarspace:/opt/scholarspace
+      #- app-hyrax:/opt/scholarspace  # Persistent Docker volume (for production)
+      - /opt/scholarspace:/opt/scholarspace # For development
     networks:
       - hyrax
       - fedora
     restart: always
   app-server:
-    image: hyrax-app
+    image: scholarspace-app
     depends_on: 
       - solr
       - pg-hyrax
@@ -95,7 +96,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-      #- app-hyrax:/opt/scholarspace
+#      - app-hyrax:/opt/scholarspace
       - /opt/scholarspace:/opt/scholarspace # For development
     restart: always
 volumes:

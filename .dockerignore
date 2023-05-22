@@ -1,4 +1,3 @@
-solr
 sidekiq_conf
 tomcat_conf
 .env.example
@@ -10,10 +9,7 @@ Dockerfile*
 log/*.*
 .env
 .gitignore
-apache_conf/server.crt
-apache_conf/server.csr
-apache_conf/server.key
-apache_conf/server.key.secure
+apache_conf
 bin/importer
 config/environments/*.rb
 config/initializers/bulkrax.rb.backup
