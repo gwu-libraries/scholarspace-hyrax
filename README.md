@@ -698,6 +698,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
     - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
     - `--create-sitemap`: enqueue the Rake task to generate a sitemap 
   - You can string multiple command-line options together, provided you **enclose the entire string, including the path to the script, in quotation marks**.
+  - In setting up a new instance, these options should be used in the order described for a non-Dockerized installation (see above).
    
 - To restart Passenger, the behavior seems to differ depending on whether one is running with RAILS_ENV=development or RAILS_ENV=production. In the former case, Passenger can be restarted by the scholarspace user; the `app-init.sh` script includes a line to accomplish this automatically on completion of any Rake tasks, etc. In a production environment, Passenger requires root permissions to restart; this can be achieved by running `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. (Note that you can restart the Passenger app only after visiting the site at least once since launching the container. Otherwise, Passenger complains that there are not sites configured.)
 
@@ -723,5 +724,6 @@ After bringing down the containers, run this script (with `sudo`) to clear out a
 
 ## Status & Unresolved Issues
 - Most features are working correctly: creation of accounts, creating of the default and ETDs admin sets, creation of new works, creation of collections, search & faceting, editing of works, uploading of files, bulk uploading with Bulkrax import.
-- A possible bug: Admin Sets in this implementation appear as `Private`, even though child works added to these sets can be made `Open Access` (and are visible without logging in, as expected). But I believe Admin Sets should appear as `Public`/`Open Access` by default.
-
+- **Possible bug**: Admin Sets in this implementation appear as `Private`, even though child works added to these sets can be made `Open Access` (and are visible without logging in, as expected). But I believe Admin Sets should appear as `Public`/`Open Access` by default.
+- **Log rotation**: This has not been configured inside the Rails/Hyrax container. When running in development, with code from `/opt/scholarspace/scholarspace-hyrax` mapped externally, it probably makes sense to let the host system handle log rotation. Even in production, it may be more desirable to have application logs reside outside the container (by mapping `/opt/scholarspace/scholarspace-hyrax/log` to an external volume). 
+- **

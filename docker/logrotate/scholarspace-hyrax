@@ -1,0 +1,9 @@
+/opt/scholarspace/scholarspace-hyrax/log/production.log {
+        daily
+        missingok
+        rotate 10
+        compress
+  delaycompress
+        notifempty
+        create 664 scholarspace scholarspace
+}
