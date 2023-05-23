@@ -626,7 +626,7 @@ for derivatives.  For example, to allow PDF files, remove the line that blocks P
 ## Note about ghostscript and ImageMagick
 
 Hyrax can be ficky about versions of ghostscript and ImageMagick.  A working combination seems to be:  ghostscript 9.26 with ImageMagick 6.9.7-4
-
+-----------------------------------------
 # Installation with Docker (beta)
 
 The Dockerized version of the ScholarSpace app uses the following images:
@@ -637,45 +637,43 @@ The Dockerized version of the ScholarSpace app uses the following images:
 | Postgres (for Fedora) | postgres | latest | https://hub.docker.com/_/postgres |
 | Postgres (for Hyrax) | postgres | 9.5.25-alpine | https://hub.docker.com/_/postgres |
 | Solr | library/solr | 6.4.2-alpine | Dockerfile-solr |
-| Rails app | scholarspace-app | latest | Dockerfile | 
+| Rails app | scholarspace-app | -- | Dockerfile | 
 | Redis server | redis | 5-alpine | https://hub.docker.com/_/redis |
-| Sidekiq | scholarspace-app | latest | Dockerfile |
+| Sidekiq | scholarspace-app | -- | Dockerfile |
 
 ## Notes on images
 
 ### Fedora server
 - The current version in production is 4.7.1. The Docker image is slightly ahead.
 - The Docker image uses Jetty, not Tomcat. Configuring authenticatiomn for Jetty requires a different process, documented [here](https://wiki.lyrasis.org/display/FEDORA474/How+to+Configure+Servlet+Container+Authentication) and with examples in the `docker-fcrepo` repository. 
-- **TO DO: configure secure authentication, if desired**
-- **TO DO: test with content from production**
+
 
 ### Postgres
 - Currently, separate postgres containers (each with their own Docker volume) are used for the Fedora and Rails databases. This may be desirable for migration purposes, i.e., if the two databases in production are running on different versions of postrgres. 
-- The Fedora postgres container is currently using the `latest` release of the image, but we should fix this to a specific version in production.
+- The Fedora postgres container is currently using the `latest` release of the image, but we should pin this to a specific version in production.
 - The Rails/Hyrax postrgres container is using a version pinned to the version in use in production.
 - To migrate the Rails and Fedora databases, the best approach is probably a backup/restore from production.
   - Start the container.
   - Copy the backup file to the postgres Docker volume: `docker cp backup.sql [db-container-name]:/tmp`.
   - Open an interactive session in the container: `docker exec -it [db-container-name] /bin/bash`.
-  - Perform the restore, using the database user appropriate to the database: `psql -U [scholarspace|fedoraproduser] -d [gwss-prod|fcrepo]`.∂
-- **TO DO: test migration from production**
+  - Perform the restore, using the database user appropriate to the database: `psql -U [scholarspace|fedoraproduser] -d [gwss-prod|fcrepo]`.
 
 ### Solr
 - The Solr container is configured to run a script on startup that checks for the existence of a named Solr core (provided as an environment variable). 
-- This image uses a base image that is one point release ahead of the version of Solr deployed in production (6.4.2 vs. 6.4.1). This is done to leverage an organization of the 6.4.2 package that makes it more straightforward to implement the custom Hyrax schema. 
+- This image uses a base image that is one point release ahead of the version of Solr deployed in production (6.4.2 vs. 6.4.1). This is done to leverage a feature of the 6.4.2 image that facilitates implementation of the custom Hyrax schema. 
 - If the core does not exist, it will be created, and the ScholarSpace schema will be applied.
 - To use an existing core (migration), do the following (before starting the container):
   - Place a copy of the parent core directory (i.e., scholarspace) in `/var/solr/data` on the Docker host. 
   - Grant ownership to the container's Solr user:  `chown -R 8983:8983 var/solr/data`
-**TO DO: test with core from production**
 
 ### Rails/Hyrax app
 - The image is built from the official Phusion/Passenger [image](https://github.com/phusion/passenger-docker/tree/rel-2.5.0).
 - ScholarSpace dependencies are installed at build time.
 - The version of Ruby is 2.7.3 (to match production).
-- Instead of Apache, the image uses Nginx with Passenger (since that was preconfigured).
-- Files like `config/initializers/hyrax.rb` have been refactored to use environment variables where possible in order to minimize manual configuration. **When loading code from outside the container, these files will be overwritten by default.**
-- When the container starts, it runs the Passenger/Nginx process in the foreground (by default). To acces the container (e.g., in order to use the Rails console), run `docker exec --user scholarspace [container-name] bash -l`. (Setting the `scholarspace` user and running `bash -l` are necessary to ensure that the RVM paths load correctly.)
+- Instead of Apache, the image uses Nginx with Passenger.
+- Files like `config/initializers/hyrax.rb` have been refactored to use environment variables where possible in order to minimize manual configuration. **When loading code from outside the container, such files will be overwritten by their external counterparts.**
+- On startup, the container performs some runtime tasks (in `docker/scripts/scholarspace-setup.sh`): creating the scholarspace user and group, setting permissions, and creating a cron job for the sitemap generation.
+- When the container starts, it launches the Passenger/Nginx process in the foreground. To acces the container (e.g., in order to use the Rails console), run `docker exec --user scholarspace [container-name] bash -l`. (Setting the `scholarspace` user and running `bash -l` are necessary to ensure that the RVM paths load correctly.)
 
 ### Sidekiq
 - This container uses the same image as the Hyrax app, but instead of running Nginx, it runs the Sidekiq gem. 
@@ -685,10 +683,10 @@ The Dockerized version of the ScholarSpace app uses the following images:
 - The `docker-compose.yml` file defines a set of services corresponding to the images above. 
 - Environment variables should be provided in a `.env` file within the same directory. (See `example.env`).
 - Start the application containers by running `docker-compose up -d`.
-- Several startup tasks necessary for initializing the ScholarSpace application can be run from a provided shell script.
+- Several tasks necessary for initializing the ScholarSpace application can be run from a provided bash script.
   - To run the script, first start the containers. 
-  - Use `docker ps` to identify the name of the container corresponding to the app server. It's probably something like `scholarspace-hyrax_app-server_1`. 
-  - Run this command to execute the script: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/scholarspace-hyrax-startup.sh [OPTIONS]"` where OPTIONS is one or more of the following:
+  - Use `docker ps` to identify the name of the container corresponding to the app server, something like `scholarspace-hyrax_app-server_1`. 
+  - Run this command to execute the script: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh [OPTIONS]"` where OPTIONS is one or more of the following:
     - `--load-schema`: create the initial Rails app database
     - `--run-migrations`: run database migrations
     - `--precompile-assets`: precompile static assets
@@ -699,7 +697,22 @@ The Dockerized version of the ScholarSpace app uses the following images:
     - `--create-sitemap`: enqueue the Rake task to generate a sitemap 
   - You can string multiple command-line options together, provided you **enclose the entire string, including the path to the script, in quotation marks**.
   - In setting up a new instance, these options should be used in the order described for a non-Dockerized installation (see above).
-   
+
+## Persistence
+
+- As currently configured, `docker-compose.yml` uses Docker volumes to persist storage for the Postgres databases.
+- The Solr and Fedora containers are mapped to local directories on the host (*bind mounts*, in Docker jargon). 
+  - The Solr directory (`/var/solr/data`) should be granted the necessary permissions **before** starting the container: `chown -R 8983:8983 var/solr/data` 
+- For storing derivatives, etc., the Rails/Hyrax app can use either a persistent Docker volume or local directories outside the container. For development purposes, the compose file currently maps the `/opt/scholarspace` directory to the same directory outside the container. This setup assumes that, per the non-Dockerized setup, a `scholarspace` user and group have ownership of that directory. (Technically, any user/group can serve this purpose, provided you provide the UID/GID in the `.env` file.)
+
+## Rails environment
+
+- The image has been tested only in "production" mode. 
+- To run in "development" mode, the `RAILS_ENV` and `PASSENGER_APP_ENV` variables can be set accordingly in `.env`.
+- **Caveat**: when installing the dependencies for development mode, I encountered some warnings in the Rails console about duplicate constants, etc. So further testing is necessary.
+
+
+
 - To restart Passenger, the behavior seems to differ depending on whether one is running with RAILS_ENV=development or RAILS_ENV=production. In the former case, Passenger can be restarted by the scholarspace user; the `app-init.sh` script includes a line to accomplish this automatically on completion of any Rake tasks, etc. In a production environment, Passenger requires root permissions to restart; this can be achieved by running `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. (Note that you can restart the Passenger app only after visiting the site at least once since launching the container. Otherwise, Passenger complains that there are not sites configured.)
 
 ### Development tips

@@ -17,6 +17,15 @@ then
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq"
 fi
+# Create sitemap cronjob, if necessary
+setuser scholarspace crontab -l > cron.tmp
+if [ ! -s cron.tmp ]
+then
+  echo "Creating cron job for sitemap"
+  setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
+  rm cron.tmp
+fi
+
 echo "Starting Passenger..."
 # Enable Nginx
 rm -f /etc/service/nginx/down
