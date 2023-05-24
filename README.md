@@ -719,6 +719,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
 
 ## Development tips
 
+- The base image for the `app-server` image is derived from Ubuntu 20. When mapping the container to the external volume `opt/scholarspace`, which includes the project gems, I encountered a problem with the [ffi](https://github.com/ffi/ffi) gem, which depends on system C components, because my host machine was running Ubuntu 18. I resolved the issue by upgrading the host machine to Ubuntu 20 and reinstalling the project gems with `bundle install`.
 - To avoid typing a long string whenever you want to access the Hyrax app container, you can assign an alias, in the `~/.bash_alias` file, using the `docker ps` command to identify the app container, like so:
 `alias hyrax-container='docker exec -it --user scholarspace $(docker ps --filter "name=app" -q) bash -l'`
 - Likewise, an alias to restart Passenger in the app container (in production): 
