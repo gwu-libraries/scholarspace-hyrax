@@ -76,8 +76,8 @@ services:
       - redis
     env_file: .env
     volumes: 
-      #- app-hyrax:/opt/scholarspace  # Persistent Docker volume (for production)
-      - /opt/scholarspace:/opt/scholarspace # For development
+      - app-hyrax:/opt/scholarspace  # Persistent Docker volume (for production)
+#      - /opt/scholarspace:/opt/scholarspace # For development
     networks:
       - hyrax
       - fedora
@@ -96,8 +96,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-#      - app-hyrax:/opt/scholarspace
-      - /opt/scholarspace:/opt/scholarspace # For development
+      - app-hyrax:/opt/scholarspace
+#      - /opt/scholarspace:/opt/scholarspace # For development
     restart: always
 volumes:
   db:
