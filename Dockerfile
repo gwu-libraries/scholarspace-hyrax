@@ -55,8 +55,7 @@ RUN gem install bundler \
 # Copy app files
 COPY . ./
 # Create config files
-RUN chmod +x docker/scripts/*.sh \
-    && bash -lc "docker/scripts/hyrax-config.sh"
+RUN chmod +x docker/scripts/*.sh
 
 # Script that creates the scholarspace user
 CMD ["bash", "-l", "docker/scripts/scholarspace-setup.sh"]

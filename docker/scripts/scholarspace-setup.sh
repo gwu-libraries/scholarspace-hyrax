@@ -12,6 +12,8 @@ groupadd -r scholarspace --gid=${SCHOLARSPACE_GID:-999} \
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
+./docker/scripts/hyrax-config.sh
+
 if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
 then
   echo "Starting sidekiq"
