@@ -81,6 +81,9 @@ gem 'recaptcha'
 
 gem 'invisible_captcha'
 
+gem 'dry-monads', '< 1.5.0'
+
+gem 'psych', '< 4.0.0'
 
 group :development, :test do
   gem 'pry'
