@@ -44,7 +44,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'hyrax', '2.9.6'
+gem 'hyrax', '3.0.0'
 
 gem 'hydra-role-management'
 
