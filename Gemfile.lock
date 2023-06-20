@@ -414,7 +414,7 @@ GEM
       hydra-derivatives (~> 3.0)
       hydra-file_characterization (~> 1.0)
       hydra-pcdm (>= 0.9)
-    hyrax (3.0.0)
+    hyrax (3.0.2)
       active-fedora (~> 13.1, >= 13.1.2)
       almond-rails (~> 0.1)
       awesome_nested_set (~> 3.1)
@@ -1014,7 +1014,7 @@ DEPENDENCIES
   dry-monads (< 1.5.0)
   fcrepo_wrapper
   hydra-role-management
-  hyrax (= 3.0.0)
+  hyrax (= 3.0.2)
   invisible_captcha
   jbuilder (~> 2.5)
   jquery-rails
