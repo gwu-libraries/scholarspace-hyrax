@@ -2,6 +2,7 @@ module Hyrax
   module HyraxHelperBehavior
     include Hyrax::CitationsBehavior
     include ERB::Util # provides html_escape
+    include Hyrax::ContactFormHelper
     include Hyrax::TitleHelper
     include Hyrax::FileSetHelper
     include Hyrax::AbilityHelper
@@ -12,7 +13,16 @@ module Hyrax
     include Hyrax::ChartsHelper
     include Hyrax::DashboardHelperBehavior
     include Hyrax::IiifHelper
+    include Hyrax::MembershipHelper
+    include Hyrax::PermissionLevelsHelper
     include Hyrax::WorkFormHelper
+    include Hyrax::WorkflowsHelper
+
+    def available_user_groups(ability:)
+      return ::User.group_service.role_names if ability.admin?
+
+      ability.user_groups
+    end
 
     # Which translations are available for the user to select
     # @return [Hash<String,String>] locale abbreviations as keys and flags as values
