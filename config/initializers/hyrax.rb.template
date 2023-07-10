@@ -231,6 +231,9 @@ Hyrax.config do |config|
   # mount point.
   #
   # config.whitelisted_ingest_dirs = []
+
+  config.iiif_image_url_builder = lambda do |file_id, base_url, size, format| end
+  
 end
 
 Date::DATE_FORMATS[:standard] = "%m/%d/%Y"
