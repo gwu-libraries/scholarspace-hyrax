@@ -1,8 +1,22 @@
 FROM phusion/passenger-ruby27:2.5.0
 
-RUN apt update && apt install -y libpq-dev unzip clamav-daemon curl imagemagick libreoffice libcurl4-openssl-dev ffmpeg gnupg2 libxml2 libxml2-dev wget
+RUN apt update && apt install -y libpq-dev unzip clamav-daemon curl libreoffice libcurl4-openssl-dev ffmpeg gnupg2 libxml2 libxml2-dev wget
+
+RUN apt update && apt build-dep -y imagemagick
+
+RUN apt install -y checkinstall libwebp-dev libopenjp2-7-dev librsvg2-dev libde265-dev
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN cd /opt && \
+   wget https://www.imagemagick.org/download/ImageMagick-7.1.1-12.tar.gz && \
+   tar xzvf ImageMagick-7.1.1-12.tar.gz && \
+   cd ImageMagick-7.1.1-12 && \
+   ./configure --enable-shared --with-modules --with-gslib && \
+   make && \
+   make install && \
+   ldconfig /usr/local/lib && \
+   identify -version
 
 # FITS install
 WORKDIR /usr/local/bin
