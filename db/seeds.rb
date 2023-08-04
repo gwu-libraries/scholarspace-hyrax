@@ -62,3 +62,34 @@ if AdminSet.find(default_admin_set_id).id != "admin_set/default"
 else
   puts "\n✅ Successfully created default admin set\n"
 end
+
+# Creating admin collection type
+puts "-" * 8 + "   Creating Admin Set Collection Type   " + "-" * 8
+admin_collection_type = Hyrax::CollectionType.find_or_create_admin_set_type
+
+if Hyrax::CollectionType.none? {|collection_type| collection_type.title == "Admin Set"}
+  abort("❌ Failed to create Admin Set Collection Type")
+else
+  puts "\n✅ Successfully created Admin Set Collection Type\n"
+end
+
+# Creating user collection type
+user_collection_type = Hyrax::CollectionType.find_or_create_default_collection_type
+
+if Hyrax::CollectionType.none? {|collection_type| collection_type.title == "User Collection"}
+  abort("❌ Failed to create User Set Collection Type")
+else
+  puts "\n✅ Successfully created User Collection Type\n"
+end
+
+# Creating ETDs collection (admin type)
+puts "-" * 8 + "   Creating ETDS Collection   " + "-" * 8
+etds_collection = Hyrax::AdministrativeSet.new(id: "etds", title: "ETDs")
+etds_collection = Hyrax.persister.save(resource: etds_collection)
+
+# this is bad but functional, will fix
+if AdminSet.find(etds_collection.id.id).id != "etds" 
+  abort("❌ Failed to create ETDs collection")
+else
+  puts "\n✅ Successfully created ETDs Collection\n"
+end
