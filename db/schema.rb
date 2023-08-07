@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_01_19_213325) do
+ActiveRecord::Schema.define(version: 2023_06_20_184025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,7 +40,6 @@ ActiveRecord::Schema.define(version: 2022_01_19_213325) do
     t.datetime "last_succeeded_at"
     t.string "importerexporter_type", default: "Bulkrax::Importer"
     t.integer "import_attempts", default: 0
-    t.index ["importerexporter_id"], name: "index_bulkrax_entries_on_importerexporter_id"
   end
 
   create_table "bulkrax_exporter_runs", force: :cascade do |t|
@@ -239,6 +238,12 @@ ActiveRecord::Schema.define(version: 2022_01_19_213325) do
     t.index ["machine_id"], name: "index_hyrax_collection_types_on_machine_id", unique: true
   end
 
+  create_table "hyrax_default_administrative_set", force: :cascade do |t|
+    t.string "default_admin_set_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "hyrax_features", id: :serial, force: :cascade do |t|
     t.string "key", null: false
     t.boolean "enabled", default: false, null: false
@@ -336,6 +341,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_213325) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["permission_template_id", "agent_id", "agent_type", "access"], name: "uk_permission_template_accesses", unique: true
+    t.index ["permission_template_id"], name: "index_permission_template_accesses_on_permission_template_id"
   end
 
   create_table "permission_templates", id: :serial, force: :cascade do |t|
@@ -411,9 +417,9 @@ ActiveRecord::Schema.define(version: 2022_01_19_213325) do
   end
 
   create_table "single_use_links", id: :serial, force: :cascade do |t|
-    t.string "downloadKey"
+    t.string "download_key"
     t.string "path"
-    t.string "itemId"
+    t.string "item_id"
     t.datetime "expires"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -451,7 +457,7 @@ ActiveRecord::Schema.define(version: 2022_01_19_213325) do
 
   create_table "sipity_entity_specific_responsibilities", id: :serial, force: :cascade do |t|
     t.integer "workflow_role_id", null: false
-    t.string "entity_id", null: false
+    t.integer "entity_id", null: false
     t.integer "agent_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

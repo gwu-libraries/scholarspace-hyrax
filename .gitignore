@@ -26,3 +26,6 @@ config/secrets.yml
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore universal viewer folder
+/public/uv
