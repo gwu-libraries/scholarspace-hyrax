@@ -81,6 +81,8 @@ gem 'recaptcha'
 
 gem 'invisible_captcha'
 
+gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
+
 # gem 'dry-monads', '< 1.5.0'
 
 # gem 'psych', '< 4.0.0'
