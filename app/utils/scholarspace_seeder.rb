@@ -23,6 +23,7 @@ class ScholarspaceSeeder
 
   def generate_default_admin_set
     default_admin_set = Hyrax::AdminSetCreateService.find_or_create_default_admin_set
+    Hyrax::PermissionTemplate.create!(source_id: Hyrax::AdminSetCreateService::DEFAULT_ID)
     verify_default_admin_set(default_admin_set)
     default_admin_set
   end
