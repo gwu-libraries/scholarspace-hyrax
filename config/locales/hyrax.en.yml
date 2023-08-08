@@ -1,6 +1,9 @@
 en:
   hyrax:
-    product_name:           "GW ScholarSpace"
+    pages:
+      tabs: 
+        terms_page: Information for Authors
+    product_name:           "ScholarSpace"
     local_product_version:  "1.7.0"
     product_twitter_handle: ""
     institution_name:       "The George Washington University"
@@ -14,7 +17,11 @@ en:
     accessibility:
       link_label: 'Report an accessibility issue with this item' 
     search:
+      button:
+        html: <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       form:
+        q:
+          placeholder: Search ScholarSpace
         option:
           all:
             label_long:     "All of GW ScholarSpace"
