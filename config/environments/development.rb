@@ -53,4 +53,6 @@ Rails.application.configure do
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
   config.permanent_url_base = "https://scholarspace-etds.library.gwu.edu/"
+
+  config.active_job.queue_adapter = :inline
 end
