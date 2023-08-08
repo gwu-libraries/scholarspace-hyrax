@@ -24,6 +24,9 @@ html {
 }
 
 body {
+  position: relative;
+  min-height: 100vh;
+  margin-bottom: 0;
   color: #444;
   font-family: $font-family-sans-serif-fallback;
   font-size: 1rem;
@@ -55,7 +58,11 @@ body {
 
 .alert-info a {
   color: #28659A;
-  text-decoration:underline; 
+  text-decoration: underline; 
+}
+
+.content-wrapper {
+  padding-bottom: 9.5rem;
 }
 
 // navbar and header styles
@@ -165,5 +172,17 @@ header .container-fluid {
         border: none;
       }
     }
+  }
+}
+
+// Footer styles
+footer {
+  position: absolute;
+  bottom: 0;
+  height: 9.5rem;
+  width: 100%;
+
+  .footer-lower {
+    height: 100%;
   }
 }
