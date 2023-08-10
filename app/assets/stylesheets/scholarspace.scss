@@ -16,6 +16,8 @@
 @include font-face("Gibson VF", "/fonts/GibsonVF-Italic", 100 900, italic);
 $font-family-sans-serif-fallback: Helvetica, Arial, sans-serif;
 $font-family-sans-serif: "Gibson VF", $font-family-sans-serif-fallback;
+$gw-dark-blue: #033c5a;
+$gw-light-blue: #28659A;
 
 // General
 html {
@@ -39,6 +41,27 @@ body {
   }
 }
 
+strong {
+  font-weight: 400;
+}
+
+a {
+  color: $gw-light-blue;
+
+  &:hover, &:focus {
+    color: #a75523;
+  }
+}
+
+h1 {
+  margin-top: 0;
+  margin-bottom: 0.25em;
+  font-size: 3em;
+  font-weight: inherit;
+  color: $gw-dark-blue;
+  line-height: 1.125em;
+}
+
 .container-fluid {
   width: 100%;
   max-width: 72rem;
@@ -52,11 +75,16 @@ body {
   }
 
   .dropdown-menu {
-    background-color: #033c5a;
+    background-color: $gw-dark-blue;
     padding: 0;
     
     li a {
       color: #fff;
+      font-weight: inherit;
+
+      &:hover {
+        background-color: #28659A;
+      }
     }
   }
 }
@@ -66,12 +94,12 @@ body {
 }
 
 .alert-info a {
-  color: #28659A;
+  color: $gw-light-blue;
   text-decoration: underline; 
 }
 
-.content-wrapper {
-  padding-bottom: 9.5rem;
+#content-wrapper {
+  padding-bottom: 10.5rem;
 }
 
 // navbar and header styles
@@ -80,6 +108,10 @@ header .container-fluid {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.navbar-static-top {
+  border-width: 0;
 }
 
 .navbar-header {
@@ -99,7 +131,7 @@ header .container-fluid {
     max-width: 21rem;
 
     .institution_name {
-      color: #033c5a;
+      color: $gw-dark-blue;
       font-size: 1.3125rem;
       line-height: 1.3;
     }
@@ -120,8 +152,17 @@ header .container-fluid {
   margin-bottom: none;
 
   .navbar {
-    background-color: #033c5a;
+    background-color: $gw-dark-blue;
     color: #fff;
+
+    .active a {
+      background-color: transparent;
+    }
+
+    .navbar-nav a:hover {
+      background-color: $gw-light-blue;
+      color: #fff;
+    }
 
     .navbar-nav li {
       background-color: transparent;
@@ -135,8 +176,7 @@ header .container-fluid {
 }
 
 .navbar, .navbar-default {
-  background-color: #033c5a;
-  color: #fff;
+  background-color: $gw-dark-blue;
   border-color: unset;
 
   .row {
@@ -223,4 +263,49 @@ footer {
   .footer-lower {
     height: 100%;
   }
+}
+
+// Homepage styles
+.home-content .nav {
+  margin-bottom: 0;
+}
+
+.tabs-container {
+  background-color: $gw-dark-blue;
+  border-radius: 5px;
+  padding: 0.5em;
+
+  li a {
+    color: #fff;
+    background-color: $gw-light-blue;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+
+    &:hover {
+      background-color: $gw-light-blue;
+    }
+  }
+
+  li.active a {
+    color: #444;
+    background-color: #fff;
+  }
+
+  .tab-content {
+    overflow: hidden;
+    border-top-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+
+    #featured_container, #recently_uploaded {
+      background-color: #fff;
+      padding: 1em;
+    }
+  }
+}
+
+//bootstrap overwrite
+.nav-pills li.active a, .nav-pills li.active a:hover, .nav-pills li.active a:focus {
+  color: #444;
+  background-color: #fff;
 }
