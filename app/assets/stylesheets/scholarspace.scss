@@ -50,6 +50,15 @@ body {
   &::before, &::after {
     display: none;
   }
+
+  .dropdown-menu {
+    background-color: #033c5a;
+    padding: 0;
+    
+    li a {
+      color: #fff;
+    }
+  }
 }
 
 .accessibility-form-link {
@@ -113,65 +122,94 @@ header .container-fluid {
   .navbar {
     background-color: #033c5a;
     color: #fff;
-    border-color: unset;
-
-    .row {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-
-      .navigation-wrap {
-        display: flex;
-        flex-direction: row;
-      }
-    }
-
-    .navbar-nav a {
-      color: #fff;
-      text-transform: none;
-    }
 
     .navbar-nav li {
       background-color: transparent;
+
+      a {
+        color: #fff;
+        text-transform: none;
+      }
+    }
+  }
+}
+
+.navbar, .navbar-default {
+  background-color: #033c5a;
+  color: #fff;
+  border-color: unset;
+
+  .row {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    .navigation-wrap {
+      display: flex;
+      flex-direction: row;
+    }
+  }
+
+  .navbar-nav li {
+    background-color: transparent;
+
+    a {
+      color: #fff;
+      text-transform: none;
+    }
+  }
+
+  .col-sm-5 {
+    width: auto;
+    padding-right: 0;
+  }
+
+  .searchbar-right {
+    width: 25rem;
+
+    input, .dropdown-toggle {
+      border: none;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+      height: 2rem;
     }
 
-    .col-sm-5 {
-      width: auto;
-      padding-right: 0;
-    }
+    .dropdown-toggle {
+      font-weight: 200;
 
-    .searchbar-right {
-      width: 25rem;
-
-      input, .dropdown-toggle {
-        border: none;
-        box-shadow: none;
-        -webkit-box-shadow: none;
-        height: 2rem;
+      &:focus {
+        height: calc(2rem - 2px);
       }
 
-      .dropdown-toggle {
+      .dropdown-menu {
+        font-size: 0.9rem;
         font-weight: 200;
-
-        &:focus {
-          height: calc(2rem - 2px);
-        }
-
-        .dropdown-menu {
-          font-size: 0.9rem;
-          font-weight: 200;
-        }
-      }
-
-      .dropdown-menu > li > a {
-        font-weight: 200;
-      }
-
-      #search-submit-header {
-        background-color: transparent;
-        border: none;
       }
     }
+
+    .dropdown-menu > li > a {
+      font-weight: 200;
+    }
+
+    #search-submit-header {
+      background-color: transparent;
+      border: none;
+    }
+  }
+}
+
+#user_utility_links {
+
+  .dropdown a, .notify-number {
+    color: #444;
+
+    &:hover {
+      color: #444;
+    }
+  }
+
+  .dropdown-menu li a, .dropdown-menu li a:hover {
+    color: #fff;
   }
 }
 
