@@ -1,4 +1,8 @@
+require 'active_fedora/cleaner'
+
 ActiveFedora.fedora.connection.send(:init_base_path)
+
+ActiveFedora::Cleaner.clean!
 
 seeder = ScholarspaceSeeder.new()
 
