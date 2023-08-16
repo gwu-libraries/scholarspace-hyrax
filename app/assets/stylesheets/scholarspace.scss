@@ -223,6 +223,10 @@ header .container-fluid {
       height: 2rem;
     }
 
+    .input-group-btn {
+      left: -4px;
+    }
+
     .dropdown-toggle {
       font-weight: 200;
       padding: 0.125em 0.3em;
@@ -239,6 +243,10 @@ header .container-fluid {
 
     .dropdown-menu > li > a {
       font-weight: 200;
+    }
+
+    #search-field-header {
+      border-radius: 4px;
     }
 
     #search-submit-header {
