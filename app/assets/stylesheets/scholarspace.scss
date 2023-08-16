@@ -18,6 +18,7 @@ $font-family-sans-serif-fallback: Helvetica, Arial, sans-serif;
 $font-family-sans-serif: "Gibson VF", $font-family-sans-serif-fallback;
 $gw-dark-blue: #033c5a;
 $gw-light-blue: #28659A;
+$gw-buff: #aa9868;
 
 // General
 html {
@@ -60,6 +61,10 @@ h1 {
   font-weight: inherit;
   color: $gw-dark-blue;
   line-height: 1.125em;
+}
+
+form label {
+  font-weight: 400;
 }
 
 .container-fluid {
@@ -108,6 +113,10 @@ header .container-fluid {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.navbar {
+  min-height: 3em;
 }
 
 .navbar-static-top {
@@ -216,6 +225,7 @@ header .container-fluid {
 
     .dropdown-toggle {
       font-weight: 200;
+      padding: 0.125em 0.3em;
 
       &:focus {
         height: calc(2rem - 2px);
@@ -232,6 +242,7 @@ header .container-fluid {
     }
 
     #search-submit-header {
+      padding: 0.125rem 0.5rem;
       background-color: transparent;
       border: none;
     }
@@ -308,4 +319,60 @@ footer {
 .nav-pills li.active a, .nav-pills li.active a:hover, .nav-pills li.active a:focus {
   color: #444;
   background-color: #fff;
+}
+
+// dashboard styles
+body.dashboard {
+  padding-top: 7.8em;
+  padding-top: 0;
+
+  #masthead {
+    position: relative;
+  }
+
+  .image-masthead {
+    margin-bottom: 0;
+  }
+
+  .sidebar {
+    background-color: $gw-dark-blue;
+
+    .profile {
+      background-color: $gw-buff;
+    }
+
+    .nav > li > a:hover {
+      color: #fff;
+      background-color: $gw-light-blue;
+    }
+  }
+
+  .panel {
+    border-radius: 0;
+
+    .panel-title {
+      color: #fff;
+      font-size: 1.125em;
+      font-weight: 400;
+    }
+
+    .panel-heading {
+      border-bottom: none;
+      border-top-left-radius: 0;
+      border-top-right-radius: 0;
+    }
+  }
+
+  .panel-default > .panel-heading {
+    color: #fff;
+    background-color: $gw-dark-blue;
+  }
+
+  .nav-tabs > li > a {
+    border-radius: 0;
+  }
+
+  .nav-tabs > li.active > a {
+    border-top: 2px solid $gw-light-blue;
+  }
 }
