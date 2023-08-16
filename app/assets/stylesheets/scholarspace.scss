@@ -265,7 +265,7 @@ header .container-fluid {
 }
 
 // Footer styles
-footer {
+footer, .footer {
   position: absolute;
   bottom: 0;
   height: 9.5rem;
@@ -273,6 +273,29 @@ footer {
 
   .footer-lower {
     height: 100%;
+    display: flex;
+    align-items: center;
+
+    .login-link {
+      text-align: end;
+
+      a {
+        color: #fff;
+        background-color: $gw-light-blue;
+        padding: 0.3em 0.8em;
+        border-radius: 3px;
+        text-decoration: none;
+  
+        &:hover {
+          background-color: $gw-buff;
+          color: #444;
+        }
+      }
+    }
+  }
+
+  .logo img {
+    width: 8rem;
   }
 }
 

@@ -4,23 +4,20 @@
             <div class="row align-items-center">
 	      <div class="navbar-text text-left">
 		<div class="col-5">
-  		  <div>
-                    <p><%= t('hyrax.footer.service_html') %></p>
-                  </div>
-		  <div>
-                    <p><%= t('hyrax.product_name') %> v<%= t('hyrax.local_product_version') %>, built on <a href="https://hyrax.samvera.org/" class="navbar-link" target="_blank">Hyrax</a> v<%= Hyrax::VERSION %></p>
-		  </div>
-		  <div class="login-link">
+		<div class="logo">
+			<%= image_tag 'footer_logo.png' %>
+		</div>
+		</div>
+              </div>
+              <div id="footer-links" class="col-4">
+                <div class="row-one">
+				<div class="login-link">
 		    <% if !user_signed_in? %>
                       <p id="login-link"><%= link_to main_app.new_user_session_path do %>
                       <span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> <%= t("hyrax.toolbar.profile.login") %>
 	              <% end %>
                     <% end %></p>
 		  </div>
-		</div>
-              </div>
-              <div id="footer-links" class="col-4">
-                <div class="row-one">
 <ul>
 			<li>
 			 <a href="https://www.campusadvisories.gwu.edu/?utm_medium=link&amp;utm_campaign=editorial-footer&amp;utm_source=campus-advisories" target="_blank" aria-label="View the latest Campus Advisories, opens in new window">Campus Advisories</a>
@@ -56,6 +53,10 @@
 <li>GW is committed to digital accessibility. If you experience a barrier that affects your ability to access content on this page, let us know via the
 			  <a href="https://accessibility.gwu.edu/accessibility-feedback-form/?utm_medium=link&amp;utm_campaign=editorial-footer&amp;utm_source=accessibility-feedback" target="_blank" aria-label="Accessibility Feedback Form, opens in new window">Accessibility Feedback Form</a>.
 			</li>
+						<li>
+		  <div>
+                    <p><%= t('hyrax.product_name') %> v<%= t('hyrax.local_product_version') %>, built on <a href="https://hyrax.samvera.org/" class="navbar-link" target="_blank">Hyrax</a> v<%= Hyrax::VERSION %></p>
+		  </div></li></ul>
                 </div>
               </div>
             </div>
