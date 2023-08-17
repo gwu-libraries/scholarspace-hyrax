@@ -46,13 +46,21 @@ zh:
           subject_tesim: 学科
           title_tesim: 标题
   hyrax:
+    search:
+      button:
+        html: <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    controls:
+      terms: 作者信息
+    pages:
+      tabs: 
+        terms_page: 作者信息
     account_name: 我的机构帐户标识符
     directory:
       suffix: "@example.org"
     footer:
       copyright_html: "<strong>版权所有 &copy; 2017 Samvera</strong> 根据Apache许可证2.0版许可"
-      service_html: 的服务<a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera</a>.
-    institution_name: 机构
-    institution_name_full: 机构名称
-    product_name: 蹄兔
-    product_twitter_handle: "@SamveraRepo"
+      service_html: 的服务<a href="https://lai.gwu.edu/" class="navbar-link" target="_blank">GW Libraries and Academic Innovation</a>
+    institution_name:       "The George Washington University"
+    institution_name_full:  "George Washington University"
+    product_name:           "ScholarSpace"
+    product_twitter_handle: ""

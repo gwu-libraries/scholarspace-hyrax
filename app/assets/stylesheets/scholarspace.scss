@@ -19,6 +19,7 @@ $font-family-sans-serif: "Gibson VF", $font-family-sans-serif-fallback;
 $gw-dark-blue: #033c5a;
 $gw-light-blue: #28659A;
 $gw-buff: #aa9868;
+$gw-hover-buff: #d9d0bb;
 $mobile-breakpoint: 786px;
 
 // General
@@ -142,7 +143,7 @@ header .container-fluid {
     display: flex;
     flex-direction: column;
     margin-left: 1.5rem;
-    max-width: 21rem;
+    max-width: 25rem;
 
     .institution_name {
       color: $gw-dark-blue;
@@ -151,7 +152,12 @@ header .container-fluid {
     }
 
     .subtitle-wrap a {
+      color: $gw-light-blue;
       text-decoration: underline;
+
+      &:hover, &:focus {
+        color: #a75523;
+      }
     }
   }
 }
@@ -206,7 +212,7 @@ header .container-fluid {
       justify-content: flex-end;
       align-items: center;
       flex-direction: column;
-      background-color: transparent;
+      background-color: $gw-hover-buff;
       margin-right: 0;
       margin-left: 0;
       width: 100%;
@@ -220,6 +226,7 @@ header .container-fluid {
       }
   
       @media (min-width: $mobile-breakpoint) {
+        background-color: transparent;
         flex-direction: row;
   
         .navigation-wrap {
@@ -246,7 +253,11 @@ header .container-fluid {
   }
 
   .searchbar-right {
-    width: 60%;
+    width: 90%;
+
+    @media (min-width: $mobile-breakpoint) {
+      width: 60%;
+    }
 
     input, .dropdown-toggle {
       border: none;

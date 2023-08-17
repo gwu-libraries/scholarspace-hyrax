@@ -4,7 +4,7 @@
     <div class="navigation-wrap">
         <ul class="nav navbar-nav col-sm-5">
           <li <%= 'class=active' if current_page?(hyrax.contact_path) %>>
-            <%= link_to t(:'hyrax.controls.information for authors'), hyrax.terms_path, aria: current_page?(hyrax.terms_path) ? {current: 'page'} : nil %></li>
+            <%= link_to t(:'hyrax.controls.terms'), hyrax.terms_path, aria: current_page?(hyrax.terms_path) ? {current: 'page'} : nil %></li>
           <li <%= 'class=active' if current_page?(hyrax.about_path) %>>
             <%= link_to t(:'hyrax.controls.about'), hyrax.about_path, aria: current_page?(hyrax.about_path) ? {current: 'page'} : nil %></li>
           <li <%= 'class=active' if current_page?(hyrax.help_path) %>>
