@@ -19,6 +19,7 @@ $font-family-sans-serif: "Gibson VF", $font-family-sans-serif-fallback;
 $gw-dark-blue: #033c5a;
 $gw-light-blue: #28659A;
 $gw-buff: #aa9868;
+$mobile-breakpoint: 786px;
 
 // General
 html {
@@ -104,7 +105,11 @@ form label {
 }
 
 #content-wrapper {
-  padding-bottom: 10.5rem;
+  padding-bottom: 18.1rem;
+
+  @media (min-width: $mobile-breakpoint) {
+    padding-bottom: 10.5rem;
+  }
 }
 
 // navbar and header styles
@@ -161,7 +166,7 @@ header .container-fluid {
   margin-bottom: none;
 
   .navbar {
-    background-color: $gw-dark-blue;
+    background-color: transparent;
     color: #fff;
 
     .active a {
@@ -181,6 +186,10 @@ header .container-fluid {
         text-transform: none;
       }
     }
+
+    @media (min-width: $mobile-breakpoint) {
+      background-color: $gw-dark-blue;
+    }
   }
 }
 
@@ -188,14 +197,37 @@ header .container-fluid {
   background-color: $gw-dark-blue;
   border-color: unset;
 
-  .row {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
+  .container-fluid {
+    padding-right: 0;
+    padding-left: 0;
 
-    .navigation-wrap {
+    .row {
       display: flex;
-      flex-direction: row;
+      justify-content: flex-end;
+      align-items: center;
+      flex-direction: column;
+      background-color: transparent;
+      margin-right: 0;
+      margin-left: 0;
+      width: 100%;
+  
+      .navigation-wrap {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        background-color: $gw-light-blue;
+      }
+  
+      @media (min-width: $mobile-breakpoint) {
+        flex-direction: row;
+  
+        .navigation-wrap {
+          justify-content: end;
+          width: 100%;
+          background-color: transparent;
+        }
+      }
     }
   }
 
@@ -214,7 +246,7 @@ header .container-fluid {
   }
 
   .searchbar-right {
-    width: 25rem;
+    width: 60%;
 
     input, .dropdown-toggle {
       border: none;
@@ -276,7 +308,7 @@ header .container-fluid {
 footer, .footer {
   position: absolute;
   bottom: 0;
-  height: 9.5rem;
+  height: 17.1rem;
   width: 100%;
 
   .footer-lower {
@@ -285,7 +317,7 @@ footer, .footer {
     align-items: center;
 
     .login-link {
-      text-align: end;
+      text-align: center;
 
       a {
         color: #fff;
@@ -300,10 +332,84 @@ footer, .footer {
         }
       }
     }
+
+    .footer-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+
+      #footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .navbar-text {
+          margin-top: 10px;
+          margin-bottom: 10px;
+        }
+
+        div {
+          ul {
+            padding: 0;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-top: 0;
+          }
+
+          &:last-of-type ul {
+            flex-direction: column;
+            align-items: center;
+
+            li {
+              margin-top: 0;
+              text-align: center;
+              max-width: 40em;
+            }
+          }
+        }
+      }
   }
 
   .logo img {
     width: 8rem;
+  }
+  }
+
+  @media (min-width: $mobile-breakpoint) {
+    height: 9.5rem;
+
+    .footer-lower {
+
+      .login-link {
+        text-align: end;
+      }
+
+    .footer-wrapper {
+      flex-direction: row;
+
+      #footer-links {
+        align-items: end;
+
+        div {
+          ul {
+            margin: 0;
+            margin-top: 0.175em;
+            flex-direction: row;
+          }
+
+          &:last-of-type ul {
+            align-items: end;
+
+            li {
+              text-align: end;
+            }
+          }
+        }
+      }
+    }
+  }
   }
 }
 
