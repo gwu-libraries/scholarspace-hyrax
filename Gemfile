@@ -83,12 +83,6 @@ gem 'invisible_captcha'
 
 gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
-# gem 'dry-monads', '< 1.5.0'
-
-# gem 'psych', '< 4.0.0'
-
-# gem 'tinymce-rails', '~> 5.10'
-
 group :development, :test do
   gem 'pry'
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
