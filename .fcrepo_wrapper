@@ -2,4 +2,3 @@
 port: 8984
 enable_jms: false
 fcrepo_home_dir: tmp/fcrepo4-development-data
-persist: false
