@@ -1,39 +1,15 @@
-# frozen_string_literal: true
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
-#
-# To use this file, run the following command in the .internal_test_app:
-#   rails generate hyrax:sample_data
-#
-# To re-use this file, you will likely want to clean out the test app content
-#   rails console
-#     require 'active_fedora/cleaner'
-#     ActiveFedora::Cleaner.clean!
-#     exit
-#   rake db:drop db:create db:migrate
-#   rake db:seed
+def create_admin_role
+  @admin_role = Role.find_or_create_by(name: 'admin')
+end
 
-require 'active_fedora/cleaner'
-ActiveFedora::Cleaner.clean!
+def create_default_admin_user
+  @admin_user = User.create!(email: ENV['DEV_ADMIN_USER_EMAIL'], password: ENV['DEV_ADMIN_USER_PASSWORD'])
+  admin_role = Role.find_or_create_by(name: 'admin')
+  admin_role.users << @admin_user
+end
 
-Hyrax::Engine.load_seed
-
-# ---------------------------------
-# methods to create various objects
-# ---------------------------------
-def create_user(email, pw)
-  # user = User.find_or_create_by(email: email) do |user|
-  user = User.find_or_create_by(Hydra.config.user_key_field => email) do |u|
-    u.email = email
-    u.password = pw
-    u.password_confirmation = pw
-  end
-  user
+def create_default_admin_set
+  @default_admin_set = Hyrax::AdminSetCreateService.find_or_create_default_admin_set
 end
 
 def create_collection_type(machine_id, options)
@@ -49,14 +25,25 @@ def create_collection_type(machine_id, options)
   Hyrax::CollectionTypes::CreateService.create_collection_type(machine_id: machine_id, title: options[:title], options: final_options)
 end
 
+def create_admin_set_collection_type
+  admin_set_collection_type = Hyrax::CollectionType.find_or_create_admin_set_type
+end
+
+def create_user_collection_type
+  user_collection_type = Hyrax::CollectionType.find_or_create_default_collection_type
+end
+
 def create_public_collection(user, type_gid, id, options)
   options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
   create_collection(user, type_gid, id, options)
 end
 
-def create_private_collection(user, type_gid, id, options)
-  options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
-  create_collection(user, type_gid, id, options)
+def create_etds_admin_set
+  etds_admin_set = Hyrax::AdministrativeSet.new(title: ['ETDs'])
+  etds_admin_set = Hyrax.persister.save(resource: etds_admin_set)
+  creating_user = User.where(email: ENV['DEV_ADMIN_USER_EMAIL']).first
+  Hyrax::AdminSetCreateService.call!(admin_set: etds_admin_set, creating_user: creating_user)
+  etds_admin_set
 end
 
 def create_collection(user, type_gid, id, options)
@@ -72,22 +59,8 @@ def create_collection(user, type_gid, id, options)
   col
 end
 
-def create_public_work(user, id, options)
-  options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
-  create_work(user, id, options)
-end
 
-def create_authenticated_work(user, id, options)
-  options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
-  create_work(user, id, options)
-end
-
-def create_private_work(user, id, options)
-  options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
-  create_work(user, id, options)
-end
-
-def create_work(user, id, options)
+def create_etd(user, id, options)
   work = GwEtd.where(id: id)
   return work.first if work.present?
   actor = Hyrax::CurationConcern.actor
@@ -98,204 +71,127 @@ def create_work(user, id, options)
   work
 end
 
-def collection_attributes_for(collection_ids)
-  attrs = {}
-  0.upto(collection_ids.size) { |i| attrs[i.to_s] = { 'id' => collection_ids[i] } }
-  attrs
+def create_public_etd(user, id, options)
+  options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC
+  create_etd(user, id, options)
 end
 
-puts "---------------------------------"
-puts " Create seeded objects for QA"
-puts "---------------------------------"
-puts 'Create users for QA'
-create_user('mgr1@example.com', 'pppppp') # 6*p
-create_user('mgr2@example.com', 'pppppp')
-create_user('dep1@example.com', 'pppppp')
-create_user('dep2@example.com', 'pppppp')
-create_user('vw1@example.com', 'pppppp')
-create_user('vw2@example.com', 'pppppp')
-genuser = create_user('general_user@example.com', 'pppppp')
-
-puts 'Create collection types for QA'
-_discoverable_gid = create_collection_type('discoverable_collection_type', title: 'Discoverable', description: 'Sample collection type allowing collections to be discovered.', discoverable: true)
-                    .to_global_id
-_sharable_gid = create_collection_type('sharable_collection_type', title: 'Sharable', description: 'Sample collection type allowing collections to be shared.', sharable: true).to_global_id
-options = { title: 'Multi-membership', description: 'Sample collection type allowing works to belong to multiple collections.', allow_multiple_membership: true }
-_multi_membership_gid = create_collection_type('multi_membership_collection_type', options)
-_nestable_1_gid = create_collection_type('nestable_1_collection_type', title: 'Nestable 1', description: 'A sample collection type allowing nesting.', nestable: true).to_global_id
-_nestable_2_gid = create_collection_type('nestable_2_collection_type', title: 'Nestable 2', description: 'Another sample collection type allowing nesting.', nestable: true).to_global_id
-_empty_gid = create_collection_type('empty_collection_type', title: 'Test Empty Collection Type', description: 'A collection type with 0 collections of this type').to_global_id
-inuse_gid = create_collection_type('inuse_collection_type', title: 'Test In-Use Collection Type', description: 'A collection type with at least one collection of this type').to_global_id
-
-puts 'Create collections for QA'
-inuse_col = create_public_collection(genuser, inuse_gid, 'inuse_col1', title: ['Public Collection of type In-Use'], description: ['Public collection of the type Test In-Use Collection Type.'])
-
-puts 'create works for QA'
-3.times do |i|
-  create_public_work(genuser, "qa_pu_gw_#{i}",
-                     title: ["QA Public #{i}"],
-                     description: ["Public work #{i} for QA testing"],
-                     creator: ['Joan Smith'], keyword: ['test'], rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
-end
-2.times do |i|
-  create_authenticated_work(genuser, "qa_auth_gw_#{i}",
-                            title: ["QA Authenticated #{i}"],
-                            description: ["Authenticated work #{i} for QA testing"],
-                            creator: ['John Smith'], keyword: ['test'], rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
-end
-1.times do |i|
-  create_private_work(genuser, "qa_priv_gw_#{i}",
-                      title: ["QA Private #{i}"],
-                      description: ["Proviate work #{i} for QA testing"],
-                      creator: ['Jean Smith'], keyword: ['test'], rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
+def create_private_etd(user, id, options)
+  options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE
+  create_etd(user, id, options)
 end
 
-puts "-------------------------------------------------------------"
-puts " Create seeded objects for collection nesting ad hoc testing"
-puts "-------------------------------------------------------------"
-puts 'Create users for collection nesting ad hoc testing'
-user = create_user('foo@example.com', 'foobarbaz')
-
-puts 'Create collection types for collection nesting ad hoc testing'
-options = { title: 'Nestable Collection', description: 'Sample collection type that allows nesting of collections.',
-            nestable: true, discoverable: true, sharable: true, allow_multiple_membership: true }
-nestable_gid = create_collection_type('nestable_collection', options).to_global_id
-
-options = { title: 'Non-Nestable Collection', description: 'Sample collection type that DOES NOT allow nesting of collections.',
-            nestable: false, discoverable: true, sharable: true, allow_multiple_membership: true }
-_nonnestable_gid = create_collection_type('nonnestable_collection', options).to_global_id
-
-puts 'Create collections for collection nesting ad hoc testing'
-pnc = create_public_collection(user, nestable_gid, 'public_nestable', title: ['Public Nestable Collection'], description: ['Public nestable collection for use in ad hoc tests.'])
-pc = create_public_collection(user, nestable_gid, 'parent_nested', title: ['A Parent Collection'], description: ['Public collection that will be a parent of another collection.'])
-cc = create_public_collection(user, nestable_gid, 'child_nested', title: ['A Child Collection'], description: ['Public collection that will be a child of another collection.'])
-Hyrax::Collections::NestedCollectionPersistenceService.persist_nested_collection_for(parent: pc, child: cc)
-
-puts 'Create collection with many child collections and works'
-mpc = create_public_collection(
-  user,
-  nestable_gid,
-  'parent_nested_many',
-  title: ['A Parent Collection with many Child Collections'],
-  description: ['Public collection that will be a parent of many collections.']
-)
-21.times do |i|
-  mcc = create_public_collection(user, nestable_gid, "child_nested_#{i}", title: ["Child Collection #{i}"], description: ['Public collection that will be a child of another collection.'])
-  Hyrax::Collections::NestedCollectionPersistenceService.persist_nested_collection_for(parent: mpc, child: mcc)
-  create_public_work(user, "pub_mgw_#{i}",
-                     title: ["Public #{i}"],
-                     description: ["Public work #{i} being added to the Public Nested Collection"],
-                     creator: ['Joan Smith'], keyword: ['test'], rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
-                     member_of_collections_attributes: collection_attributes_for([mpc.id]))
+def create_authenticated_etd(user, id, options)
+  options[:visibility] = Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED
+  create_etd(user, id, options)
 end
 
-puts 'Create collections with many parent collections'
-# Pool of collections that will be used as parents of the collections
-parent_pool = Array.new(12) do |i|
-  create_public_collection(user,
-                           nestable_gid,
-                           "col_shared_parents_#{i}",
-                           title: ["Shared Parent collection #{i}"],
-                           description: ['Collection that shares children with multiple parents.'])
-end
-# 2 parent collection
-col_two_parents = create_public_collection(user, nestable_gid, "col_two_parents", title: ["Collection - 2 parents"], description: ['Collection that has two parents.'])
-2.times { |i| Hyrax::Collections::NestedCollectionPersistenceService.persist_nested_collection_for(parent: parent_pool[i], child: col_two_parents) }
-# 6 parent collection
-col_six_parents = create_public_collection(user, nestable_gid, "col_six_parents", title: ["Collection - 6 parents"], description: ['Collection that has six parents.'])
-6.times { |i| Hyrax::Collections::NestedCollectionPersistenceService.persist_nested_collection_for(parent: parent_pool[i], child: col_six_parents) }
-# 12 parent collection
-col_twelve_parents = create_public_collection(user, nestable_gid, "col_twelve_parents", title: ["Collection - 12 parents"], description: ['Collection that has twelve parents.'])
-12.times { |i| Hyrax::Collections::NestedCollectionPersistenceService.persist_nested_collection_for(parent: parent_pool[i], child: col_twelve_parents) }
+# --------------
 
-puts 'Create works for collection nesting ad hoc testing'
-3.times do |i|
-  create_public_work(user, "pub_gw_#{i}",
-                     title: ["Public #{i}"],
-                     description: ["Public work #{i} being added to the Public Nested Collection"],
-                     creator: ['Joan Smith'], keyword: ['test'], rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
-                     member_of_collections_attributes: collection_attributes_for([pnc.id]))
-end
-2.times do |i|
-  create_authenticated_work(user, "auth_gw_#{i}",
-                            title: ["Authenticated #{i}"],
-                            description: ["Authenticated work #{i} being added to the Parent Collection"],
-                            creator: ['John Smith'], keyword: ['test'], rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
-                            member_of_collections_attributes: collection_attributes_for([pc.id]))
-end
-1.times do |i|
-  create_private_work(user, "priv_gw_#{i}",
-                      title: ["Private #{i}"],
-                      description: ["Proviate work #{i} being added to the Child Collection"],
-                      creator: ['Jean Smith'], keyword: ['test'], rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
-                      member_of_collections_attributes: collection_attributes_for([cc.id]))
-end
+require 'active_fedora/cleaner'
+ActiveFedora::Cleaner.clean!
 
-puts "-----------------------------------------------------"
-puts " Create seeded objects for embargo ad hoc testing"
-puts "-----------------------------------------------------"
-# TODO: update to use create_work method which uses actor stack to create works
+# -- Creating admin role and user
+create_admin_role
+create_default_admin_user
 
-puts 'Create Active, Private Embargo works'
-3.times do |i|
-  GwEtd.create(title: ["Active Private #{i}"]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_embargo(Date.tomorrow.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-  end
-end
+# -- Creating default admin sets, admin set collection type, and user collection type --
+create_default_admin_set
+create_admin_set_collection_type
+create_user_collection_type
 
-puts 'Create Active, Authenticated Embargo works'
-2.times do |i|
-  GwEtd.create(title: ["Active Authenticated #{i}"]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_embargo(Date.tomorrow.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-  end
+# -- Creating the ETDs admin set
+@etds_admin_set = create_etds_admin_set
+
+# @discoverable_gid = create_collection_type('discoverable_collection_type', title: 'Discoverable', description: 'Sample collection type allowing collections to be discovered.', discoverable: true)
+                    # .to_global_id
+
+# @collection = create_public_collection(@admin_user, @discoverable_gid, 'col1', title: ['A Discoverable Collection'], description: ['Wow it is a discoverable collection.'])
+
+
+# -- creating public ETDs from files in spec/fixtures/public_etds --
+# -- these should be visible on main page and search without logging in --
+
+public_uploads = []
+public_etds = []
+
+Dir[File.join(Rails.root, 'spec', 'fixtures', 'public_etds', '*')].each_with_index do |file_path, index|
+  file = File.open(file_path)
+  title = file_path.split('/').last.split('.').first.titleize
+  file_type = file_path.split('/').last.split('.').last.upcase
+
+  public_uploads << Hyrax::UploadedFile.create(user: @admin_user,
+                                                file: file)
+
+  public_etds << create_public_etd(@admin_user,
+                                  "public_etd_#{index}",
+                                  title: [title],
+                                  description: ["This is a test public ETD"],
+                                  creator: ["William Shakespeare"],
+                                  keyword: ["Test", "Public", "#{file_type}"],
+                                  rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                  publisher: ["A Fake Publisher Inc"],
+                                  language: ["English"],
+                                  contributor: ["Batman"],
+                                  gw_affiliation: [""],
+                                  advisor: ["Batman"],
+                                  resource_type: ["Article"])
+
+  AttachFilesToWorkJob.perform_now(public_etds[index], [public_uploads[index]])
 end
 
-puts 'Create Expired, Authenticated Embargo works'
-1.times do |i|
-  GwEtd.create(title: ["Expired Authenticated #{i}"], read_groups: [Hyrax.config.registered_user_group_name]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_embargo(Date.yesterday.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED)
-  end
+# -- creating private ETDs from files in spec/fixtures/private_etds --
+# -- these should be visible only if you are logged in as the default admin user --
+
+private_uploads = []
+private_etds = []
+
+Dir[File.join(Rails.root, 'spec', 'fixtures', 'private_etds', '*')].each_with_index do |file_path, index|
+  file = File.open(file_path)
+  title = file_path.split('/').last.split('.').first.titleize
+  file_type = file_path.split('/').last.split('.').last.upcase
+
+  private_uploads << Hyrax::UploadedFile.create(user: @admin_user,
+                                                file: file)
+
+  private_etds << create_private_etd(@admin_user,
+                                      "private_etd_#{index}",
+                                      title: [title],
+                                      description: ["This is a test private ETD"],
+                                      creator: ["William Shakespeare"],
+                                      keyword: ["Test", "Private", "#{file_type}"],
+                                      rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
+
+  AttachFilesToWorkJob.perform_now(private_etds[index], [private_uploads[index]])
 end
 
-puts 'Create Expired, Public Embargo works'
-3.times do |i|
-  GwEtd.create(title: ["Expired Public #{i}"], read_groups: [Hyrax.config.public_user_group_name]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_embargo(Date.yesterday.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC)
-  end
+# -- creating authenticated ETDs from files in spec/fixtures/authenticated_etds --
+# -- these should be visible only if you are logged in as a GW user --
+
+authenticated_uploads = []
+authenticated_etds = []
+
+Dir[File.join(Rails.root, 'spec', 'fixtures', 'authenticated_etds', '*')].each_with_index do |file_path, index|
+  file = File.open(file_path)
+  title = file_path.split('/').last.split('.').first.titleize
+  file_type = file_path.split('/').last.split('.').last.upcase
+
+  authenticated_uploads << Hyrax::UploadedFile.create(user: @admin_user,
+                                                      file: file)
+
+  authenticated_etds << create_authenticated_etd(@admin_user,
+                                                "authenticated_etd_#{index}",
+                                                title: [title],
+                                                description: ["This is a test authenticated GW user ETD"],
+                                                creator: ["John Milton"],
+                                                keyword: ["Test", "Authenticated", "#{file_type}"],
+                                                rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
+
+  AttachFilesToWorkJob.perform_now(authenticated_etds[index], [authenticated_uploads[index]])
 end
 
-puts 'Create Active, Public Lease works'
-3.times do |i|
-  GwEtd.create(title: ["Active Public #{i}"], read_groups: [Hyrax.config.public_user_group_name]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_lease(Date.tomorrow.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE)
-  end
-end
-
-puts 'Create Active, Authenticated Lease works'
-2.times do |i|
-  GwEtd.create(title: ["Active Authenticated #{i}"], read_groups: [Hyrax.config.registered_user_group_name]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_lease(Date.tomorrow.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE)
-  end
-end
-
-puts 'Create Expired, Authenticated Lease works'
-1.times do |i|
-  GwEtd.create(title: ["Expired Authenticated #{i}"], read_groups: [Hyrax.config.registered_user_group_name]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_lease(Date.yesterday.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED)
-  end
-end
-
-puts 'Create Expired, Private Lease works'
-3.times do |i|
-  GwEtd.create(title: ["Expired Public #{i}"]) do |work|
-    work.apply_depositor_metadata(user)
-    work.apply_lease(Date.yesterday.to_s, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED, Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PRIVATE)
-  end
-end
+#TO-DO
+# create a content-admin user
+# have the content-admin user create a user collection, add works to that collection
+# figure out how to set the works to go in the etds admin set, rather than the default admin set
+# set featured_researcher, marketing_text, and announcement_text
