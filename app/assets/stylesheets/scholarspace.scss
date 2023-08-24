@@ -114,11 +114,19 @@ form label {
 }
 
 // navbar and header styles
-header .container-fluid {
-  height: 7.8em;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+header {
+  display: none;
+
+  @media (min-width: $mobile-breakpoint) {
+    display: block;
+  }
+
+  .container-fluid {
+    height: 7.8em;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
 }
 
 .navbar {
@@ -220,9 +228,31 @@ header .container-fluid {
       .navigation-wrap {
         width: 100%;
         display: flex;
-        justify-content: center;
-        flex-direction: row;
+        flex-direction: column;
+        align-items: end;
         background-color: $gw-light-blue;
+
+        .navbar-toggle {
+          border: none;
+          width: fit-content;
+
+          &:hover, &:focus {
+            background-color: transparent;
+          }
+
+          .icon-bar {
+            background-color: #fff;
+          }
+        }
+
+        #top-navbar-collapse {
+          width: inherit;
+          background-color: $gw-dark-blue;
+        }
+
+        @media (min-width: $mobile-breakpoint) {
+          justify-content: center;
+        }
       }
   
       @media (min-width: $mobile-breakpoint) {
@@ -230,6 +260,7 @@ header .container-fluid {
         flex-direction: row;
   
         .navigation-wrap {
+          flex-direction: row;
           justify-content: end;
           width: 100%;
           background-color: transparent;
@@ -425,8 +456,33 @@ footer, .footer {
 }
 
 // Homepage styles
-.home-content .nav {
-  margin-bottom: 0;
+.home-content {
+  display: flex;
+  flex-direction: column;
+
+  div.col-sm-6 {
+    width: 100%;
+
+    &:last-child {
+      order: -1;
+      margin-bottom: 1em;
+    }
+  }
+
+  .nav {
+    margin-bottom: 0;
+  }
+
+  @media (min-width: $mobile-breakpoint) {
+    flex-direction: row;
+
+    div.col-sm-6 {
+      &:last-child {
+        order: 1;
+        margin-bottom: 0;
+      }
+    }
+  }
 }
 
 .tabs-container {
@@ -455,6 +511,7 @@ footer, .footer {
     border-top-right-radius: 5px;
     border-bottom-left-radius: 5px;
     border-bottom-right-radius: 5px;
+    margin-bottom: 0 !important;
 
     #featured_container, #recently_uploaded {
       background-color: #fff;
