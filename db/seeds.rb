@@ -113,15 +113,79 @@ create_user_collection_type
 # -- Creating the ETDs admin set
 @etds_admin_set = create_etds_admin_set
 
-# @discoverable_gid = create_collection_type('discoverable_collection_type', title: 'Discoverable', description: 'Sample collection type allowing collections to be discovered.', discoverable: true)
-                    # .to_global_id
 
-# @collection = create_public_collection(@admin_user, @discoverable_gid, 'col1', title: ['A Discoverable Collection'], description: ['Wow it is a discoverable collection.'])
-
-# Here - have a content-admin create a collection
-
+# -- Creating a content-admin role and user
 create_content_admin_role
 create_content_admin_user
+
+# -- Creating a "journal" collection type --
+@journal_gid = create_collection_type('journal', 
+  title: 'Journal', 
+  description: 'This is a sample collection that can be found.', 
+  discoverable: true).to_global_id
+
+# -- Creating a journal collection (GW Undergraduate Review) --
+@journal_collection = create_public_collection(@content_admin_user,
+                                              @journal_gid, 
+                                              'gwur', 
+                                              title: ['GW Undergraduate Review'], 
+                                              description: ['Wow it is a discoverable journal.'])
+
+
+banner_file = File.open('spec/fixtures/branding/gwur/banner/banner_2_gwur.png')
+logo_file = File.open('spec/fixtures/branding/gwur/logo/gwur_logo.png')
+
+branding_uploads = [banner_file, logo_file].map {|file| Hyrax::UploadedFile.create(user: @content_admin, file: file)}
+
+banner_uploaded = Hyrax::UploadedFile.first
+banner_info = CollectionBrandingInfo.new(
+  collection_id: @journal_collection.id,
+  filename: "GWUR_banner.png",
+  role: "banner",
+).save banner_uploaded.file_url
+
+logo_uploaded = Hyrax::UploadedFile.last
+logo_info = CollectionBrandingInfo.new(
+  collection_id: @journal_collection.id,
+  filename: "GWUR_logo.png",
+  role: "logo",
+).save logo_uploaded.file_url
+
+# -- Creating ETDs as @content-user, attaching files from /spec/fixtures/journal_collection, and adding
+# -- the newly created ETDs to the "GW Undergraduate Review" collection
+
+journal_uploads = []
+journal_etds = []
+
+Dir[File.join(Rails.root, 'spec', 'fixtures', 'journal_collection', '*')].each_with_index do |file_path, index|
+  file = File.open(file_path)
+  title = file_path.split('/').last.split('.').first.titleize
+  file_type = file_path.split('/').last.split('.').last.upcase
+
+  journal_uploads << Hyrax::UploadedFile.create(user: @content_admin,
+                                                file: file)
+
+  journal_etds << create_public_etd(@content_admin_user,
+                                    "journal_etd_#{index}",
+                                    title: [title],
+                                    description: ["This is a test public ETD"],
+                                    creator: ["William Shakespeare"],
+                                    keyword: ["Test", "Public", "#{file_type}"],
+                                    rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                    publisher: ["A Fake Publisher Inc"],
+                                    language: ["English"],
+                                    contributor: ["Batman"],
+                                    gw_affiliation: ["Student Organization"],
+                                    advisor: ["Batman"],
+                                    resource_type: ["Article"])
+
+  AttachFilesToWorkJob.perform_now(journal_etds[index], [journal_uploads[index]])
+end
+
+journal_etds.each do |j_etd|
+  j_etd.member_of_collections << @journal_collection
+  j_etd.save
+end
 
 # -- creating public ETDs from files in spec/fixtures/public_etds --
 # -- these should be visible on main page and search without logging in --
@@ -205,7 +269,8 @@ Dir[File.join(Rails.root, 'spec', 'fixtures', 'authenticated_etds', '*')].each_w
 end
 
 #TO-DO
-# create a content-admin user
 # have the content-admin user create a user collection, add works to that collection
 # figure out how to set the works to go in the etds admin set, rather than the default admin set
 # set featured_researcher, marketing_text, and announcement_text
+# figure out setting the color scheme in seed
+# figure out setting featured researcher
