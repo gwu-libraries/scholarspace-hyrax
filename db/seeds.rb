@@ -86,6 +86,16 @@ def create_authenticated_etd(user, id, options)
   create_etd(user, id, options)
 end
 
+def create_content_admin_role
+  @content_admin_role = Role.find_or_create_by(name: 'content-admin')
+end
+
+def create_content_admin_user
+  @content_admin_user = User.create!(email: "content-admin@example.com", password: "password")
+  content_admin_role = Role.find_or_create_by(name: "content-admin")
+  content_admin_role.users << @content_admin_user
+end
+
 # --------------
 
 require 'active_fedora/cleaner'
@@ -108,6 +118,10 @@ create_user_collection_type
 
 # @collection = create_public_collection(@admin_user, @discoverable_gid, 'col1', title: ['A Discoverable Collection'], description: ['Wow it is a discoverable collection.'])
 
+# Here - have a content-admin create a collection
+
+create_content_admin_role
+create_content_admin_user
 
 # -- creating public ETDs from files in spec/fixtures/public_etds --
 # -- these should be visible on main page and search without logging in --
