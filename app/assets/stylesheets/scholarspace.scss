@@ -65,6 +65,48 @@ h1 {
   line-height: 1.125em;
 }
 
+h2 {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-bottom: 0.1em;
+  color: $gw-dark-blue;
+  font-size: 1.9em;
+  font-weight: inherit;
+  line-height: 1.2em;
+}
+
+.gw-btn {
+  height: 120%;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.25rem;
+  border-color: $gw-light-blue;
+  background-color: $gw-light-blue;
+  color: #fff;
+  font-size: 1em;
+  line-height: 1.5;
+  text-decoration: none;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  text-align: center;
+
+  &:focus {
+    color: #fff;
+    background-color: #005984;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(3, 60, 90, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.65;
+  }
+
+  &:hover {
+    text-decoration: none;
+    color: #212529;
+    border-color: $gw-hover-buff;
+    background-color: $gw-hover-buff;
+  }
+}
+
 form label {
   font-weight: 400;
 }
@@ -247,7 +289,13 @@ header {
 
         #top-navbar-collapse {
           width: inherit;
+          padding-left: 0;
           background-color: $gw-dark-blue;
+          border: none;
+
+          ul {
+            margin-left: 0;
+          }
         }
 
         @media (min-width: $mobile-breakpoint) {
@@ -269,12 +317,24 @@ header {
     }
   }
 
-  .navbar-nav li {
-    background-color: transparent;
-
-    a {
+  .navbar-nav {
+    .open > a:hover, .open > a:focus {
       color: #fff;
-      text-transform: none;
+      background-color: $gw-light-blue;
+    }
+
+    li {
+      background-color: transparent;
+
+      a {
+        color: #fff;
+        text-transform: none;
+
+        &:hover, &:focus {
+          color: #fff;
+          background-color: $gw-light-blue;
+        }
+      }
     }
   }
 
@@ -336,9 +396,14 @@ header {
   .dropdown a, .notify-number {
     color: #444;
 
-    &:hover {
+    &:hover, &:focus {
+      background-color: transparent;
       color: #444;
     }
+  }
+
+  .fa-user {
+    padding-left: 1em;
   }
 
   .dropdown-menu li a, .dropdown-menu li a:hover {
@@ -414,9 +479,9 @@ footer, .footer {
       }
   }
 
-  .logo img {
-    width: 8rem;
-  }
+    .logo img {
+      width: 8rem;
+    }
   }
 
   @media (min-width: $mobile-breakpoint) {
@@ -491,17 +556,28 @@ footer, .footer {
   padding: 0.5em;
 
   li a {
+    background-color: transparent;
+    color: $gw-light-blue;
+    text-decoration: underline;
+
+    &:hover {
+      color: #a75523;
+    }
+  }
+
+  #homeTabs li a {
     color: #fff;
     background-color: $gw-light-blue;
+    text-decoration: none;
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
 
-    &:hover {
+    &:hover, &:focus {
       background-color: $gw-light-blue;
     }
   }
 
-  li.active a {
+  #homeTabs li.active a {
     color: #444;
     background-color: #fff;
   }
@@ -515,9 +591,44 @@ footer, .footer {
 
     #featured_container, #recently_uploaded {
       background-color: #fff;
-      padding: 1em;
+      padding: 0;
+
+      h3 {
+        margin-bottom: 0;
+      }
+
+      p {
+        margin: 0;
+        padding: 0.5em;
+      }
+
+      #recent_docs, #featured_docs {
+        list-style-type: none;
+
+        .recent-item, .featured-item {
+          border-top: none;
+          padding: 1em;
+  
+          .recent-label, .featured-label {
+            font-weight: 400;
+          }
+        }
+
+        li:nth-child(even) {
+          background-color: #eeeeee;
+        }
+      }
+
+      .table {
+        margin-bottom: 0;
+      }
     }
   }
+}
+
+#publication-content h2 {
+  display: flex;
+  align-items: center;
 }
 
 //bootstrap overwrite
