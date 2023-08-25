@@ -1,4 +1,7 @@
-<a id="logo" class="navbar-brand" href="https://library.gwu.edu" data-no-turbolink="true" style="padding: 0px 25px;"><%= image_tag 'gw_iddol_smaller.png' %></a>
-<a id="product_name" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true" style="font-size: 20px;">
-  <span class="institution_name"><%= application_name %></span>
-</a>
+<a id="logo" class="navbar-brand" href="https://library.gwu.edu" data-no-turbolink="true"><%= image_tag 'logo.png' %></a>
+<div class="title-wrap">
+  <a id="product_name" class="navbar-brand" href="<%= hyrax.root_path %>" data-no-turbolink="true">
+    <span class="institution_name"><%= application_name %></span>
+  </a>
+  <div class="subtitle-wrap"><span class="subtitle"><%= t(:'hyrax.footer.service_html') %></span></div>
+</div>

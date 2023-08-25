@@ -1,6 +1,16 @@
 en:
   hyrax:
-    product_name:           "GW ScholarSpace"
+    controls:
+      terms: Information for Authors
+    pages:
+      tabs: 
+        terms_page: Information for Authors
+    homepage:
+      featured_researcher:
+        missing: No publication has been featured.
+        tab_label: Featured Publication
+        title: Featured Publication
+    product_name:           "ScholarSpace"
     local_product_version:  "1.7.0"
     product_twitter_handle: ""
     institution_name:       "The George Washington University"
@@ -14,7 +24,11 @@ en:
     accessibility:
       link_label: 'Report an accessibility issue with this item' 
     search:
+      button:
+        html: <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
       form:
+        q:
+          placeholder: Search ScholarSpace
         option:
           all:
             label_long:     "All of GW ScholarSpace"
@@ -22,6 +36,7 @@ en:
     deposit_agreement:      "GW ScholarSpace Deposit Agreement"
     upload_url: "https://docs.google.com/forms/d/e/1FAIpQLSfasnzb2NjLsw7YRBvEJcw1GCfSsY6DVqvF3sdKlWs2uvEP2w/viewform?usp=sf_link"
     toolbar:
+      language_switch: Language
       profile:
         login:  "Staff login"
     visibility:
