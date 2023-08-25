@@ -132,6 +132,8 @@ create_content_admin_user
                                               description: ['Wow it is a discoverable journal.'])
 
 
+
+# -- Setting the banner and logo of the journal collection
 banner_file = File.open('spec/fixtures/branding/gwur/banner/banner_2_gwur.png')
 logo_file = File.open('spec/fixtures/branding/gwur/logo/gwur_logo.png')
 
@@ -187,6 +189,9 @@ journal_etds.each do |j_etd|
   j_etd.save
 end
 
+# -- taking the last ETD created and featuring it
+@featured_work = FeaturedWork.new(work_id: journal_etds.last.id).save
+
 # -- creating public ETDs from files in spec/fixtures/public_etds --
 # -- these should be visible on main page and search without logging in --
 
@@ -238,7 +243,8 @@ Dir[File.join(Rails.root, 'spec', 'fixtures', 'private_etds', '*')].each_with_in
                                       description: ["This is a test private ETD"],
                                       creator: ["William Shakespeare"],
                                       keyword: ["Test", "Private", "#{file_type}"],
-                                      rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
+                                      rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                      resource_type: ["Article"])
 
   AttachFilesToWorkJob.perform_now(private_etds[index], [private_uploads[index]])
 end
@@ -263,7 +269,8 @@ Dir[File.join(Rails.root, 'spec', 'fixtures', 'authenticated_etds', '*')].each_w
                                                 description: ["This is a test authenticated GW user ETD"],
                                                 creator: ["John Milton"],
                                                 keyword: ["Test", "Authenticated", "#{file_type}"],
-                                                rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
+                                                rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                                resource_type: ["Article"])
 
   AttachFilesToWorkJob.perform_now(authenticated_etds[index], [authenticated_uploads[index]])
 end
