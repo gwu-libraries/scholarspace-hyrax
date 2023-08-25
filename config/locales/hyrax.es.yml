@@ -46,13 +46,21 @@ es:
           subject_tesim: Tema
           title_tesim: Título
   hyrax:
+    search:
+      button:
+        html: <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    controls:
+      terms: Información para Autores
+    pages:
+      tabs: 
+        terms_page: Información para Autores
     account_name: Mi identificador de cuenta institucional
     directory:
       suffix: "@example.org"
     footer:
       copyright_html: "<strong>Copyright &copy; 2017 Samvera</strong> bajo licencia de Apache, Version 2.0"
-      service_html: Un servicio de <a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera/a>.
+      service_html: Un servicio de <a href="https://lai.gwu.edu/" class="navbar-link" target="_blank">GW Libraries and Academic Innovation</a>
     institution_name: The George Washington University
     institution_name_full: George Washington University
-    product_name: GW ScholarSpace
+    product_name: ScholarSpace
     product_twitter_handle: ""

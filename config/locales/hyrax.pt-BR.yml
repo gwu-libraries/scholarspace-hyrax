@@ -46,13 +46,21 @@ pt-BR:
           subject_tesim: Sujeito
           title_tesim: Título
   hyrax:
+    search:
+      button:
+        html: <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+    controls:
+      terms: Informação para autores
+    pages:
+      tabs: 
+        terms_page: Informação para autores
     account_name: ID da conta da minha instituição
     directory:
       suffix: "@ Example.org"
     footer:
       copyright_html: "<strong>Copyright © 2017 Samvera Licenciado</strong> sob a Licença Apache, Versão 2.0"
-      service_html: Um serviço de <a href="http://samvera.org/" class="navbar-link" target="_blank">Samvera</a> .
-    institution_name: Instituição
-    institution_name_full: O Nome da Instituição
-    product_name: Hyrax
-    product_twitter_handle: "@SamveraRepo"
+      service_html: Um serviço de <a href="https://lai.gwu.edu/" class="navbar-link" target="_blank">GW Libraries and Academic Innovation</a>
+    institution_name:       "The George Washington University"
+    institution_name_full:  "George Washington University"
+    product_name:           "ScholarSpace"
+    product_twitter_handle: ""
