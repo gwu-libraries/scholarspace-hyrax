@@ -79,7 +79,7 @@ h2 {
   height: 120%;
   padding: 0.375rem 0.75rem;
   border-radius: 0.25rem;
-  border-color: $gw-light-blue;
+  border: 2px solid $gw-light-blue;
   background-color: $gw-light-blue;
   color: #fff;
   font-size: 1em;
@@ -234,6 +234,11 @@ header {
       color: #fff;
     }
 
+    .navbar-nav a:focus {
+      background-color: $gw-light-blue;
+      outline: none;
+    }
+
     .navbar-nav li {
       background-color: transparent;
 
@@ -294,6 +299,7 @@ header {
           border: none;
 
           ul {
+            border: none;
             margin-left: 0;
           }
         }
@@ -690,5 +696,118 @@ body.dashboard {
 
   .nav-tabs > li.active > a {
     border-top: 2px solid $gw-light-blue;
+  }
+}
+
+// collection page styles
+.hyc-container {
+  .hyc-generic {
+
+    .hyc-wrap {
+      display: flex;
+      align-items: center;
+
+      .hyc-logos img {
+        height: 6em;
+      }
+
+      .hyc-title .label {
+        font-weight: 400;
+        padding: .2em .6em;
+      }
+    }
+
+    .hyc-bugs .hyc-item-count::after {
+      content: "|";
+      margin: 0 0.5em;
+    }
+  }
+
+  .hyc-header {
+    margin-bottom: 0;
+  }
+
+  .edit_collection {
+    background-color: #eee;
+    padding: 1em;
+
+    .input-group {
+      margin-bottom: 0;
+      display: flex;
+      flex-direction: column;
+
+      input {
+        border-radius: 0;
+        border: 1px solid #444;
+      }
+
+      .input-group-btn {
+        margin-top: 1rem;
+        width: 100%;
+
+        .btn {
+          width: 100%;
+          border-radius: 0;
+          border: 1px solid #444;
+          background-color: #EFEFEF;
+          color: #444;
+        }
+      }
+
+      @media (min-width: $mobile-breakpoint) {
+        flex-direction: row;
+
+        .input-group-btn {
+          margin-top: 0;
+          width: auto;
+
+          .btn {
+            width: auto;
+            margin-left: 1em;
+          }
+        }
+      }
+    }
+  }
+
+  .hyc-blacklight {
+    select {
+      border: 1px solid #444;
+      border-radius: 0;
+      background-color: #fff;
+      padding: 0.4rem;
+    }
+
+    table {
+      td {
+        border: none !important;
+      }
+
+      thead {
+        th {
+          font-weight: 200;
+        }
+      }
+
+      tbody {
+        tr {
+          td {
+            padding: 0.5rem;
+          }
+          &:nth-child(odd) {
+            background-color: #EEEEEE;
+          }
+        }
+      }
+    }
+
+    .btn-group .btn {
+      border-radius: 0;
+      border: 1px solid #444;
+    }
+  }
+
+  .hyc-bl-results {
+    padding: 0;
   }
 }
