@@ -37,7 +37,7 @@ body {
   font-size: 1rem;
   font-weight: 200;
   text-rendering: optimizeLegibility;
-  line-height: normal;
+  line-height: 1.4;
 
   @supports (font-variation-settings: normal) {
     font-family: $font-family-sans-serif;
@@ -73,6 +73,14 @@ h2 {
   font-size: 1.9em;
   font-weight: inherit;
   line-height: 1.2em;
+}
+
+h3 {
+  font-weight: 400;
+}
+
+dt {
+  font-weight: 400;
 }
 
 .gw-btn {
@@ -126,6 +134,7 @@ form label {
   .dropdown-menu {
     background-color: $gw-dark-blue;
     padding: 0;
+    border-radius: 0;
     
     li a {
       color: #fff;
@@ -809,5 +818,108 @@ body.dashboard {
 
   .hyc-bl-results {
     padding: 0;
+  }
+}
+
+// search results
+
+#facets {
+  .top-panel-heading {
+    padding: 0;
+    text-align: center;
+
+    h2.facets-heading {
+      font-weight: 200;
+      font-size: 1rem;
+      padding-bottom: 0;
+    }
+  }
+
+  .panel {
+    border: none;
+  
+    .panel-heading {
+      border: none;
+      border-radius: 0;
+      background-color: $gw-dark-blue;
+      color: #fff;
+  
+      h3.panel-title {
+        font-size: 1rem;
+        font-weight: 200;
+      }
+
+      h3.panel-title::after {
+        color: #fff;
+      }
+    }
+
+    .panel-body {
+      background-color: #eee;
+
+      ul {
+        margin-bottom: 0;
+
+        .selected {
+          color: #444;
+        }
+
+        .glyphicon {
+          vertical-align: initial;
+
+          &:hover {
+            color: $gw-light-blue;
+          }
+        }
+      }
+    }
+  }
+}
+
+.panel-group .panel + .panel {
+  margin-top: 0;
+}
+
+#appliedParams {
+  background-color: #fff;
+  text-align: right;
+  
+  span {
+    font-weight: 200;
+  }
+
+  span.appliedFilter .remove {
+    background-color: $gw-light-blue;
+    border-color: $gw-light-blue;
+  }
+}
+
+#sortAndPerPage {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+li.document {
+  padding: 1em;
+
+  &:nth-child(odd) {
+    background-color: #eee;
+  }
+
+  .search-result-wrapper {
+    border-bottom: none;
+    margin-bottom: 0;
+
+    .list-thumbnail {
+      padding-bottom: 0;
+    }
+
+    dl {
+      margin-bottom: 0;
+
+      dd {
+        margin-bottom: 0;
+      }
+    }
   }
 }
