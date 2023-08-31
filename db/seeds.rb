@@ -113,7 +113,6 @@ create_user_collection_type
 # -- Creating the ETDs admin set
 @etds_admin_set = create_etds_admin_set
 
-
 # -- Creating a content-admin role and user
 create_content_admin_role
 create_content_admin_user
@@ -132,6 +131,8 @@ create_content_admin_user
                                               description: ['Wow it is a discoverable journal.'])
 
 
+
+# -- Setting the banner and logo of the journal collection
 banner_file = File.open('spec/fixtures/branding/gwur/banner/banner_2_gwur.png')
 logo_file = File.open('spec/fixtures/branding/gwur/logo/gwur_logo.png')
 
@@ -187,6 +188,9 @@ journal_etds.each do |j_etd|
   j_etd.save
 end
 
+# -- taking the last ETD created and featuring it
+@featured_work = FeaturedWork.new(work_id: journal_etds.last.id).save
+
 # -- creating public ETDs from files in spec/fixtures/public_etds --
 # -- these should be visible on main page and search without logging in --
 
@@ -238,7 +242,8 @@ Dir[File.join(Rails.root, 'spec', 'fixtures', 'private_etds', '*')].each_with_in
                                       description: ["This is a test private ETD"],
                                       creator: ["William Shakespeare"],
                                       keyword: ["Test", "Private", "#{file_type}"],
-                                      rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
+                                      rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                      resource_type: ["Article"])
 
   AttachFilesToWorkJob.perform_now(private_etds[index], [private_uploads[index]])
 end
@@ -263,14 +268,26 @@ Dir[File.join(Rails.root, 'spec', 'fixtures', 'authenticated_etds', '*')].each_w
                                                 description: ["This is a test authenticated GW user ETD"],
                                                 creator: ["John Milton"],
                                                 keyword: ["Test", "Authenticated", "#{file_type}"],
-                                                rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/')
+                                                rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                                resource_type: ["Article"])
 
   AttachFilesToWorkJob.perform_now(authenticated_etds[index], [authenticated_uploads[index]])
 end
 
+# -- Styling and content blocks
+
+ContentBlock.find_or_create_by(name: "header_background_color").update!(value: "#FFFFFF")
+ContentBlock.find_or_create_by(name: "header_text_color").update!(value: "#444444")
+ContentBlock.find_or_create_by(name: "link_color").update!(value: "#28659A")
+ContentBlock.find_or_create_by(name: "footer_link_color").update!(value: "#FFFFFF")
+ContentBlock.find_or_create_by(name: "primary_buttom_background_color").update!(value: "#28659A")
+
+featured_researcher_text = "Established in 2016, the GW Undergraduate Review (GWUR) is the premier publication of research from undergraduate students at George Washington University. Its mission is to promote undergraduate research on GW’s campus through events, workshops, and the annual publication of a peer-reviewed journal. GWUR is entirely student-run and is supported by the Office of the Vice Provost for Research and GW Libraries and Academic Innovation."
+marketing_text = "Wow look at this, it is marketing text! This little text went to market. I don't know what is supposed to go here, sorry."
+announcement_text = "This is an announcement! Hello!"
+
+ContentBlock.find_or_create_by(name: "featured_researcher").update!(value: featured_researcher_text)
+ContentBlock.find_or_create_by(name: "marketing_text").update!(value: marketing_text)
+
 #TO-DO
-# have the content-admin user create a user collection, add works to that collection
 # figure out how to set the works to go in the etds admin set, rather than the default admin set
-# set featured_researcher, marketing_text, and announcement_text
-# figure out setting the color scheme in seed
-# figure out setting featured researcher
