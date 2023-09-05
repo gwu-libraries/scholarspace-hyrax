@@ -35,3 +35,6 @@ config/secrets.yml
 
 # VScode settings
 /.vscode
+
+# .DS_Store files
+.DS_Store
