@@ -20,7 +20,7 @@ $gw-dark-blue: #033c5a;
 $gw-light-blue: #28659A;
 $gw-buff: #aa9868;
 $gw-hover-buff: #d9d0bb;
-$mobile-breakpoint: 786px;
+$mobile-breakpoint: 768px;
 
 // General
 html {
@@ -351,6 +351,15 @@ header {
         }
       }
     }
+
+    .open .dropdown-menu > li > a {
+      color: #fff;
+
+      &:hover {
+        background-color: $gw-light-blue;
+        color: #fff;
+      }
+    }
   }
 
   .col-sm-5 {
@@ -407,6 +416,7 @@ header {
 }
 
 #user_utility_links {
+  margin-right: 0;
 
   .dropdown a, .notify-number {
     color: #444;
@@ -421,9 +431,18 @@ header {
     padding-left: 1em;
   }
 
-  .dropdown-menu li a, .dropdown-menu li a:hover {
+  .dropdown-menu li a {
     color: #fff;
+
+    &:hover {
+      color: #fff;
+      background-color: $gw-light-blue;
+    }
   }
+}
+
+.navbar-right {
+  margin-right: 0;
 }
 
 // Footer styles
@@ -617,8 +636,9 @@ footer, .footer {
         padding: 0.5em;
       }
 
-      #recent_docs, #featured_docs {
+      #recent_docs, #featured_works {
         list-style-type: none;
+        margin-bottom: 0;
 
         .recent-item, .featured-item {
           border-top: none;
@@ -825,7 +845,11 @@ body.dashboard {
 
 #facets {
   .top-panel-heading {
-    padding: 0;
+    border: none;
+    border-radius: 0;
+    margin-bottom: 0;
+    background-color: $gw-dark-blue;
+    color: #fff;
     text-align: center;
 
     h2.facets-heading {
@@ -833,12 +857,33 @@ body.dashboard {
       font-size: 1rem;
       padding-bottom: 0;
     }
+
+    .facets-toggle {
+      margin: 0;
+      border: none;
+      background-color: transparent;
+
+      &:hover {
+        background-color: transparent;
+      }
+
+      .icon-bar {
+        background-color: #fff;
+      }
+    }
+
+    @media (min-width: $mobile-breakpoint) {
+      background-color: transparent;
+      color: #444;
+      padding: 0;
+    }
   }
 
   .panel {
     border: none;
   
     .panel-heading {
+      margin-bottom: 0;
       border: none;
       border-radius: 0;
       background-color: $gw-dark-blue;
@@ -892,11 +937,30 @@ body.dashboard {
     background-color: $gw-light-blue;
     border-color: $gw-light-blue;
   }
+
+  a#startOverLink {
+    background-color: $gw-light-blue;
+    color: #fff;
+    margin-left: 1rem;
+  }
+
+  @media (min-width: $mobile-breakpoint) {
+    a#startOverLink {
+      margin-left: 1rem;
+    }
+  }
 }
 
 #sortAndPerPage {
   border-bottom: none;
   margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  @media (min-width: $mobile-breakpoint) {
+    display: block;
+  }
 }
 
 li.document {
@@ -909,6 +973,7 @@ li.document {
   .search-result-wrapper {
     border-bottom: none;
     margin-bottom: 0;
+    text-align: center;
 
     .list-thumbnail {
       padding-bottom: 0;
@@ -920,6 +985,68 @@ li.document {
       dd {
         margin-bottom: 0;
       }
+    }
+
+    @media (min-width: $mobile-breakpoint) {
+      text-align: start;
+    }
+  }
+}
+
+.pagination {
+  margin: 0;
+
+  li a {
+    border: none;
+    border-radius: 0;
+
+    &:hover {
+      background-color: transparent;
+      border: none;
+      color: #a75523;
+    }
+  }
+
+  .active > span {
+    background-color: transparent;
+    border: none;
+    color: #444;
+    font-weight: 400;
+
+    &:hover {
+      background-color: transparent;
+      color: #444;
+    }
+  }
+}
+
+.search-widgets {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .view-type .btn-group a {
+    &.active {
+      box-shadow: none;
+      background-color: $gw-light-blue;
+      border-color: $gw-light-blue;
+      color: #fff;
+    }
+
+    &:hover {
+      box-shadow: none;
+    }
+  }
+
+  > div {
+    margin: 0.3em 0;
+  }
+
+  @media (min-width: $mobile-breakpoint) {
+    display: block;
+
+    > div {
+      margin: 0;
     }
   }
 }
