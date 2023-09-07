@@ -95,6 +95,8 @@ project from which the work was derived."
       gw_etd: Electronic Thesis/Dissertation
   blacklight:
     search:
+      per_page:
+        button_label: Per page
       fields:
         show:
           resource_type:                Type of Work
