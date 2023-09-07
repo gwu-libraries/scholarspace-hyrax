@@ -20,6 +20,7 @@ $gw-dark-blue: #033c5a;
 $gw-light-blue: #28659A;
 $gw-buff: #aa9868;
 $gw-hover-buff: #d9d0bb;
+$gw-hover-orange: #a75523;
 $mobile-breakpoint: 768px;
 
 // General
@@ -52,7 +53,7 @@ a {
   color: $gw-light-blue;
 
   &:hover, &:focus {
-    color: #a75523;
+    color: $gw-hover-orange;
   }
 }
 
@@ -217,7 +218,7 @@ header {
       text-decoration: underline;
 
       &:hover, &:focus {
-        color: #a75523;
+        color: $gw-hover-orange;
       }
     }
   }
@@ -290,6 +291,23 @@ header {
         align-items: end;
         background-color: $gw-light-blue;
 
+        .always-visible {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          #mobile-title {
+            margin-left: 0.3rem;
+            color: #fff;
+            text-decoration: underline;
+
+            &:hover {
+              color: #eee;
+            }
+          }
+        }
+
         .navbar-toggle {
           border: none;
           width: fit-content;
@@ -329,6 +347,14 @@ header {
           justify-content: end;
           width: 100%;
           background-color: transparent;
+
+          .always-visible {
+            display: none;
+          }
+
+          #mobile-title {
+            display: none;
+          }
         }
       }
     }
@@ -597,7 +623,7 @@ footer, .footer {
     text-decoration: underline;
 
     &:hover {
-      color: #a75523;
+      color: $gw-hover-orange;
     }
   }
 
@@ -1027,7 +1053,7 @@ li.document {
     &:hover {
       background-color: transparent;
       border: none;
-      color: #a75523;
+      color: $gw-hover-orange;
     }
   }
 
