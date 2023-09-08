@@ -8,9 +8,32 @@
       </div>
 
       <div>
+      <!-- share your work button display qualities -->
+  <div class="home_share_work row">
+    <div class="col-sm-12 text-center">
+      <% if signed_in? %>
+        <% if @presenter.create_many_work_types? %>
+          <%= link_to '#',
+            class: "gw-btn",
+            data: { behavior: 'select-work', target: '#worktypes-to-create', 'create-type' => 'single' } do %>
+            <i class="glyphicon glyphicon-upload" aria-hidden="true"></i> <%= t('hyrax.share_button') %>
+          <% end %>
+        <% else # simple link to the first work type %>
+          <%= link_to new_polymorphic_path([main_app, @presenter.first_work_type]),
+                class: 'btn btn-primary' do %>
+            <i class="glyphicon glyphicon-upload" aria-hidden="true"></i> <%= t('hyrax.share_button') %>
+          <% end %>
+        <% end %>
+      <% else %>
+        <%= link_to t('hyrax.upload_url'),
+          class: "gw-btn" do %>
+          <i class="glyphicon glyphicon-upload" aria-hidden="true"></i> <%= t('hyrax.share_button') %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
 
-      <!-- toggle share your work button or user util links, depending on sign in status-->
-
+      <!-- toggle user util links, depending on sign in status-->
       <%= render '/user_util_links' %>
       </div>
     </div>
