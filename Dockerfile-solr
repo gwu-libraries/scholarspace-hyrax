@@ -4,7 +4,7 @@ FROM library/solr:6.4.2-alpine
 RUN echo 'SOLR_OPTS="$SOLR_OPTS -Dlog4j2.formatMsgNoLookups=true"' >> /opt/solr/bin/solr.in.sh
 
 # Copy app configs to image
-COPY --chown=solr:solr ./solr/config /opt/scholarspace/config
+COPY --chown=solr:solr ./solr/conf /opt/scholarspace/config
 # Copy init script to resident scripts folder
 COPY --chown=solr:solr ./docker/scripts/scholarspace-solr-init.sh /opt/docker-solr/scripts/
 # Make executable
