@@ -84,7 +84,7 @@ gem 'invisible_captcha'
 gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
 group :development, :test do
-  gem 'pry'
+  # gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'solr_wrapper', '>= 0.3'
   gem 'launchy'
