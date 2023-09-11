@@ -16,7 +16,8 @@ RUN cd /opt && \
    make && \
    make install && \
    ldconfig /usr/local/lib && \
-   identify -version
+   identify -version && \
+   rm /opt/ImageMagick-7.1.1-12.tar.gz
 
 # FITS install
 WORKDIR /usr/local/bin
