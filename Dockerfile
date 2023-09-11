@@ -64,7 +64,9 @@ ARG RAILS_ENV
 # Install dependencies and finalize Hyrax setup
 # Running without development; installing as development seems to cause some issues
 RUN gem install bundler \
-    && bundle install --without development --deployment 
+    && bundle lock --add-platform aarch64-linux \
+    && bundle lock --add-platform x86_64-linux \
+    && bundle install
 
 # Copy app files
 COPY . ./
