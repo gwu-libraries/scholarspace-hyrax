@@ -1,4 +1,4 @@
- Run Tomcat as this user ID. Not setting this or leaving it blank will use the
+# Run Tomcat as this user ID. Not setting this or leaving it blank will use the
 # default of tomcat8.
 TOMCAT8_USER=tomcat8
 

@@ -81,11 +81,7 @@ gem 'recaptcha'
 
 gem 'invisible_captcha'
 
-# gem 'dry-monads', '< 1.5.0'
-
-# gem 'psych', '< 4.0.0'
-
-# gem 'tinymce-rails', '~> 5.10'
+gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
 group :development, :test do
   gem 'pry'
@@ -103,6 +99,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :test do
