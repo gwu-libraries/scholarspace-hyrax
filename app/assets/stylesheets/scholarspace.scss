@@ -80,22 +80,29 @@ h3, dt, thead th, .label {
   font-weight: 400;
 }
 
-.gw-btn {
+textarea {
+  resize: none;
+}
+
+.gw-btn, .btn-primary {
+  display: inline-block;
   height: 100%;
-  padding: 0.5rem 0.75rem;
+  padding: 0.3rem 0.75rem;
+  margin: 0;
   border-radius: 0.25rem;
-  border: 2px solid $gw-light-blue;
-  background-color: $gw-light-blue;
+  border: 2px solid $gw-light-blue !important;
+  background-color: $gw-light-blue !important;
   color: #fff;
   font-size: 1em;
+  font-weight: 200;
   line-height: 1.5;
   text-decoration: none;
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   text-align: center;
 
   &:focus {
-    color: #fff;
-    background-color: #005984;
+    color: #fff !important;
+    background-color: #005984 !important;
     outline: 0;
     box-shadow: 0 0 0 0.2rem rgba(3, 60, 90, 0.25);
   }
@@ -106,9 +113,9 @@ h3, dt, thead th, .label {
 
   &:hover {
     text-decoration: none;
-    color: #212529;
-    border-color: $gw-hover-buff;
-    background-color: $gw-hover-buff;
+    color: #212529 !important;
+    border-color: $gw-hover-buff !important;
+    background-color: $gw-hover-buff !important;
   }
 }
 
@@ -158,6 +165,31 @@ form label {
 
   @media (min-width: $mobile-breakpoint) {
     padding-bottom: 10.5rem;
+  }
+}
+
+.alert-info, .alert-success {
+  background-color: $gw-dark-blue;
+  color: #fff;
+  border: none;
+  border-radius: 0;
+
+  a {
+    padding: 0.3em;
+    color: #fff;
+    background-color: $gw-light-blue;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .close {
+    top: 0;
+    opacity: 1;
+    text-shadow: none;
+    color: #fff;
   }
 }
 
@@ -435,6 +467,11 @@ header {
       padding: 0.125rem 0.5rem;
       background-color: transparent;
       border: none;
+      color: #fff;
+
+      &:hover {
+        color: #fff;
+      }
     }
   }
 }
@@ -1204,6 +1241,26 @@ li.document {
 
     > div {
       margin: 0 0.3em;
+    }
+  }
+}
+
+// Individual work page
+
+.work-type {
+  .panel {
+    border: none;
+    box-shadow: none;
+
+    .panel-heading {
+      background-color: transparent;
+      border: none;
+      padding: 0;
+    }
+
+    .work-preview {
+      background-color: #eee;
+      padding: 1em;
     }
   }
 }
