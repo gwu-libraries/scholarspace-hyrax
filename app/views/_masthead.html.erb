@@ -12,11 +12,11 @@
   <div class="home_share_work row">
     <div class="col-sm-12 text-center">
       <% if signed_in? %>
-          <%= link_to '#',
-            class: "gw-btn",
-            data: { behavior: 'select-work', target: '#worktypes-to-create', 'create-type' => 'single' } do %>
-            <i class="glyphicon glyphicon-upload" aria-hidden="true"></i> <%= t('hyrax.share_button') %>
-          <% end %>
+        <%= link_to '#',
+          class: "gw-btn",
+          data: { behavior: 'select-work', target: '#worktypes-to-create', 'create-type' => 'single' } do %>
+          <i class="glyphicon glyphicon-upload" aria-hidden="true"></i> <%= t('hyrax.share_button') %>
+        <% end %>
       <% else %>
         <%= link_to t('hyrax.upload_url'),
           class: "gw-btn" do %>
