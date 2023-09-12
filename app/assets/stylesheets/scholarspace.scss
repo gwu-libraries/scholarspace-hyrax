@@ -947,29 +947,6 @@ body.dashboard {
       padding: 0.4rem;
     }
 
-    table {
-      td {
-        border: none !important;
-      }
-
-      thead {
-        th {
-          font-weight: 200;
-        }
-      }
-
-      tbody {
-        tr {
-          td {
-            padding: 0.5rem;
-          }
-          &:nth-child(odd) {
-            background-color: #EEEEEE;
-          }
-        }
-      }
-    }
-
     .btn-group .btn {
       border-radius: 0;
       border: 1px solid #444;
@@ -978,6 +955,52 @@ body.dashboard {
 
   .hyc-bl-results {
     padding: 0;
+  }
+}
+
+.table-borderless {
+  width: 100%;
+
+  td {
+    border: none !important;
+  }
+
+  thead {
+    th {
+      font-weight: 200;
+    }
+  }
+
+  tbody {
+    .file_set {
+      padding: 0.5rem;
+    }
+
+    tr {
+      td {
+        padding: 0.5rem;
+
+        .media-body {
+          vertical-align: middle;
+        }
+      }
+      
+      &:nth-child(odd) {
+        background-color: #EEEEEE;
+      }
+    }
+  }
+
+  .thumbnail {
+    background-color: transparent;
+    margin-bottom: 0;
+  }
+
+  .file_listing_thumbnail, .thumbnail img {
+    width: 4rem;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
   }
 }
 
