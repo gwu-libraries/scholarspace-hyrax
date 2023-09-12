@@ -947,9 +947,20 @@ body.dashboard {
       padding: 0.4rem;
     }
 
-    .btn-group .btn {
+    .btn-group a {
       border-radius: 0;
-      border: 1px solid #444;
+      border-color: #444;
+  
+      &.active {
+        box-shadow: none;
+        background-color: $gw-light-blue;
+        border-color: $gw-light-blue;
+        color: #fff;
+      }
+  
+      &:hover {
+        box-shadow: none;
+      }
     }
   }
 
@@ -984,7 +995,7 @@ body.dashboard {
           vertical-align: middle;
         }
       }
-      
+
       &:nth-child(odd) {
         background-color: #EEEEEE;
       }

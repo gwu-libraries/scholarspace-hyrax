@@ -10,6 +10,9 @@ en:
         missing: No publication has been featured.
         tab_label: Featured Publication
         title: Featured Publication
+    collections:
+      search_form:
+        button_label: Search
     product_name:           "ScholarSpace"
     local_product_version:  "1.7.0"
     product_twitter_handle: ""
