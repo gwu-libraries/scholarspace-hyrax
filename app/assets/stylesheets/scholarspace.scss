@@ -476,6 +476,10 @@ header {
   }
 }
 
+.home_share_work {
+  margin: 0;
+}
+
 #user_utility_links {
   margin-right: 0;
 
@@ -1178,6 +1182,10 @@ li.document {
       }
     }
 
+    .collection-counts-wrapper .collection-counts-item {
+      font-weight: 400;
+    }
+
     @media (min-width: $mobile-breakpoint) {
       text-align: start;
     }
@@ -1282,6 +1290,12 @@ li.document {
 // Individual work page
 
 .work-type {
+  .work-type-tag {
+    margin: 0;
+    font-weight: 200;
+    font-size: 1rem;
+  }
+
   .panel {
     border: none;
     box-shadow: none;
@@ -1295,6 +1309,36 @@ li.document {
     .work-preview {
       background-color: #eee;
       padding: 1em;
+    }
+
+    .table-borderless {
+      display: flex;
+
+      thead {
+        display: none;
+      }
+
+      tbody {
+        width: 100%;
+
+        tr {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+      }
+
+      @media (min-width: $mobile-breakpoint) {
+        display: table;
+
+        thead {
+          display: revert;
+        }
+
+        tbody tr {
+          display: revert;
+        }
+      }
     }
   }
 }
