@@ -10,8 +10,7 @@ module Hyrax
         end
 
         def create_work_presenter
-            # @create_work_presenter ||= create_work_presenter_class.new(current_ability.current_user)
-            Hyrax::SelectTypeListPresenter.new(current_ability.current_user)
+            @create_work_presenter ||= Hyrax::SelectTypeListPresenter.new(::User.where(guest: false).first)
         end
 
         def draw_select_work_modal?
