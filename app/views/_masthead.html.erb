@@ -31,4 +31,4 @@
     </div>
   </nav>
 </header>
-<%= render '/shared/select_work_type_modal', create_work_presenter: @presenter.create_work_presenter if @presenter.draw_select_work_modal? %>
+<%= render '/shared/select_work_type_modal', create_work_presenter: Hyrax::SelectTypeListPresenter.new(::User.where(guest: false).first) %>
