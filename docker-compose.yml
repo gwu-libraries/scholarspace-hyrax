@@ -36,8 +36,8 @@ services:
     environment:
       - POSTGRES_USER=$HYRAX_DB_USER
       - POSTGRES_PASSWORD=$HYRAX_DB_PASSWORD
-#     - POSTGRES_DB=$HYRAX_DB_DEV
-      - POSTGRES_DB=$HYRAX_DB_PROD
+      - POSTGRES_DB=$HYRAX_DB_DEV
+      # - POSTGRES_DB=$HYRAX_DB_PROD
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
       - db-hyrax:/var/lib/postgresql/data
@@ -50,7 +50,9 @@ services:
       dockerfile: Dockerfile-solr
     hostname: solr-hyrax
     environment:
-      - SOLR_CORE
+      - SOLR_CORE_DEV=$SOLR_CORE_DEV
+      - SOLR_CORE_TEST=$SOLR_CORE_TEST
+      - SOLR_CORE_PROD=$SOLR_CORE_PROD
     # Use this to map to an external volume/existing Solr core
     volumes:
       - /var/solr/data:/opt/solr/server/solr/mycores
@@ -77,8 +79,8 @@ services:
       - redis
     env_file: .env
     volumes: 
-      - app-hyrax:/opt/scholarspace  # Persistent Docker volume (for production)
-#      - /opt/scholarspace:/opt/scholarspace # For development
+      # - app-hyrax:/opt/scholarspace  # Persistent Docker volume (for production)
+     - /opt/scholarspace:/opt/scholarspace # For development
     networks:
       - hyrax
       - fedora
@@ -97,8 +99,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - app-hyrax:/opt/scholarspace
-#      - /opt/scholarspace:/opt/scholarspace # For development
+      # - app-hyrax:/opt/scholarspace
+     - /opt/scholarspace:/opt/scholarspace # For development
     restart: always
 volumes:
   db:
