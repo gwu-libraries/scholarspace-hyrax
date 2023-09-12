@@ -21,8 +21,9 @@
             <%= link_to t(:'hyrax.controls.help'), hyrax.help_path, aria: current_page?(hyrax.help_path) ? {current: 'page'} : nil %></li>
           <li <%= 'class=active' if current_page?(hyrax.contact_path) %>>
             <%= link_to t(:'hyrax.controls.contact'), hyrax.contact_path, aria: current_page?(hyrax.contact_path) ? {current: 'page'} : nil %></li>
-          <li>
-            <%= render 'shared/locale_picker' if available_translations.size > 1 %></li>
+         <!-- Commented out language selector for now 
+         <li>
+            <%= render 'shared/locale_picker' if available_translations.size > 1 %></li> -->
         </ul><!-- /.nav -->
       </div>
       </div>
