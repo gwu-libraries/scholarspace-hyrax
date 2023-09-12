@@ -623,11 +623,39 @@ for derivatives.  For example, to allow PDF files, remove the line that blocks P
 
          config.shibboleth = true
 
-## Note about ghostscript and ImageMagick
+## Note about ghostscript and ImageMagick  
 
 Hyrax can be ficky about versions of ghostscript and ImageMagick.  A working combination seems to be:  ghostscript 9.26 with ImageMagick 6.9.7-4
+
 -----------------------------------------
+
 # Installation with Docker (beta)
+
+## Prerequisites
+
+- An Ubuntu 20 instance. To date, we have not tested a successful development setup with Ubuntu 22,
+though it may be more likely to succeed for a production setup.
+- A `scholarspace` system account
+- The following directories, owned by `scholarspace:scholarspace`:
+  - `/opt/scholarspace`
+  - `/opt/scholarspace/scholarspace-derivatives`
+  - `/opt/scholarspace/scholarspace-tmp`
+  - `/opt/scholarspace/scholarspace-minter`
+- Installation of [Docker](https://docs.docker.com/engine/install/ubuntu/) and [docker-compose](https://docs.docker.com/compose/install/linux/#install-using-the-repository). Add the `scholarspace` user to the `docker` group in `/etc/group`.
+- A clone of this repository, as `/opt/scholarspace/scholarspace-hyrax` (owned by `scholarspace`)
+- `.env`, copied from `example.env`, with key values populated appropriately.
+- For a new instance (not migrated)
+  - Create `/var/solr/data` and assign ownership to `8983:8983`
+- To use an existing core (migration), do the following (before starting the container):
+  - Place a copy of the parent core directory (i.e., scholarspace) in `/var/solr/data` on the Docker host.
+  - Grant ownership to the container's Solr user:  `chown -R 8983:8983 var/solr/data`
+- For development:
+   - The following system packages installed: `libxml2` `libxml2-dev`
+   - [`rvm`](https://github.com/rvm/ubuntu_rvm), installed for the `scholarspace` user (via `sudo usermod -a -G rvm scholarspace`)
+   - `rvm install ruby-2.7.3` (or whichever version is referenced in `Dockerfile`).  This will need to be run by a user who has `sudo` privileges.
+   - `gem install bundler && bundle install --without development --deployment`
+
+## Docker images
 
 The Dockerized version of the ScholarSpace app uses the following images:
 
