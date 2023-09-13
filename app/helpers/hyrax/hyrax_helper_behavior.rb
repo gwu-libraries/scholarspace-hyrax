@@ -349,5 +349,9 @@ module Hyrax
       def institution
         Institution
       end
+
+      def standard_work_types_presenter
+        Hyrax::SelectTypeListPresenter.new(::User.where(guest: false).first)
+      end
   end
 end

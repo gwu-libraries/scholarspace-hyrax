@@ -10,6 +10,9 @@ en:
         missing: No publication has been featured.
         tab_label: Featured Publication
         title: Featured Publication
+    collections:
+      search_form:
+        button_label: Search
     product_name:           "ScholarSpace"
     local_product_version:  "1.7.0"
     product_twitter_handle: ""
@@ -95,6 +98,8 @@ project from which the work was derived."
       gw_etd: Electronic Thesis/Dissertation
   blacklight:
     search:
+      per_page:
+        button_label: Per page
       fields:
         show:
           resource_type:                Type of Work
