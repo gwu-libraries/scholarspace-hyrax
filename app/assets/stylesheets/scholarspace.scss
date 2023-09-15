@@ -839,7 +839,7 @@ body.dashboard {
       background-color: $gw-buff;
     }
 
-    .nav > li > a:hover {
+    .nav > li > a:hover, .nav > li.active > a {
       color: #fff;
       background-color: $gw-light-blue;
     }
@@ -847,6 +847,10 @@ body.dashboard {
 
   .panel {
     border-radius: 0;
+
+    label {
+      font-weight: 400;
+    }
 
     .panel-title {
       color: #fff;
@@ -859,6 +863,23 @@ body.dashboard {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
+
+    .btn {
+      padding: 0.3rem 0.75rem;
+      border-radius: 0.25rem;
+      font-size: 1em;
+      font-weight: 200;
+      border: 2px solid rgba(0,0,0, 0);
+    }
+
+    #search-submit-header {
+      padding: 0.4rem;
+      margin-left: 0.3rem;
+
+      .glyphicon-search::before {
+        font-size: 1rem;
+      }
+    }
   }
 
   .panel-default > .panel-heading {
@@ -866,12 +887,44 @@ body.dashboard {
     background-color: $gw-dark-blue;
   }
 
-  .nav-tabs > li > a {
-    border-radius: 0;
+  .nav-tabs {
+    margin-top: -2.75rem;
+    padding: 0;
+    margin-left: -1px;
   }
 
-  .nav-tabs > li.active > a {
-    border-top: 2px solid $gw-light-blue;
+  .nav-tabs > li > a {
+    border-radius: 0;
+
+    &:hover {
+      background-color: transparent;
+      text-decoration: underline;
+      border-top: 2px solid transparent;
+      border-bottom: none;
+    }
+  }
+
+  .nav-tabs > li.active > a,
+  .nav-tabs > li.active > a:hover {
+    background-color: #fff;
+    text-decoration: none;
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+  }
+
+  .dropzone, .table th,
+  .permissions-add-group-label,
+  .permissions-add-user-label,
+  .list-filters-label,
+  .badge {
+    font-weight: 400;
+  }
+
+  td.toggle input[type="submit"] {
+    padding: 0.3rem 0.5rem;
+    box-shadow: none;
+    font-size: 0.9rem;
+    border: 1px solid $gw-light-blue !important;
   }
 }
 
