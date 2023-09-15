@@ -195,24 +195,42 @@ form label {
 
 // navbar and header styles
 header {
-  display: none;
-
-  @media (min-width: $mobile-breakpoint) {
-    display: block;
+  #masthead {
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .container-fluid {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    height: 7.8em;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  @media (min-width: $mobile-breakpoint) {
+    height: 7.8em;
   }
 }
 
 .navbar {
   min-height: 3em;
+
+  .share-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (min-width: $mobile-breakpoint) {
+      width: auto;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
 }
 
 .navbar-static-top {
@@ -220,7 +238,7 @@ header {
 }
 
 .navbar-header {
-  display: flex;
+  display: none;
   align-items: center;
 
   .navbar-brand {
@@ -250,16 +268,24 @@ header {
       }
     }
   }
+
+  @media (min-width: $mobile-breakpoint) {
+    display: flex;
+  }
 }
 
 .navbar-inverse {
-  background-color: #fff;
+  background-color: $gw-dark-blue !important;
   border-color: transparent;
+
+  @media (min-width: $mobile-breakpoint) {
+    background-color: #fff !important;
+  }
 }
 
 .image-masthead {
   border-bottom: none;
-  margin-bottom: none;
+  margin-bottom: 1rem;
 
   .navbar {
     background-color: transparent;
@@ -450,6 +476,7 @@ header {
       }
 
       .dropdown-menu {
+        position: absolute;
         font-size: 0.9rem;
         font-weight: 200;
       }
@@ -481,17 +508,33 @@ header {
 }
 
 #user_utility_links {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1rem;
   margin-top: 0.3em;
   margin-right: 0;
 
   .dropdown a, .notify-number {
-    color: #444;
+    color: #fff;
     padding: 0;
 
     &:hover, &:focus {
       background-color: transparent;
-      color: #444;
+      color: #fff;
     }
+
+    @media (min-width: $mobile-breakpoint) {
+      color: #444;
+
+      &:hover, &:focus {
+        color: #444;
+      }
+    }
+  }
+
+  .open .dropdown-menu {
+    position: absolute;
+    background-color: $gw-dark-blue;
   }
 
   .notify-number span {
@@ -823,6 +866,15 @@ footer, .footer {
 body.dashboard {
   padding-top: 7.8em;
   padding-top: 0;
+
+  .main-content {
+    padding-top: 1rem;
+
+    // ideally will change this method to removing breadcrumbs on all controllers eventually
+    .breadcrumb {
+      display: none;
+    }
+  }
 
   #masthead {
     position: relative;
