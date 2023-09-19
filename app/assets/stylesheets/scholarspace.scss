@@ -76,6 +76,11 @@ h2 {
   line-height: 1.2em;
 }
 
+h3 {
+  margin: 0.3rem 0;
+  font-size: 1.3rem;
+}
+
 h3, dt, thead th, .label {
   font-weight: 400;
 }
@@ -195,24 +200,42 @@ form label {
 
 // navbar and header styles
 header {
-  display: none;
-
-  @media (min-width: $mobile-breakpoint) {
-    display: block;
+  #masthead {
+    height: 100%;
+    display: flex;
+    align-items: center;
   }
 
   .container-fluid {
     padding-left: 0.5rem;
     padding-right: 0.5rem;
-    height: 7.8em;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
+  }
+
+  @media (min-width: $mobile-breakpoint) {
+    height: 7.8em;
   }
 }
 
 .navbar {
   min-height: 3em;
+
+  .share-header {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    @media (min-width: $mobile-breakpoint) {
+      width: auto;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
 }
 
 .navbar-static-top {
@@ -220,7 +243,7 @@ header {
 }
 
 .navbar-header {
-  display: flex;
+  display: none;
   align-items: center;
 
   .navbar-brand {
@@ -250,16 +273,24 @@ header {
       }
     }
   }
+
+  @media (min-width: $mobile-breakpoint) {
+    display: flex;
+  }
 }
 
 .navbar-inverse {
-  background-color: #fff;
+  background-color: $gw-dark-blue !important;
   border-color: transparent;
+
+  @media (min-width: $mobile-breakpoint) {
+    background-color: #fff !important;
+  }
 }
 
 .image-masthead {
   border-bottom: none;
-  margin-bottom: none;
+  margin-bottom: 1rem;
 
   .navbar {
     background-color: transparent;
@@ -450,6 +481,7 @@ header {
       }
 
       .dropdown-menu {
+        position: absolute;
         font-size: 0.9rem;
         font-weight: 200;
       }
@@ -481,17 +513,33 @@ header {
 }
 
 #user_utility_links {
+  display: flex;
+  flex-direction: row;
+  margin-left: 1rem;
   margin-top: 0.3em;
   margin-right: 0;
 
   .dropdown a, .notify-number {
-    color: #444;
+    color: #fff;
     padding: 0;
 
     &:hover, &:focus {
       background-color: transparent;
-      color: #444;
+      color: #fff;
     }
+
+    @media (min-width: $mobile-breakpoint) {
+      color: #444;
+
+      &:hover, &:focus {
+        color: #444;
+      }
+    }
+  }
+
+  .open .dropdown-menu {
+    position: absolute;
+    background-color: $gw-dark-blue;
   }
 
   .notify-number span {
@@ -824,6 +872,15 @@ body.dashboard {
   padding-top: 7.8em;
   padding-top: 0;
 
+  .main-content {
+    padding-top: 1rem;
+
+    // ideally will change this method to removing breadcrumbs on all controllers eventually
+    .breadcrumb {
+      display: none;
+    }
+  }
+
   #masthead {
     position: relative;
   }
@@ -839,7 +896,7 @@ body.dashboard {
       background-color: $gw-buff;
     }
 
-    .nav > li > a:hover {
+    .nav > li > a:hover, .nav > li.active > a {
       color: #fff;
       background-color: $gw-light-blue;
     }
@@ -847,6 +904,10 @@ body.dashboard {
 
   .panel {
     border-radius: 0;
+
+    label {
+      font-weight: 400;
+    }
 
     .panel-title {
       color: #fff;
@@ -859,6 +920,23 @@ body.dashboard {
       border-top-left-radius: 0;
       border-top-right-radius: 0;
     }
+
+    .btn {
+      padding: 0.3rem 0.75rem;
+      border-radius: 0.25rem;
+      font-size: 1em;
+      font-weight: 200;
+      border: 2px solid rgba(0,0,0, 0);
+    }
+
+    #search-submit-header {
+      padding: 0.4rem;
+      margin-left: 0.3rem;
+
+      .glyphicon-search::before {
+        font-size: 1rem;
+      }
+    }
   }
 
   .panel-default > .panel-heading {
@@ -866,12 +944,44 @@ body.dashboard {
     background-color: $gw-dark-blue;
   }
 
-  .nav-tabs > li > a {
-    border-radius: 0;
+  .nav-tabs {
+    margin-top: -2.75rem;
+    padding: 0;
+    margin-left: -1px;
   }
 
-  .nav-tabs > li.active > a {
-    border-top: 2px solid $gw-light-blue;
+  .nav-tabs > li > a {
+    border-radius: 0;
+
+    &:hover {
+      background-color: transparent;
+      text-decoration: underline;
+      border-top: 2px solid transparent;
+      border-bottom: none;
+    }
+  }
+
+  .nav-tabs > li.active > a,
+  .nav-tabs > li.active > a:hover {
+    background-color: #fff;
+    text-decoration: none;
+    border-top: 1px solid #ddd;
+    border-bottom: none;
+  }
+
+  .dropzone, .table th,
+  .permissions-add-group-label,
+  .permissions-add-user-label,
+  .list-filters-label,
+  .badge {
+    font-weight: 400;
+  }
+
+  td.toggle input[type="submit"] {
+    padding: 0.3rem 0.5rem;
+    box-shadow: none;
+    font-size: 0.9rem;
+    border: 1px solid $gw-light-blue !important;
   }
 }
 
@@ -1342,6 +1452,33 @@ li.document {
           display: revert;
         }
       }
+    }
+  }
+}
+
+// Error page
+h2.broken-links {
+  margin-top: 2rem;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+
+  h3 {
+    margin: 0.3rem;
+  }
+
+  .option {
+    padding: 0.5rem;
+    width: 100%;
+  }
+
+  @media (min-width: $mobile-breakpoint) {
+    flex-direction: row;
+
+    .option {
+      width: 33.3%;
     }
   }
 }
