@@ -283,7 +283,7 @@
        </lst>
       -->
   </searchComponent>
-
+<!-- This triggers errors if enabled
   <searchComponent name="suggest" class="solr.SuggestComponent">
     <lst name="suggester">
       <str name="name">mySuggester</str>
@@ -293,7 +293,7 @@
       <str name="field">suggest</str>
     </lst>
   </searchComponent>
-
+-->
   <requestHandler name="/suggest" class="solr.SearchHandler" startup="lazy">
     <lst name="defaults">
       <str name="suggest">true</str>
