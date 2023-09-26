@@ -4,7 +4,7 @@
     <%= render_thumbnail_tag document, {}, suppress_link: true %>
   <% else %>
     <div class="list-thumbnail">
-      <%= render_thumbnail_tag(document, { alt:"preview thumbnail for work"}) %>
+      <%= render_thumbnail_tag(document, { alt:"Preview of #{document.title[0]}"}) %>
     </div>
   <% end %>
 </div>
