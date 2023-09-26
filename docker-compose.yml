@@ -18,7 +18,7 @@ services:
       - pg-fcrepo
     restart: always
   pg-fcrepo:
-    image: postgres:latest
+    image: postgres:15.4
     hostname: pg-fcrepo
     environment:
       - POSTGRES_USER=$FEDORA_PG_USER
