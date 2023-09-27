@@ -3,7 +3,7 @@
       <h2 class="sr-only"><%= t('hyrax.file_set.show.downloadable_content.heading') %></h2>
       <%= image_tag thumbnail_url(file_set),
                     class: "representative-media",
-                    alt: "",
+                    alt: "Preview of #{file_set.title[0]}",
                     role: "presentation" %>
       <%= link_to t('hyrax.file_set.show.downloadable_content.office_doc_download'),
                   hyrax.download_path(file_set, :disposition => "attachment"),
@@ -21,7 +21,7 @@
     <div>
       <%= image_tag thumbnail_url(file_set),
                     class: "representative-media",
-                    alt: "",
+                    alt: "Preview of #{file_set.title[0]}",
                     role: "presentation" %>
     </div>
 <% end %>
