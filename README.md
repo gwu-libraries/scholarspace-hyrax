@@ -634,7 +634,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
 | Component | Image Name | Version | Source |
 | --------- | ---------- | ------- | ------ | 
 | Fedora server | ghcr.io/samvera/fcrepo4 | 4.7.5 | https://github.com/samvera-labs/docker-fcrepo | 
-| Postgres (for Fedora) | postgres | latest | https://hub.docker.com/_/postgres |
+| Postgres (for Fedora) | postgres | 15.4 | https://hub.docker.com/_/postgres |
 | Postgres (for Hyrax) | postgres | 9.5.25-alpine | https://hub.docker.com/_/postgres |
 | Solr | library/solr | 6.4.2-alpine | Dockerfile-solr |
 | Rails app | scholarspace-app | -- | Dockerfile | 
@@ -650,21 +650,13 @@ The Dockerized version of the ScholarSpace app uses the following images:
 
 ### Postgres
 - Currently, separate postgres containers (each with their own Docker volume) are used for the Fedora and Rails databases. This may be desirable for migration purposes, i.e., if the two databases in production are running on different versions of postrgres. 
-- The Fedora postgres container is currently using the `latest` release of the image, but we should pin this to a specific version in production.
 - The Rails/Hyrax postrgres container is using a version pinned to the version in use in production.
-- To migrate the Rails and Fedora databases, the best approach is probably a backup/restore from production.
-  - Start the container.
-  - Copy the backup file to the postgres Docker volume: `docker cp backup.sql [db-container-name]:/tmp`.
-  - Open an interactive session in the container: `docker exec -it [db-container-name] /bin/bash`.
-  - Perform the restore, using the database user appropriate to the database: `psql -U [scholarspace|fedoraproduser] -d [gwss-prod|fcrepo]`.
+
 
 ### Solr
 - The Solr container is configured to run a script on startup that checks for the existence of a named Solr core (provided as an environment variable). 
 - This image uses a base image that is one point release ahead of the version of Solr deployed in production (6.4.2 vs. 6.4.1). This is done to leverage a feature of the 6.4.2 image that facilitates implementation of the custom Hyrax schema. 
 - If the core does not exist, it will be created, and the ScholarSpace schema will be applied.
-- To use an existing core (migration), do the following (before starting the container):
-  - Place a copy of the parent core directory (i.e., scholarspace) in `/var/solr/data` on the Docker host. 
-  - Grant ownership to the container's Solr user:  `chown -R 8983:8983 var/solr/data`
 
 ### Rails/Hyrax app
 - The image is built from the official Phusion/Passenger [image](https://github.com/phusion/passenger-docker/tree/rel-2.5.0).
@@ -677,6 +669,28 @@ The Dockerized version of the ScholarSpace app uses the following images:
 
 ### Sidekiq
 - This container uses the same image as the Hyrax app, but instead of running Nginx, it runs the Sidekiq gem. 
+
+## Setting up the server
+
+1. Install the [Docker engine](https://docs.docker.com/engine/install/ubuntu/).
+2. Edit `/etc/group` and add your user (e.g., `ubuntu`) to the `docker` group.
+3. For local development, 
+
+  - sudo adduser --disabled-password scholarspace
+
+
+- To migrate the Rails and Fedora databases, the best approach is probably a backup/restore from production.
+  - Start the container.
+  - Copy the backup file to the postgres Docker volume: `docker cp backup.sql [db-container-name]:/tmp`.
+  - Open an interactive session in the container: `docker exec -it [db-container-name] /bin/bash`.
+  - Perform the restore, using the database user appropriate to the database: `psql -U [scholarspace|fedoraproduser] -d [gwss-prod|fcrepo]`.
+
+
+- To use an existing core (migration), do the following (before starting the container):
+  - Place a copy of the parent core directory (i.e., scholarspace) in `/var/solr/data` on the Docker host. 
+  - Grant ownership to the container's Solr user:  `chown -R 8983:8983 var/solr/data`
+
+
 
 ## Running with docker-compose
 
