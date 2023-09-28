@@ -718,7 +718,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
   - `--create-roles`: create default app roles (if they don't already exist)
   - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
   - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
- - `--create-sitemap`: enqueue the Rake task to generate a sitemap 
+ - `--create-sitemap`: enqueue the Rake task to generate a sitemap. **This command should be run in the Sidekiq container, not the app server container.
  - You can string multiple options together, provided you **enclose the entire string, including the path to the script, in quotation marks**.
 
 ## Data migration

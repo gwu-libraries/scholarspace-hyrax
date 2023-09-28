@@ -32,16 +32,17 @@ if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
 then
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq"
+  # Create sitemap cronjob, if necessary
+  setuser scholarspace crontab -l > cron.tmp
+  if [ ! -s cron.tmp ]
+  then
+    # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
+    #echo "Creating cron job for sitemap"
+    #setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
+    rm cron.tmp
+  fi
 fi
-# Create sitemap cronjob, if necessary
-setuser scholarspace crontab -l > cron.tmp
-if [ ! -s cron.tmp ]
-then
-  # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
-  #echo "Creating cron job for sitemap"
-  #setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
-  rm cron.tmp
-fi
+
 
 echo "Starting Passenger..."
 # Enable Nginx
