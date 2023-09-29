@@ -36,8 +36,7 @@ do
             echo "Key is $secret" ;;
         "--create-sitemap")
             echo "Generating sitemap"
-            bundle exec rake gwss:sitemap_queue_generate 
-            echo "Adding to cron job" ;;
+            bundle exec rake gwss:sitemap_queue_generate ;;
          *) echo >&2 "Invalid option: $opt"; exit 1;;
     esac
     # Restart passenger after making any changes

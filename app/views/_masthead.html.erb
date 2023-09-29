@@ -1,0 +1,34 @@
+<header aria-label="header">
+  <nav id="masthead" class="navbar navbar-inverse navbar-static-top" role="navigation" aria-label="masthead">
+    <h1 class="sr-only"><%= application_name %></h1>
+    <div class="container-fluid">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <%= render '/logo' %>
+      </div>
+
+      <div class="share-header">
+            <!-- share your work button display qualities -->
+  <div class="home_share_work row">
+    <div class="text-center">
+      <% if signed_in? %>
+        <%= link_to '#',
+          class: "gw-btn",
+          data: { behavior: 'select-work', target: '#worktypes-to-create', 'create-type' => 'single' } do %>
+          <i class="glyphicon glyphicon-upload" aria-hidden="true"></i> <%= t('hyrax.share_button') %>
+        <% end %>
+      <% else %>
+        <%= link_to t('hyrax.upload_url'),
+          class: "gw-btn" do %>
+          <i class="glyphicon glyphicon-upload" aria-hidden="true"></i> <%= t('hyrax.share_button') %>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+      <!-- toggle user util links, depending on sign in status-->
+      <%= render '/user_util_links' %>
+      </div>
+    </div>
+  </nav>
+</header>
+<%= render '/shared/select_work_type_modal', create_work_presenter: standard_work_types_presenter %>

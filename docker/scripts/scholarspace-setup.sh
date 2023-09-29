@@ -13,6 +13,16 @@ groupadd -r scholarspace --gid=${SCHOLARSPACE_GID:-999} \
 # Otherwise, Passenger will create it as root
 setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/${RAILS_ENV}.log
 
+# Set up nginx configuration, applying environment variables
+echo "Configuring nginx"
+if [[ "$SSL_ON" = true ]]; then
+  envsubst < nginx_conf/scholarspace-ssl.conf > /etc/nginx/sites-enabled/scholarspace-ssl.conf
+else
+  envsubst < nginx_conf/scholarspace.conf > /etc/nginx/sites-enabled/scholarspace.conf
+fi
+# Remove default nginx site conf
+rm /etc/nginx/sites-enabled/default
+
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
@@ -22,16 +32,17 @@ if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
 then
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq"
+  # Create sitemap cronjob, if necessary
+  setuser scholarspace crontab -l > cron.tmp
+  if [ ! -s cron.tmp ]
+  then
+    # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
+    #echo "Creating cron job for sitemap"
+    #setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
+    rm cron.tmp
+  fi
 fi
-# Create sitemap cronjob, if necessary
-setuser scholarspace crontab -l > cron.tmp
-if [ ! -s cron.tmp ]
-then
-  # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
-  #echo "Creating cron job for sitemap"
-  #setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
-  rm cron.tmp
-fi
+
 
 echo "Starting Passenger..."
 # Enable Nginx

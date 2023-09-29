@@ -10,4 +10,7 @@ cp config/fedora.yml.template config/fedora.yml
 cp config/secrets.yml.template config/secrets.yml
 # RAILS_ENV is one of production,development,test
 # Should be passed in at build time: docker build --build-arg ENV_TYPE=development
-cp config/environments/environment.rb.template config/environments/${RAILS_ENV:-production}.rb
+cp config/environments/environment.rb.template config/environments/environment.rb
+cp config/environments/production.rb.template config/environments/production.rb
+cp config/environments/development.rb.template config/environments/development.rb
+cp config/environments/test.rb.template config/environments/test.rb

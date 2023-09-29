@@ -292,6 +292,15 @@ module Hyrax
       solr_field.first
     end
 
+    ##
+    # @param [Object] an object that might have a thumbnail
+    #
+    # @return [String] a label for the object's thumbnail
+    def thumbnail_label_for(object:)
+      object.try(:thumbnail_title).presence ||
+        ""
+    end
+
     private
 
       def user_agent
@@ -339,6 +348,10 @@ module Hyrax
 
       def institution
         Institution
+      end
+
+      def standard_work_types_presenter
+        Hyrax::SelectTypeListPresenter.new(::User.where(guest: false).first)
       end
   end
 end

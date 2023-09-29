@@ -1,7 +1,7 @@
 # This is a sample config file that points to a solr server for each environment
 development:
-  url: <%=ENV['SOLR_DEV_URL'] || 'http://127.0.0.1' %>:<%= ENV['SOLR_DEV_PORT'] || ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_DEV_CORE'] || 'hydra-development' %>
+  url: <%=ENV['SOLR_URL'] || 'http://127.0.0.1' %>:<%= ENV['SOLR_PORT'] || ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_CORE_DEV'] || 'hydra-development' %>
 test:
-  url: <%=ENV['SOLR_TEST_URL'] || 'http://127.0.0.1'%>:<%= ENV['SOLR_TEST_PORT'] || ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_TEST_CORE'] || 'hydra-test' %>
+  url: <%=ENV['SOLR_URL'] || 'http://127.0.0.1'%>:<%= ENV['SOLR_PORT'] || ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_CORE_TEST'] || 'hydra-test' %>
 production:
-  url: <%=ENV['SOLR_URL']%>:<%= ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_CORE'] %>
+  url: <%=ENV['SOLR_URL']%>:<%= ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_CORE_PROD'] %>

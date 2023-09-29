@@ -1,12 +1,12 @@
 development:
   user:  <%= ENV['FEDORA_USERNAME'] %>
   password: <%= ENV['FEDORA_PASSWORD'] %>
-  url: <%= ENV['FEDORA_DEV_URL'] || ENV['FEDORA_URL']%>:<%= ENV['FEDORA_DEV_PORT'] || ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
+  url: <%= ENV['FEDORA_URL'] || ENV['FEDORA_URL']%>:<%= ENV['FEDORA_PORT'] || ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /dev
 test:
   user:  <%= ENV['FEDORA_USERNAME'] %>
   password: <%= ENV['FEDORA_PASSWORD'] %>
-  url: <%= ENV['FEDORA_TEST_URL'] || ENV['FEDORA_URL']%>:<%= ENV['FEDORA_TEST_PORT'] || ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
+  url: <%= ENV['FEDORA_URL'] || ENV['FEDORA_URL']%>:<%= ENV['FEDORA_PORT'] || ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /test
 production:
   user:  <%= ENV['FEDORA_USERNAME'] %>

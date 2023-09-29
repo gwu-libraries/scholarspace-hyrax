@@ -16,7 +16,8 @@ RUN cd /opt && \
    make && \
    make install && \
    ldconfig /usr/local/lib && \
-   identify -version
+   identify -version && \
+   rm /opt/ImageMagick-7.1.1-12.tar.gz
 
 # FITS install
 WORKDIR /usr/local/bin
@@ -32,15 +33,11 @@ RUN bash -lc "rvm remove ruby-2.7.7 && rvm install ruby-2.7.3 && gem install rai
 
 # Hyrax directories
 RUN mkdir -p /opt/scholarspace/scholarspace-hyrax \ 
+    && mkdir -p /opt/scholarspace/certs \
     && mkdir -p /opt/scholarspace/scholarspace-tmp \
     && mkdir -p /opt/scholarspace/scholarspace-minter \
     && mkdir -p /opt/scholarspace/scholarspace-derivatives \
     && chmod 775 -R /opt/scholarspace/scholarspace-derivatives
-
-# Nginx configuration
-COPY nginx_conf/scholarspace.conf /etc/nginx/sites-enabled/scholarspace.conf
-# Enable Nginx with new configuration
-RUN rm /etc/nginx/sites-enabled/default
 
 WORKDIR /opt/scholarspace/scholarspace-hyrax
 
@@ -64,7 +61,9 @@ ARG RAILS_ENV
 # Install dependencies and finalize Hyrax setup
 # Running without development; installing as development seems to cause some issues
 RUN gem install bundler \
-    && bundle install --without development --deployment 
+    && bundle lock --add-platform aarch64-linux \
+    && bundle lock --add-platform x86_64-linux \
+    && bundle install
 
 # Copy app files
 COPY . ./
