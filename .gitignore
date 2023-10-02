@@ -16,6 +16,8 @@
 /tmp/*
 !/log/.keep
 !/tmp/.keep
+dump.rdb
+fits.log
 
 # Ignore local config files
 config/database.yml
@@ -23,6 +25,13 @@ config/fedora.yml
 config/solr.yml
 config/blacklight.yml
 config/secrets.yml
+.env
 
 # Ignore Byebug command history file.
 .byebug_history
+
+# Ignore universal viewer folder
+/public/uv
+
+# VScode settings
+/.vscode

@@ -1,0 +1,24 @@
+<div class="error-container">
+  <div class="error-header">
+    <h1>404: Page not found</h1>
+  </div>
+  <div class="error-content">
+    <p>Looks like something went wrong...</p>
+    <p>The link you have may be incorrect, or the page you're looking for may have been removed or renamed.</p>
+    <h2 class="broken-links">Solutions for broken links</h2>
+    <div class="options">
+      <div class="option">
+        <h3>Find the page name</h3>
+        <p>Use the search bar to locate the page by name.</p>
+      </div>
+      <div class="option">
+        <h3>Start over</h3>
+        <p>Try <%= link_to "starting from the homepage", "/" %>.</p>
+      </div>
+      <div class="option">
+        <h3>Contact us</h3>
+        <p>Reach out using the <%= link_to "contact form", "/contact" %> to let us know what you were looking for.</p>
+      </div>
+    </div>
+  </div>
+</div>

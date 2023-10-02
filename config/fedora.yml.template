@@ -1,15 +1,15 @@
 development:
-  user: fedoraAdmin
-  password: fedoraAdmin
-  url: http://127.0.0.1:<%= ENV['FCREPO_DEVELOPMENT_PORT'] || 8984 %>/rest
+  user:  <%= ENV['FEDORA_USERNAME'] %>
+  password: <%= ENV['FEDORA_PASSWORD'] %>
+  url: <%= ENV['FEDORA_URL'] || ENV['FEDORA_URL']%>:<%= ENV['FEDORA_PORT'] || ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /dev
 test:
-  user: fedoraAdmin
-  password: fedoraAdmin
-  url: http://127.0.0.1:<%= ENV['FCREPO_TEST_PORT'] || 8986 %>/rest
+  user:  <%= ENV['FEDORA_USERNAME'] %>
+  password: <%= ENV['FEDORA_PASSWORD'] %>
+  url: <%= ENV['FEDORA_URL'] || ENV['FEDORA_URL']%>:<%= ENV['FEDORA_PORT'] || ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /test
 production:
-  user: fedoraAdmin
-  password: dummypassword
-  url: http://127.0.0.1:8080/fcrepo/rest
+  user:  <%= ENV['FEDORA_USERNAME'] %>
+  password: <%= ENV['FEDORA_PASSWORD'] %>
+  url: <%= ENV['FEDORA_URL'] %>:<%= ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /prod

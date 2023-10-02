@@ -13,6 +13,14 @@ namespace :gwss  do
     SitemapRegenerateJob.perform_later
   end
 
+  desc "Creates the default Admin Set if it doesn't exist"
+  task create_admin_set: :environment do
+    if !AdminSet.exists?("admin_set/default")
+      # Delegate to Hyrax task
+      Rake::Task["hyrax:default_admin_set:create"].invoke
+    end
+  end
+
   desc "Create GW ScholarSpace user roles"
   task create_roles: :environment do
     adminrole = Role.find_or_create_by(name: 'admin')
@@ -20,6 +28,16 @@ namespace :gwss  do
 
     contentadminrole = Role.find_or_create_by(name: 'content-admin')
     contentadminrole.save
+  end
+
+  desc "Add a user to the admin role"
+  task :add_admin_role => :environment do
+    # Expect this variable to be set when running from the command line
+    if ENV["admin_user"]
+      r = Role.find_by_name("admin")
+      r.users << User.find_by_user_key(ENV["admin_user"])
+      r.save
+    end
   end
 
   desc "Ingest a Work"

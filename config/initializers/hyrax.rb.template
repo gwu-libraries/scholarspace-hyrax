@@ -1,10 +1,8 @@
 Hyrax.config do |config|
-  # Injected via `rails g hyrax:work GwWork`
-  config.register_curation_concern :gw_work
-  # Injected via `rails g hyrax:work GwEtd`
-  config.register_curation_concern :gw_etd
-  # Injected via `rails g hyrax:work GwJournalIssue`
-  config.register_curation_concern :gw_journal_issue
+  # Injected via `rails g hyrax:work GwWork`, etc.
+  ENV["CURATION_CONCERNS"].split(",").each do |concern|
+    config.register_curation_concern(concern.to_sym)
+  end
   # Register roles that are expected by your implementation.
   # @see Hyrax::RoleRegistry for additional details.
   # @note there are magical roles as defined in Hyrax::RoleRegistry::MAGIC_ROLES
@@ -18,7 +16,7 @@ Hyrax.config do |config|
   # config.default_active_workflow_name = 'default'
 
   # Email recipient of messages sent via the contact form
-  config.contact_email = "schol_comm@gwu.edu"
+  config.contact_email = ENV["CONTACT_EMAIL"]
 
   # Text prefacing the subject entered in the contact form
   config.subject_prefix = "Contact form:"
@@ -55,7 +53,7 @@ Hyrax.config do |config|
 
   # Where to store tempfiles, leave blank for the system temp directory (e.g. /tmp)
   # config.temp_file_base = '/home/developer1'
-  config.temp_file_base = '/opt/scholarspace/scholarspace-tmp'
+  config.temp_file_base = ENV["TEMP_FILE_BASE"]
 
   # Hostpath to be used in Endnote exports
   # config.persistent_hostpath = 'http://localhost/files/'
@@ -75,7 +73,9 @@ Hyrax.config do |config|
 
   # Store identifier minter's state in a file for later replayability
   # This is only relevant if the minter_class (above) is set to file
-  # config.minter_statefile = '/tmp/minter-state'
+  if ENV["MINTER_STATEFILE"] 
+    config.minter_statefile = ENV["MINTER_STATEFILE"]
+  end
 
   # Prefix for Redis keys
   # config.redis_namespace = "hyrax"
@@ -126,7 +126,7 @@ Hyrax.config do |config|
   # The banner image. Should be 5000px wide by 1000px tall
   # config.banner_image = 'https://cloud.githubusercontent.com/assets/92044/18370978/88ecac20-75f6-11e6-8399-6536640ef695.jpg'
   # config.banner_image = 'https://gist.githubusercontent.com/kerchner/96b8863e2eeb8900e798f0a7974fb3fb/raw/6ac16b6addfef42f213b87ede3389ecb22a30634/gw-etd17.jpg'
-  config.banner_image = 'https://raw.githubusercontent.com/gwu-libraries/scholarspace/v1.6.0/app/assets/images/gw-scholarspace-1.jpg'
+  config.banner_image = ENV["BANNER_IMAGE"]
 
   # Temporary paths to hold uploads before they are ingested into FCrepo
   # These must be lambdas that return a Pathname. Can be configured separately
@@ -136,7 +136,7 @@ Hyrax.config do |config|
   # Location on local file system where derivatives will be stored
   # If you use a multi-server architecture, this MUST be a shared volume
   # config.derivatives_path = Rails.root.join('tmp', 'derivatives')
-  config.derivatives_path = '/opt/scholarspace/scholarspace-derivatives/derivatives'
+  config.derivatives_path = ENV["DERIVATIVES_PATH"]
 
   # Should schema.org microdata be displayed?
   # config.display_microdata = true
@@ -231,6 +231,9 @@ Hyrax.config do |config|
   # mount point.
   #
   # config.whitelisted_ingest_dirs = []
+
+  config.iiif_image_url_builder = lambda do |file_id, base_url, size, format| end
+  
 end
 
 Date::DATE_FORMATS[:standard] = "%m/%d/%Y"

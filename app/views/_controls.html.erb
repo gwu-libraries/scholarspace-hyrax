@@ -1,0 +1,35 @@
+<nav class="navbar navbar-default navbar-static-top" role="navigation" aria-label="Root Menu">
+  <div class="container-fluid">
+    <div class="row">
+    <div class="navigation-wrap">
+      <div class="always-visible">
+      <a href="<%= hyrax.root_path %>" data-no-turbolink="true" id="mobile-title">GW ScholarSpace</a>
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-navbar-collapse" aria-expanded="false">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        </div>
+      <div class="collapse navbar-collapse" id="top-navbar-collapse">
+        <ul class="nav navbar-nav col-sm-5">
+          <li <%= 'class=active' if current_page?(hyrax.contact_path) %>>
+            <%= link_to t(:'hyrax.controls.terms'), hyrax.terms_path, aria: current_page?(hyrax.terms_path) ? {current: 'page'} : nil %></li>
+          <li <%= 'class=active' if current_page?(hyrax.about_path) %>>
+            <%= link_to t(:'hyrax.controls.about'), hyrax.about_path, aria: current_page?(hyrax.about_path) ? {current: 'page'} : nil %></li>
+          <li <%= 'class=active' if current_page?(hyrax.help_path) %>>
+            <%= link_to t(:'hyrax.controls.help'), hyrax.help_path, aria: current_page?(hyrax.help_path) ? {current: 'page'} : nil %></li>
+          <li <%= 'class=active' if current_page?(hyrax.contact_path) %>>
+            <%= link_to t(:'hyrax.controls.contact'), hyrax.contact_path, aria: current_page?(hyrax.contact_path) ? {current: 'page'} : nil %></li>
+         <!-- Commented out language selector for now 
+         <li>
+            <%= render 'shared/locale_picker' if available_translations.size > 1 %></li> -->
+        </ul><!-- /.nav -->
+      </div>
+      </div>
+      <div class="searchbar-right navbar-right col-sm-7">
+        <%= render partial: 'catalog/search_form' %>
+      </div>
+    </div>
+  </div>
+</nav><!-- /.navbar -->

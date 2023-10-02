@@ -1,20 +1,20 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  host: localhost
-  username: YOURDBUSER
-  password: YOURDBPWD
+  host: <%= ENV["HYRAX_DB_HOST"] || "localhost" %>
+  username: <%= ENV["HYRAX_DB_USER"] %>
+  password: <%= ENV["HYRAX_DB_PASSWORD"] %>
   pool: 5
   timeout: 5000
 
 development:
-  database: YOURDEVDBNAME
+  database: <%= ENV["HYRAX_DB_DEV"] %>
   <<: *default
 
 production:
-  database: YOURPRODDBNAME
+  database: <%= ENV["HYRAX_DB_PROD"] %>
   <<: *default
 
 test:
-  database: YOURTESTDBNAME
+  database: <%= ENV["HYRAX_DB_TEST"] %>
   <<: *default

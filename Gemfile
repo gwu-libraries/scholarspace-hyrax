@@ -44,7 +44,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
-gem 'hyrax', '2.9.6'
+gem 'hyrax', '3.5.0'
 
 gem 'hydra-role-management'
 
@@ -81,9 +81,10 @@ gem 'recaptcha'
 
 gem 'invisible_captcha'
 
+gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
 group :development, :test do
-  gem 'pry'
+  # gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'solr_wrapper', '>= 0.3'
   gem 'launchy'
@@ -98,6 +99,8 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :test do
@@ -107,3 +110,4 @@ group :test do
   # Easy installation and use of chromedriver to run system tests with Chrome
   gem 'chromedriver-helper'
 end
+gem "ffi", "~> 1.15"
