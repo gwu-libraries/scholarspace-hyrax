@@ -100,7 +100,7 @@ services:
       - 80:80
       - 443:443
     volumes:
-     - ${SSL_CERT_DIR}:/opt/scholarspace/certs
+     - ${NGINX_CERT_DIR}:/opt/scholarspace/certs
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
      - app-hyrax:/opt/scholarspace          # For production
      #- /opt/scholarspace:/opt/scholarspace # For development
