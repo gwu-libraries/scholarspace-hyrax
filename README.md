@@ -773,7 +773,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
       `dropdb -U fedoraproduser fcrepo && createdb -U fedoraproduser -T template0 fcrepo`
     - For the Hyrax database:
       `dropdb -U scholarspace gwss_prod && createdb -U scholarspace -T template0 gwss_prod`
-  - Perform the restore, using appropriate database, user, and file: `psql -U [scholarspace|fedoraproduser] -d [gwss-prod|fcrepo]` < [db-backup-file.sql]
+  - Perform the restore, using appropriate database, user, and file: `psql -U [scholarspace|fedoraproduser] -d [gwss_prod|fcrepo]` < [db-backup-file.sql]
   - Exit the container. 
 
  ## Persistence
