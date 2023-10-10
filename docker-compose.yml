@@ -17,6 +17,8 @@ services:
     depends_on:
       - pg-fcrepo
     restart: always
+    logging: &logging
+      driver: "local"
   pg-fcrepo:
     image: postgres:15.4
     hostname: pg-fcrepo
@@ -30,6 +32,8 @@ services:
     networks:
       - fedora
     restart: always
+    logging: 
+      <<: *logging
   pg-hyrax:
     image: postgres:9.5.25-alpine
     hostname: pg-hyrax
@@ -44,6 +48,8 @@ services:
     networks:
       - hyrax
     restart: always
+    logging: 
+      <<: *logging
   solr:
     build: 
       context: .
@@ -61,6 +67,8 @@ services:
     networks:
       - hyrax
     restart: always
+    logging: 
+      <<: *logging
   redis:
     image: 'redis:5-alpine'
     hostname: redis-hyrax
@@ -68,6 +76,8 @@ services:
     networks:
       - hyrax
     restart: always
+    logging: 
+      <<: *logging
   sidekiq:
     image: scholarspace-app
     build: 
@@ -86,6 +96,8 @@ services:
       - hyrax
       - fedora
     restart: always
+    logging: 
+      <<: *logging
   app-server:
     image: scholarspace-app
     depends_on: 
@@ -105,6 +117,8 @@ services:
      - app-hyrax:/opt/scholarspace          # For production
      #- /opt/scholarspace:/opt/scholarspace # For development
     restart: always
+    logging: 
+      <<: *logging
 volumes:
   db:
   db-hyrax:
