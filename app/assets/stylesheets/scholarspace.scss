@@ -9,7 +9,7 @@
     font-weight: $weight;
     font-style: $style;
     font-display: swap;
-  }
+  } 
 }
 
 @include font-face("Gibson VF", "/fonts/GibsonVF-Regular", 100 900, normal);
@@ -859,9 +859,15 @@ footer, .footer {
   }
 }
 
-#publication-content h2 {
-  display: flex;
-  align-items: center;
+#publication-content {
+  h2 {
+    display: flex;
+    align-items: center;
+  }
+
+  img.featured {
+    margin: 0px 10px 10px 0px;
+  }
 }
 
 //misc bootstrap overwrite
