@@ -932,7 +932,7 @@ body.dashboard {
       border: 2px solid rgba(0,0,0, 0);
     }
 
-    #search-submit-header {
+    #search-submit-header, #collection_submit {
       padding: 0.4rem;
       margin-left: 0.3rem;
 
@@ -985,6 +985,20 @@ body.dashboard {
     box-shadow: none;
     font-size: 0.9rem;
     border: 1px solid $gw-light-blue !important;
+  }
+
+  h2.collection-title {
+    color: $gw-white;
+  }
+
+  .coll-search-row {
+    display: flex;
+    justify-content: center;
+  }
+
+  .admin-show-page .panel-body > section {
+    border: none;
+    margin: 0;
   }
 }
 
@@ -1367,7 +1381,7 @@ li.document {
     }
   }
 
-  .view-type .btn-group a {
+  .view-type .btn-group a, .view-type-group btn-group a {
     border-radius: 0;
     border-color: $gw-dark-grey;
 
