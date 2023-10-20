@@ -16,15 +16,6 @@
 @include font-face("Gibson VF", "/fonts/GibsonVF-Italic", 100 900, italic);
 $font-family-sans-serif-fallback: Helvetica, Arial, sans-serif;
 $font-family-sans-serif: "Gibson VF", $font-family-sans-serif-fallback;
-$gw-dark-blue: #033c5a;
-$gw-light-blue: #28659A;
-$gw-buff: #aa9868;
-$gw-hover-buff: #d9d0bb;
-$gw-hover-orange: #a75523;
-$mobile-breakpoint: 768px;
-$gw-white: #fff;
-$gw-dark-grey: #444;
-$gw-light-grey: #eee;
 
 // General
 html {
@@ -955,6 +946,7 @@ body.dashboard {
 
   .nav-tabs > li > a {
     border-radius: 0;
+    border-bottom: none;
 
     &:hover {
       background-color: transparent;

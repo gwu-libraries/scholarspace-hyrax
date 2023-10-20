@@ -1,0 +1,11 @@
+module Constants
+  GW_DARK_BLUE = '#033c5a'
+  GW_LIGHT_BLUE = '#28659A'
+  GW_BUFF = '#AA9868'
+  GW_HOVER_BUFF = '#D9D0BB'
+  GW_HOVER_ORANGE = '#A75523'
+  MOBILE_BREAKPOINT = '768px'
+  GW_WHITE = '#fff'
+  GW_DARK_GREY = '#444'
+  GW_LIGHT_GREY = '#eee'
+  end 
