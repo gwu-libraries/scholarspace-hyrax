@@ -703,51 +703,56 @@ The Dockerized version of the ScholarSpace app uses the following images:
 1. Install the [Docker engine](https://docs.docker.com/engine/install/ubuntu/).
 2. Edit `/etc/group` and add your user (e.g., `ubuntu`) to the `docker` group.
 3. For local development, 
-
-  - sudo adduser --disabled-password scholarspace
-  - Edit `/etc/group` and add your user to the `scholarspace` group.
-  - Run `id scholarspace` and note the values for `uid` and `gid`. You'll want to add those to the `.env` file (see below).
+    - `sudo adduser --disabled-password scholarspace`
+    - Edit `/etc/group` and add your user to the `scholarspace` group.
+    - Run `id scholarspace` and note the values for `uid` and `gid`. You'll want to add those to the `.env` file (see below).
 4. Create an `opt/scholarspace` directory and clone the `scholarspace-hyrax` repository inside it. 
 5. Create a directory for derivatives: `mkdir -p /opt/scholarspace/scholarspace-derivatives`.
-  - For development, also create the following (empty) directories:
-    ```
-    /opt/scholarspace/certs 
-    /opt/scholarspace/scholarspace-tmp 
-    /opt/scholarspace/scholarspace-minter 
-    ```
-  - Then `chown -R scholarspace:scholarspace /opt/scholarspace/`.
+    - For development, also create the following (empty) directories:
+      ```
+      /opt/scholarspace/certs 
+      /opt/scholarspace/scholarspace-tmp 
+      /opt/scholarspace/scholarspace-minter 
+      ```
+    - Then `chown -R scholarspace:scholarspace /opt/scholarspace/`.
 6. In `/opt/scholarspace/scholarspace-hyrax` run `cp example.env .env` to create the local environment file.
 7. Edit `.env` to add the following values:
-  - SCHOLARSPACE_UID, SCHOLARSPACE_GID (if linking in external code for development)
-  - HYRAX_DB_USER, HYRAX_DB_PASSWORD (for the Hyrax app database)
-  - CONTACT_EMAIL
-  - Variables under the `#Recaptch config` comment
-  - RAILS_ENV and PASSENGER_APP_ENV (if other than production)
-  - SMTP_USER and SMTP_PASSWORD
-  - SERVER_NAME (hostname for Nginx)
-  - SSL_ON (set to `true` if using)
-  - `SSL_` variables (if using)
-  - PERM_URL_BASE (used for persistent links)
-  - FEDORA_PG_USER, FEDORA_PG_PASSWORD, FEDORA_USER, FEDORA_PASSWORD (username and password for the Fedora db backend and the Fedora app, respectively)
+    - SCHOLARSPACE_UID, SCHOLARSPACE_GID (if linking in external code for development)
+    - HYRAX_DB_USER, HYRAX_DB_PASSWORD (for the Hyrax app database)
+    - CONTACT_EMAIL
+    - Variables under the `#Recaptch config` comment
+    - RAILS_ENV and PASSENGER_APP_ENV (if other than production)
+    - SMTP_USER and SMTP_PASSWORD
+    - SERVER_NAME (hostname for Nginx)
+    - SSL_ON (set to `true` if using)
+    - `SSL_` variables (if using)
+    - PERM_URL_BASE (used for persistent links) **Make sure to terminate the URL with a forward slash**.
+    - FEDORA_PG_USER, FEDORA_PG_PASSWORD, FEDORA_USER, FEDORA_PASSWORD (username and password for the Fedora db backend and the Fedora app, respectively)
 8. Adjust any other variables in the `.env` as needed.
 9. Edit `docker-compose.yml` as necessary.
-  - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `hyrax-pg` service definition.
-10. If migrating data, prepare the Solr core and Fedora database locally (see below).
+    - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `hyrax-pg` service definition.
+    - If not using SSL, comment out the lines for the key and cert directories under the `app-server` service definition.
+10. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/data/fedora` and `/var/solr/data` directories to store the Fedora files on the host (e.g,, `sudo mkdir -p /data/fedora`).
 11. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers.
 12. If migrating data, restore the postgres database dumps for Fedora and Hyrax (see below).
 13. The Hyrax server will not work without the value of `SECRET_KEY_BASE` being set in the `.env` file. To generate a secret key using Rails, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --create-secret"`. The `app-server-container-name` is probably `scholarspace-hyrax-app-server-1` but can be ascertained by running `docker ps`.
 13. Add the secret key string to the `.env` file and restart the containers: `docker compose down && docker-compose up -d`.
 14.  If migrating data, run the Rake job to perform database migrations: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --run-migrations"`. 
-  - If creating a new instance (no migrated data), run  `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --load-schema"`.
+  - If creating a new instance (no migrated data), run the following commands: 
+      ```
+      docker exec -it --user scholarspace [app-server-container-name] bash -lc "bash -lc "rails db:{drop,create,migrate}" 
+
+      docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:seed"
+      ```
+    The first command will load the database schema; the second will populate the database with a few test works.
 15. Visit the site in a web browser to trigger the Passenger app. (You won't see the compiled assets yet.)
 16. Compile assets: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --precompile-assets"`.
 17. (Production only): Restart the Nginx server: `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. (In development mode, the `app-init.sh` script restarts the server by default after running any of the above options.)
 18. The following additional steps may be useful in setting up a new instance (no migrated data), all of which can be run as options of the `app-init.sh` script:
-  - `--create-roles`: create default app roles (if they don't already exist)
-  - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
-  - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
- - `--create-sitemap`: enqueue the Rake task to generate a sitemap. **This command should be run in the Sidekiq container, not the app server container.
- - You can string multiple options together, provided you **enclose the entire string, including the path to the script, in quotation marks**.
+    - `--create-roles`: create default app roles (if they don't already exist)
+    - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
+    - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
+19. To generate a sitemap, run `docker exec -it --user scholarspace [sidekiq-container-name] bash -lc "docker/scripts/app-init.sh --create-sitemap"`. **This command should be run in the Sidekiq container, not the app server container.
 
 ## Data migration
 
