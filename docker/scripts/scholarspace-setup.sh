@@ -37,8 +37,8 @@ then
   if [ ! -s cron.tmp ]
   then
     # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
-    #echo "Creating cron job for sitemap"
-    #setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
+    echo "Creating cron job for sitemap"
+    setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
     rm cron.tmp
   fi
 fi

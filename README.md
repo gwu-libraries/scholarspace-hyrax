@@ -272,7 +272,7 @@ Log in to the application as the admin user.  Navigate to the Administrative pag
 ## Deployment tips (production)
 
 - When applying code changes with a persistent Docker volume (as used in production), it's necessary to delete both the image and the Docker volume that contains the old code. To facilitate this series of steps, you can run `script/redeploy-app.sh` from the `/opt/scholarspace/scholarspace-hyrax` directory (after making that script executable). This script will bring down all containers, delete the `scholarspace-app` image, delete the `app-hyrax` volume, and then restart all containers, rebuilding the image in the process. This script will also precompile the assets for the app as a last step.
-- To avoid typing a long string whenever you want to access the Hyrax app container, you can assign an alias, in the `~/.bash_alias` file, using the `docker ps` command to identify the app container, like so:
+- To avoid typing a long string whenever you want to access the Hyrax app container, you can assign an alias, in the `~/.bashrc` file, using the `docker ps` command to identify the app container, like so:
 `alias hyrax-container='docker exec -it --user scholarspace $(docker ps --filter "name=app" -q) bash -l'`
 - Likewise, an alias to restart Passenger in the app container (in production): 
 `alias restart-hyrax='docker exec $(docker ps --filter 'name=app' -q) bash -lc "passenger-config restart-app /"'` 
