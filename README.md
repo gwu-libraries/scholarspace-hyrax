@@ -11,92 +11,6 @@ Some convenient links to have handy:
 - [Hyrax project](http://hyr.ax/)
 - [Hyrax developer knowledge base](http://samvera.github.io/)
 
-
-  * Generate sitemap
-  ```
-  bundle exec rake gwss:sitemap_queue_generate RAILS_ENV=production
-  ```
-
-  * Set up cron job for sitemap generation
-
-  Run `whenever` to read `config/schedule.rb` and generate the recommended command with which to configure the cron job.
-  ```
-  bundle exec whenever
-  ```
-  Use the output provided by `whenever` to create a cron job.  A recommended approach is to (as the `scholarspace` user) run `crontab -e` to edit the cron jobs.  Your crontab might include a job that looks like this:
-  ```
-# m h  dom mon dow   command
-0 0 * * * /bin/bash -l -c 'cd /opt/scholarspace/scholarspace-hyrax && RAILS_ENV=production bundle exec rake gwss:sitemap_queue_generate --silent >> /opt/scholarspace/scholarspace-hyrax/log/wheneveroutput.log 2>&1'
-
- 
-  * Set up log rotation.  `production.log` can grow quite large, quite quickly, without any sort of compression and/or rotation configured.  A typical `logrotate` configuration would entail adding a configuration file into `/etc/logrotate.d/`.  For example, create a file in `/etc/logrotate.d/` called `scholarspace-hyrax` containing the following:
-  ```
-  /opt/scholarspace/scholarspace-hyrax/log/production.log {
-          daily
-          missingok
-          rotate 10
-          compress
-    delaycompress
-          notifempty
-          create 664 scholarspace scholarspace
-  }
-  ```
-
- 
-   
-### (NEEDS REFRESH - see [#83](https://github.com/gwu-libraries/scholarspace-hyrax/issues/83)) (Optional) Add Google Analytics
-
-* Enable Google Analytics in `config/initializers/hyrax.rb` by editing the following lines:
-
-         # Enable displaying usage statistics in the UI
-         # Defaults to FALSE
-         # Requires a Google Analytics id and OAuth2 keyfile.  See README for more info
-         config.analytics = true
-        
-         # Specify a Google Analytics tracking ID to gather usage statistics
-         config.google_analytics_id = 'UA-99999999-1'
-
-         # Specify a date you wish to start collecting Google Analytic statistics for.
-         config.analytic_start_date = DateTime.new(2015,11,10)
-
-* Copy the `analytics.yml.template` file in config
-
-        cp config/analytics.yml.template config/analytics.yml
-
-* Populate the `analyitcs.yml` file with your Google Analyitcs credentials.  See: https://github.com/samvera/hyrax/wiki/Hyrax-Management-Guide#analytics-and-usage-statistics for setup details.  Note that Hyrax seems to expect the .p12 file version of the private key, rather than the json version.
-
-* Set up a cron job to import GA stats nightly
-
-  Test the script to make sure that it can run successfully.  Make sure the script has execute permissions.  Your `analytics.yml` file must also be set up correctly in order for the script to succeed.
-
-          cd /opt/scholarspace/scholarspace-hyrax/script
-          sudo chmod +x import_stats.sh
-          ./import_stats.sh production
-
-  If it runs successfully, proceed with adding the cron job:
-
-          crontab -e
-
-  Add a line similar to the following:
-
-        0 5 * * * /opt/scholarspace/scholarspace-hyrax/script/import_stats.sh production
-
-### (NEEDS REFRESH - see [#11](https://github.com/gwu-libraries/scholarspace-hyrax/issues/11)) (Optional) Set up Shibboleth integration on the GW ScholarSpace server:
-
-  Please refer to https://github.com/gwu-libraries/shibboleth for the recommended steps for setting up the Shibboleth integration.
-
-* If Shibboleth has been setup on the GW ScholarSpace Server, enable Shibboleth in the appropriate environment file (ie: `config/environments/production.rb`):
-
-         config.shibboleth = true
-
-## Note about ghostscript and ImageMagick  
-
-Hyrax can be ficky about versions of ghostscript and ImageMagick.  A working combination seems to be:  ghostscript 9.26 with ImageMagick 6.9.7-4
-
------------------------------------------
-
-# Installation with Docker (beta)
-
 ## Docker images
 
 The Dockerized version of the ScholarSpace app uses the following images:
@@ -139,7 +53,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
 ### Sidekiq
 - This container uses the same image as the Hyrax app, but instead of running Nginx, it runs the Sidekiq gem. 
 
-## Setting up the server
+## Setting up the application
 
 1. Install the [Docker engine](https://docs.docker.com/engine/install/ubuntu/).
 2. Edit `/etc/group` and add your user (e.g., `ubuntu`) to the `docker` group.
@@ -279,7 +193,6 @@ Log in to the application as the admin user.  Navigate to the Administrative pag
 
 ## Development tips
 
-- The base image for the `app-server` image is derived from Ubuntu 20. When mapping the container to the external volume `opt/scholarspace`, which includes the project gems, I encountered a problem with the [ffi](https://github.com/ffi/ffi) gem, which depends on system C components, because my host machine was running Ubuntu 18. I resolved the issue by upgrading the host machine to Ubuntu 20 and reinstalling the project gems with `bundle install`.
 - To facilitate recreating the entire app & environment from scratch (fresh install), you could use a script like the following:
 ```
 #!/bin/bash
