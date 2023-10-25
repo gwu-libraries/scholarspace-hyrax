@@ -102,13 +102,12 @@ The Dockerized version of the ScholarSpace app uses the following images:
 14. The Hyrax server will not work without the value of `SECRET_KEY_BASE` being set in the `.env` file. To generate a secret key using Rails, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --create-secret"`. The `app-server-container-name` is probably `scholarspace-hyrax-app-server-1` but can be ascertained by running `docker ps`.
 15. Add the secret key string to the `.env` file and restart the containers: `docker compose down && docker-compose up -d`.
 16.  If migrating data, run the Rake job to perform database migrations: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --run-migrations"`. 
-  - If creating a new instance (no migrated data), run the following commands: 
+  - If creating a new instance (no migrated data), run the following command: 
       ```
       docker exec -it --user scholarspace [app-server-container-name] bash -lc "bash -lc "rails db:{drop,create,migrate}" 
 
-      docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:seed"
-      ```
-    The first command will load the database schema; the second will populate the database with a few test works.
+  - In addition, when setting up a development instance, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:seed"`
+    This command will populate the database with a few test works.
 17. Visit the site in a web browser to trigger the Passenger app. (You won't see the compiled assets yet.)
 18. Compile assets: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --precompile-assets"`.
 19. (Production only): Restart the Nginx server: `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. (In development mode, the `app-init.sh` script restarts the server by default after running any of the above options.)
