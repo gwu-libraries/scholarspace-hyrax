@@ -96,7 +96,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
 10. Edit `docker-compose.yml` as necessary.
     - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `hyrax-pg` service definition.
     - If not using SSL, comment out the lines for the key and cert directories under the `app-server` service definition.
-11. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/data/fedora` and `/var/solr/data` directories to store the Fedora files on the host (e.g,, `sudo mkdir -p /data/fedora`).
+11. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/data/fedora` and `/var/solr/data` directories to store the Fedora files on the host (e.g, `sudo mkdir -p /data/fedora`).
 12. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers.
 13. If migrating data, restore the postgres database dumps for Fedora and Hyrax (see below).
 14. The Hyrax server will not work without the value of `SECRET_KEY_BASE` being set in the `.env` file. To generate a secret key using Rails, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --create-secret"`. The `app-server-container-name` is probably `scholarspace-hyrax-app-server-1` but can be ascertained by running `docker ps`.
