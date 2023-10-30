@@ -11,6 +11,28 @@ body.dashboard {
       .breadcrumb {
         display: none;
       }
+
+      div.sort-toggle {
+        select, .view-type-group a {
+          padding: 6px 12px;
+          background-color: $gw-white;
+          border-radius: 0;
+          border: 1px solid $gw-dark-grey;
+          font-weight: 200;
+          border-collapse: collapse;
+        }
+
+        .view-type-group a:hover {
+          background-color: $gw-light-grey;
+        }
+
+        .view-type-group a.active {
+          background-color: $gw-light-blue;
+          box-shadow: none;
+          -webkit-box-shadow: none;
+          color: $gw-white;
+        }
+      }
     }
   
     #masthead {

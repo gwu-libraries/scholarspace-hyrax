@@ -54,12 +54,12 @@
 
       <!-- Works -->
       <section class="works-wrapper">
-        <h3><%= t('.item_count') %> (<%= @members_count %>)</h3>
         <% unless collection_search_parameters? %>
           <%= render 'show_add_items_actions', presenter: @presenter %>
         <% end %>
 
         <%= render 'sort_and_per_page', collection: @presenter %>
+        <h3><%= t('.item_count') %> (<%= @members_count %>)</h3>
         <%= render_document_index @member_docs %>
         <%= render 'hyrax/collections/paginate' %>
       </section>
