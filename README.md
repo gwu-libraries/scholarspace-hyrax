@@ -94,7 +94,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
         ```
 9. Adjust any other variables in the `.env` as needed.
 10. Edit `docker-compose.yml` as necessary.
-    - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `hyrax-pg` service definition.
+    - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `pg-hyrax` service definition.
     - If not using SSL, comment out the lines for the key and cert directories under the `app-server` service definition.
 11. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/data/fedora` and `/var/solr/data` directories to store the Fedora files on the host (e.g, `sudo mkdir -p /data/fedora`).
 12. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers.
