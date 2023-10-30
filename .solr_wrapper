@@ -5,5 +5,5 @@ instance_dir: tmp/solr-development
 persist: false
 dir: solr/conf/
 name: hydra-development
-version: 6.4.1
+version: 6.4.2
 verbose: true
