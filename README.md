@@ -8,7 +8,7 @@ The public application is accessible at [https://scholarspace.library.gwu.edu/](
 
 Some convenient links to have handy:
 - [Hyrax github repo](https://github.com/samvera/hyrax/)
-- [Hyrax project](http://hyr.ax/)
+- [Hyrax project](https://hyrax.samvera.org/)
 - [Hyrax developer knowledge base](http://samvera.github.io/)
 
 ## Docker images
