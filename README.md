@@ -79,6 +79,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
     - RAILS_ENV and PASSENGER_APP_ENV (if other than production)
     - SMTP_USER and SMTP_PASSWORD
     - SERVER_NAME (hostname for Nginx)
+    - NGINX_CERT_DIR and NGINX_KEY_DIR
     - SSL_ON (set to `true` if using)
     - `SSL_` variables (if using)
     - PERM_URL_BASE (used for persistent links) **Make sure to terminate the URL with a forward slash**.
@@ -97,14 +98,14 @@ The Dockerized version of the ScholarSpace app uses the following images:
     - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `pg-hyrax` service definition.
     - If not using SSL, comment out the lines for the key and cert directories under the `app-server` service definition.
 11. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/data/fedora` and `/var/solr/data` directories to store the Fedora files on the host (e.g, `sudo mkdir -p /data/fedora`).
-12. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers.
+12. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers. Note that the app is not yet ready to view and there may be some errors in the log at this point.
 13. If migrating data, restore the postgres database dumps for Fedora and Hyrax (see below).
 14. The Hyrax server will not work without the value of `SECRET_KEY_BASE` being set in the `.env` file. To generate a secret key using Rails, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --create-secret"`. The `app-server-container-name` is probably `scholarspace-hyrax-app-server-1` but can be ascertained by running `docker ps`.
-15. Add the secret key string to the `.env` file and restart the containers: `docker compose down && docker-compose up -d`.
+15. Add the secret key string to the `.env` file and restart the containers: `docker compose down && docker compose up -d`.
 16.  If migrating data, run the Rake job to perform database migrations: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --run-migrations"`. 
   - If creating a new instance (no migrated data), run the following command: 
       ```
-      docker exec -it --user scholarspace [app-server-container-name] bash -lc "bash -lc "rails db:{drop,create,migrate}" 
+      docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:{drop,create,migrate}" 
 
   - In addition, when setting up a development instance, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:seed"`
     This command will populate the database with a few test works.
