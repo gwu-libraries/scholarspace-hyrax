@@ -33,3 +33,4 @@ sidekiq_conf
 tomcat_conf
 apache_conf
 tmp
+docs
