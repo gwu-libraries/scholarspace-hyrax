@@ -205,3 +205,35 @@ docker volume rm $(docker volume ls -q)
 ```
 After bringing down the containers, run this script (with `sudo`) to clear out all persistent storage, including the Rails database, before bringing back up the containers. 
 
+## Running a Local Development Instance
+
+For development of the Rails application, ScholarSpace can be run locally. 
+
+### Requirements
+- Installation of [FITS](https://projects.iq.harvard.edu/fits/home)
+  - This can be found on the [download page](https://projects.iq.harvard.edu/fits/downloads)
+  - If you are installing via Homebrew, this can be installed by running `brew install fits` in a terminal.
+  - Once installed, modify the `config.fits_path` in `config/initializers/hyrax.rb` to point to the installation path for FITS, e.g. `"/usr/local/bin/fits-1.5.0/fits.sh"`. 
+    - This path can be found by running `which fits` in your terminal. 
+- Installation of [LibreOffice](https://www.libreoffice.org/)
+  - This can be found on the [download page](https://www.libreoffice.org/download/download-libreoffice/)
+  - If installing via Homebrew, this can be installed by running `brew install --cask libreoffice`
+  - Once installed, modify the  `config.libreoffice_path` in `config/initializers/hyrax.rb` to point to the installation path for LibreOffice
+    - This path can be found by running `which soffice` in your terminal. 
+
+### Configuration
+- In `config/environments/development.rb`, change the `config.active_job_queue_adapter` to `:inline` rather than `:sidekiq`
+- .env configuration:
+  - `RAILS_ENV=development`
+  - `SOLR_URL=http://localhost`
+  - `FEDORA_URL=https://localhost`
+
+### Preparing the Databases
+
+- In a terminal, run `rails db:{drop,create,migrate}` in order to drop the development database (if it exists), create a new development database, and run the database migrations. 
+
+### Launching the Server
+
+- In a terminal, run `rails hydra:server`
+- If this is the first time you have run this command, it will install an instance of Solr and an instance of Fedora4 in `tmp`
+
