@@ -145,3 +145,41 @@
       border-radius: 0;
     }
   }
+
+.dashboard {
+  #collection-edit-controls {
+    .input-group .form-control {
+      border-radius: 4px;
+    }
+    #s2id_collection_thumbnail_id, #s2id_collection_based_near {
+      height: unset;
+      border: none;
+      box-shadow: none;
+      -webkit-box-shadow: none;
+
+      .select2-choice,
+      .select2-container {
+        height: 3rem;
+        background-image: none;
+        padding: 0.5rem;
+
+        .select2-arrow b {
+          background-color: $gw-light-grey;
+          background-position: 0 0.5rem;
+        }
+      }
+    }
+
+    .additional-fields {
+      @extend .gw-btn;
+    }
+
+    #extended-terms {
+      margin-top: 1rem;
+    }
+  }
+
+  #select2-drop {
+    border: none;
+  }
+}
