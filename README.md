@@ -57,10 +57,8 @@ The Dockerized version of the ScholarSpace app uses the following images:
 
 1. Install the [Docker engine](https://docs.docker.com/engine/install/ubuntu/).
 2. Edit `/etc/group` and add your user (e.g., `ubuntu`) to the `docker` group.
-3. Create a ScholarSpace user account:
-    - `sudo adduser --disabled-password scholarspace`
-    - Edit `/etc/group` and add your user to the `scholarspace` group.
-    - Run `id scholarspace` and note the values for `uid` and `gid`. You'll want to add those to the `.env` file (see below).
+3. Run `id $USER` and note the values for `uid` and `gid`. Below you will add those to the `.env` file.  Note: You can create
+a separate user for the app, but it is not necessary.  That user will need to own /opt/scholarspace and subdirectories.
 4. Create an `opt/scholarspace` directory and clone the `scholarspace-hyrax` repository inside it. 
 5. Create a directory for derivatives: `mkdir -p /opt/scholarspace/scholarspace-derivatives`.
     - For development, also create the following (empty) directories:
@@ -69,7 +67,6 @@ The Dockerized version of the ScholarSpace app uses the following images:
       /opt/scholarspace/scholarspace-tmp 
       /opt/scholarspace/scholarspace-minter 
       ```
-    - Then `chown -R scholarspace:scholarspace /opt/scholarspace/`.
 6. In `/opt/scholarspace/scholarspace-hyrax` run `cp example.env .env` to create the local environment file.
 7. Edit `.env` to add the following values:
     - SCHOLARSPACE_GID, SCHOLARSPACE_UID 
