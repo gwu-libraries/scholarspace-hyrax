@@ -1,3 +1,7 @@
+LABEL org.opencontainers.image.source=https://github.com/gwu-libraries/scholarspace-hyrax
+LABEL org.opencontainers.image.description="Solr Docker image for our Hyrax application, GW ScholarSpace"
+LABEL org.opencontainers.image.licenses="MIT"
+
 FROM library/solr:6.4.2-alpine
 
 # Add Log4J security patch
