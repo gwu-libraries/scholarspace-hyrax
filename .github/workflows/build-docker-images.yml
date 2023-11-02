@@ -21,9 +21,9 @@ jobs:
       matrix:
         include:
           - dockerfile: Dockerfile
-            image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/scholarspace-app
+            image: ghcr.io/${{ github.repository_owner }}/scholarspace-app
           - dockerfile: Dockerfile-solr
-            image: ${{ env.REGISTRY }}/${{ github.repository_owner }}/scholarspace-hyrax-solr
+            image: ghcr.io/${{ github.repository_owner }}/scholarspace-hyrax-solr
     # Sets the permissions granted to the `GITHUB_TOKEN` for the actions in this job.
     permissions:
       contents: read
