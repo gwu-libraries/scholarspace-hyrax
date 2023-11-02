@@ -4,6 +4,10 @@ LABEL org.opencontainers.image.licenses="MIT"
 
 FROM phusion/passenger-ruby27:2.5.0
 
+LABEL org.opencontainers.image.source=https://github.com/gwu-libraries/scholarspace-hyrax
+LABEL org.opencontainers.image.description="Dockerized version of our Hyrax application, GW ScholarSpace"
+LABEL org.opencontainers.image.licenses="MIT"
+
 RUN apt update && apt install -y libpq-dev unzip clamav-daemon curl libreoffice libcurl4-openssl-dev ffmpeg gnupg2 libxml2 libxml2-dev wget
 
 RUN apt update && apt build-dep -y imagemagick
