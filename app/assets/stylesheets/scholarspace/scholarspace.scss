@@ -1,8 +1,5 @@
-/* ...
- *= require jquery-ui
- *= require select2
-*/
-
+@import "jquery-ui";
+@import "select2";
 @import "bootstrap-sprockets";
 @import "bootstrap-default-overrides";
 @import 'bootstrap';
