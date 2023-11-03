@@ -1,9 +1,9 @@
 development:
   adapter: solr
-  url:  <%=ENV['SOLR_URL'] || 'http://127.0.0.1' %>:<%= ENV['SOLR_PORT'] || ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_CORE_DEV'] || 'hydra-development' %>
+  url: <%=ENV['SOLR_URL'] || 'http://localhost' %>:<%= ENV['SOLR_PORT'] || '8983' %>/solr/<%= ENV['SOLR_CORE_DEV'] || 'hydra-development' %>
 test: &test
   adapter: solr
-  url: <%=ENV['SOLR_URL'] || 'http://127.0.0.1'%>:<%= ENV['SOLR_PORT'] || ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_CORE_TEST'] || 'hydra-test' %>
+  url: <%=ENV['SOLR_URL'] || 'http://localhost' %>:<%= ENV['SOLR_PORT'] || '8983' %>/solr/<%= ENV['SOLR_CORE_TEST'] || 'solr-core-test' %>
 production:
   adapter: solr
   url: <%=ENV['SOLR_URL']%>:<%= ENV['SOLR_PORT'] %>/solr/<%= ENV['SOLR_CORE_PROD'] %>
