@@ -207,7 +207,7 @@ After bringing down the containers, run this script (with `sudo`) to clear out a
 
 ## Local Development Installation
 
-For development of the Rails application, ScholarSpace can be run locally on macOS. This does not create a 1-to-1 replication of the production environment and does not use utilize Docker, but is intended as a minimal 
+ScholarSpace can be run locally on macOS. This does not create a 1-to-1 replication of the production environment and does not use utilize Docker, but is intended as a minimal setup for development of the Rails application.
 
 ### Requirements
 - Installation of [FITS 1.5.0](https://projects.iq.harvard.edu/fits/home)
@@ -230,6 +230,12 @@ For development of the Rails application, ScholarSpace can be run locally on mac
     # Path to the file derivatives creation tool
     config.libreoffice_path = "/usr/local/bin/soffice"
     ```
+
+- Installation of [PostgreSQL 15](https://www.postgresql.org/)
+  - If using Homebrew:
+   - `brew install postgresql@15`
+  - Manual install:
+   - [Download Page](https://www.postgresql.org/download/macosx/)
 
 ### Configuration
 - In `config/environments/development.rb`, change the `config.active_job_queue_adapter` to `:inline` rather than `:sidekiq`
