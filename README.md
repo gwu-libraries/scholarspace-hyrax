@@ -233,9 +233,9 @@ ScholarSpace can be run locally on macOS. This does not create a 1-to-1 replicat
 
 - Installation of [PostgreSQL 15](https://www.postgresql.org/)
   - If using Homebrew:
-   - `brew install postgresql@15`
+    - `brew install postgresql@15`
   - Manual install:
-   - [Download Page](https://www.postgresql.org/download/macosx/)
+    - [Download Page](https://www.postgresql.org/download/macosx/)
 
 ### Configuration
 - In `config/environments/development.rb`, change the `config.active_job_queue_adapter` to `:inline` rather than `:sidekiq`
