@@ -8,7 +8,7 @@ default: &default
   timeout: 5000
 
 development:
-  database: <%= ENV["HYRAX_DB_DEV"] %>
+  database: <%= ENV["HYRAX_DB_DEV"] || 'gwss_dev' %>
   <<: *default
 
 production:
@@ -16,5 +16,5 @@ production:
   <<: *default
 
 test:
-  database: <%= ENV["HYRAX_DB_TEST"] %>
+  database: <%= ENV["HYRAX_DB_TEST"] || 'gwss_test' %>
   <<: *default
