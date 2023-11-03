@@ -1,0 +1,46 @@
+// Styling accordions on about & help to match GW conventions
+
+.accordion {
+    .card {
+        margin: 1rem 0;
+        &:first-of-type {
+            margin-top: 0;
+        }
+
+        .card-header {
+            padding: 0.3rem;
+            background-color: $gw-light-blue;
+            button {
+                padding: 0.5rem;
+                font-size: 1rem;
+                font-weight: 200;
+                color: $gw-white;
+
+                &::before {
+                    float: left;
+                    width: 20px;
+                    height: 20px;
+                    margin-right: 0.5rem;
+                    content: "";
+                    border: 2px solid $gw-hover-buff;
+                    border-radius: 50%;
+                    background-image: linear-gradient($gw-hover-buff,$gw-hover-buff),none;
+                    background-repeat: no-repeat,no-repeat;
+                    background-position: center center,center center;
+                    background-size: 10px 2px,2px 10px;
+                }
+
+                &.collapsed {
+                    &::before {
+                        content: "";
+                        background-image: linear-gradient($gw-hover-buff,$gw-hover-buff),linear-gradient($gw-hover-buff,$gw-hover-buff);
+                    }
+                }
+            }
+        }
+
+        .card-body {
+            margin: 1rem 0;
+        }
+    }
+}
