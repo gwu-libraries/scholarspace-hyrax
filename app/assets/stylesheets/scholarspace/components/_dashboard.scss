@@ -1,5 +1,15 @@
 // dashboard styling
 
+// this is a confusing override to even out borders
+.dashboard .panel {
+  border: 1px solid #ddd;
+}
+
+.dashboard .panel.panel-default.labels {
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
 body.dashboard {
     padding-top: 7.8em;
     padding-top: 0;
@@ -101,7 +111,6 @@ body.dashboard {
     .nav-tabs {
       margin-top: -2.75rem;
       padding: 0;
-      margin-left: -1px;
     }
   
     .nav-tabs > li > a {
@@ -114,6 +123,10 @@ body.dashboard {
         border-top: 2px solid transparent;
         border-bottom: none;
       }
+    }
+
+    .nav-tabs > li {
+      margin-bottom: -2px;
     }
   
     .nav-tabs > li.active > a,
@@ -153,4 +166,3 @@ body.dashboard {
       margin: 0;
     }
   }
-  

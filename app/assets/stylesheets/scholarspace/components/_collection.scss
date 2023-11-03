@@ -148,6 +148,10 @@
 
 .dashboard {
   #collection-edit-controls {
+    .nav-tabs > li {
+      margin-left: -1px;
+    }
+
     .input-group .form-control {
       border-radius: 4px;
     }
