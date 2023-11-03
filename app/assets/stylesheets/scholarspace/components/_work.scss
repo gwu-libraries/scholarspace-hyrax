@@ -1,0 +1,55 @@
+// Individual work page
+
+.work-type {
+    .work-type-tag {
+      margin: 0;
+      font-weight: 200;
+      font-size: 1rem;
+    }
+  
+    .panel {
+      border: none;
+      box-shadow: none;
+  
+      .panel-heading {
+        background-color: transparent;
+        border: none;
+        padding: 0;
+      }
+  
+      .work-preview {
+        background-color: $gw-light-grey;
+        padding: 1em;
+      }
+  
+      .table-borderless {
+        display: flex;
+  
+        thead {
+          display: none;
+        }
+  
+        tbody {
+          width: 100%;
+  
+          tr {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+          }
+        }
+  
+        @media (min-width: $mobile-breakpoint) {
+          display: table;
+  
+          thead {
+            display: revert;
+          }
+  
+          tbody tr {
+            display: revert;
+          }
+        }
+      }
+    }
+  }

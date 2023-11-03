@@ -1,0 +1,17 @@
+//Mixins
+
+@mixin font-face($family, $src, $weight, $style) {
+    @font-face {
+      font-family: $family;
+      src:
+        url("#{$src}.woff2") format("woff2"),
+        url("#{$src}.woff") format("woff");
+      font-weight: $weight;
+      font-style: $style;
+      font-display: swap;
+    }
+  }
+  
+  @include font-face("Gibson VF", "/fonts/GibsonVF-Regular", 100 900, normal);
+  @include font-face("Gibson VF", "/fonts/GibsonVF-Italic", 100 900, italic);
+  

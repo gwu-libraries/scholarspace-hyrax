@@ -1,0 +1,108 @@
+  // Footer styles
+  footer, .footer {
+    position: absolute;
+    bottom: 0;
+    height: 17.1rem;
+    width: 100%;
+  
+    .footer-lower {
+      height: 100%;
+      display: flex;
+      align-items: center;
+  
+      .login-link {
+        text-align: center;
+  
+        a {
+          color: $gw-white;
+          background-color: $gw-light-blue;
+          padding: 0.3em 0.8em;
+          border-radius: 3px;
+          text-decoration: none;
+    
+          &:hover {
+            background-color: $gw-buff;
+            color: $gw-dark-grey;
+          }
+        }
+      }
+  
+      .footer-wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+  
+        #footer-links {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+  
+          .navbar-text {
+            margin-top: 10px;
+            margin-bottom: 10px;
+          }
+  
+          div {
+            ul {
+              padding: 0;
+              display: flex;
+              flex-direction: row;
+              align-items: center;
+              margin-top: 0;
+            }
+  
+            &:last-of-type ul {
+              flex-direction: column;
+              align-items: center;
+  
+              li {
+                margin-top: 0;
+                text-align: center;
+                max-width: 40em;
+              }
+            }
+          }
+        }
+    }
+  
+      .logo img {
+        width: 8rem;
+      }
+    }
+  
+    @media (min-width: $mobile-breakpoint) {
+      height: 9.5rem;
+  
+      .footer-lower {
+  
+        .login-link {
+          text-align: end;
+        }
+  
+      .footer-wrapper {
+        flex-direction: row;
+  
+        #footer-links {
+          align-items: end;
+  
+          div {
+            ul {
+              margin: 0;
+              margin-top: 0.175em;
+              flex-direction: row;
+            }
+  
+            &:last-of-type ul {
+              align-items: end;
+  
+              li {
+                text-align: end;
+              }
+            }
+          }
+        }
+      }
+    }
+    }
+  }

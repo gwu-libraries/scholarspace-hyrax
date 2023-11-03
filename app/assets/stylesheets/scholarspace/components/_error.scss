@@ -1,0 +1,27 @@
+// Error page styling
+
+h2.broken-links {
+    margin-top: 2rem;
+  }
+  
+  .options {
+    display: flex;
+    flex-direction: column;
+  
+    h3 {
+      margin: 0.3rem;
+    }
+  
+    .option {
+      padding: 0.5rem;
+      width: 100%;
+    }
+  
+    @media (min-width: $mobile-breakpoint) {
+      flex-direction: row;
+  
+      .option {
+        width: 33.3%;
+      }
+    }
+  }

@@ -1,0 +1,168 @@
+// dashboard styling
+
+// this is a confusing override to even out borders
+.dashboard .panel {
+  border: 1px solid #ddd;
+}
+
+.dashboard .panel.panel-default.labels {
+  border: none;
+  border-top: 1px solid #ddd;
+}
+
+body.dashboard {
+    padding-top: 7.8em;
+    padding-top: 0;
+  
+    .main-content {
+      padding-top: 1rem;
+  
+      // ideally will change this method to removing breadcrumbs on all controllers eventually
+      .breadcrumb {
+        display: none;
+      }
+
+      div.sort-toggle {
+        select, .view-type-group a {
+          padding: 6px 12px;
+          background-color: $gw-white;
+          border-radius: 0;
+          border: 1px solid $gw-dark-grey;
+          font-weight: 200;
+          border-collapse: collapse;
+        }
+
+        .view-type-group a:hover {
+          background-color: $gw-light-grey;
+        }
+
+        .view-type-group a.active {
+          background-color: $gw-light-blue;
+          box-shadow: none;
+          -webkit-box-shadow: none;
+          color: $gw-white;
+        }
+      }
+    }
+  
+    #masthead {
+      position: relative;
+    }
+  
+    .image-masthead {
+      margin-bottom: 0;
+    }
+  
+    .sidebar {
+      background-color: $gw-dark-blue;
+  
+      .profile {
+        background-color: $gw-buff;
+      }
+  
+      .nav > li > a:hover, .nav > li.active > a {
+        color: $gw-white;
+        background-color: $gw-light-blue;
+      }
+    }
+  
+    .panel {
+      border-radius: 0;
+  
+      label {
+        font-weight: 400;
+      }
+  
+      .panel-title {
+        color: $gw-white;
+        font-size: 1.125em;
+        font-weight: 400;
+      }
+  
+      .panel-heading {
+        border-bottom: none;
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+      }
+  
+      .btn {
+        padding: 0.3rem 0.75rem;
+        border-radius: 0.25rem;
+        font-size: 1em;
+        font-weight: 200;
+        border: 2px solid rgba(0,0,0, 0);
+      }
+  
+      #search-submit-header, #collection_submit {
+        padding: 0.4rem;
+        margin-left: 0.3rem;
+  
+        .glyphicon-search::before {
+          font-size: 1rem;
+        }
+      }
+    }
+  
+    .panel-default > .panel-heading {
+      color: $gw-white;
+      background-color: $gw-dark-blue;
+    }
+  
+    .nav-tabs {
+      margin-top: -2.75rem;
+      padding: 0;
+    }
+  
+    .nav-tabs > li > a {
+      border-radius: 0;
+      border-bottom: none;
+  
+      &:hover {
+        background-color: transparent;
+        text-decoration: underline;
+        border-top: 2px solid transparent;
+        border-bottom: none;
+      }
+    }
+
+    .nav-tabs > li {
+      margin-bottom: -2px;
+    }
+  
+    .nav-tabs > li.active > a,
+    .nav-tabs > li.active > a:hover {
+      background-color: $gw-white;
+      text-decoration: none;
+      border-top: 1px solid #ddd;
+      border-bottom: none;
+    }
+  
+    .dropzone, .table th,
+    .permissions-add-group-label,
+    .permissions-add-user-label,
+    .list-filters-label,
+    .badge {
+      font-weight: 400;
+    }
+  
+    td.toggle input[type="submit"] {
+      padding: 0.3rem 0.5rem;
+      box-shadow: none;
+      font-size: 0.9rem;
+      border: 1px solid $gw-light-blue !important;
+    }
+  
+    h2.collection-title {
+      color: #fff;
+    }
+  
+    .coll-search-row {
+      display: flex;
+      justify-content: center;
+    }
+  
+    .admin-show-page .panel-body > section {
+      border: none;
+      margin: 0;
+    }
+  }
