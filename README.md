@@ -237,6 +237,14 @@ ScholarSpace can be run locally on macOS. This does not create a 1-to-1 replicat
   - Manual install:
     - [Download Page](https://www.postgresql.org/download/macosx/)
 
+- An installed version of Ruby 2.7.3
+  - This can achieved through [RBENV](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/)
+
+### Clone and Setup Repository
+- Clone this repository to your local machine.
+- Navigate to the folder where installed, and ensure you are running Ruby 2.7.3
+- Run `bundle` in order to install ruby gems from the Gemile
+
 ### Configuration
 - In `config/environments/development.rb`, change the `config.active_job_queue_adapter` to `:inline` rather than `:sidekiq`
 - Minimal .env configuration:
