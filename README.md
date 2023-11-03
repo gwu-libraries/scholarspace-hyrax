@@ -205,28 +205,44 @@ docker volume rm $(docker volume ls -q)
 ```
 After bringing down the containers, run this script (with `sudo`) to clear out all persistent storage, including the Rails database, before bringing back up the containers. 
 
-## Running a Local Development Instance
+## Local Development Installation
 
-For development of the Rails application, ScholarSpace can be run locally. 
+For development of the Rails application, ScholarSpace can be run locally on macOS. This does not create a 1-to-1 replication of the production environment and does not use utilize Docker, but is intended as a minimal 
 
 ### Requirements
-- Installation of [FITS](https://projects.iq.harvard.edu/fits/home)
-  - This can be found on the [download page](https://projects.iq.harvard.edu/fits/downloads)
-  - If you are installing via Homebrew, this can be installed by running `brew install fits` in a terminal.
-  - Once installed, modify the `config.fits_path` in `config/initializers/hyrax.rb` to point to the installation path for FITS, e.g. `"/usr/local/bin/fits-1.5.0/fits.sh"`. 
-    - This path can be found by running `which fits` in your terminal. 
+- Installation of [FITS 1.5.0](https://projects.iq.harvard.edu/fits/home)
+  - Manual install: 
+    - [Download Page](https://projects.iq.harvard.edu/fits/downloads)
+  - Once installed, modify the `config.fits_path` in `config/initializers/hyrax.rb` to point to the installation path for FITS, i.e.
+    ```ruby
+    # Path to the file characterization tool
+    config.fits_path = "/usr/local/bin/fits-1.5.0/fits.sh"
+    ```
+
 - Installation of [LibreOffice](https://www.libreoffice.org/)
-  - This can be found on the [download page](https://www.libreoffice.org/download/download-libreoffice/)
-  - If installing via Homebrew, this can be installed by running `brew install --cask libreoffice`
-  - Once installed, modify the  `config.libreoffice_path` in `config/initializers/hyrax.rb` to point to the installation path for LibreOffice
-    - This path can be found by running `which soffice` in your terminal. 
+  - If using Homebrew:
+    - `brew install --cask libreoffice`
+  - Manual install:
+    - [Download Page](https://www.libreoffice.org/download/download-libreoffice/)
+  - Once installed, modify the  `config.libreoffice_path` in `config/initializers/hyrax.rb` to point to the installation path for LibreOffice, i.e.
+      - If installed via Homebrew, this path can be found by running `which soffice` in your terminal. 
+    ```ruby
+    # Path to the file derivatives creation tool
+    config.libreoffice_path = "/usr/local/bin/soffice"
+    ```
 
 ### Configuration
 - In `config/environments/development.rb`, change the `config.active_job_queue_adapter` to `:inline` rather than `:sidekiq`
-- .env configuration:
-  - `RAILS_ENV=development`
-  - `SOLR_URL=http://localhost`
-  - `FEDORA_URL=https://localhost`
+- Minimal .env configuration:
+    ```ruby
+    RAILS_ENV=development
+    DEV_ADMIN_USER_EMAIL='admin@example.com'
+    DEV_ADMIN_USER_PASSWORD='password'
+    CURATION_CONCERNS=gw_work,gw_etd,gw_journal_issue
+    PERM_URL_BASE = "a-permanent-url/"
+    ACCESSIBILITY_URL="https://library.gwu.edu/found-problem?type_of_problem=a11y&a11y_problem_type=item&url=%{gwss_item_url}"
+    ```
+- You can set additional ENV options, but these are the only environment variables currently necessary for running in local development mode - all others can be commented out or deleted. 
 
 ### Preparing the Databases
 
@@ -235,5 +251,18 @@ For development of the Rails application, ScholarSpace can be run locally.
 ### Launching the Server
 
 - In a terminal, run `rails hydra:server`
-- If this is the first time you have run this command, it will install an instance of Solr and an instance of Fedora4 in `tmp`
+- If this is the first time you have run this command, it will install an instance of Solr and an instance of Fedora4 in `tmp`, and create directories in `tmp` for derivatives and uploads.
+- Once Solr and Fedora are installed, this will launch the Rails application (port `3000` by default), Solr (port `8983` by default), and Fedora (port `8984` by default).
+- At this point, you should be able to load the application by visiting `localhost:3000` in your browser.
 
+### Seeding the Database
+
+- *With the Rails, Solr, and Fedora processes running*, run `rails db:seed`
+  - This can be accomplished by opening another terminal window in the same directory. 
+- Seeding the database creates:
+  - Default admin and content-admin roles
+  - An admin user, with credentials specified with `DEV_ADMIN_USER_EMAIL` and `DEV_ADMIN_USER_PASSWORD`, and a content-admin user with username `content-admin@example.com` and password `password`.
+  - Default admin set, admin set collection type, and user collection type.
+  - ETDs admin set
+  - A journal collection (`GW Undergraduate Review`)
+  - Uploads and processes files contained in `spec/fixtures` to create demo works. You can add or remove files from the `authenticated_etds`, `journal_collection`, `private_etds`, and `public_etds` folders to change the demonstration files. 
