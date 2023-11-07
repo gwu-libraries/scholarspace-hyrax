@@ -1,11 +1,12 @@
 // Styling accordions on about & help to match GW conventions
+.collapse,
+.collapsing {
+  max-height: 50vh;
+}
 
 .accordion {
     .card {
-        margin: 1rem 0;
-        &:first-of-type {
-            margin-top: 0;
-        }
+        padding-bottom: 1rem;
 
         .card-header {
             padding: 0.3rem;
@@ -40,7 +41,7 @@
         }
 
         .card-body {
-            margin: 1rem 0;
+            padding-top: 1rem;
         }
     }
 }
