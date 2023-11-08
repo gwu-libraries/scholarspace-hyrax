@@ -45,14 +45,17 @@
           margin-top: 1rem;
           width: 100%;
   
-          .btn {
+          .btn, #collection_submit {
             width: 100%;
             border-radius: 0;
-            border: 1px solid $gw-dark-grey;
-            background-color: #EFEFEF;
-            color: $gw-dark-grey;
+            padding: 0.4rem;
+            margin-left: 0;
+        
+              .glyphicon-search::before {
+                font-size: 1rem;
+              }
+            }
           }
-        }
   
         @media (min-width: $mobile-breakpoint) {
           flex-direction: row;
@@ -63,7 +66,7 @@
   
             .btn {
               width: auto;
-              margin-left: 1em;
+              margin-left: 1rem;
             }
           }
         }
