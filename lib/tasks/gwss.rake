@@ -290,4 +290,20 @@ namespace :gwss  do
   task reindex_everything: :environment do
     ActiveFedora::Base.reindex_everything
   end
+
+  desc "Apply ContentBlock changes"
+  task apply_contentblock_changes: :environment do
+    featured_researcher_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/featured_researcher.html")
+    about_page_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/about_page.html")
+    help_page_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/help_page.html")
+
+    ContentBlock.find_or_create_by(name: "header_background_color").update!(value: "#FFFFFF")
+    ContentBlock.find_or_create_by(name: "header_text_color").update!(value: "#444444")
+    ContentBlock.find_or_create_by(name: "link_color").update!(value: "#28659A")
+    ContentBlock.find_or_create_by(name: "footer_link_color").update!(value: "#FFFFFF")
+    ContentBlock.find_or_create_by(name: "primary_buttom_background_color").update!(value: "#28659A")
+    ContentBlock.find_or_create_by(name: "featured_researcher").update!(value: featured_researcher_html.read)
+    ContentBlock.find_or_create_by(name: "about_page").update!(value: about_page_html.read)
+    ContentBlock.find_or_create_by(name: "help_page").update!(value: help_page_html.read)
+  end
 end
