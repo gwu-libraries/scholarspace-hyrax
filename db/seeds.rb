@@ -276,18 +276,16 @@ end
 
 # -- Styling and content blocks
 
+featured_researcher_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/featured_researcher.html")
+about_page_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/about_page.html")
+help_page_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/help_page.html")
+
 ContentBlock.find_or_create_by(name: "header_background_color").update!(value: "#FFFFFF")
 ContentBlock.find_or_create_by(name: "header_text_color").update!(value: "#444444")
 ContentBlock.find_or_create_by(name: "link_color").update!(value: "#28659A")
 ContentBlock.find_or_create_by(name: "footer_link_color").update!(value: "#FFFFFF")
 ContentBlock.find_or_create_by(name: "primary_buttom_background_color").update!(value: "#28659A")
 
-featured_researcher_text = "Established in 2016, the GW Undergraduate Review (GWUR) is the premier publication of research from undergraduate students at George Washington University. Its mission is to promote undergraduate research on GW’s campus through events, workshops, and the annual publication of a peer-reviewed journal. GWUR is entirely student-run and is supported by the Office of the Vice Provost for Research and GW Libraries and Academic Innovation."
-marketing_text = "Wow look at this, it is marketing text! This little text went to market. I don't know what is supposed to go here, sorry."
-announcement_text = "This is an announcement! Hello!"
-
-ContentBlock.find_or_create_by(name: "featured_researcher").update!(value: featured_researcher_text)
-ContentBlock.find_or_create_by(name: "marketing_text").update!(value: marketing_text)
-
-#TO-DO
-# figure out how to set the works to go in the etds admin set, rather than the default admin set
+ContentBlock.find_or_create_by(name: "featured_researcher").update!(value: featured_researcher_html.read)
+ContentBlock.find_or_create_by(name: "about_page").update!(value: about_page_html.read)
+ContentBlock.find_or_create_by(name: "help_page").update!(value: help_page_html.read)

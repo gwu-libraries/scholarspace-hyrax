@@ -1,5 +1,9 @@
 FROM phusion/passenger-ruby27:2.5.0
 
+LABEL org.opencontainers.image.source=https://github.com/gwu-libraries/scholarspace-hyrax
+LABEL org.opencontainers.image.description="Dockerized version of our Hyrax application, GW ScholarSpace"
+LABEL org.opencontainers.image.licenses="MIT"
+
 RUN apt update && apt install -y libpq-dev unzip clamav-daemon curl libreoffice libcurl4-openssl-dev ffmpeg gnupg2 libxml2 libxml2-dev wget
 
 RUN apt update && apt build-dep -y imagemagick
@@ -9,15 +13,15 @@ RUN apt install -y checkinstall libwebp-dev libopenjp2-7-dev librsvg2-dev libde2
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 RUN cd /opt && \
-   wget https://www.imagemagick.org/archive/releases/ImageMagick-7.1.1-13.tar.gz && \
-   tar xzvf ImageMagick-7.1.1-13.tar.gz && \
+   wget https://www.imagemagick.org/archive/releases/ImageMagick-7.1.1-13.tar.xz && \
+   tar xf ImageMagick-7.1.1-13.tar.xz && \
    cd ImageMagick-7.1.1-13 && \
    ./configure --enable-shared --with-modules --with-gslib && \
    make && \
    make install && \
    ldconfig /usr/local/lib && \
    identify -version && \
-   rm /opt/ImageMagick-7.1.1-13.tar.gz
+   rm /opt/ImageMagick-7.1.1-13.tar.xz
 
 # FITS install
 WORKDIR /usr/local/bin
