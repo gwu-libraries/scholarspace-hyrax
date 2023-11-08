@@ -103,7 +103,7 @@ a separate user for the app, but it is not necessary.  That user will need to ow
   - If creating a new instance (no migrated data), run the following command: 
       ```
       docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:{drop,create,migrate}" 
-
+      ```
   - In addition, when setting up a development instance, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:seed"`
     This command will populate the database with a few test works.
 17. Visit the site in a web browser to trigger the Passenger app. (You won't see the compiled assets yet.)

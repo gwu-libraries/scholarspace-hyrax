@@ -8,6 +8,18 @@ namespace :gwss  do
   #  Rails.logger
   #end
 
+  desc "Deletes null keywords from GwEtds"
+  task "delete_null_keywords" => :environment do
+    ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd NOT keyword_tesim:*", fl: [:id], rows: 1_000_000)
+    ids["response"]["docs"].each do |doc|
+      work = GwEtd.find(doc["id"])
+      if (work.keyword.length == 1) and (work.keyword[0] == "") 
+        work.keyword = []
+        work.save
+      end
+    end
+  end
+
   desc "Queues a job to (re)generate the sitemap.xml"
   task "sitemap_queue_generate" => :environment do
     SitemapRegenerateJob.perform_later
