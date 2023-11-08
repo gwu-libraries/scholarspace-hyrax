@@ -13,14 +13,13 @@
 body.dashboard {
     padding-top: 7.8em;
     padding-top: 0;
+
+    .breadcrumb {
+      border-radius: 0;
+    }
   
     .main-content {
       padding-top: 1rem;
-  
-      // ideally will change this method to removing breadcrumbs on all controllers eventually
-      .breadcrumb {
-        display: none;
-      }
 
       div.sort-toggle {
         select, .view-type-group a {
@@ -120,6 +119,7 @@ body.dashboard {
       &:hover {
         background-color: transparent;
         text-decoration: underline;
+        border-color: transparent;
         border-top: 2px solid transparent;
         border-bottom: none;
       }
@@ -133,6 +133,7 @@ body.dashboard {
     .nav-tabs > li.active > a:hover {
       background-color: $gw-white;
       text-decoration: none;
+      border-color: #ddd;
       border-top: 1px solid #ddd;
       border-bottom: none;
     }
