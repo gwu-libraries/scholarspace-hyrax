@@ -1,7 +1,6 @@
 // Styling accordions on about & help to match GW conventions
-.collapse,
-.collapsing {
-  max-height: 50vh;
+.accordion-title {
+    font-weight: 400;
 }
 
 .accordion {
