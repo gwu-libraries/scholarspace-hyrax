@@ -123,6 +123,10 @@ body.dashboard {
         border-top: 2px solid transparent;
         border-bottom: none;
       }
+
+      &:focus {
+        background-color: transparent;
+      }
     }
 
     .nav-tabs > li {
