@@ -306,4 +306,37 @@ namespace :gwss  do
     ContentBlock.find_or_create_by(name: "about_page").update!(value: about_page_html.read)
     ContentBlock.find_or_create_by(name: "help_page").update!(value: help_page_html.read)
   end
+
+  desc "Launch testing server"
+  task launch_test_server: :environment do
+    solr_defaults = { 
+                      instance_dir: "tmp/solr-development",
+                      port: 8983,
+                      verbose: true,
+                      managed: true,
+                      persist: false,
+                      dir: "solr/conf",
+                      name: "gwss-solr-test",
+                      version: "6.4.2",
+                    }
+
+    fedora_defaults = { 
+                        instance_dir: "tmp/fcrepo4",
+                        port: 8986,
+                        verbose: true,
+                        managed: true,
+                        persist: false,
+                        enable_jms: false,
+                        fcrepo_home_dir: "tmp/fcrepo-test-data",
+                        version: "4.7.5"
+                      }
+
+    SolrWrapper.wrap(solr_defaults) do |solr|
+      solr.with_collection(solr_defaults) do
+        FcrepoWrapper.wrap(fedora_defaults) do |fedora|
+          Rake::Task['spec'].invoke
+        end
+      end
+    end
+  end
 end
