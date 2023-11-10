@@ -34,3 +34,4 @@ tomcat_conf
 apache_conf
 tmp
 docs
+coverage
