@@ -51,9 +51,10 @@ services:
     logging: 
       <<: *logging
   solr:
-    build: 
-      context: .
-      dockerfile: Dockerfile-solr
+    image: ghcr.io/gwu-libraries/scholarspace-hyrax-solr:master
+    #build: 
+    #  context: .
+    #  dockerfile: Dockerfile-solr
     hostname: solr-hyrax
     environment:
       - SOLR_CORE_DEV=$SOLR_CORE_DEV
@@ -79,11 +80,12 @@ services:
     logging: 
       <<: *logging
   sidekiq:
-    image: scholarspace-app
-    build: 
-      context: .
-      args:
-        - RAILS_ENV
+    image: ghcr.io/gwu-libraries/scholarspace-app:master
+    #image: scholarspace-app
+    #build: 
+    #  context: .
+    #  args:
+    #    - RAILS_ENV
     command: ["bash", "-l", "docker/scripts/scholarspace-setup.sh", "sidekiq"]
     depends_on: 
       - redis
@@ -99,7 +101,8 @@ services:
     logging: 
       <<: *logging
   app-server:
-    image: scholarspace-app
+    image: ghcr.io/gwu-libraries/scholarspace-app:master
+    #image: scholarspace-app
     depends_on: 
       - solr
       - pg-hyrax
@@ -116,7 +119,7 @@ services:
      - ${NGINX_KEY_DIR}:/opt/scholarspace/keys
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
      - app-hyrax:/opt/scholarspace          # For production
-     #- /opt/scholarspace:/opt/scholarspace # For development
+    # - /opt/scholarspace:/opt/scholarspace # For development
     restart: always
     logging: 
       <<: *logging
