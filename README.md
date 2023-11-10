@@ -95,7 +95,7 @@ a separate user for the app, but it is not necessary.  That user will need to ow
     - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `pg-hyrax` service definition.
     - If not using SSL, comment out the lines for the key and cert directories under the `app-server` service definition.
 11. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/data/fedora` and `/var/solr/data` directories to store the Fedora files on the host (e.g, `sudo mkdir -p /data/fedora`).
-12. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers. Note that the app is not yet ready to view and there may be some errors in the log at this point.
+12. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers. Note that the app is not yet ready to view and there may be some errors in the log at this point. If you get an authentication error, see the section on [authenticating to the GitHub Container Registry](#authenticating-to-ghcr) below. 
 13. If migrating data, restore the postgres database dumps for Fedora and Hyrax (see below).
 14. The Hyrax server will not work without the value of `SECRET_KEY_BASE` being set in the `.env` file. To generate a secret key using Rails, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --create-secret"`. The `app-server-container-name` is probably `scholarspace-hyrax-app-server-1` but can be ascertained by running `docker ps`.
 15. Add the secret key string to the `.env` file and restart the containers: `docker compose down && docker compose up -d`.
@@ -107,14 +107,44 @@ a separate user for the app, but it is not necessary.  That user will need to ow
   - In addition, when setting up a development instance, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:seed"`
     This command will populate the database with a few test works.
 17. Visit the site in a web browser to trigger the Passenger app. (You won't see the compiled assets yet.)
-18. Compile assets: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --precompile-assets"`.
+18. Add initial content blocks and precompile assets: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --apply-content-blocks --precompile-assets"`.
 19. (Production only): Restart the Nginx server: `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. (In development mode, the `app-init.sh` script restarts the server by default after running any of the above options.)
 20. The following additional steps may be useful in setting up a new instance (no migrated data), all of which can be run as options of the `app-init.sh` script:
     - `--create-roles`: create default app roles (if they don't already exist)
     - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
     - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
-21. To generate a sitemap, run `docker exec -it --user scholarspace [sidekiq-container-name] bash -lc "docker/scripts/app-init.sh --create-sitemap"`. **This command should be run in the Sidekiq container, not the app server container.
+21. To generate a sitemap, run `docker exec -it --user scholarspace [sidekiq-container-name] bash -lc "docker/scripts/app-init.sh --create-sitemap"`. **This command should be run in the Sidekiq container**, not the app server container.
 
+## Redeployment
+
+For convenience with prod deployments, use the redeploy script:
+```
+sudo chmod u+x script/redeploy-app.sh 
+./script/redeploy-app.sh
+```
+This script will perform the following actions:
+ - Gracefully stop and remove all containers
+ - Delete the ScholarSpace and Solr custom images
+ - Delete the Docker volume associated with the ScholarSpace image
+ - Restart the containers
+ - Precompile the app's assets
+
+It will still be necessary to restart the app container after visiting the site (in order to the compiled assets to be visible).
+
+## Authenticating to GHCR
+
+The ScholarSpace app and Solr Docker images are hosted on GitHub's Container Registry. Since the images are not public (by GW policy), pulling images from the registry requires user authentication with a personal access token. 
+
+1. Log into your GitHub account and visit [https://github.com/settings/tokens](https://github.com/settings/tokens) (under Developer Settings). 
+2. Either select an existing access token or create a new one. 
+3. Grant the token the `write:packages` or (minimally) `read:packages` permission.
+4. Once you have copied your token to a secure location, select the option to Configure SSO on the token.
+5. At the command line on the server where you're install ScholarSpace, do the following steps to log into the GHCR, using your GitHub username and the token you have created.
+```
+export CR_PAT=[YOUR_TOKEN]
+echo $CR_PAT | docker login ghcr.io -u [USERNAME] --password-stdin
+```
+6. Now run `docker compose up -d`.
 
 ## Data migration
 

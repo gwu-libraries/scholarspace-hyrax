@@ -37,6 +37,9 @@ do
         "--create-sitemap")
             echo "Generating sitemap"
             bundle exec rake gwss:sitemap_queue_generate ;;
+        "--apply-content-blocks")
+            echo "Applying content block changes"
+            bundle exec rake gwss:apply_contentblock_changes ;;
          *) echo >&2 "Invalid option: $opt"; exit 1;;
     esac
     # Restart passenger after making any changes

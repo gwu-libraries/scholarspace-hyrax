@@ -2,8 +2,8 @@
 # For use with a Dockerized implementation
 # Stops containers, removes app image, deletes app volume, restarts app, recompiles assets
 docker compose down
-echo "Deleting app image"
-docker image rm scholarspace-app
+echo "Deleting Docker images"
+docker image rm $(docker images "ghcr.io/gwu-libraries/**" -q)
 echo "Deleting app volume"
 docker volume rm scholarspace-hyrax_app-hyrax
 echo "Restarting Docker containers"
