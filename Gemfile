@@ -84,7 +84,7 @@ gem 'invisible_captcha'
 gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
 group :development, :test do
-  # gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
+  gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'solr_wrapper', '>= 0.3'
   gem 'launchy'
@@ -106,8 +106,9 @@ end
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
+  gem 'simplecov', require: false
+  # gem 'selenium-webdriver'
   # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  # gem 'chromedriver-helper'
 end
 gem "ffi", "~> 1.15"
