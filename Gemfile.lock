@@ -79,8 +79,6 @@ GEM
       public_suffix (>= 2.0.2, < 6.0)
     almond-rails (0.3.0)
       rails (>= 4.2)
-    archive-zip (0.12.0)
-      io-like (~> 0.3.0)
     arel (9.0.0)
     autoprefixer-rails (10.4.13.0)
       execjs (~> 2)
@@ -184,9 +182,6 @@ GEM
       activesupport (>= 4.0.0)
       mime-types (>= 1.16)
       ssrf_filter (~> 1.0, < 1.1.0)
-    chromedriver-helper (2.1.1)
-      archive-zip (~> 0.10)
-      nokogiri (~> 1.8)
     chronic (0.10.2)
     clipboard-rails (1.7.1)
     coderay (1.1.3)
@@ -202,6 +197,12 @@ GEM
     cookies_eu (1.7.8)
       js_cookie_rails (~> 2.2.0)
     crass (1.0.6)
+    database_cleaner (2.0.2)
+      database_cleaner-active_record (>= 2, < 3)
+    database_cleaner-active_record (2.1.0)
+      activerecord (>= 5.a)
+      database_cleaner-core (~> 2.0.0)
+    database_cleaner-core (2.0.1)
     date (3.3.3)
     declarative (0.0.20)
     declarative-builder (0.1.0)
@@ -224,6 +225,7 @@ GEM
       declarative-option (< 0.2.0)
       representable (>= 2.4.0, <= 3.1.0)
       uber (< 0.2.0)
+    docile (1.4.0)
     docopt (0.5.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
@@ -488,7 +490,6 @@ GEM
       activesupport (>= 4)
     invisible_captcha (2.1.0)
       rails (>= 5.2)
-    io-like (0.3.1)
     iso8601 (0.9.1)
     jbuilder (2.11.5)
       actionview (>= 5.0.0)
@@ -673,6 +674,9 @@ GEM
     pg (1.5.3)
     posix-spawn (0.3.15)
     power_converter (0.1.2)
+    pry (0.14.2)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     psych (3.3.4)
     public_suffix (5.0.3)
     puma (4.3.12)
@@ -861,10 +865,6 @@ GEM
       ffi (~> 1.9)
     scanf (1.0.0)
     select2-rails (3.5.11)
-    selenium-webdriver (4.9.0)
-      rexml (~> 3.2, >= 3.2.5)
-      rubyzip (>= 1.2.2, < 3.0)
-      websocket (~> 1.0)
     shacl (0.1.1)
       json-ld (~> 3.1, >= 3.1.7)
       rdf (~> 3.1, >= 3.1.8)
@@ -891,6 +891,12 @@ GEM
     simple_form (5.2.0)
       actionpack (>= 5.2)
       activemodel (>= 5.2)
+    simplecov (0.22.0)
+      docile (~> 1.1)
+      simplecov-html (~> 0.11)
+      simplecov_json_formatter (~> 0.1)
+    simplecov-html (0.12.3)
+    simplecov_json_formatter (0.1.4)
     sitemap (0.3.3)
     slop (4.10.1)
     snaky_hash (2.0.1)
@@ -986,7 +992,6 @@ GEM
       bindex (>= 0.4.0)
       railties (>= 5.0)
     webrick (1.8.1)
-    websocket (1.2.9)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -1007,9 +1012,9 @@ DEPENDENCIES
   bulkrax (= 2.3.0)
   byebug
   capybara (>= 2.15)
-  chromedriver-helper
   coffee-rails (~> 4.2)
   cookies_eu
+  database_cleaner
   devise
   devise-guests (~> 0.6)
   dotenv-rails
@@ -1026,6 +1031,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   mini_racer
   pg
+  pry
   puma (~> 4.3)
   rails (~> 5.2.8.1)
   recaptcha
@@ -1035,8 +1041,8 @@ DEPENDENCIES
   rsolr (>= 1.0, < 3)
   rspec-rails
   sass-rails (~> 5.0)
-  selenium-webdriver
   sidekiq (~> 6)
+  simplecov
   sitemap
   solr_wrapper (>= 0.3)
   spring
@@ -1054,4 +1060,4 @@ RUBY VERSION
    ruby 2.7.3p183
 
 BUNDLED WITH
-   2.4.21
+   2.4.19
