@@ -308,22 +308,22 @@ namespace :gwss  do
   end
 
   desc "Launch testing server"
-  task launch_test_server: :environment do
+  task rspec_tests: :environment do
     solr_defaults = { 
                       instance_dir: "tmp/solr-development",
-                      port: 8983,
-                      verbose: true,
+                      port: ENV['SOLR_PORT_TEST'],
+                      verbose: false,
                       managed: true,
                       persist: false,
                       dir: "solr/conf",
-                      name: "gwss-solr-test",
+                      name: ENV['SOLR_CORE_TEST'],
                       version: "6.4.2",
                     }
 
     fedora_defaults = { 
                         instance_dir: "tmp/fcrepo4",
-                        port: 8986,
-                        verbose: true,
+                        port: ENV['FEDORA_PORT_TEST'],
+                        verbose: false,
                         managed: true,
                         persist: false,
                         enable_jms: false,
