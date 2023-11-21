@@ -20,6 +20,8 @@ if [[ "$SSL_ON" = true ]]; then
 else
   envsubst < nginx_conf/scholarspace.conf > /etc/nginx/sites-enabled/scholarspace.conf
 fi
+# Add allow directives for GH pages IP ranges
+cp nginx_conf/ghpages-cidr.conf /etc/nginx/conf.d/
 # Remove default nginx site conf
 rm /etc/nginx/sites-enabled/default
 
