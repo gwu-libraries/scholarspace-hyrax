@@ -1,15 +1,15 @@
 development:
-  user:  <%= ENV['FEDORA_USERNAME'] || 'fedora_user' %>
-  password: <%= ENV['FEDORA_PASSWORD'] || 'password' %>
-  url: <%= ENV['FEDORA_URL'] || 'http://localhost' %>:<%= ENV['FEDORA_PORT'] || '8984' %>/<%= ENV['FEDORA_BASE'] || 'rest' %>
+  user:  <%= ENV['FEDORA_USERNAME'] %>
+  password: <%= ENV['FEDORA_PASSWORD'] %>
+  url: <%= ENV['FEDORA_URL'] %>:<%= ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /dev
 test:
-  user:  <%= ENV['FEDORA_USERNAME'] || 'fedora_user' %>
-  password: <%= ENV['FEDORA_PASSWORD'] || 'password' %>
-  url: <%= ENV['FEDORA_URL'] || 'http://localhost' %>:<%= ENV['FEDORA_PORT'] || '8984' %>/<%= ENV['FEDORA_BASE'] || 'rest' %>
+  user:  <%= ENV['FEDORA_USERNAME'] %>
+  password: <%= ENV['FEDORA_PASSWORD'] %>
+  url: <%= ENV['FEDORA_URL'] %>:<%= ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /test
 production:
-  user:  <%= ENV['FEDORA_USERNAME'] || 'fedora_user' %>
-  password: <%= ENV['FEDORA_PASSWORD'] || 'password' %>
-  url: <%= ENV['FEDORA_URL'] || 'http://localhost' %>:<%= ENV['FEDORA_PORT'] || '8984' %>/<%= ENV['FEDORA_BASE'] || 'rest' %>
+  user:  <%= ENV['FEDORA_USERNAME'] %>
+  password: <%= ENV['FEDORA_PASSWORD'] %>
+  url: <%= ENV['FEDORA_URL'] %>:<%= ENV['FEDORA_PORT'] %>/<%= ENV['FEDORA_BASE'] %>
   base_path: /prod
