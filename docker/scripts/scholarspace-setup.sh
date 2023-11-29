@@ -11,7 +11,10 @@ groupadd -r scholarspace --gid=${SCHOLARSPACE_GID:-999} \
 
 # Create the log file here, so that it will be created with the correct permissions
 # Otherwise, Passenger will create it as root
-setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/${RAILS_ENV}.log
+setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/production.log
+setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/development.log
+setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/test.log
+
 
 # Set up nginx configuration, applying environment variables
 echo "Configuring nginx"
