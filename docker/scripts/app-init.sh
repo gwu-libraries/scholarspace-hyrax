@@ -42,12 +42,5 @@ do
             bundle exec rake gwss:apply_contentblock_changes ;;
          *) echo >&2 "Invalid option: $opt"; exit 1;;
     esac
-    # Restart passenger after making any changes
-    # Note that this will only work if running in development
-    if [ $RAILS_ENV = "development" ] 
-    then
-        echo "Restarting Passenger"
-        passenger-config restart-app /opt/scholarspace/scholarspace-hyrax
-    fi
 done
 
