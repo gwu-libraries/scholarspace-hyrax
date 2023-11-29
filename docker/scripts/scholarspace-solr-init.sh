@@ -2,7 +2,7 @@
 
 set -e
 
-for solr_core in $SOLR_CORE_TEST $SOLR_CORE_DEV $SOLR_CORE_PROD; do
+for solr_core in $SOLR_CORE "$SOLR_CORE"_dev "$SOLR_CORE"_test; do
 
         if [ ! -d "/opt/solr/server/solr/mycores/${solr_core}" ]
     then
