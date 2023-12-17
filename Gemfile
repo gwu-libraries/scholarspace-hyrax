@@ -12,8 +12,8 @@ gem 'pg'
 # Use sitemap
 # See https://github.com/viseztrance/rails-sitemap
 gem 'sitemap'
-# Use Puma as the app server
-gem 'puma', '~> 4.3'
+# Use Passenger as the app server
+gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
