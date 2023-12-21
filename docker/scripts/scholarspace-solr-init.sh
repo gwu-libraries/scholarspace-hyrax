@@ -4,7 +4,7 @@ set -e
 
 for solr_core in "$SOLR_CORE"_test "$SOLR_CORE"_dev $SOLR_CORE; do
 
-        if [ ! -d "/opt/solr/server/solr/mycores/${solr_core}" ]
+    if [ ! -d "/opt/solr/server/solr/mycores/${solr_core}" ]
     then
         # Replicated from the solr-create script
         echo "Creating ${solr_core} core"
@@ -14,7 +14,6 @@ for solr_core in "$SOLR_CORE"_test "$SOLR_CORE"_dev $SOLR_CORE; do
         echo "Disabling managed schema"
         mv /opt/solr/server/solr/mycores/${solr_core}/conf/managed-schema /opt/solr/server/solr/mycores/${solr_core}/conf/managed-schema.bak
         echo "Migrating configs"
-        # Probably worth converting source path to an ENV variable?
         cp -r /opt/scholarspace/solr/conf /opt/solr/server/solr/mycores/${solr_core}
         echo "Starting Solr with new core..."
     else
