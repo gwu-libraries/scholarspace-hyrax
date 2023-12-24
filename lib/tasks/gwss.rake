@@ -306,7 +306,7 @@ namespace :gwss  do
     ContentBlock.find_or_create_by(name: "header_text_color").update!(value: "#444444")
     ContentBlock.find_or_create_by(name: "link_color").update!(value: "#28659A")
     ContentBlock.find_or_create_by(name: "footer_link_color").update!(value: "#FFFFFF")
-    ContentBlock.find_or_create_by(name: "primary_buttom_background_color").update!(value: "#28659A")
+    ContentBlock.find_or_create_by(name: "primary_button_background_color").update!(value: "#28659A")
     ContentBlock.find_or_create_by(name: "featured_researcher").update!(value: featured_researcher_html.read)
     ContentBlock.find_or_create_by(name: "about_page").update!(value: about_page_html.read)
     ContentBlock.find_or_create_by(name: "help_page").update!(value: help_page_html.read)
