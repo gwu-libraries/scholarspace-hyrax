@@ -106,4 +106,70 @@ RSpec.describe "Homepage" do
       expect(current_path).to eq("/catalog")
     end
   end
+
+  context "footer" do
+    
+    it 'has a link to "staff login"' do
+      within "#footer-links" do
+        click_on "Staff login"
+
+        expect(current_path).to eq("/users/sign_in")
+      end
+    end
+
+    it 'has a link to "Campus Advisories"' do
+      within "#footer-links" do
+        expect(page).to have_content("Campus Advisories")
+      end
+    end
+
+    it 'has a link to "EO/Nondiscrimination Policy"' do
+      within "#footer-links" do
+        expect(page).to have_content("EO/Nondiscrimination Policy")
+      end
+    end
+
+    it 'has a link to "Privacy Notice"' do
+      within "#footer-links" do
+        expect(page).to have_content("Privacy Notice")
+      end
+    end
+
+    it 'has a link to "Contact GW"' do
+      within "#footer-links" do
+        expect(page).to have_content("Contact GW")
+      end
+    end
+
+    it 'has a link to "Accessibility"' do
+      within "#footer-links" do
+        expect(page).to have_content("Accessibility")
+      end
+    end
+
+    it 'has a link to "Terms of Use"' do
+      within "#footer-links" do
+        expect(page).to have_content("Terms of Use")
+      end
+    end
+
+    it 'has a link to "Copyright"' do
+      within "#footer-links" do
+        expect(page).to have_content("Copyright")
+      end
+    end
+
+    it 'has a link to "A-Z Index"' do
+      within "#footer-links" do
+        expect(page).to have_content("A-Z Index")
+      end
+    end
+    
+    it 'has a link to "Accessibility Feedback Form"' do
+      within "#footer-links" do
+        expect(page).to have_content("Accessibility Feedback Form")
+      end
+    end
+  end
+
 end
