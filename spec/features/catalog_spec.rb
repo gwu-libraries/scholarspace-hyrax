@@ -4,13 +4,23 @@ require Rails.root.join("spec", "support", "sample_solr_documents")
 RSpec.describe 'catalog page' do
 
   let(:solr) { Blacklight.default_index.connection }
-  let(:sonnets) { [SONNET_2, SONNET_1, SONNET_3] }
+  let(:admin_user) { FactoryBot.create(:admin_user) }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:earliest_work) { FactoryBot.create(:gw_work, admin_set: admin_set, 
+                                                    date_uploaded: "2000-01-01", 
+                                                    date_modified: "2010-01-01") }
+  let(:middle_work) { FactoryBot.create(:gw_work, admin_set: admin_set, 
+                                                  date_uploaded: "2001-01-01", 
+                                                  date_modified: "2009-01-01") }
+  let(:latest_work) { FactoryBot.create(:gw_work, admin_set: admin_set, 
+                                                  date_uploaded: "2002-01-01", 
+                                                  date_modified: "2008-01-01") }
 
   before do
     ActiveFedora::Cleaner.clean!
     solr.delete_by_query("*:*")
 
-    sonnets.map {|sonnet| solr.add(sonnet) }
+    [earliest_work, middle_work, latest_work].map { |work| solr.add(work.to_solr) }
 
     solr.commit
   end
@@ -24,8 +34,8 @@ RSpec.describe 'catalog page' do
   it 'defaults to showing results in order of most recent upload to least recently upload' do
     visit search_catalog_path
 
-    expect("Sonnet 3").to appear_before("Sonnet 2")
-    expect("Sonnet 2").to appear_before("Sonnet 1")
+    expect(latest_work.title.first).to appear_before(middle_work.title.first)
+    expect(middle_work.title.first).to appear_before(earliest_work.title.first)
   end
 
   it 'can order results by least recent upload to most recent upload' do
@@ -37,8 +47,8 @@ RSpec.describe 'catalog page' do
       end
     end
     
-    expect("Sonnet 1").to appear_before("Sonnet 2")
-    expect("Sonnet 2").to appear_before("Sonnet 3")
+    expect(earliest_work.title.first).to appear_before(middle_work.title.first)
+    expect(middle_work.title.first).to appear_before(latest_work.title.first)
   end
 
   it 'can order results by most recent modification to least recent modification' do
@@ -50,8 +60,8 @@ RSpec.describe 'catalog page' do
       end
     end
 
-    expect("Sonnet 3").to appear_before("Sonnet 2")
-    expect("Sonnet 2").to appear_before("Sonnet 1")
+    expect(latest_work.title.first).to appear_before(middle_work.title.first)
+    expect(middle_work.title.first).to appear_before(earliest_work.title.first)
   end
 
   it 'can order results by least recent modification to most recent modification' do
@@ -63,8 +73,8 @@ RSpec.describe 'catalog page' do
       end
     end
 
-    expect("Sonnet 1").to appear_before("Sonnet 2")
-    expect("Sonnet 2").to appear_before("Sonnet 3")
+    expect(earliest_work.title.first).to appear_before(middle_work.title.first)
+    expect(middle_work.title.first).to appear_before(latest_work.title.first)
   end
 
   xit 'defaults to displaying 10 items per page' do
@@ -83,4 +93,13 @@ RSpec.describe 'catalog page' do
     # need factorybot for solr items
   end
 
+  it 'displays only relevant results in search' do
+    visit search_catalog_path
+
+    fill_in("search-field-header", with: "beefaroni")
+
+    click_button "Submit"
+
+    expect(page).to have_content("No results found for your search")
+  end
 end
