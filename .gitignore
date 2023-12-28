@@ -30,3 +30,5 @@ fits.log
 
 # VScode settings
 /.vscode
+
+coverage

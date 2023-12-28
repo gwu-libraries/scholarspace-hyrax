@@ -2,11 +2,13 @@ version: '3.6'
 
 services:
   fedora:
+    env_file: .env
     image: ghcr.io/samvera/fcrepo4:4.7.5
     hostname: fedora-hyrax
     # Use this map to external volume
     volumes:
-       - /data/fedora:/data
+      #  - /opt/scholarspace/fedora:/data
+      - fedora-prod:/data
     ports:
       - 8984:8080
     environment:
@@ -20,6 +22,7 @@ services:
     logging: &logging
       driver: "local"
   pg-fcrepo:
+    env_file: .env
     image: postgres:15.4
     hostname: pg-fcrepo
     environment:
@@ -28,41 +31,40 @@ services:
       - POSTGRES_DB=$FEDORA_DB
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - db:/var/lib/postgresql/data
+      - fcrepo-db-prod:/var/lib/postgresql/data
     networks:
       - fedora
     restart: always
     logging: 
       <<: *logging
   pg-hyrax:
+    env_file: .env
     image: postgres:9.5.25-alpine
     hostname: pg-hyrax
     environment:
       - POSTGRES_USER=$HYRAX_DB_USER
       - POSTGRES_PASSWORD=$HYRAX_DB_PASSWORD
-      #- POSTGRES_DB=$HYRAX_DB_DEV          # For development
-      - POSTGRES_DB=$HYRAX_DB_PROD          # For production
+      - POSTGRES_DB=$HYRAX_DB
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - db-hyrax:/var/lib/postgresql/data
+      - hyrax-db-prod:/var/lib/postgresql/data
     networks:
       - hyrax
     restart: always
     logging: 
       <<: *logging
   solr:
-    image: ghcr.io/gwu-libraries/scholarspace-hyrax-solr:2.0.1
-    #build: 
-    #  context: .
-    #  dockerfile: Dockerfile-solr
+    # image: ghcr.io/gwu-libraries/scholarspace-hyrax-solr:2.0.1
+    env_file: .env
+    build: 
+     context: .
+     dockerfile: Dockerfile-solr
     hostname: solr-hyrax
     environment:
-      - SOLR_CORE_DEV=$SOLR_CORE_DEV
-      - SOLR_CORE_TEST=$SOLR_CORE_TEST
-      - SOLR_CORE_PROD=$SOLR_CORE_PROD
-    # Use this to map to an external volume/existing Solr core
+      - SOLR_CORE=$SOLR_CORE
     volumes:
-      - /var/solr/data:/opt/solr/server/solr/mycores
+      # - /var/solr/data:/opt/solr/server/solr/mycores
+      - solr-cores:/opt/solr/server/solr/mycores
     ports:
       - 8983:8983
     networks:
@@ -80,53 +82,52 @@ services:
     logging: 
       <<: *logging
   sidekiq:
-    image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
-    #image: scholarspace-app
-    #build: 
-    #  context: .
-    #  args:
-    #    - RAILS_ENV
-    command: ["bash", "-l", "docker/scripts/scholarspace-setup.sh", "sidekiq"]
+    env_file: .env
+    # image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
+    image: scholarspace-app
+    build: 
+     context: .
     depends_on: 
       - redis
-    env_file: .env
     volumes: 
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
-     - app-hyrax:/opt/scholarspace          # For production
-    # - /opt/scholarspace:/opt/scholarspace # For development
+     - app-hyrax-prod:/opt/scholarspace
     networks:
       - hyrax
       - fedora
     restart: always
     logging: 
       <<: *logging
+    command: ["bash", "-l", "docker/scripts/scholarspace-setup.sh", "sidekiq"]
   app-server:
-    image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
-    #image: scholarspace-app
+    env_file: .env
+    # image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
+    image: scholarspace-app
     depends_on: 
       - solr
       - pg-hyrax
       - fedora
-    env_file: .env
     networks:
       - hyrax
       - fedora
     ports:
       - 80:80
       - 443:443
+      - 3000:3000
     volumes:
      - ${NGINX_CERT_DIR}:/opt/scholarspace/certs
      - ${NGINX_KEY_DIR}:/opt/scholarspace/keys
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
-     - app-hyrax:/opt/scholarspace          # For production
-    # - /opt/scholarspace:/opt/scholarspace # For development
+     - app-hyrax-prod:/opt/scholarspace          # For production
     restart: always
     logging: 
       <<: *logging
 volumes:
-  db:
-  db-hyrax:
-  app-hyrax:
+  fcrepo-db-prod:
+  hyrax-db-prod:
+  app-hyrax-prod:
+  fedora-prod:
+  solr-cores:
 networks:
   hyrax:
     driver: bridge

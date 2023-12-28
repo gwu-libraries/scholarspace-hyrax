@@ -9,7 +9,6 @@ nohup.out
 .gitignore
 .bundle
 .git
-.cache
 .byebug_history
 fits.log
 bin/importer
@@ -22,5 +21,4 @@ vendor
 sidekiq_conf
 tomcat_conf
 apache_conf
-tmp
 docs
