@@ -11,7 +11,7 @@ groupadd -r scholarspace --gid=${SCHOLARSPACE_GID:-999} \
 
 # Create the log file here, so that it will be created with the correct permissions
 # Otherwise, Passenger will create it as root
-setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/${RAILS_ENV}.log
+setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/production.log
 
 # Set up nginx configuration, applying environment variables
 echo "Configuring nginx"
@@ -28,8 +28,6 @@ rm /etc/nginx/sites-enabled/default
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
-./docker/scripts/hyrax-config.sh
-
 if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
 then  
   # Create sitemap cronjob, if necessary
@@ -44,11 +42,18 @@ then
     rm cron.tmp
   fi
   echo "Starting sidekiq"
-  exec /sbin/my_init -- bash -lc "bundle exec sidekiq"
-fi
-
-
+  exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
+else
+echo "########## Creating DBs (prod) ########"
+setuser scholarspace bundle exec rails db:create RAILS_ENV=production
+echo "########## Migrating DBs (prod) #######"
+setuser scholarspace bundle exec rails db:migrate RAILS_ENV=production
+echo "####### Seeding DB (prod) #####"
+setuser scholarspace bundle exec rails db:seed RAILS_ENV=production
+echo "####### Precompiling assets (prod) ######"
+setuser scholarspace bundle exec rails assets:precompile RAILS_ENV=production
 echo "Starting Passenger..."
 # Enable Nginx
 rm -f /etc/service/nginx/down
 exec /sbin/my_init
+fi
