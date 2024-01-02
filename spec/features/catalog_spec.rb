@@ -1,5 +1,4 @@
 require 'rails_helper'
-require Rails.root.join("spec", "support", "sample_solr_documents")
 
 RSpec.describe 'catalog page' do
 
@@ -75,22 +74,6 @@ RSpec.describe 'catalog page' do
 
     expect(earliest_work.title.first).to appear_before(middle_work.title.first)
     expect(middle_work.title.first).to appear_before(latest_work.title.first)
-  end
-
-  xit 'defaults to displaying 10 items per page' do
-    # need factorybot for solr items
-  end
-
-  xit 'can show 20 items per page' do
-    # need factorybot for solr items
-  end
-
-  xit 'can show 50 items per page' do
-    # need factorybot for solr items
-  end
-
-  xit 'can show 100 items per page' do
-    # need factorybot for solr items
   end
 
   it 'displays only relevant results in search' do
