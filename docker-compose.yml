@@ -5,10 +5,8 @@ services:
     env_file: .env
     image: ghcr.io/samvera/fcrepo4:4.7.5
     hostname: fedora-hyrax
-    # Use this map to external volume
     volumes:
-      #  - /opt/scholarspace/fedora:/data
-      - fedora-prod:/data
+       - /opt/scholarspace/fedora-data:/data
     ports:
       - 8984:8080
     environment:
@@ -31,7 +29,7 @@ services:
       - POSTGRES_DB=$FEDORA_DB
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - fcrepo-db-prod:/var/lib/postgresql/data
+      - fedora-db:/var/lib/postgresql/data
     networks:
       - fedora
     restart: always
@@ -47,7 +45,7 @@ services:
       - POSTGRES_DB=$HYRAX_DB
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - hyrax-db-prod:/var/lib/postgresql/data
+      - hyrax-db:/var/lib/postgresql/data
     networks:
       - hyrax
     restart: always
@@ -63,8 +61,7 @@ services:
     environment:
       - SOLR_CORE=$SOLR_CORE
     volumes:
-      # - /var/solr/data:/opt/solr/server/solr/mycores
-      - solr-cores:/opt/solr/server/solr/mycores
+      - /opt/scholarspace/solr-data:/opt/solr/server/solr/mycores
     ports:
       - 8983:8983
     networks:
@@ -91,7 +88,7 @@ services:
       - redis
     volumes: 
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
-     - app-hyrax-prod:/opt/scholarspace
+     - app-hyrax:/opt/scholarspace
     networks:
       - hyrax
       - fedora
@@ -118,16 +115,14 @@ services:
      - ${NGINX_CERT_DIR}:/opt/scholarspace/certs
      - ${NGINX_KEY_DIR}:/opt/scholarspace/keys
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
-     - app-hyrax-prod:/opt/scholarspace          # For production
+     - app-hyrax:/opt/scholarspace
     restart: always
     logging: 
       <<: *logging
 volumes:
-  fcrepo-db-prod:
-  hyrax-db-prod:
-  app-hyrax-prod:
-  fedora-prod:
-  solr-cores:
+  fedora-db:
+  hyrax-db:
+  app-hyrax:
 networks:
   hyrax:
     driver: bridge
