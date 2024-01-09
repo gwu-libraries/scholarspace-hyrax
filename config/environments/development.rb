@@ -57,6 +57,9 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
+  
+  # TODO - setup sidekiq to use separate queues
+  # At the moment, running inline instead of sidekiq works
   config.active_job.queue_adapter = :inline
   # config.active_job.queue_name_prefix = "scholarspace_#{Rails.env}"
   config.action_mailer.perform_caching = false
