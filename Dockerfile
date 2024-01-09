@@ -33,11 +33,10 @@ RUN wget https://github.com/harvard-lts/fits/releases/download/1.5.0/fits-1.5.0.
     
 # Uninstall Ruby version from image and install our version
 # bash -lc is necessary per the configuration of the base image 
-RUN bash -lc "rvm remove ruby-2.7.7 && rvm install ruby-2.7.3 && gem install rails -v 5.2.7 -N"
+RUN bash -lc "rvm remove ruby-2.7.7 && rvm install ruby-2.7.3"
 
 # Hyrax directories
 RUN mkdir -p /opt/scholarspace/scholarspace-hyrax \ 
-    && mkdir -p /opt/scholarspace/certs \
     && mkdir -p /opt/scholarspace/scholarspace-tmp \
     && mkdir -p /opt/scholarspace/scholarspace-minter \
     && mkdir -p /opt/scholarspace/scholarspace-derivatives \
@@ -60,11 +59,9 @@ RUN ruby2.7 -S passenger-config build-native-support
 
 # Copy Gemfile separately, so that we don't have to rebuild this stage every time we change another file
 COPY Gemfile Gemfile.lock ./
-# Used to create the correct file in config/environments 
-ARG RAILS_ENV
 # Install dependencies and finalize Hyrax setup
 # Running without development; installing as development seems to cause some issues
-RUN gem install bundler \
+RUN gem install bundler -v 2.4.22 \
     && bundle lock --add-platform aarch64-linux \
     && bundle lock --add-platform x86_64-linux \
     && bundle install
