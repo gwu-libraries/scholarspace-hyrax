@@ -83,6 +83,10 @@ gem 'invisible_captcha'
 
 gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
+gem "ffi", "~> 1.15"
+
+gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonicalization/issues/2
+
 group :development, :test do
   # gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
