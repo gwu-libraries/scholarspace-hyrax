@@ -42,7 +42,7 @@ then
     rm cron.tmp
   fi
   echo "Starting sidekiq"
-  exec /sbin/my_init -- bash -lc "bundle exec sidekiq"
+  exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
 fi
 
 
