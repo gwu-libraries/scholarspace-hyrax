@@ -1,10 +1,9 @@
 Rails.application.configure do
-  # Settings specified here will take precedence over those in config/application.rb.
 
-  # If seeing logs reading "Cannot render console from 10.0.2.2! Allowed networks: 127.0.0.1, ::1, 127.0.0.0/127.255.255.255",
-  # This line above might be needed for running development mode in a docker environment
-  # https://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
   config.web_console.whitelisted_ips = '192.168.0.0/16' 
+  # https://stackoverflow.com/questions/29417328/how-to-disable-cannot-render-console-from-on-rails
+
+  # Settings specified here will take precedence over those in config/application.rb.
 
   # Code is not reloaded between requests.
   config.cache_classes = true
@@ -58,7 +57,7 @@ Rails.application.configure do
   # config.cache_store = :mem_cache_store
 
   # Use a real queuing backend for Active Job (and separate queues per environment)
-  config.active_job.queue_adapter = :sidekiq
+  config.active_job.queue_adapter = :inline
   # config.active_job.queue_name_prefix = "scholarspace_#{Rails.env}"
   config.action_mailer.perform_caching = false
 
