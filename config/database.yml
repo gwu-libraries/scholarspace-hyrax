@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  host: <%= ENV["HYRAX_DB_HOST"] %>
+  username: <%= ENV["HYRAX_DB_USER"] %>
+  password: <%= ENV["HYRAX_DB_PASSWORD"] %>
+  pool: 5
+  timeout: 5000
+
+development:
+  database: <%= ENV["HYRAX_DB"] %>_dev
+  <<: *default
+
+production:
+  database: <%= ENV["HYRAX_DB"] %>
+  <<: *default
+
+test:
+  database: <%= ENV["HYRAX_DB"] %>_test
+  <<: *default
