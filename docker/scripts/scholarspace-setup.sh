@@ -43,10 +43,9 @@ then
   fi
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
-fi
-
-
+else
 echo "Starting Passenger..."
 # Enable Nginx
 rm -f /etc/service/nginx/down
 exec /sbin/my_init
+fi
