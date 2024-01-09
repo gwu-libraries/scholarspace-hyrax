@@ -19,6 +19,9 @@
 dump.rdb
 fits.log
 
+# Ignore local config files
+.env
+
 # Ignore Byebug command history file.
 .byebug_history
 
