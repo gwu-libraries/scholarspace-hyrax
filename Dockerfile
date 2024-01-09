@@ -12,16 +12,16 @@ RUN apt install -y checkinstall libwebp-dev libopenjp2-7-dev librsvg2-dev libde2
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN cd /opt && \
-   wget https://www.imagemagick.org/archive/releases/ImageMagick-7.1.1-13.tar.xz && \
-   tar xf ImageMagick-7.1.1-13.tar.xz && \
-   cd ImageMagick-7.1.1-13 && \
-   ./configure --enable-shared --with-modules --with-gslib && \
-   make && \
-   make install && \
-   ldconfig /usr/local/lib && \
-   identify -version && \
-   rm /opt/ImageMagick-7.1.1-13.tar.xz
+RUN cd /opt \
+    && wget https://www.imagemagick.org/archive/releases/ImageMagick-7.1.1-13.tar.xz \
+    && tar xf ImageMagick-7.1.1-13.tar.xz \
+    && cd ImageMagick-7.1.1-13 \
+    && ./configure --enable-shared --with-modules --with-gslib \
+    && make \
+    && make install \
+    && ldconfig /usr/local/lib \
+    && identify -version \
+    && rm /opt/ImageMagick-7.1.1-13.tar.xz
 
 # FITS install
 WORKDIR /usr/local/bin
