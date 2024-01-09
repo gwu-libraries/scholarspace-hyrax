@@ -73,7 +73,6 @@ a separate user for the app, but it is not necessary.  That user will need to ow
     - HYRAX_DB_USER, HYRAX_DB_PASSWORD (for the Hyrax app database)
     - CONTACT_EMAIL
     - Variables under the `#Recaptch config` comment
-    - RAILS_ENV and PASSENGER_APP_ENV (if other than production)
     - SMTP_USER and SMTP_PASSWORD
     - SERVER_NAME (hostname for Nginx)
     - NGINX_CERT_DIR and NGINX_KEY_DIR
@@ -92,9 +91,8 @@ a separate user for the app, but it is not necessary.  That user will need to ow
         ```
 9. Adjust any other variables in the `.env` as needed.
 10. Edit `docker-compose.yml` as necessary.
-    - If running in development, change the volume mappings for the `sidekiq` and the `app-server` services and change the value for `POSTGRES_DB` under the `pg-hyrax` service definition.
     - If not using SSL, comment out the lines for the key and cert directories under the `app-server` service definition.
-11. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/data/fedora` and `/var/solr/data` directories to store the Fedora files on the host (e.g, `sudo mkdir -p /data/fedora`).
+11. If migrating data, prepare the Solr core and Fedora database locally (see below). Otherwise, create the `/opt/scholarspace/fedora-data` and `/opt/scholarspace/solr-data` directories to store the Fedora files on the host (e.g, `sudo mkdir -p /opt/scholarspace/fedora-data`).
 12. Start the application containers by running `docker compose up -d`. This will build the Hyrax app/Sidekiq and Solr images locally and start all containers. Note that the app is not yet ready to view and there may be some errors in the log at this point. If you get an authentication error, see the section on [authenticating to the GitHub Container Registry](#authenticating-to-ghcr) below. 
 13. If migrating data, restore the postgres database dumps for Fedora and Hyrax (see below).
 14. The Hyrax server will not work without the value of `SECRET_KEY_BASE` being set in the `.env` file. To generate a secret key using Rails, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --create-secret"`. The `app-server-container-name` is probably `scholarspace-hyrax-app-server-1` but can be ascertained by running `docker ps`.
@@ -102,13 +100,11 @@ a separate user for the app, but it is not necessary.  That user will need to ow
 16.  If migrating data, run the Rake job to perform database migrations: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --run-migrations"`. 
   - If creating a new instance (no migrated data), run the following command: 
       ```
-      docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:{drop,create,migrate}" 
+      docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:{drop,create,migrate,seed}" 
       ```
-  - In addition, when setting up a development instance, run `docker exec -it --user scholarspace [app-server-container-name] bash -lc "rails db:seed"`
-    This command will populate the database with a few test works.
 17. Visit the site in a web browser to trigger the Passenger app. (You won't see the compiled assets yet.)
 18. Add initial content blocks and precompile assets: `docker exec -it --user scholarspace [app-server-container-name] bash -lc "docker/scripts/app-init.sh --apply-content-blocks --precompile-assets"`.
-19. (Production only): Restart the Nginx server: `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. (In development mode, the `app-init.sh` script restarts the server by default after running any of the above options.)
+19. (Production only): Restart the Nginx server: `docker exec [app-container-name] bash -lc "passenger-config restart-app /"`. 
 20. The following additional steps may be useful in setting up a new instance (no migrated data), all of which can be run as options of the `app-init.sh` script:
     - `--create-roles`: create default app roles (if they don't already exist)
     - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
@@ -151,8 +147,8 @@ echo $CR_PAT | docker login ghcr.io -u [USERNAME] --password-stdin
 ### Solr
 
 - To use an existing core (migration), do the following (before starting the container):
-  - Place a copy of the parent core directory (i.e., scholarspace) in `/var/solr/data` on the Docker host. 
-  - Grant ownership to the container's Solr user:  `chown -R 8983:8983 /var/solr/data`
+  - Place a copy of the parent core directory (i.e., scholarspace) in `/opt/scholarspace/solr-data` on the Docker host. 
+  - Grant ownership to the container's Solr user:  `chown -R 8983:8983 /opt/scholarspace/solr-data`
 
 ### Fedora
 
@@ -235,78 +231,36 @@ docker volume rm $(docker volume ls -q)
 ```
 After bringing down the containers, run this script (with `sudo`) to clear out all persistent storage, including the Rails database, before bringing back up the containers. 
 
-## Local Development Installation
+# Development Mode
 
-ScholarSpace can be run locally on macOS. This does not create a 1-to-1 replication of the production environment and does not use utilize Docker, but is intended as a minimal setup for development of the Rails application.
+### Preparing Development Databases
 
-### Requirements
-- Installation of [FITS 1.5.0](https://projects.iq.harvard.edu/fits/home)
-  - Manual install: 
-    - [Download Page](https://projects.iq.harvard.edu/fits/downloads)
-  - Once installed, modify the `config.fits_path` in `config/initializers/hyrax.rb` to point to the installation path for FITS, i.e.
-    ```ruby
-    # Path to the file characterization tool
-    config.fits_path = "/usr/local/bin/fits-1.5.0/fits.sh"
-    ```
+NOTE: The following steps assume that Docker containers have launched successfully and are currently running. 
 
-- Installation of [LibreOffice](https://www.libreoffice.org/)
-  - If using Homebrew:
-    - `brew install --cask libreoffice`
-  - Manual install:
-    - [Download Page](https://www.libreoffice.org/download/download-libreoffice/)
-  - Once installed, modify the  `config.libreoffice_path` in `config/initializers/hyrax.rb` to point to the installation path for LibreOffice, i.e.
-      - If installed via Homebrew, this path can be found by running `which soffice` in your terminal. 
-    ```ruby
-    # Path to the file derivatives creation tool
-    config.libreoffice_path = "/usr/local/bin/soffice"
-    ```
+To prepare a development server:
+- Run `docker exec -it scholarspace-hyrax_app-server_1 /bin/sh`
+	- This will give you access to an interactive terminal (`-it`) in the container with the Rails application.
+- Switch to the in-container "scholarspace" user with `su scholarspace`
+- Run:
+	- `bundle exec rails db:create` to create the `development` and `test` databases.
+	- `bundle exec rails db:migrate` to run the database migrations for the `development` and `test` databases. 
+	- `bundle exec rails db:seed` to create (in the `devleopment` environment): 
+		- An admin role and user (email and password set in `.env`)
+		- A content admin role and user (email and password set in `.env`)
+		- The default admin set
+		- The admin set collection type
+		- The user collection type
+		- An `ETDs` admin set
 
-- Installation of [PostgreSQL 15](https://www.postgresql.org/)
-  - If using Homebrew:
-    - `brew install postgresql@15`
-  - Manual install:
-    - [Download Page](https://www.postgresql.org/download/macosx/)
+### Running a Development Application
 
-- An installed version of Ruby 2.7.3
-  - This can achieved through [RBENV](https://github.com/rbenv/rbenv) or [RVM](https://rvm.io/)
+From a terminal attached to the Rails application container (i.e. through `docker exec -it scholarspace-hyrax_app-server_1 /bin/sh`), run:
 
-### Clone and Setup Repository
-- Clone this repository to your local machine.
-- Navigate to the folder where installed, and ensure you are running Ruby 2.7.3
-- Run `bundle` in order to install ruby gems from the Gemile
+- `bundle exec rails s -b 0.0.0.0` 
 
-### Configuration
-- In `config/environments/development.rb`, change the `config.active_job_queue_adapter` to `:inline` rather than `:sidekiq`
-- Minimal .env configuration:
-    ```ruby
-    RAILS_ENV=development
-    DEV_ADMIN_USER_EMAIL='admin@example.com'
-    DEV_ADMIN_USER_PASSWORD='password'
-    CURATION_CONCERNS=gw_work,gw_etd,gw_journal_issue
-    PERM_URL_BASE = "a-permanent-url/"
-    ACCESSIBILITY_URL="https://library.gwu.edu/found-problem?type_of_problem=a11y&a11y_problem_type=item&url=%{gwss_item_url}"
-    ```
-- You can set additional ENV options, but these are the only environment variables currently necessary for running in local development mode - all others can be commented out or deleted. 
+This command starts a Passenger/NGINX server running Rails in `development` mode on port 3000, accessible at:
+- http://YOUR-EC2-INSTANCE-URL.compute.amazonaws.com:3000 (assuming AWS security groups have been configured to allow traffic on port 3000)
 
-### Preparing the Databases
+As you interact with the `development` application in a browser, the logs will output to the terminal where you ran the `bundle exec rails s -b 0.0.0.0` command, with a `debug` level of detail. 
 
-- In a terminal, run `rails db:{drop,create,migrate}` in order to drop the development database (if it exists), create a new development database, and run the database migrations. 
-
-### Launching the Server
-
-- In a terminal, run `rails hydra:server`
-- If this is the first time you have run this command, it will install an instance of Solr and an instance of Fedora4 in `tmp`, and create directories in `tmp` for derivatives and uploads.
-- Once Solr and Fedora are installed, this will launch the Rails application (port `3000` by default), Solr (port `8983` by default), and Fedora (port `8984` by default).
-- At this point, you should be able to load the application by visiting `localhost:3000` in your browser.
-
-### Seeding the Database
-
-- *With the Rails, Solr, and Fedora processes running*, run `rails db:seed`
-  - This can be accomplished by opening another terminal window in the same directory. 
-- Seeding the database creates:
-  - Default admin and content-admin roles
-  - An admin user, with credentials specified with `DEV_ADMIN_USER_EMAIL` and `DEV_ADMIN_USER_PASSWORD`, and a content-admin user with username `content-admin@example.com` and password `password`.
-  - Default admin set, admin set collection type, and user collection type.
-  - ETDs admin set
-  - A journal collection (`GW Undergraduate Review`)
-  - Uploads and processes files contained in `spec/fixtures` to create demo works. You can add or remove files from the `authenticated_etds`, `journal_collection`, `private_etds`, and `public_etds` folders to change the demonstration files. 
+To stop the `development` server, press `ctrl + c` in the terminal where you ran the command to start the server.  You can restart the development application, and previous changes (i.e. deposited works, created collections, etc) should persist. 
