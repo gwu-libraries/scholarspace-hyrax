@@ -43,8 +43,11 @@ Rails.application.routes.draw do
   end
 
   require 'sidekiq/web'
-  mount Sidekiq::Web => '/sidekiq'
-
+  
+  authenticate :user, lambda { |u| u.admin? } do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+  
   match '*path', to: 'errors#not_found', via: :all, format: false, defaults: { format: 'html' }
 
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
