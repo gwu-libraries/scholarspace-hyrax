@@ -82,6 +82,10 @@
       }
     }
   }
+
+  .dl-horizontal {
+    display: grid;
+  }
   
   .panel-group .panel + .panel {
     margin-top: 0;
