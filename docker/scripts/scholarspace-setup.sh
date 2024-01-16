@@ -30,17 +30,6 @@ setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
 if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
 then  
-  # Create sitemap cronjob, if necessary
-  setuser scholarspace crontab -l > cron.tmp
-  # cron.tmp won't be created if not cron jobs exist
-  # if cron job exists, presume we've already created the sitemap job
-  if [[ ! -e cron.tmp || ! -s cron.tmp ]]
-  then
-    # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
-    echo "Creating cron job for sitemap"
-    setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
-    rm cron.tmp
-  fi
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
 else
@@ -48,4 +37,29 @@ echo "Starting Passenger..."
 # Enable Nginx
 rm -f /etc/service/nginx/down
 exec /sbin/my_init
+
+echo "Preparing sitemap cron job"
+setuser scholarspace bundle exec whenever --update-crontab
+setuser scholarspace bundle exec rails gwss:sitemap_queue_generate RAILS_ENV=production
+
+# why bother with this? Just run the generation either way
+# echo "Checking if sitemap exists"
+# if [ -f /opt/scholarspace/scholarspace-hyrax/public/sitemap.xml ]
+# then
+  # echo "Sitemap found"
+# else
+  # echo "Sitemap not found - queuing sitemap generation"
+  # setuser scholarspace bundle exec rails gwss:sitemap_queue_generate RAILS_ENV=production
+# fi
+
+# setuser scholarspace crontab -l > cron.tmp
+#   # cron.tmp won't be created if not cron jobs exist
+#   # if cron job exists, presume we've already created the sitemap job
+#   if [[ ! -e cron.tmp || ! -s cron.tmp ]]
+#   then
+#     # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
+#     echo "Creating cron job for sitemap"
+#     setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
+#     # rm cron.tmp
+#   fi
 fi
