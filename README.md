@@ -113,7 +113,7 @@ a separate user for the app, but it is not necessary.  That user will need to ow
     - `--create-roles`: create default app roles (if they don't already exist)
     - `--create-admin-set`: create the default Admin Set, if it doesn't already exist
     - `--add-admin-user`: grant a ScholarSpace user the `admin` role. To use: first, create the user in the ScholarSpace UI. Then run this command, inserting an environment variable (`admin_user=USER_EMAIL_ADDRESS`) before the path to the script. This environment variable will be used by the Rake task to look up the user in the app database. 
-21. To generate a sitemap, run `docker exec -it --user scholarspace [sidekiq-container-name] bash -lc "docker/scripts/app-init.sh --create-sitemap"`. **This command should be run in the Sidekiq container**, not the app server container.
+21. To start the job to generate a sitemap, run `docker exec -it --user scholarspace [app-container-name] bash -lc "docker/scripts/app-init.sh --create-sitemap"`. With default configurations, this job will run every morning at 12:30 AM, or can be configured in `config/schedule.rb` to run on a different schedule.
 
 ## Redeployment
 
