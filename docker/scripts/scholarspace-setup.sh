@@ -28,28 +28,15 @@ rm /etc/nginx/sites-enabled/default
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
-if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
-  then  
-    echo "Starting sidekiq"
-    exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
+if [[ "$#" -eq 1 && $1 = "sidekiq" ]]; then  
+  echo "Starting sidekiq"
+  exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
 else
 
-echo "Preparing sitemap cron job"
+# Setting up sitemap regeneration schedule - configure in config/schedule.rb
+# Default configuration is every day at 12:30 AM
+echo "Preparing sitemap crontab"
 setuser scholarspace bundle exec whenever --update-crontab
-
-echo "Performing database migrations"
-setuser scholarspace bundle exec rails db:migrate RAILS_ENV=production
-
-echo "Precompiling assets"
-setuser scholarspace bundle exec rails assets:precompile RAILS_ENV=production
-
-  if [ -f /opt/scholarspace/scholarspace-hyrax/public/sitemap.xml ]
-    then
-    echo "Sitemap found - skipping immediate sitemap generation"
-  else
-    echo "Sitemap not found - queuing sitemap generation"
-    setuser scholarspace bundle exec rails gwss:sitemap_queue_generate RAILS_ENV=production
-  fi
 
 echo "Starting Passenger..."
 # Enable Nginx
