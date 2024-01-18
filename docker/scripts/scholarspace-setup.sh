@@ -28,25 +28,19 @@ rm /etc/nginx/sites-enabled/default
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
-if [[ "$#" -eq 1 && $1 = "sidekiq" ]]
-then  
-  # Create sitemap cronjob, if necessary
-  setuser scholarspace crontab -l > cron.tmp
-  # cron.tmp won't be created if not cron jobs exist
-  # if cron job exists, presume we've already created the sitemap job
-  if [[ ! -e cron.tmp || ! -s cron.tmp ]]
-  then
-    # This isn't working in the docker volume, not sure why. It seems unable to execute the bundle command.
-    echo "Creating cron job for sitemap"
-    setuser scholarspace bundle exec whenever > cron.tmp && setuser scholarspace crontab cron.tmp
-    rm cron.tmp
-  fi
+if [[ "$#" -eq 1 && $1 = "sidekiq" ]]; then  
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
 else
+
+# Setting up sitemap regeneration schedule - configure in config/schedule.rb
+# Default configuration is every day at 12:30 AM
+echo "Preparing sitemap crontab"
+setuser scholarspace bundle exec whenever --update-crontab
 
 echo "Starting Passenger..."
 # Enable Nginx
 rm -f /etc/service/nginx/down
 exec /sbin/my_init
+fi
 fi
