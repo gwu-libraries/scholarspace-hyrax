@@ -2,7 +2,6 @@
 docker-compose.yml
 Dockerfile*
 .env.example
-.env
 .travis.yml
 method_tracer.rb
 nohup.out
@@ -18,16 +17,6 @@ db/*.sqlite3-journal
 public/assets
 public/sitemap.xml
 log/*.*
-config/environments/*.rb
-config/initializers/bulkrax.rb.backup
-config/initializers/bulkrax.rb.backup2
-config/initializers/hyrax.rb
-config/initializers/hyrax.rb.backup
-config/database.yml
-config/fedora.yml
-config/solr.yml
-config/blacklight.yml
-config/secrets.yml
 vendor
 sidekiq_conf
 tomcat_conf
