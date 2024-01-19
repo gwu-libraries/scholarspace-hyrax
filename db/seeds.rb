@@ -1,5 +1,3 @@
-abort("The Rails environment is running in production mode!") if Rails.env.production?
-
 # reworking this to only create the necessary collections/roles/users for a minimally
 # instance, and will move the seeding of works into a rake task
 
