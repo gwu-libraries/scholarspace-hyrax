@@ -44,6 +44,16 @@ then
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
 else
+
+echo "########## Creating DBs (prod) ########"
+setuser scholarspace bundle exec rails db:create RAILS_ENV=production
+echo "########## Migrating DBs (prod) #######"
+setuser scholarspace bundle exec rails db:migrate RAILS_ENV=production
+echo "####### Seeding DB (prod) #####"
+setuser scholarspace bundle exec rails db:seed RAILS_ENV=production
+echo "####### Precompiling assets (prod) ######"
+setuser scholarspace bundle exec rails assets:precompile RAILS_ENV=production
+
 echo "Starting Passenger..."
 # Enable Nginx
 rm -f /etc/service/nginx/down
