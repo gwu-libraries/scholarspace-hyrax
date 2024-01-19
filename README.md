@@ -182,24 +182,21 @@ echo $CR_PAT | docker login ghcr.io -u [USERNAME] --password-stdin
   ingest_command = "rake RAILS_ENV=production gwss:ingest_etd"
   ```
 
-### Create the user roles and the default Admin set
+### Migrating Production Database
 
-  1. Create an account in the UI for the admin user. (The email address of this account is referenced in step 2 below.)
-  2. Run the rake tasks to user roles called `admin` and `content-admin` as well as the default Admin set:
-  ```
-          admin_user=YOUR_EMAIL_ADDRESS docker exec -it --user scholarspace [hyrax-app-container] bash -lc "docker/scripts/app-init.sh --create-roles --add-admin-user --create-admin-set"
-  ```
-  3. Add the `content-admin` users as desired through the `/roles` UI.
+In the app-server container (i.e. through `docker exec -it scholarspace-hyrax_app-server_1 /bin/sh`, followed by `su scholarspace`), run:
 
-### Create `ETDs` admin set
+`bundle exec rails db:migrate RAILS_ENV=production`
 
-Log in to the application as the admin user.  Navigate to the Administrative page, and create an Administrative set called `ETDs`.
+### Creating First Admin User and Necessary Admin Sets/Collections
 
-### Customize UI
+In the app-server container (i.e. through `docker exec -it scholarspace-hyrax_app-server_1 /bin/sh`, followed by `su scholarspace`), run this rake task - replacing email and password with your new admin user email and password:
 
-  1. Configure colors.  As the admin user, go to the admin dashboard --> Settings --> Appearance.  Set the Header background color to `004165` (You will need to select the color sliders, then RGB sliders, then enter the hex code in the Hex Color # box.)
- 
-  2. Also under Settings, add back Pages and Content Blocks 
+`bundle exec rails gwss:prep_new_prod RAILS_ENV=production admin_user="AN-EMAIL-ADDRESS@EXAMPLE.COM" admin_password="A-PASSWORD"`
+
+This will create the admin and content-admin roles, create an admin user with the specified email and password, create the default admin sets, and create an `ETDs` admin set with the admin user as the owner.
+
+In addition, this task will precompile assets for production.
 
  ## Persistence
 
