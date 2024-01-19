@@ -3,6 +3,8 @@ require 'rake'
 namespace :gwss do
 
   desc "Prepares new prod instance"
+  # Requires passing in "admin_user" and "admin_password" as arguments
+  # i.e. bundle exec rails gwss:prep_new_prod RAILS_ENV=production admin_user="an-email-address@example.com" admin_password="a-password"
   task :prep_new_prod => :environment do
     abort("Please supply admin_user email as an argument") if ENV['admin_user'].nil?
     abort("Please supply admin_user password") if ENV['admin_password'].nil?
