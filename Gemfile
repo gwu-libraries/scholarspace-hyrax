@@ -12,8 +12,8 @@ gem 'pg'
 # Use sitemap
 # See https://github.com/viseztrance/rails-sitemap
 gem 'sitemap'
-# Use Puma as the app server
-gem 'puma', '~> 4.3'
+# Use Passenger as the app server
+gem "passenger", ">= 5.3.2", require: "phusion_passenger/rack_handler"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -83,6 +83,10 @@ gem 'invisible_captcha'
 
 gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
+gem "ffi", "~> 1.15"
+
+gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonicalization/issues/2
+
 group :development, :test do
   # gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -90,6 +94,8 @@ group :development, :test do
   gem 'launchy'
   gem 'fcrepo_wrapper'
   gem 'rspec-rails'
+  gem 'factory_bot_rails'
+  gem 'faker'
 end
 
 group :development do
@@ -99,15 +105,11 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
-  gem 'factory_bot_rails'
-  gem 'faker'
 end
 
 group :test do
-  # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'
-  gem 'selenium-webdriver'
-  # Easy installation and use of chromedriver to run system tests with Chrome
-  gem 'chromedriver-helper'
+  gem 'simplecov', require: false
+  gem 'database_cleaner'
+  gem 'orderly'
 end
-gem "ffi", "~> 1.15"

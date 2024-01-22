@@ -44,11 +44,16 @@ namespace :gwss  do
 
   desc "Add a user to the admin role"
   task :add_admin_role => :environment do
-    # Expect this variable to be set when running from the command line
-    if ENV["admin_user"]
-      r = Role.find_by_name("admin")
-      r.users << User.find_by_user_key(ENV["admin_user"])
-      r.save
+    if User.find_by(email: ENV['DEV_ADMIN_USER_EMAIL']) == nil
+      admin_user = User.create(email: ENV['DEV_ADMIN_USER_EMAIL'], password: ENV['DEV_ADMIN_USER_PASSWORD'])
+      admin_role = Role.find_or_create_by(name: 'admin')
+      admin_role.users << admin_user  
+    end
+
+    if User.find_by(email: ENV['DEV_CONTENT_ADMIN_USER_EMAIL']) == nil
+      content_admin_user = User.create(email: ENV['DEV_CONTENT_ADMIN_USER_EMAIL'], password: ENV['DEV_CONTENT_ADMIN_USER_PASSWORD'])
+      content_admin_role = Role.find_or_create_by(name: 'content-admin')
+      content_admin_role.users << content_admin_user
     end
   end
 
@@ -301,7 +306,7 @@ namespace :gwss  do
     ContentBlock.find_or_create_by(name: "header_text_color").update!(value: "#444444")
     ContentBlock.find_or_create_by(name: "link_color").update!(value: "#28659A")
     ContentBlock.find_or_create_by(name: "footer_link_color").update!(value: "#FFFFFF")
-    ContentBlock.find_or_create_by(name: "primary_buttom_background_color").update!(value: "#28659A")
+    ContentBlock.find_or_create_by(name: "primary_button_background_color").update!(value: "#28659A")
     ContentBlock.find_or_create_by(name: "featured_researcher").update!(value: featured_researcher_html.read)
     ContentBlock.find_or_create_by(name: "about_page").update!(value: about_page_html.read)
     ContentBlock.find_or_create_by(name: "help_page").update!(value: help_page_html.read)
