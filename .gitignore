@@ -20,11 +20,6 @@ dump.rdb
 fits.log
 
 # Ignore local config files
-config/database.yml
-config/fedora.yml
-config/solr.yml
-config/blacklight.yml
-config/secrets.yml
 .env
 
 # Ignore Byebug command history file.
@@ -35,3 +30,5 @@ config/secrets.yml
 
 # VScode settings
 /.vscode
+
+coverage

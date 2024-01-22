@@ -28,8 +28,6 @@ rm /etc/nginx/sites-enabled/default
 # Not sure if this step is necessary  
 setuser scholarspace ruby2.7 -S passenger-config build-native-support
 
-./docker/scripts/hyrax-config.sh
-
 if [[ "$#" -eq 1 && $1 = "sidekiq" ]]; then  
   echo "Starting sidekiq"
   exec /sbin/my_init -- bash -lc "bundle exec sidekiq --environment production"
