@@ -2,6 +2,9 @@ name: CI testing
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - ci-testing
 jobs:
   CI:
     runs-on: ubuntu-latest
