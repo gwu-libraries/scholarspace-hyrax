@@ -5,7 +5,7 @@ on:
 jobs:
   CI:
     runs-on: ubuntu-latest
-  steps:
+    steps:
     - name: Check out repository code
       uses: actions/checkout@v4
     - name: Run docker-compose stack
