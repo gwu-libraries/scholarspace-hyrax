@@ -86,7 +86,7 @@ services:
     logging: 
       <<: *logging
     healthcheck:
-      test: ["CMD-SHELL", "wget --no-verbose --spider --tries=1 localhost:8983/solr/$SOLR_CORE/admin/ping || exit 1"]
+      test: ["CMD-SHELL", "wget --no-verbose --spider --tries=1 localhost:8983 || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 10
