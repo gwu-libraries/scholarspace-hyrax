@@ -1,0 +1,45 @@
+name: CI testing
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - master
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    permissions: 
+      packages: read
+    steps:
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v3
+      with:
+        registry: ghcr.io
+        username: ${{ secrets.GHCR_USERNAME }}
+        password: ${{ secrets.CR_PAT }}
+    - name: Setup scholarspace folder
+      run: |
+        mkdir -p /opt/scholarspace
+        mkdir /opt/scholarspace/certs
+        mkdir /opt/scholarspace-tmp
+        mkdir /opt/scholarspace-minter
+        mkdir /opt/scholarspace/fedora-data
+        mkdir /opt/scholarspace/solr-data
+        cd /opt/scholarspace
+    - name: Check out repository code
+      uses: actions/checkout@v4
+    - name: Create env file
+      run: |
+        cp docker/ci.env .env
+    - name: Start Docker containers
+      run: |
+        docker compose up --wait
+    - name: Create dev/test databases
+      run: |
+        docker exec $(docker ps --filter 'name=app' -q) bash -lc "bundle exec rails db:create"
+    - name: Migrate dev/test databases
+      run: |
+        docker exec $(docker ps --filter 'name=app' -q) bash -lc "bundle exec rails db:migrate"
+    - name: Run RSpec tests
+      run: |
+        docker exec $(docker ps --filter 'name=app' -q) bash -lc "bundle exec rspec"
