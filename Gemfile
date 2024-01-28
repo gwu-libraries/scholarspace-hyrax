@@ -87,6 +87,8 @@ gem "ffi", "~> 1.15"
 
 gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonicalization/issues/2
 
+gem 'schoolie', '0.1.3'
+
 group :development, :test do
   # gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

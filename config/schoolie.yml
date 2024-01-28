@@ -1,0 +1,8 @@
+static:
+  citation_institution: George Washington University
+attributes:
+  citation_title: title
+  citation_author: creator
+    #  citation_date: publication_date
+    #  citation_keywords: keywords
+    #  citation_pdf_url: permanent_url
