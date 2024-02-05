@@ -32,7 +32,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
 - The Docker image uses Jetty, not Tomcat. Configuring authentication for Jetty requires a different process, documented [here](https://wiki.lyrasis.org/display/FEDORA474/How+to+Configure+Servlet+Container+Authentication) and with examples in the `docker-fcrepo` repository. 
 
 ### Postgres
-- Currently, separate postgres containers (each with their own Docker volume) are used for the Fedora and Rails databases. This may be desirable for migration purposes, i.e., if the two databases in production are running on different versions of postrgres. 
+- Currently, separate postgres containers (each with their own Docker volume) are used for the Fedora and Rails databases. This may be desirable for migration purposes, i.e., if the two databases in production are running on different versions of postgres. 
 - The Rails/Hyrax postrgres container is using a version pinned to the version in use in production.
 
 
