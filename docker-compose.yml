@@ -150,6 +150,7 @@ services:
      - /opt/scholarspace/scholarspace-hyrax/app:/opt/scholarspace/scholarspace-hyrax/app
      - /opt/scholarspace/scholarspace-hyrax/config:/opt/scholarspace/scholarspace-hyrax/config
      - /opt/scholarspace/scholarspace-hyrax/spec:/opt/scholarspace/scholarspace-hyrax/spec
+     - /opt/scholarspace/scholarspace-hyrax/db:/opt/scholarspace/scholarspace-hyrax/db
     restart: always
     logging: 
       <<: *logging
