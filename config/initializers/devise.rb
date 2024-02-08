@@ -254,11 +254,13 @@ Devise.setup do |config|
 
 
   config.omniauth :saml,
-    idp_cert: ENV.fetch('IDP_CERT_PEM', 'fakeCERT'),
-    idp_sso_target_url: ENV['IDP_TARGET_URL'],
-    issuer:  ENV['ISSUER'],
-    private_key: ENV.fetch('SP_KEY', 'fakeKey'),
-    certificate: ENV.fetch('SP_CERT', 'fakeCERT'),
+    idp_cert: File.read(ENV['IDP_CERT_PEM']),
+    idp_sso_service_url: ENV['IDP_TARGET_URL'],
+    idp_slo_service_url: "https://idp.sso.example.com/signoff/29490",
+    sp_entity_id: ENV['ISSUER'] + '/users/auth/saml',
+    assertion_consumer_service_url: ENV['ISSUER'] + '/users/auth/saml/callback',
+    private_key: File.read(ENV['SP_KEY']),
+    certificate: File.read(ENV['SP_CERT']),
     uid_attribute: ENV.fetch('UID_ATTRIBUTE', 'urn:oid:0.9.2342.19200300.100.1.1'),
     request_attributes: [
       { :name => 'email', :name_format => 'urn:oid:0.9.2342.19200300.100.1.3', :friendly_name => 'Email address' },
