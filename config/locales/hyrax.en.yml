@@ -2,9 +2,11 @@ en:
   hyrax:
     controls:
       terms: Information for Authors
+      share: Share Your Work
     pages:
       tabs: 
         terms_page: Information for Authors
+        share_page: Share Your Work
     homepage:
       featured_researcher:
         missing: No publication has been featured.
