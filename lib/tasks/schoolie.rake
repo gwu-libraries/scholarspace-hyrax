@@ -2,6 +2,7 @@
 
 require 'json'
 require 'nokogiri'
+
 namespace :schoolie do
   task sitemap: :environment do
     date_field = 'system_modified_dtsi'
