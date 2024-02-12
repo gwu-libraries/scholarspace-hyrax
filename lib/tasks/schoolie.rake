@@ -4,6 +4,7 @@ require 'json'
 require 'nokogiri'
 
 namespace :schoolie do
+  desc "Creates Google Scholar compliant sitemap for GwEtd works"
   task sitemap: :environment do
     date_field = 'system_modified_dtsi'
     result = Hyrax::SolrService.new.get("has_model_ssim:GwEtd NOT keyword_tesim:*",
