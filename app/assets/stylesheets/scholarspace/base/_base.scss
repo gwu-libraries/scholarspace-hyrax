@@ -70,6 +70,10 @@ html {
   div.section-gw-white {
     .gw-white-content {
       padding: 1.5em 0 0 0;
+      
+      li a {
+        text-decoration: underline;
+      }
     }
   }
 
@@ -175,6 +179,7 @@ html {
       li a {
         color: $gw-white;
         font-weight: inherit;
+        text-decoration: none;
   
         &:hover {
           background-color: $gw-light-blue;
