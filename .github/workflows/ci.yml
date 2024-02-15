@@ -26,7 +26,7 @@ jobs:
         username: ${{ secrets.GHCR_USERNAME }}
         password: ${{ secrets.CR_PAT }}
     # Prepare the folder structure for scholarspace
-    - name: Setup scholarspace folder
+    - name: Create scholarspace folders
       run: |
         mkdir -p /opt/scholarspace
         mkdir /opt/scholarspace/certs
