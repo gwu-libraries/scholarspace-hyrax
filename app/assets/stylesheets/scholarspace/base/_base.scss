@@ -5,8 +5,10 @@ html {
     font-weight: 200;
   }
   
-  body {
+  body,
+  div.section-gw-white {
     position: relative;
+    background-color: $gw-white;
     min-height: 100vh;
     margin-bottom: 0;
     color: $gw-dark-blue;
@@ -19,46 +21,100 @@ html {
     @supports (font-variation-settings: normal) {
       font-family: $font-family-sans-serif;
     }
-  }
-  
-  strong {
-    font-weight: 400;
-  }
-  
-  a {
-    color: $gw-light-blue;
-  
-    &:hover, &:focus {
-      color: $gw-hover-orange;
+
+    p a {
+      text-decoration: underline;
+    }
+
+    strong {
+      font-weight: 400;
+    }
+    
+    a {
+      color: $gw-light-blue;
+    
+      &:hover, &:focus {
+        color: $gw-hover-orange;
+      }
+    }
+    
+    h1 {
+      margin-top: 0;
+      margin-bottom: 0.25em;
+      font-size: 3em;
+      font-weight: inherit;
+      color: $gw-dark-blue;
+      line-height: 1.125em;
+    }
+    
+    h2 {
+      margin-top: 0;
+      margin-bottom: 0;
+      padding-bottom: 0.1em;
+      color: $gw-dark-blue;
+      font-size: 1.9em;
+      font-weight: inherit;
+      line-height: 1.2em;
+    }
+    
+    h3 {
+      margin: 0.3rem 0;
+      font-size: 1.3rem;
+    }
+    
+    h3, dt, thead th, .label {
+      font-weight: 400;
     }
   }
-  
-  h1 {
-    margin-top: 0;
-    margin-bottom: 0.25em;
-    font-size: 3em;
-    font-weight: inherit;
-    color: $gw-dark-blue;
-    line-height: 1.125em;
+
+  div.section-gw-white {
+    .gw-white-content {
+      padding: 1.5em 0 0 0;
+      
+      li a {
+        text-decoration: underline;
+      }
+    }
   }
-  
-  h2 {
-    margin-top: 0;
-    margin-bottom: 0;
-    padding-bottom: 0.1em;
-    color: $gw-dark-blue;
-    font-size: 1.9em;
-    font-weight: inherit;
-    line-height: 1.2em;
-  }
-  
-  h3 {
-    margin: 0.3rem 0;
-    font-size: 1.3rem;
-  }
-  
-  h3, dt, thead th, .label {
-    font-weight: 400;
+
+  div.section-gw-darkblue {
+    background-color: $gw-dark-blue;
+    color: $gw-white;
+
+    p {
+      margin: 5px 0;
+
+      &:last-child {
+        margin: 5px 0 0;
+      }
+    }
+
+    a {
+      color: $gw-hover-buff;
+    
+      &:hover, &:focus {
+        color: $gw-buff;
+      }
+    }
+
+    a.gw-btn {
+      color: $gw-white;
+    }
+
+    h1,
+    h2 {
+      color: $gw-white;
+    }
+
+    h2.h2-section-header {
+      font-size: 1.7em;
+
+      &:after {
+        content:' ';
+        display: block;
+        border: 2px solid $gw-buff;
+      }
+    }
   }
   
   textarea {
@@ -67,7 +123,6 @@ html {
   
   .gw-btn, .btn-primary {
     display: inline-block;
-    height: 100%;
     padding: 0.3rem 0.75rem;
     margin: 0;
     border-radius: 0.25rem;
@@ -124,6 +179,7 @@ html {
       li a {
         color: $gw-white;
         font-weight: inherit;
+        text-decoration: none;
   
         &:hover {
           background-color: $gw-light-blue;
