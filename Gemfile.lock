@@ -674,7 +674,7 @@ GEM
     orm_adapter (0.5.0)
     os (1.1.4)
     parslet (2.0.0)
-    passenger (6.0.20)
+    passenger (6.0.17)
       rack
       rake (>= 0.8.1)
     pg (1.5.3)
@@ -1037,7 +1037,7 @@ DEPENDENCIES
   listen (>= 3.0.5, < 3.2)
   mini_racer
   orderly
-  passenger (~> 6.0.17)
+  passenger (= 6.0.17)
   pg
   rails (~> 5.2.8.1)
   recaptcha

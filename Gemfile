@@ -14,7 +14,7 @@ gem 'pg'
 gem 'sitemap'
 # Use Passenger as the app server
 # Update this when we update the Passenger docker container base image version
-gem 'passenger', "~> 6.0.17", require: "phusion_passenger/rack_handler"
+gem 'passenger', '6.0.17', require: "phusion_passenger/rack_handler"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
