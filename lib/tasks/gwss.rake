@@ -308,6 +308,7 @@ namespace :gwss  do
     featured_researcher_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/featured_researcher.html")
     about_page_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/about_page.html")
     help_page_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/help_page.html")
+    share_page_html = File.open("#{Rails.root}/spec/fixtures/content_blocks/share_page.html")
 
     ContentBlock.find_or_create_by(name: "header_background_color").update!(value: "#FFFFFF")
     ContentBlock.find_or_create_by(name: "header_text_color").update!(value: "#444444")
@@ -317,6 +318,7 @@ namespace :gwss  do
     ContentBlock.find_or_create_by(name: "featured_researcher").update!(value: featured_researcher_html.read)
     ContentBlock.find_or_create_by(name: "about_page").update!(value: about_page_html.read)
     ContentBlock.find_or_create_by(name: "help_page").update!(value: help_page_html.read)
+    ContentBlock.find_or_create_by(name: "share_page").update!(value: share_page_html.read)
   end
 
   desc "Reassigns GwEtd resource_type values to Master's Thesis or Dissertation"
