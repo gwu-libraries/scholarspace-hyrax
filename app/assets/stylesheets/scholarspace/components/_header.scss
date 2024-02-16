@@ -1,6 +1,9 @@
 // navbar and header styling
 
 header {
+  height: 20px;
+  background-color: $gw-light-blue;
+
     #masthead {
       height: 100%;
       display: flex;
@@ -13,11 +16,16 @@ header {
       height: auto;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: end;
     }
   
     @media (min-width: $mobile-breakpoint) {
       height: 7.8em;
+      background-color: transparent;
+
+      .container-fluid {
+        justify-content: space-between;
+      }
     }
 }
   
@@ -81,7 +89,7 @@ header {
   }
   
   .navbar-inverse {
-    background-color: $gw-dark-blue !important;
+    background-color: transparent !important;
     border-color: transparent;
   
     @media (min-width: $mobile-breakpoint) {
@@ -158,9 +166,10 @@ header {
             align-items: center;
   
             #mobile-title {
+              font-size: 2.5em;
+              font-weight: bold;
               margin-left: 0.3rem;
               color: $gw-white;
-              text-decoration: underline;
   
               &:hover {
                 color: $gw-light-grey;
@@ -239,6 +248,11 @@ header {
           }
         }
       }
+
+      .active > a {
+        color: $gw-white;
+        background-color: unset;
+      }
   
       .open .dropdown-menu > li > a {
         color: $gw-white;
@@ -257,9 +271,14 @@ header {
   
     .searchbar-right {
       width: 90%;
+      margin: 0.5em 0;
   
       @media (min-width: $mobile-breakpoint) {
-        width: 60%;
+        width: 70%;
+      }
+
+      @media (min-width: 880px) {
+        width: 100%;
       }
   
       input, .dropdown-toggle {
@@ -291,6 +310,14 @@ header {
       .dropdown-menu > li > a {
         font-weight: 200;
       }
+
+      #search-form-header {
+        margin-top: 0;
+
+        .input-group {
+          margin-bottom: 0;
+        }
+      }
   
       #search-field-header {
         border-radius: 4px;
@@ -309,15 +336,11 @@ header {
     }
   }
   
-  .home_share_work {
-    margin: 0;
-  }
-  
   #user_utility_links {
     display: flex;
     flex-direction: row;
     margin-left: 1rem;
-    margin-top: 0.3em;
+    margin-top: 0;
     margin-right: 0;
   
     .dropdown a, .notify-number {
@@ -327,14 +350,6 @@ header {
       &:hover, &:focus {
         background-color: transparent;
         color: $gw-white;
-      }
-  
-      @media (min-width: $mobile-breakpoint) {
-        color: $gw-dark-grey;
-  
-        &:hover, &:focus {
-          color: $gw-dark-grey;
-        }
       }
     }
   
@@ -358,6 +373,18 @@ header {
       &:hover {
         color: $gw-white;
         background-color: $gw-light-blue;
+      }
+    }
+
+    @media (min-width: $mobile-breakpoint) {
+      margin-top: 0.3rem;
+
+      .dropdown a, .notify-number {
+        color: $gw-dark-grey;
+
+      &:hover, &:focus {
+        color: $gw-dark-grey;
+      }
       }
     }
   }
