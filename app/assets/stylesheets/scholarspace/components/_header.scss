@@ -252,6 +252,11 @@ header {
       .active > a {
         color: $gw-white;
         background-color: unset;
+
+        &:hover {
+          color: $gw-white;
+          background: $gw-light-blue;
+        }
       }
   
       .open .dropdown-menu > li > a {
