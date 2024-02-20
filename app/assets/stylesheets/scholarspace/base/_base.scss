@@ -123,37 +123,51 @@ html {
     resize: none;
   }
   
-  .gw-btn, .btn-primary {
+  .btn-primary {
     display: inline-block;
-    padding: 0.3rem 0.75rem;
     margin: 0;
     border-radius: 0.25rem;
-    border: 2px solid $gw-light-blue !important;
-    background-color: $gw-light-blue !important;
-    color: $gw-white;
     font-size: 1em;
     font-weight: 200;
     line-height: 1.5;
     text-decoration: none;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     text-align: center;
-  
-    &:focus {
-      color: $gw-white !important;
-      background-color: #005984 !important;
-      outline: 0;
-      box-shadow: 0 0 0 0.2rem rgba(3, 60, 90, 0.25);
+
+    &.gw-btn {
+      padding: 0.3rem 0.75rem;
+      border: 2px solid $gw-light-blue !important;
+      background-color: $gw-light-blue !important;
+      color: $gw-white;
     }
-  
+
+    &.gw-ghost-btn {
+      margin: 0 0.75rem;
+      padding: 0.3rem 2rem;
+      border: 2px solid $gw-dark-blue !important;
+      background-color: $gw-white !important;
+      color: $gw-dark-blue;
+    }
+
+    &.btn-home {
+      width: 14rem;
+    }
+
     &:disabled {
       opacity: 0.65;
     }
   
-    &:hover {
+    &:hover, 
+    &:focus {
       text-decoration: none;
       color: #212529 !important;
       border-color: $gw-hover-buff !important;
       background-color: $gw-hover-buff !important;
+    }
+
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(3, 60, 90, 0.25);
     }
   }
   
