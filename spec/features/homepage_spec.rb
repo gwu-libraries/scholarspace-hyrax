@@ -98,7 +98,7 @@ RSpec.describe "Homepage" do
         click_on "Browse Everything"
       end
 
-      expect(current_path).to eq("/browse")
+      expect(current_path).to eq("/catalog")
     end
 
     it 'takes user to search result page when clicking magnifying glass icon' do
