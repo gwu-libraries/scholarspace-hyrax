@@ -1,42 +1,44 @@
-<% provide :page_title, @presenter.page_title %>
+<div class="container">
+  <% provide :page_title, @presenter.page_title %>
 
-<%= render 'shared/citations' %>
+  <%= render 'shared/citations' %>
 
-<div class="row work-type">
-  <div class="col-xs-12">
-    <%= render 'work_type', presenter: @presenter %>
-    <%= render 'show_actions', presenter: @presenter %>
-  </div>
-  <div class="col-xs-12">&nbsp;</div>
-  <div itemscope itemtype="http://schema.org/CreativeWork" class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <%= render 'work_title', presenter: @presenter %>
-      </div>
-      <div class="panel-body">
-        <div class="row">
-          <%= render 'workflow_actions_widget', presenter: @presenter %>
-          <% if @presenter.iiif_viewer? %>
-            <div class="col-sm-12">
-              <%= render 'representative_media', presenter: @presenter, viewer: true %>
+  <div class="row work-type">
+    <div class="col-xs-12">
+      <%= render 'work_type', presenter: @presenter %>
+      <%= render 'show_actions', presenter: @presenter %>
+    </div>
+    <div class="col-xs-12">&nbsp;</div>
+    <div itemscope itemtype="http://schema.org/CreativeWork" class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <%= render 'work_title', presenter: @presenter %>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <%= render 'workflow_actions_widget', presenter: @presenter %>
+            <% if @presenter.iiif_viewer? %>
+              <div class="col-sm-12">
+                <%= render 'representative_media', presenter: @presenter, viewer: true %>
+              </div>
+            <% end %>
+            <div class="col-sm-3 text-center work-preview">
+              <%= render 'representative_media', presenter: @presenter, viewer: false unless @presenter.iiif_viewer? %>
+              <%= render 'citations', presenter: @presenter %>
+              <%= render 'social_media' %>
             </div>
-          <% end %>
-          <div class="col-sm-3 text-center work-preview">
-            <%= render 'representative_media', presenter: @presenter, viewer: false unless @presenter.iiif_viewer? %>
-            <%= render 'citations', presenter: @presenter %>
-            <%= render 'social_media' %>
-          </div>
-          <div class="col-sm-9">
-            <%= render 'work_description', presenter: @presenter %>
-            <%= render 'metadata', presenter: @presenter %>
-            <%= render 'note_to_authors', presenter: @presenter %>
-          </div>
-          <div class="col-sm-12">
-            <%= render 'relationships', presenter: @presenter %>
-            <%= render 'items', presenter: @presenter %>
-            <%# TODO: we may consider adding these partials in the future %>
-            <%# = render 'sharing_with', presenter: @presenter %>
-            <%# = render 'user_activity', presenter: @presenter %>
+            <div class="col-sm-9">
+              <%= render 'work_description', presenter: @presenter %>
+              <%= render 'metadata', presenter: @presenter %>
+              <%= render 'note_to_authors', presenter: @presenter %>
+            </div>
+            <div class="col-sm-12">
+              <%= render 'relationships', presenter: @presenter %>
+              <%= render 'items', presenter: @presenter %>
+              <%# TODO: we may consider adding these partials in the future %>
+              <%# = render 'sharing_with', presenter: @presenter %>
+              <%# = render 'user_activity', presenter: @presenter %>
+            </div>
           </div>
         </div>
       </div>

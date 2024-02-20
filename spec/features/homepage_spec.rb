@@ -45,24 +45,10 @@ RSpec.describe "Homepage" do
   end
 
   context "navigation bar" do
-    it 'has a link to "Information for Authors" page' do
-      within ".navigation-wrap" do
-        expect(page).to have_content("Information for Authors")
-      end      
-    end
-
-    it 'takes user to "Information for Authors" page when clicked' do
-      within ".navigation-wrap" do
-        click_on "Information for Authors"
-      end
-
-      expect(current_path).to eq("/terms")
-    end
-
     it 'has a link to "About" page' do
       within ".navigation-wrap" do
         expect(page).to have_content("About")
-      end
+      end      
     end
 
     it 'takes user to "About" page when clicked' do
@@ -73,21 +59,7 @@ RSpec.describe "Homepage" do
       expect(current_path).to eq("/about")
     end
 
-    it 'has a link to the "Help" page' do
-      within ".navigation-wrap" do
-        expect(page).to have_content("Help")
-      end
-    end
-
-    it 'takes user to "Help" page when clicked' do
-      within ".navigation-wrap" do
-        click_on "Help"
-      end
-
-      expect(current_path).to eq("/help")
-    end
-
-    it 'has a link to the "Contact" page' do
+    it 'has a link to "Contact" page' do
       within ".navigation-wrap" do
         expect(page).to have_content("Contact")
       end
@@ -99,6 +71,34 @@ RSpec.describe "Homepage" do
       end
 
       expect(current_path).to eq("/contact")
+    end
+
+    it 'has a link to the "Share Your Work" page' do
+      within ".navigation-wrap" do
+        expect(page).to have_content("Share Your Work")
+      end
+    end
+
+    it 'takes user to "Share Your Work" page when clicked' do
+      within ".navigation-wrap" do
+        click_on "Share Your Work"
+      end
+
+      expect(current_path).to eq("/share")
+    end
+
+    it 'has a link to the "Browse Everything" page' do
+      within ".navigation-wrap" do
+        expect(page).to have_content("Browse Everything")
+      end
+    end
+
+    it 'takes user to "Browse Everything" page when clicked' do
+      within ".navigation-wrap" do
+        click_on "Browse Everything"
+      end
+
+      expect(current_path).to eq("/catalog")
     end
 
     it 'takes user to search result page when clicking magnifying glass icon' do
