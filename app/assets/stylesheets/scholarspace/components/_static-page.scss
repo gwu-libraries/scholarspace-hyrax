@@ -70,3 +70,21 @@
         font-size: 2.7em;
     }
 }
+
+//contact page
+#new_contact_form {
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  
+    .form-group {
+      margin-left: 0;
+      margin-right: 0;
+      width: 100%;
+    }
+  
+    input[type="submit"] {
+      margin-right: 15px;
+      width: 10em;
+    }
+  }
