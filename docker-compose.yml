@@ -68,11 +68,11 @@ services:
       timeout: 5s
       retries: 5
   solr:
-    # image: ghcr.io/gwu-libraries/scholarspace-hyrax-solr:2.0.1
+    image: ghcr.io/gwu-libraries/scholarspace-hyrax-solr:2.0.1
     env_file: .env
-    build: 
-     context: .
-     dockerfile: Dockerfile-solr
+    # build: 
+     # context: .
+     # dockerfile: Dockerfile-solr
     hostname: solr-hyrax
     environment:
       - SOLR_CORE=$SOLR_CORE
@@ -103,10 +103,10 @@ services:
       test: ["CMD", "redis-cli","ping"]
   sidekiq:
     env_file: .env
-    # image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
-    image: scholarspace-app
-    build: 
-     context: .
+    image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
+    # image: scholarspace-app
+    # build: 
+     # context: .
     depends_on:
       redis:
         condition: service_healthy
@@ -122,8 +122,8 @@ services:
     command: ["bash", "-l", "docker/scripts/scholarspace-setup.sh", "sidekiq"]
   app-server:
     env_file: .env
-    # image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
-    image: scholarspace-app
+    image: ghcr.io/gwu-libraries/scholarspace-app:2.0.1
+    # image: scholarspace-app
     depends_on:
       pg-hyrax:
         condition: service_healthy
