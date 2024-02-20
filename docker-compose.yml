@@ -35,7 +35,7 @@ services:
       - POSTGRES_DB=$FEDORA_DB
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - fedora-db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data
     networks:
       - fedora
     restart: always
@@ -56,7 +56,7 @@ services:
       - POSTGRES_DB=$HYRAX_DB
       - POSTGRES_HOST_AUTH_METHOD=trust
     volumes:
-      - hyrax-db:/var/lib/postgresql/data
+      - db-hyrax:/var/lib/postgresql/data
     networks:
       - hyrax
     restart: always
@@ -147,8 +147,8 @@ services:
     logging: 
       <<: *logging
 volumes:
-  fedora-db:
-  hyrax-db:
+  db:
+  db-hyrax:
   app-hyrax:
 networks:
   hyrax:
