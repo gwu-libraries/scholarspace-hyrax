@@ -29,3 +29,6 @@ docker exec -i --user scholarspace $(docker ps --filter name=app -q) bash -lc "b
 # Run rake task to apply any changes to contentblocks used on homepage/about/other main pages
 echo "Applying contentblocks"
 docker exec -i --user scholarspace $(docker ps --filter name=app -q) bash -lc "bundle exec rails gwss:apply_contentblock_changes RAILS_ENV=production"
+# Restart passenger
+echo "Restarting Passenger"
+docker exec -i --user scholarspace $(docker ps --filter name=app-server -q) bash -lc "passenger-config restart-app /"
