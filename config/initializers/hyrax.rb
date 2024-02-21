@@ -206,15 +206,21 @@ Hyrax.config do |config|
   # config.binaries_directory = "tmp/binaries"
 
   # If browse-everything has been configured, load the configs.  Otherwise, set to nil.
-  begin
-    if defined? BrowseEverything
-      config.browse_everything = BrowseEverything.config
-    else
-      Rails.logger.warn "BrowseEverything is not installed"
-    end
-  rescue Errno::ENOENT
-    config.browse_everything = nil
-  end
+  # GWSS Customization - this BrowseEverything conditional doesn't seem to be working in our setup
+  # causes an error in _/hyrax-3.6.0/app/views/hyrax/base/_form_files.html.erb
+
+  # begin
+  #   if defined? BrowseEverything
+  #     config.browse_everything = BrowseEverything.config
+  #   else
+  #     Rails.logger.warn "BrowseEverything is not installed"
+  #   end
+  # rescue Errno::ENOENT
+  #   config.browse_everything = nil
+  # end
+
+  # Skipping block and manually setting browse_everything to nil
+  config.browse_everything = nil
 
   ## Whitelist all directories which can be used to ingest from the local file
   # system.
