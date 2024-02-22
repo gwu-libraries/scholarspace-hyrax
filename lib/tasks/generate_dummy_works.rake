@@ -117,7 +117,7 @@ namespace :gwss do
 
       authenticated_uploads << Hyrax::UploadedFile.create(user: admin_user, file: file)
       
-      authenticated_works << create_private_etd(admin_user,
+      authenticated_works << create_authenticated_etd(admin_user,
                                         "authenticated_work_#{index}",
                                         title: [title],
                                         description: ["This is a test authenticated ETD"],
