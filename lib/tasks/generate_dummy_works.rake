@@ -5,7 +5,7 @@ namespace :gwss do
   desc "Creates dummy works for development"
   # Takes integer arguments for number of each work type to generate
   # i.e.
-  # bundle exec rails gwss:create_dummy_works public_works=2 private_works=2 authenticated_works=1
+  # bundle exec rails gwss:create_dummy_works public_works=2 private_works=2 authenticated_works=1 RAILS_ENV=production
   task :create_dummy_works => :environment do
     # Sets these counts to either the argument passed in or 0 if no argument
     public_work_count = ENV['public_works'].to_i || 0
