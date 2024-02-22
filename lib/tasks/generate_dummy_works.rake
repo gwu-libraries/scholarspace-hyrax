@@ -19,6 +19,7 @@ namespace :gwss do
     admin_set = Hyrax::AdminSetCreateService.find_or_create_default_admin_set
     admin_set_collection_type = Hyrax::CollectionType.find_or_create_admin_set_type
 
+    # Check if PDF already exists at path, otherwise generate pdf
     public_work_count.times do |index|
       file_path = Rails.root.join('spec', 'fixtures', 'dummy_works', 'public', "public_work_#{index}.pdf")
       if !File.file?(file_path)
@@ -46,9 +47,10 @@ namespace :gwss do
       end
     end
 
-    public_files = Dir[File.join(Rails.root, 'spec', 'fixtures', 'dummy_works', 'public', '*')][0...public_work_count]
-    private_files = Dir[File.join(Rails.root, 'spec', 'fixtures', 'dummy_works', 'private', '*')][0...private_work_count]
-    authenticated_files = Dir[File.join(Rails.root, 'spec', 'fixtures', 'dummy_works', 'authenticated', '*')][0...authenticated_work_count]
+    # Create arrays of the file paths
+    public_files = Dir[File.join(Rails.root, 'spec', 'fixtures', 'dummy_works', 'public', '*')]
+    private_files = Dir[File.join(Rails.root, 'spec', 'fixtures', 'dummy_works', 'private', '*')]
+    authenticated_files = Dir[File.join(Rails.root, 'spec', 'fixtures', 'dummy_works', 'authenticated', '*')]
 
     public_uploads = []
     public_works = []
@@ -59,13 +61,15 @@ namespace :gwss do
     authenticated_uploads = []
     authenticated_works = []
 
+    # Iterate through the file paths, create ETDs, attach files
     public_files.each_with_index do |file_path, index|
+      next if GwEtd.exists?("public_work_#{index}")
       file = File.open(file_path)
       title = file_path.split('/').last.split('.').first.titleize
 
-      public_uploads << Hyrax::UploadedFile.create(user: admin, file: file)
+      public_uploads << Hyrax::UploadedFile.create(user: admin_user, file: file)
       
-      public_works << create_public_etd(admin,
+      public_works << create_public_etd(admin_user,
                                         "public_work_#{index}",
                                         title: [title],
                                         description: ["This is a test public ETD"],
@@ -82,8 +86,55 @@ namespace :gwss do
       AttachFilesToWorkJob.perform_now(public_works[index], [public_uploads[index]])
     end
 
-  end
- 
+    private_files.each_with_index do |file_path, index|
+      next if GwEtd.exists?("private_work_#{index}")
+      file = File.open(file_path)
+      title = file_path.split('/').last.split('.').first.titleize
+
+      private_uploads << Hyrax::UploadedFile.create(user: admin_user, file: file)
+      
+      private_works << create_private_etd(admin_user,
+                                        "private_work_#{index}",
+                                        title: [title],
+                                        description: ["This is a test private ETD"],
+                                        creator: ["Professor Test"],
+                                        keyword: ['Test', 'Private'],
+                                        rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                        publisher: ["A Fake Publisher Inc"],
+                                        language: ["English"],
+                                        contributor: ["Assistant Test"],
+                                        gw_affiliation: [""],
+                                        advisor: ["Advisor Test"],
+                                        resource_type: ["Article"])
+      
+      AttachFilesToWorkJob.perform_now(private_works[index], [private_uploads[index]])
+    end
+
+    authenticated_files.each_with_index do |file_path, index|
+      next if GwEtd.exists?("authenticated_work_#{index}")
+      file = File.open(file_path)
+      title = file_path.split('/').last.split('.').first.titleize
+
+      authenticated_uploads << Hyrax::UploadedFile.create(user: admin_user, file: file)
+      
+      authenticated_works << create_private_etd(admin_user,
+                                        "authenticated_work_#{index}",
+                                        title: [title],
+                                        description: ["This is a test authenticated ETD"],
+                                        creator: ["Professor Test"],
+                                        keyword: ['Test', 'Authenticated'],
+                                        rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
+                                        publisher: ["A Fake Publisher Inc"],
+                                        language: ["English"],
+                                        contributor: ["Assistant Test"],
+                                        gw_affiliation: [""],
+                                        advisor: ["Advisor Test"],
+                                        resource_type: ["Article"])
+      
+      AttachFilesToWorkJob.perform_now(authenticated_works[index], [authenticated_uploads[index]])
+    end
+
+  end 
 end
 
 def create_etd(user, id, options)
