@@ -23,6 +23,9 @@ echo "Restarting Docker containers"
 docker compose up -d
 # If we don't sleep, Docker can't find the user
 sleep 2
+# Run Database migrations if necessary
+echo "Running Database Migrations"
+docker exec -i --user scholarspace $(docker ps --filter name=app -q) bash -lc "bundle exec rails db:migrate RAILS_ENV=production"
 # Precompile Assets
 echo "Precompiling assets"
 docker exec -i --user scholarspace $(docker ps --filter name=app -q) bash -lc "bundle exec rails assets:precompile RAILS_ENV=production"
