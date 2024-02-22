@@ -32,3 +32,5 @@ fits.log
 /.vscode
 
 coverage
+
+spec/fixtures/dummy_works/*/*
