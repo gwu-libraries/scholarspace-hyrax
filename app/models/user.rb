@@ -33,17 +33,13 @@ class User < ApplicationRecord
     roles.where(name: 'content-admin').exists?
   end
 
-  def self.from_omniauth(access_token)
-    Rails.logger.debug "access_token = #{access_token.extra.response_object.attributes['urn:oid:0.9.2342.19200300.100.1.3'].inspect}"
-    email = case access_token.provider.to_s
-            when 'saml' then "#{access_token.uid}@gwu.edu"
-            else access_token.uid
-    end
-
-    User.where(email: email).first_or_create do |user|
-        user.email = email
-        user.display_name = access_token.extra.response_object.attributes['urn:oid:2.16.840.1.113730.3.1.241']
-        user.password = SecureRandom.urlsafe_base64
+  def self.from_omniauth(auth)
+    # Recommended implementation from Devise: https://github.com/heartcombo/devise/wiki/OmniAuth:-Overview
+    # provider and uid (email) are stored in the User ActiveRecord
+    find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
+        user.email = auth.info.email
+        user.display_name = "#{auth.info.first_name} #{auth.info.last_name}"
+        #user.password = SecureRandom.urlsafe_base64
     end
   end
   

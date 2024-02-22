@@ -13,8 +13,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def find_user_and_redirect
     @user = User.from_omniauth(request.env['omniauth.auth'])
+    Rails.logger.warn(@user.inspect)
     prov = request.env['omniauth.auth'].provider.to_s
-    sign_in_and_redirect @user, event: :authentication
+    sign_in_and_redirect @user#, event: :authentication
     set_flash_message(:notice, :success, kind: prov) if is_navigational_format?
   end
 end
