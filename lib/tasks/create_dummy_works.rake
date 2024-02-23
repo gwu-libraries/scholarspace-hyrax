@@ -3,17 +3,22 @@ require 'rake'
 namespace :gwss do
 
   desc "Creates dummy works for development"
+  # Takes string argument for admin user email
   # Takes integer arguments for number of each work type to generate
   # i.e.
-  # bundle exec rails gwss:create_dummy_works public_works=2 private_works=2 authenticated_works=1 RAILS_ENV=production
+  # bundle exec rails gwss:create_dummy_works admin_email="admin@example.com" public_works=2 private_works=2 authenticated_works=1 RAILS_ENV=production
   task :create_dummy_works => :environment do
     # Sets these counts to either the argument passed in or 0 if no argument
     public_work_count = ENV['public_works'].to_i || 0
     private_work_count = ENV['private_works'].to_i || 0
     authenticated_work_count = ENV['authenticated_works'].to_i || 0
 
-    # Finding first admin user
-    admin_user = Role.find_by(name: "admin").users.first
+    # Finding user from email
+    admin_user = User.find_by(email: ENV['admin_email'])
+
+    # Validating user
+    abort("User not found") if admin_user.nil?
+    abort("User is not admin") if !admin_user.admin?
 
     # Finding admin set
     admin_set = Hyrax::AdminSetCreateService.find_or_create_default_admin_set
@@ -63,20 +68,20 @@ namespace :gwss do
 
     # Iterate through the file paths, create ETDs, attach files
     public_files.each_with_index do |file_path, index|
-      next if GwEtd.exists?("public_work_#{index}")
       file = File.open(file_path)
       title = file_path.split('/').last.split('.').first.titleize
 
       public_uploads << Hyrax::UploadedFile.create(user: admin_user, file: file)
       
       public_works << create_public_etd(admin_user,
-                                        "public_work_#{index}",
+                                        Noid::Rails::Service.new.mint,
                                         title: [title],
                                         description: ["This is a test public ETD"],
                                         creator: ["Professor Test"],
                                         keyword: ['Test', 'Public'],
                                         rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
                                         publisher: ["A Fake Publisher Inc"],
+                                        license: ["http://www.europeana.eu/portal/rights/rr-r.html"],
                                         language: ["English"],
                                         contributor: ["Assistant Test"],
                                         gw_affiliation: [""],
@@ -87,20 +92,20 @@ namespace :gwss do
     end
 
     private_files.each_with_index do |file_path, index|
-      next if GwEtd.exists?("private_work_#{index}")
       file = File.open(file_path)
       title = file_path.split('/').last.split('.').first.titleize
 
       private_uploads << Hyrax::UploadedFile.create(user: admin_user, file: file)
       
       private_works << create_private_etd(admin_user,
-                                        "private_work_#{index}",
+                                        Noid::Rails::Service.new.mint,
                                         title: [title],
                                         description: ["This is a test private ETD"],
                                         creator: ["Professor Test"],
                                         keyword: ['Test', 'Private'],
                                         rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
                                         publisher: ["A Fake Publisher Inc"],
+                                        license: ["http://www.europeana.eu/portal/rights/rr-r.html"],
                                         language: ["English"],
                                         contributor: ["Assistant Test"],
                                         gw_affiliation: [""],
@@ -111,20 +116,20 @@ namespace :gwss do
     end
 
     authenticated_files.each_with_index do |file_path, index|
-      next if GwEtd.exists?("authenticated_work_#{index}")
       file = File.open(file_path)
       title = file_path.split('/').last.split('.').first.titleize
 
       authenticated_uploads << Hyrax::UploadedFile.create(user: admin_user, file: file)
       
       authenticated_works << create_authenticated_etd(admin_user,
-                                        "authenticated_work_#{index}",
+                                        Noid::Rails::Service.new.mint,
                                         title: [title],
                                         description: ["This is a test authenticated ETD"],
                                         creator: ["Professor Test"],
                                         keyword: ['Test', 'Authenticated'],
                                         rights_statement: 'http://rightsstatements.org/vocab/InC/1.0/',
                                         publisher: ["A Fake Publisher Inc"],
+                                        license: ["http://www.europeana.eu/portal/rights/rr-r.html"],
                                         language: ["English"],
                                         contributor: ["Assistant Test"],
                                         gw_affiliation: [""],
