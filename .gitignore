@@ -33,4 +33,6 @@ fits.log
 
 coverage
 
+# Save dummy works folders, not dummy works
 spec/fixtures/dummy_works/*/*
+!spec/fixtures/dummy_works/*/.keep
