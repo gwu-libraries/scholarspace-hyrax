@@ -21,19 +21,9 @@ Rails.application.routes.draw do
     concerns :oai_provider
     concerns :searchable
   end
-=begin
-  if Rails.env.production?
-    devise_for :users, :skip => [:registrations], path_names: { sign_in: 'auth/saml'}, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', sessions: 'users/sessions'}, registrations: 'users/registrations' }
-    devise_scope :user do
-      get 'users/auth/saml', to: 'users/omniauth_authorize#passthru', defaults: { provider: :saml }, as: 'new_gwss_session'
-    end
-  end
 
-  if Rails.env.development?
-    devise_for :users
-  end
-=end
-  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', 
+                                    sessions: 'users/sessions' }
   mount Hydra::RoleManagement::Engine => '/'
 
   mount Qa::Engine => '/authorities'
