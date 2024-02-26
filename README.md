@@ -80,6 +80,8 @@ a separate user for the app, but it is not necessary.  That user will need to ow
     - `SSL_` variables (if using)
     - PERM_URL_BASE (used for persistent links) **Make sure to terminate the URL with a forward slash**.
     - FEDORA_PG_USER, FEDORA_PG_PASSWORD, FEDORA_USER, FEDORA_PASSWORD (username and password for the Fedora db backend and the Fedora app, respectively)
+    - SOLR_DATA_DIR (directory for Solr cores on host machine)
+    - FEDORA_DATA_DIR (directory for Fedora data on host machine)
 8. Configure ReCAPTCHA. 
     - Log in to the Google domain using the Google account that should have access to managing ReCAPTCHA API keys.  
     - Create ReCAPTCHA API keys at the [ReCAPTCHA admin console](https://www.google.com/recaptcha/admin).  
