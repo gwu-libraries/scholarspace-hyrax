@@ -1,5 +1,4 @@
 # frozen_string_literal: true
-
 # This handles the omniauth callback to grab a user and sign them in
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   skip_before_action :verify_authenticity_token, only: %i[saml failure]
@@ -13,7 +12,6 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
 
   def find_user_and_redirect
     @user = User.from_omniauth(request.env['omniauth.auth'])
-    Rails.logger.warn(@user.inspect)
     prov = request.env['omniauth.auth'].provider.to_s
     if @user.persisted?
       sign_in_and_redirect @user, event: :authentication
