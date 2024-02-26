@@ -33,7 +33,7 @@ The Dockerized version of the ScholarSpace app uses the following images:
 
 ### Postgres
 - Currently, separate postgres containers (each with their own Docker volume) are used for the Fedora and Rails databases. This may be desirable for migration purposes, i.e., if the two databases in production are running on different versions of postgres. 
-- The Rails/Hyrax postrgres container is using a version pinned to the version in use in production.
+- The Rails/Hyrax postgres container is using a version pinned to the version in use in production.
 
 
 ### Solr
