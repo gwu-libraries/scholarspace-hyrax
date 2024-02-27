@@ -60,7 +60,7 @@
       <% else %>
         <%= recaptcha_v3(action: 'contact', site_key: ENV['RECAPTCHA_SITE_KEY_V3']) %>
       <% end %>
-      <%= f.submit value: t('hyrax.contact_form.button_label'), class: "btn btn-primary" %>
+      <%= f.submit value: t('hyrax.contact_form.button_label'), class: "btn-base gw-btn" %>
     <% end %>
   </div>
 </div>

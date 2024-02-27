@@ -1,0 +1,27 @@
+<div id="home-block-2" class="section-gw-darkblue">
+    <div class="content-container">
+        <div id="browse-category">
+            <h2 class="h2-section-header">Browse by Category</h2>
+            <div class="content-container">
+                <div id="categories-container">
+                    <a class="btn-base btn-categories" href="/catalog?f%5Bhas_model_ssim%5D%5B%5D=GwEtd">Theses and Dissertations</a>
+                    <a class="btn-base btn-categories">Journals</a>
+                    <a class="btn-base btn-categories">Articles</a>
+                    <a class="btn-base btn-categories">Posters</a>
+                    <a class="btn-base btn-categories">Presentations</a>
+                    <a class="btn-base btn-categories">Archival Materials</a>
+                </div>
+                <div id="categories-tooltip">
+                    <div id="arrow-left"></div>
+                    <div id="tooltip-box">Browse theses and dissertations by GW students</div>
+                </div>
+            </div>
+        </div>
+        <div id="recently-uploaded">
+            <h2 class="h2-section-header">Recently Uploaded</h2>
+            <div class="content-container">
+                <%= render 'recently_uploaded', recent_documents: @recent_documents %>
+            </div>
+        </div>
+    </div>
+</div>

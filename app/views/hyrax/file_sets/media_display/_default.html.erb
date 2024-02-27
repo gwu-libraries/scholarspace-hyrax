@@ -6,13 +6,13 @@
     hyrax.download_path(file_set, :disposition => "attachment"),
     id: "file_download",
     data: { label: file_set.id },
-    class: "btn-primary gw-btn",
+    class: "btn-base gw-btn",
     target: "_new" %>
   <p/><%= link_to t('hyrax.file_set.show.downloadable_content.default_new_tab'),
     hyrax.download_path(file_set, :disposition => "inline"),
     id: "file_download",
     data: { label: file_set.id },
-    class: "btn-primary gw-btn",
+    class: "btn-base gw-btn",
     target: "_new" %>
   <% if (Rails.configuration.respond_to?(:accessibility_url)) && (@presenter.respond_to?(:permanent_url))  %>
     <p class="accessibility-form-link"/><%= link_to t('hyrax.accessibility.link_label'),
