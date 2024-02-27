@@ -2,8 +2,9 @@ Rails.application.routes.draw do
 
   mount Bulkrax::Engine, at: '/'
   mount Riiif::Engine => 'images', as: :riiif if Hyrax.config.iiif_image_server?
-  mount BrowseEverything::Engine => '/browse'
-  
+
+  get '/browse', to: redirect('/catalog')
+
   get '/etd/:id', to: redirect('/concern/gw_etds/%{id}')
   get '/etds/:id', to: redirect('/concern/gw_etds/%{id}')
   get '/files/:id', to: redirect('concern/gw_works/%{id}')

@@ -90,8 +90,10 @@ gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonical
 
 gem 'schoolie', '0.1.3'
 
+gem 'prawn'
+
 group :development, :test do
-  # gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
+  gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'solr_wrapper', '>= 0.3'
   gem 'launchy'

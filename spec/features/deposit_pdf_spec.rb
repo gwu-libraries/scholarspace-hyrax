@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Deposit a PDF through dashboard" do
 
   let(:admin_user) { FactoryBot.create(:admin_user) }
-  let(:pdf_path) { "#{Rails.root}/spec/fixtures/public_etds/hamlet.pdf" }
+  let(:pdf_path) { "#{Rails.root}/spec/fixtures/fixture_dummy.pdf" }
 
   it 'can deposit a pdf' do
     visit "/users/sign_in"
