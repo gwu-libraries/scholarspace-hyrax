@@ -63,3 +63,23 @@ RSpec.configure do |config|
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
 end
+
+
+OmniAuth.config.test_mode = true
+OmniAuth.config.silence_get_warning = true
+def generate_omniauth(user)
+  # Generate OmniAuth hash to simulate SAML login
+  first_name, last_name = user.display_name.split(' ', 2)
+  OmniAuth::AuthHash.new({"provider" => "saml",
+        "uid" => user.email,
+        "info" => {
+          "name" => user.display_name,
+          "email" => user.email,
+          "first_name" => first_name,
+          "last_name" => last_name,
+        },
+        "credentials" => {
+          "token" => "Token",
+        },
+    })
+  end

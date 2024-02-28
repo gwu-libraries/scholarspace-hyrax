@@ -2,6 +2,26 @@ require 'rails_helper'
 
 RSpec.describe "Dashboard page" do
 
+=begin
+  it 'redirects to the home page if the user authenticates but lacks admin privilages' do
+    non_admin_user = FactoryBot.create(:user)
+    OmniAuth.config.mock_auth[:saml] = generate_omniauth(non_admin_user)
+    Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]
+    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml] 
+  
+    page.driver.post '/users/auth/saml'
+
+    page.driver.post '/users/auth/saml/callback'
+
+    pp page.driver.response
+
+    expect(current_path).to eq(root_path)
+
+    OmniAuth.config.mock_auth[:saml] = nil
+
+  end
+=end
+
   it 'displays all admin controls when logged in as an admin user' do
     admin_user = FactoryBot.create(:admin_user)
 

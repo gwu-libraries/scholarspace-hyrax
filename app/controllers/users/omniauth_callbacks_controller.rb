@@ -8,6 +8,10 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     find_user_and_redirect
   end
 
+  def failure
+    redirect_to root_path
+  end
+
   private
 
   def find_user_and_redirect
@@ -22,7 +26,4 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     end
   end
 
-  def failure
-    redirect_to root_path
-  end
 end
