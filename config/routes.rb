@@ -1,10 +1,3 @@
-class DashboardAdminOnlyConstraint
-  def matches?(request)
-    #Rails.logger.warn(current_user)
-    true
-  end
-end
-
 Rails.application.routes.draw do
 
   mount Bulkrax::Engine, at: '/'
