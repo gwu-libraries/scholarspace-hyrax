@@ -1,3 +1,10 @@
+class DashboardAdminOnlyConstraint
+  def matches?(request)
+    #Rails.logger.warn(current_user)
+    true
+  end
+end
+
 Rails.application.routes.draw do
 
   mount Bulkrax::Engine, at: '/'
@@ -28,7 +35,7 @@ Rails.application.routes.draw do
   mount Hydra::RoleManagement::Engine => '/'
 
   mount Qa::Engine => '/authorities'
-  mount Hyrax::Engine, at: '/'
+  mount Hyrax::Engine, at: '/'#, constraints: DashboardAdminOnlyConstraint.new
   resources :welcome, only: 'index'
   root 'hyrax/homepage#index'
   curation_concerns_basic_routes
@@ -58,4 +65,11 @@ end
 
 Hyrax::Engine.routes.draw do
   get 'share' =>'pages#show', key: 'share'
+
+  authenticate :user, lambda { |u| !u.admin? && !u.contentadmin?} do
+    namespace :dashboard do
+      match '(*any)', to: redirect('/'), via: [:get, :post]
+    end 
+  end
+
 end
