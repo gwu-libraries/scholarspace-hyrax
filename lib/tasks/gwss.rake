@@ -354,7 +354,7 @@ namespace :gwss  do
 
   desc "Enumerates degree types present among existing GwEtd works"
   task "enumerate_degree_types" => :environment do
-    ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd NOT keyword_tesim:*", fl: [:id], rows: 1_000_000)
+    ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd", fl: [:id], rows: 1_000_000)
     docs = ids["response"]["docs"]
     # Map a list of ids to a list of degree values
     degrees = docs.map {|doc| GwEtd.find(doc["id"]).degree}
