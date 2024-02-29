@@ -1,11 +1,13 @@
 require 'rails_helper'
+#require 'pry'
 
 RSpec.describe "Deposit a PDF through dashboard" do
 
   let(:admin_user) { FactoryBot.create(:admin_user) }
-  #let(:user) { FactoryBot.create(:user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:pdf_path) { "#{Rails.root}/spec/fixtures/fixture_dummy.pdf" }
-=begin
+  let(:solr) { Blacklight.default_index.connection }
+begin
   it 'cannot deposit as a non-admin user' do
 
     sign_in_user(user)
@@ -14,8 +16,14 @@ RSpec.describe "Deposit a PDF through dashboard" do
 
     expect(current_path).to eq(root_path)
 
+    #binding.pry
+
+    ActiveFedora::Cleaner.clean!
+    solr.delete_by_query("*:*")
+    solr.commit
+
   end
-=end
+end
   it 'can deposit a pdf' do
     
     sign_in_user(admin_user)
