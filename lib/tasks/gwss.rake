@@ -338,11 +338,11 @@ namespace :gwss  do
     ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd", fl: [:id], rows: 1_000_000)
     ids["response"]["docs"].each do |doc|
       work = GwEtd.find(doc["id"])
-      degree_name = work.degree
+      degree_name = work.degree.upcase.delete('.')
       if degree_etd_map.keys.include?(degree_name)
-        work.resource_type = degree_etd_map[degree_name]
+        work.resource_type = [degree_etd_map[degree_name]]
         work.save
-        puts "Reassigned #{degree_name} resource type"
+        puts "Reassigned #{degree_name} resource type to #{degree_etd_map[degree_name]}"
       else
         puts "Degree name #{degree_name} not found!"
       end
