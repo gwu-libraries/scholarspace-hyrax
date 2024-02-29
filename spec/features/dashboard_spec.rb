@@ -2,35 +2,23 @@ require 'rails_helper'
 
 RSpec.describe "Dashboard page" do
 
-=begin
   it 'redirects to the home page if the user authenticates but lacks admin privilages' do
     non_admin_user = FactoryBot.create(:user)
-    OmniAuth.config.mock_auth[:saml] = generate_omniauth(non_admin_user)
-    Rails.application.env_config["devise.mapping"] = Devise.mappings[:user]
-    Rails.application.env_config['omniauth.auth'] = OmniAuth.config.mock_auth[:saml] 
-  
-    page.driver.post '/users/auth/saml'
 
-    page.driver.post '/users/auth/saml/callback'
+    sign_in_user(non_admin_user)
+    
+    expect(current_path).to eq(root_path)
 
-    pp page.driver.response
+    visit '/dashboard/my/works'
 
     expect(current_path).to eq(root_path)
 
-    OmniAuth.config.mock_auth[:saml] = nil
-
   end
-=end
 
   it 'displays all admin controls when logged in as an admin user' do
     admin_user = FactoryBot.create(:admin_user)
 
-    visit "/users/sign_in"
-
-    fill_in("user_email", with: admin_user.email)
-    fill_in("user_password", with: admin_user.password)
-    
-    click_button("Log in")
+    sign_in_user(admin_user)
 
     within ".sidebar" do
       expect(page).to have_content("Dashboard")
@@ -64,12 +52,7 @@ RSpec.describe "Dashboard page" do
   it 'displays all content-admin controls when logged in as a content-admin user' do
     content_admin_user = FactoryBot.create(:content_admin_user)
 
-    visit "/users/sign_in"
-
-    fill_in("user_email", with: content_admin_user.email)
-    fill_in("user_password", with: content_admin_user.password)
-    
-    click_button("Log in")
+    sign_in_user(content_admin_user)
 
     within ".sidebar" do
       expect(page).to have_content("Dashboard")

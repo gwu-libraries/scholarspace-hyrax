@@ -6,11 +6,16 @@ RSpec.describe "Deposit a PDF through dashboard" do
   let(:pdf_path) { "#{Rails.root}/spec/fixtures/fixture_dummy.pdf" }
 
   it 'can deposit a pdf' do
+    
+    #sign_in_user(admin_user)
+
     visit "/users/sign_in"
 
     fill_in("user_email", with: admin_user.email)
     fill_in("user_password", with: admin_user.password)
     click_button("Log in")
+
+    pp admin_user.roles
 
     visit new_hyrax_gw_etd_path
 

@@ -113,9 +113,11 @@ services:
       redis:
         condition: service_healthy
     volumes: 
+     - ${NGINX_CERT_DIR}:/opt/scholarspace/certs
+     - ${NGINX_KEY_DIR}:/opt/scholarspace/keys
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
-     #- /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
      - app-hyrax:/opt/scholarspace
+     - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
     networks:
       - hyrax
       - fedora

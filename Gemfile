@@ -93,9 +93,6 @@ gem 'prawn'
 gem 'omniauth-saml', '2.1.0'
 gem 'omniauth-rails_csrf_protection'
 
-# Temporarily for developing SSO in prod
-gem 'pry-remote'
-
 group :development, :test do
   gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

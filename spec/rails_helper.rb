@@ -64,22 +64,11 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 end
 
+def sign_in_user(user)
+    visit "/users/sign_in"
 
-OmniAuth.config.test_mode = true
-OmniAuth.config.silence_get_warning = true
-def generate_omniauth(user)
-  # Generate OmniAuth hash to simulate SAML login
-  first_name, last_name = user.display_name.split(' ', 2)
-  OmniAuth::AuthHash.new({"provider" => "saml",
-        "uid" => user.email,
-        "info" => {
-          "name" => user.display_name,
-          "email" => user.email,
-          "first_name" => first_name,
-          "last_name" => last_name,
-        },
-        "credentials" => {
-          "token" => "Token",
-        },
-    })
-  end
+    fill_in("user_email", with: user.email)
+    fill_in("user_password", with: user.password)
+    
+    click_button("Log in")
+end
