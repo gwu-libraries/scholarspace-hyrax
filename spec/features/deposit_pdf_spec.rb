@@ -3,19 +3,22 @@ require 'rails_helper'
 RSpec.describe "Deposit a PDF through dashboard" do
 
   let(:admin_user) { FactoryBot.create(:admin_user) }
+  #let(:user) { FactoryBot.create(:user) }
   let(:pdf_path) { "#{Rails.root}/spec/fixtures/fixture_dummy.pdf" }
+=begin
+  it 'cannot deposit as a non-admin user' do
 
+    sign_in_user(user)
+
+    visit new_hyrax_gw_etd_path
+
+    expect(current_path).to eq(root_path)
+
+  end
+=end
   it 'can deposit a pdf' do
     
-    #sign_in_user(admin_user)
-
-    visit "/users/sign_in"
-
-    fill_in("user_email", with: admin_user.email)
-    fill_in("user_password", with: admin_user.password)
-    click_button("Log in")
-
-    pp admin_user.roles
+    sign_in_user(admin_user)
 
     visit new_hyrax_gw_etd_path
 
