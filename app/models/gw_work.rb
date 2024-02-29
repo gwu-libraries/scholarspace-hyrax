@@ -17,4 +17,12 @@ class GwWork < ActiveFedora::Base
   end
 
   include ::Hyrax::BasicMetadata
+
+  def scholarly?
+    false
+  end
+
+  def self.scholarly?
+    false
+  end 
 end

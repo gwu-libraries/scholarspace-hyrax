@@ -1,8 +1,5 @@
 <div class="container">
   <% provide :page_title, @presenter.page_title %>
-  <%content_for :head do%>
-    <%schoolie_tags(@presenter).html_safe%>
-  <%end%>
 
   <%= render 'shared/citations' %>
 

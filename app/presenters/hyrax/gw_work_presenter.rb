@@ -5,5 +5,9 @@ module Hyrax
     def permanent_url
       Scholarspace::Application.config.permanent_url_base + "work/#{id}"
     end
+
+    def scholarly?
+      false
+    end
   end
 end
