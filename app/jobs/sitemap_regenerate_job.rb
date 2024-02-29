@@ -4,7 +4,6 @@ Rails.application.load_tasks
 
 class SitemapRegenerateJob < ApplicationJob
   def perform
-    puts 'invoking schoolie:sitemap from SitemapRegenerateJob'
     Rake::Task['schoolie:sitemap'].invoke
   end
 end

@@ -29,12 +29,4 @@ class GwEtd < ActiveFedora::Base
   end
 
   include ::Hyrax::BasicMetadata
-
-  def scholarly?
-    true
-  end
-
-  def self.scholarly?
-    true
-  end 
 end
