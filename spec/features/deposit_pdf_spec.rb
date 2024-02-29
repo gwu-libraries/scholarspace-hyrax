@@ -1,5 +1,4 @@
 require 'rails_helper'
-#require 'pry'
 
 RSpec.describe "Deposit a PDF through dashboard" do
 
@@ -15,8 +14,6 @@ begin
     visit new_hyrax_gw_etd_path
 
     expect(current_path).to eq(root_path)
-
-    #binding.pry
 
     ActiveFedora::Cleaner.clean!
     solr.delete_by_query("*:*")
@@ -50,6 +47,10 @@ end
 
     expect(page).to have_content("Your files are being processed by ScholarSpace in the background.")
     expect(page).to have_content("This is a PDF ETD")
+
+    ActiveFedora::Cleaner.clean!
+    solr.delete_by_query("*:*")
+    solr.commit
   end
 
 end

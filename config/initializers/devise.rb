@@ -252,16 +252,27 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
-
-  config.omniauth :saml,
-    idp_cert: File.read(ENV['IDP_CERT_PEM']),
-    idp_sso_service_url: ENV['IDP_SSO_URL'],
-    idp_slo_service_url: ENV['IDP_SLO_URL'],
-    sp_entity_id: ENV['ISSUER'] + '/users/auth/saml',
-    assertion_consumer_service_url: ENV['ISSUER'] + '/users/auth/saml/callback',
-    private_key: File.read(ENV['SP_KEY']),
-    certificate: File.read(ENV['SP_CERT']),
-    request_attributes: {}
+  if Rails.env.production?
+    config.omniauth :saml,
+      idp_cert: File.read(ENV['IDP_CERT_PEM']),
+      idp_sso_service_url: ENV['IDP_SSO_URL'],
+      idp_slo_service_url: ENV['IDP_SLO_URL'],
+      sp_entity_id: ENV['ISSUER'] + '/users/auth/saml',
+      assertion_consumer_service_url: ENV['ISSUER'] + '/users/auth/saml/callback',
+      private_key: File.read(ENV['SP_KEY']),
+      certificate: File.read(ENV['SP_CERT']),
+      request_attributes: {}
+  else
+    config.omniauth :saml,
+      idp_cert: 'cert',
+      idp_sso_service_url: 'https://www.example.com',
+      idp_slo_service_url: 'https://www.example.com',
+      sp_entity_id: ENV['PERM_URL_BASE'] + 'users/auth/saml',
+      assertion_consumer_service_url: ENV['PERM_URL_BASE'] + '/users/auth/saml/callback',
+      private_key: 'key',
+      certificate: 'cert',
+      request_attributes: {}
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
