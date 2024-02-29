@@ -327,18 +327,15 @@ namespace :gwss  do
     degree_etd_map = {}
     degree_categories = etd_degree_map.keys
     # Flip etd_degree_map to create degree_etd_map
+    # So that for any given degree, we can get back whether it's a masters or a doctorate
     degree_categories.each do |degree_category|
       etd_degree_map[degree_category].each do |degree_name|
+        # upcase each degree (just in case) and ignore "."s
         degree_etd_map[degree_name.upcase.delete('.')] = degree_category
       end
     end
 
-    #masters_list = ['M.S.', 'M.P.H']
-    #masters_list = masters_list.map {|d| d.upcase.delete('.')}
-    #doctoral_list = ['Ph.D.', 'Ed.D.']
-    #doctoral_list = doctoral_list.map {|d| d.upcase.delete('.')}
-    
-    ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd NOT keyword_tesim:*", fl: [:id], rows: 1_000_000)
+    ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd", fl: [:id], rows: 1_000_000)
     ids["response"]["docs"].each do |doc|
       work = GwEtd.find(doc["id"])
       degree_name = work.degree
