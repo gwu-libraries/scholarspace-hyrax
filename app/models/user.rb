@@ -39,7 +39,7 @@ class User < ApplicationRecord
     find_or_create_by(provider: auth.provider, uid: auth.uid) do |user|
         user.email = auth.info.email
         user.display_name = "#{auth.info.first_name} #{auth.info.last_name}"
-        #user.password = SecureRandom.urlsafe_base64
+        user.password = SecureRandom.urlsafe_base64
     end
   end
   

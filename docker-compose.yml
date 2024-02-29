@@ -147,10 +147,7 @@ services:
      - ${NGINX_KEY_DIR}:/opt/scholarspace/keys
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
      - app-hyrax:/opt/scholarspace
-     - /opt/scholarspace/scholarspace-hyrax/app:/opt/scholarspace/scholarspace-hyrax/app
-     - /opt/scholarspace/scholarspace-hyrax/config:/opt/scholarspace/scholarspace-hyrax/config
-     - /opt/scholarspace/scholarspace-hyrax/spec:/opt/scholarspace/scholarspace-hyrax/spec
-     - /opt/scholarspace/scholarspace-hyrax/db:/opt/scholarspace/scholarspace-hyrax/db
+     - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
     restart: always
     logging: 
       <<: *logging
