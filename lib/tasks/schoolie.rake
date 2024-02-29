@@ -7,7 +7,7 @@ namespace :schoolie do
   desc "Creates Google Scholar compliant sitemap for GwEtd works"
   task sitemap: :environment do
     date_field = 'system_modified_dtsi'
-    result = Hyrax::SolrService.new.get("has_model_ssim:GwEtd NOT keyword_tesim:*",
+    result = Hyrax::SolrService.new.get("has_model_ssim:GwEtd",
                                         fl: "id,#{date_field}",
                                         rows: 1_000_000)
     ids = result['response']['docs'].map do |x|
