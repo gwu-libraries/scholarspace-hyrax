@@ -89,6 +89,8 @@ gem "ffi", "~> 1.15"
 gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonicalization/issues/2
 
 gem 'prawn'
+# SAML
+gem 'omniauth-saml'
 
 group :development, :test do
   gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
