@@ -1,15 +1,20 @@
-<li class="recent-item">
-    <div class="row">
-      <div class="col-sm-12">
+<div class="recent-work">
+    <div class="recent-container">
         <span class="sr-only"><%= t('hyrax.homepage.recently_uploaded.document.title_label') %></span>
-        <h3>
+        <div class="image-wrapper">
           <%= link_to [main_app, recent_document] do %>
-            <%= render_thumbnail_tag(recent_document, {width: 90, alt:"Preview of #{recent_document.title[0]}"}, {suppress_link: true}) + recent_document.to_s %>
+            <div class="recent-thumbnail">
+                <%= render_thumbnail_tag(recent_document, {alt: "#{recent_document} #{ t('hyrax.homepage.admin_sets.thumbnail')}" }, {suppress_link: true}) %>
+            </div>
+            <div class="recent-title">
+              <h3>
+                  <%= recent_document %>
+              </h3>
+            </div>
           <% end %>
-        </h3>
+        </div>
         <p class="recent-field">
           <span class="recent-label"><%= t('hyrax.homepage.recently_uploaded.document.keyword_label') %>:</span> <%= link_to_facet_list(recent_document.keyword, 'keyword', t('hyrax.homepage.recently_uploaded.document.keyword_missing')).html_safe %>
         </p>
-      </div>
     </div>
-</li>
+</div>
