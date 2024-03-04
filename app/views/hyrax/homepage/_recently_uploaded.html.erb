@@ -3,8 +3,6 @@
   <p><%= t('.no_public') %></p>
 <% else %>
   <div id="recent_docs">
-    <table class="table table-striped">
       <%= render partial: "recent_document", collection: recent_documents %>
-    </table>
   </div>
 <% end %>

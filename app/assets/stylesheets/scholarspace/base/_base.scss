@@ -67,6 +67,19 @@ html {
     }
   }
 
+  div.section-gw-white,
+  div.section-gw-darkblue {
+    h2.h2-section-header {
+      font-size: 1.7em;
+
+      &:after {
+        content:' ';
+        display: block;
+        border: 2px solid $gw-buff;
+      }
+    }
+  }
+
   div.section-gw-white {
     min-height: auto;
     
@@ -107,53 +120,65 @@ html {
     h2 {
       color: $gw-white;
     }
-
-    h2.h2-section-header {
-      font-size: 1.7em;
-
-      &:after {
-        content:' ';
-        display: block;
-        border: 2px solid $gw-buff;
-      }
-    }
   }
   
   textarea {
     resize: none;
   }
   
-  .gw-btn, .btn-primary {
+  .btn-base {
     display: inline-block;
-    padding: 0.3rem 0.75rem;
     margin: 0;
     border-radius: 0.25rem;
-    border: 2px solid $gw-light-blue !important;
-    background-color: $gw-light-blue !important;
-    color: $gw-white;
     font-size: 1em;
     font-weight: 200;
     line-height: 1.5;
     text-decoration: none;
     transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
     text-align: center;
-  
-    &:focus {
-      color: $gw-white !important;
-      background-color: #005984 !important;
-      outline: 0;
-      box-shadow: 0 0 0 0.2rem rgba(3, 60, 90, 0.25);
+
+    &.gw-btn {
+      padding: 0.3rem 0.75rem;
+      border: 2px solid $gw-light-blue;
+      background-color: $gw-light-blue;
+      color: $gw-white;
     }
-  
+
+    &.gw-ghost-btn {
+      padding: 0.3rem 2rem;
+      border: 2px solid $gw-dark-blue;
+      background-color: $gw-white;
+      color: $gw-dark-blue;
+    }
+
+    &.btn-home {
+      width: 14rem;
+    }
+
+    &.btn-categories {
+      width: 100%;
+      margin: 0.2em 0;
+      padding: 0.3rem 2rem;
+      border: 2px solid $gw-white;
+      background-color: $gw-white;
+      color: $gw-dark-blue;
+    }
+
     &:disabled {
       opacity: 0.65;
     }
   
-    &:hover {
+    &:hover, 
+    &:focus {
       text-decoration: none;
-      color: #212529 !important;
-      border-color: $gw-hover-buff !important;
-      background-color: $gw-hover-buff !important;
+      color: $gw-dark-blue !important;
+      border-color: $gw-hover-buff;
+      background-color: $gw-hover-buff;
+    }
+
+    &:focus {
+      outline: 0;
+      box-shadow: 0 0 0 0.2rem rgba(3, 60, 90, 0.25);
     }
   }
   
@@ -232,3 +257,32 @@ html {
     }
   }
   
+//Log In or Sign Up
+.login-container {
+  padding: 0 3em;
+
+  p {
+    margin: 0;
+  }
+
+  label {
+    margin-bottom: 0;
+  }
+
+  .field {
+    margin-bottom: 0.5em;
+  }
+
+  .actions input[type="submit"] {
+    @extend .btn-base;
+    @extend .gw-btn;
+  }
+
+  input[type="checkbox"] {
+    margin: 0 0.5em 0 0;
+  }
+
+  #remember-me {
+    display: flex;
+  }
+}
