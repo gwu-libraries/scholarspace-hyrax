@@ -155,6 +155,7 @@
       .collection-counts-wrapper {
         display: none;
       }
+    }
   
     &:nth-child(odd) {
       background-color: $gw-light-grey;
@@ -283,4 +284,3 @@
       }
     }
   }
-}
