@@ -211,11 +211,22 @@
               width: 12vw;
               margin: 0.5em 0.5em;
               display: flex;
-              align-items: center;
+              align-items: baseline;
+              height: 18.5vw;
 
               .image-wrapper {
                 position: relative;
                 overflow: hidden;
+                height: 15.5vw;
+                width: 12vw;
+
+                .recent-thumbnail {
+                  height: 100%;
+                  display: flex;
+                  width: auto;
+                  background-color: $gw-white;
+                  justify-content: center;
+                }
 
                 a {
                   color: $gw-white;
@@ -238,8 +249,8 @@
                 }
   
                 .recent-title {
-                  width: 100%;
-                  height: 40%;
+                  width: calc(100% + 1px);
+                  height: 50%;
                   position: absolute;
                   top: 50%;
                   transform: translateY(-50%);
@@ -261,10 +272,34 @@
 
               @media (max-width: 1300px) {
                 width: 14vw;
+
+                .image-wrapper {
+                  position: relative;
+                  overflow: hidden;
+                  height: 18.1vw;
+                  width: 14vw;
+
+                  .recent-title {
+                    height: 60%;
+                  }
+                }
+
               }
 
               @media (max-width: 940px) {
                 width: 26.5vw;
+                height: 100%;
+
+                .image-wrapper {
+                  position: relative;
+                  overflow: hidden;
+                  height: 35vw;
+                  width: 26.5vw;
+
+                  .recent-title {
+                    height: 50%;
+                  }
+                }
               }
             }
 
@@ -274,6 +309,15 @@
               .recent-work {
                 width: 100%;
                 margin: 2em 0;
+
+                .image-wrapper {
+                  height: 90.5vw;
+                  width: 70vw;
+
+                  .recent-title {
+                    height: 40%;
+                  }
+                }
               }
             }
           }
