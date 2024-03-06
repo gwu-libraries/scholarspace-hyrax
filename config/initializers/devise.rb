@@ -251,16 +251,16 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-
+  # for dev environments in production mode, this will create empty cert and key files
   if Rails.env.production?
     config.omniauth :saml,
-      idp_cert: File.read(ENV['IDP_CERT_PEM']),
+      idp_cert: File.open(ENV['IDP_CERT_PEM'], File::RDONLY|File::CREAT) { |file| file.read },
       idp_sso_service_url: ENV['IDP_SSO_URL'],
       idp_slo_service_url: ENV['IDP_SLO_URL'],
-      sp_entity_id: ENV['ISSUER'] + '/users/auth/saml',
-      assertion_consumer_service_url: ENV['ISSUER'] + '/users/auth/saml/callback',
-      private_key: File.read(ENV['SP_KEY']),
-      certificate: File.read(ENV['SP_CERT']),
+      sp_entity_id: ENV.fetch('ISSUER', 'PERM_URL_BASE') + 'users/auth/saml',
+      assertion_consumer_service_url: ENV.fetch('ISSUER', 'PERM_URL_BASE') + 'users/auth/saml/callback',
+      private_key: File.open(ENV['IDP_CERT_PEM'], File::RDONLY|File::CREAT) { |file| file.read },
+      certificate: File.open(ENV['IDP_CERT_PEM'], File::RDONLY|File::CREAT) { |file| file.read },
       request_attributes: {}
   else
     config.omniauth :saml,
