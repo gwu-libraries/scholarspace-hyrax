@@ -11,8 +11,15 @@ namespace :gwss do
             if gw_email.match(user.email) 
                 user.uid = user.email
                 user.provider = "saml"
+                puts "Updating user #{user.email}"
                 user.save
+            else
+                if (!user.admin?) & (!user.contentadmin?)
+                    puts "Deleting user #{user.email}"
+                    user.destroy
+                end
             end
+
         end
     end 
 end
