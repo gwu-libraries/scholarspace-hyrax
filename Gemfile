@@ -9,9 +9,6 @@ gem 'rails', '~> 5.2.8.1'
 gem "sqlite3", "~> 1.3.0"
 # Use pg as the production database for Active Record
 gem 'pg'
-# Use sitemap
-# See https://github.com/viseztrance/rails-sitemap
-gem 'sitemap'
 # Use Passenger as the app server
 # Update this when we update the Passenger docker container base image version
 gem 'passenger', '6.0.17', require: "phusion_passenger/rack_handler"
