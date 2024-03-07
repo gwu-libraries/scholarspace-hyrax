@@ -148,6 +148,14 @@
   
   li.document {
     padding: 1em;
+
+    &.blacklight-collection {
+      .col-md-2,
+      .col-md-10,
+      .collection-counts-wrapper {
+        display: none;
+      }
+    }
   
     &:nth-child(odd) {
       background-color: $gw-light-grey;

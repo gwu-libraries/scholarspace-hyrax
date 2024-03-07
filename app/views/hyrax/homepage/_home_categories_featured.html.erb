@@ -1,0 +1,64 @@
+<div id="home-block-2" class="section-gw-darkblue">
+    <div class="content-container">
+        <div id="browse-category">
+            <h2 class="h2-section-header">Browse by Category</h2>
+            <div class="content-container">
+                <div id="categories-container">
+                    <a class="btn-base btn-categories" id="etds" href="/catalog?f%5Bhas_model_ssim%5D%5B%5D=GwEtd">Theses and Dissertations</a>
+                    <a class="btn-base btn-categories" id="journals" href="/catalog?f[resource_type_sim][]=Journal">Journals</a>
+                    <a class="btn-base btn-categories" id="articles" href="/catalog?f[resource_type_sim][]=Article">Articles</a>
+                    <a class="btn-base btn-categories" id="posters" href="/catalog?f[resource_type_sim][]=Poster">Posters</a>
+                    <a class="btn-base btn-categories" id="presentations" href="/catalog?f[resource_type_sim][]=Presentation">Presentations</a>
+                    <a class="btn-base btn-categories" id="materials" href="/catalog?f[resource_type_sim][]=Archival+materials">Archival Materials</a>
+                </div>
+                <div id="categories-tooltip">
+                    <div id="arrow-left"></div>
+                    <div id="tooltip-box">Browse theses and dissertations by GW students</div>
+                </div>
+            </div>
+        </div>
+        <div id="recently-uploaded">
+            <h2 class="h2-section-header">Recently Uploaded</h2>
+            <div class="content-container">
+                <%= render 'recently_uploaded', recent_documents: @recent_documents %>
+            </div>
+        </div>
+    </div>
+</div>
+
+<%= javascript_tag do %>
+        arrow = document.getElementById('arrow-left');
+        text = document.getElementById('tooltip-box');
+
+        etds = document.getElementById('etds');
+        journals = document.getElementById('journals');
+        articles = document.getElementById('articles');
+        posters = document.getElementById('posters');
+        presentations = document.getElementById('presentations');
+        materials = document.getElementById('materials');
+
+        etds.addEventListener("mouseover", (event) => {
+            arrow.style.marginTop = '0';
+            text.innerHTML = 'Browse theses and dissertations by GW students';
+        });
+        journals.addEventListener("mouseover", (event) => {
+            arrow.style.marginTop = '2.7em';
+            text.innerHTML = 'Browse journals published by GW student organizations and other GW-affiliated organizations';
+        });
+        articles.addEventListener("mouseover", (event) => {
+            arrow.style.marginTop = '5.5em';
+            text.innerHTML = 'Browse individual articles authored by GW faculty, staff, students, and published by GW-affiliated orgnaizations';
+        });
+        posters.addEventListener("mouseover", (event) => {
+            arrow.style.marginTop = '8.2em';
+            text.innerHTML = 'Browse posters created by GW faculty, staff, and students for various research purposes';
+        });
+        presentations.addEventListener("mouseover", (event) => {
+            arrow.style.marginTop = '10.9em';
+            text.innerHTML = 'Browse presentations given by GW faculty, staff, and students for conferences and other meetings';
+        });
+        materials.addEventListener("mouseover", (event) => {
+            arrow.style.marginTop = '13.6em';
+            text.innerHTML = 'Browse digitized and born-digital content from the specialized collections of GW Libraries & Academic Innovation';
+        });
+<% end %>
