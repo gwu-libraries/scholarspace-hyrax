@@ -201,18 +201,18 @@
           height: 100%;
 
           #recent_docs {
-            height: 100%;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            align-items: center;
+            align-items: baseline;
+            padding-top: 0.5em;
 
             .recent-work {
               width: 12vw;
               margin: 0.5em 0.5em;
               display: flex;
               align-items: baseline;
-              height: 18.5vw;
+              min-height: 18.5vw;
 
               .image-wrapper {
                 position: relative;
@@ -258,15 +258,46 @@
                   align-items: center;
                   justify-content: center;
                   background-color: $gw-light-blue;
-  
-                  h3 {
-                    font-size: 1em;
-                    text-decoration: underline;
 
-                    &:hover {
-                      color: $gw-hover-buff;
+                  .title-wrapper {
+                    -webkit-box-orient: vertical;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 4;
+                    padding: 0 1em;
+                    overflow: hidden;
+                    max-width: 100%;
+                    text-align: center;
+  
+                    h3 {
+                      font-size: 1em;
+                      text-decoration: underline;
+                      --max-lines: 4;
+                      --line-height: 1.2;
+                      max-height: calc(var(--max-lines) * 1em * var(--line-height));
+                      line-height: var(--line-height);
+                      position: relative;
+
+                      &:hover {
+                        color: $gw-hover-buff;
+                      }
                     }
                   }
+                }
+              }
+
+              .keyword-wrapper {
+                -webkit-box-orient: vertical;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                overflow: hidden;
+                max-width: 100%;
+                
+                .recent-field {
+                  --max-lines: 2;
+                  --line-height: 1.4;
+                  height: calc(var(--max-lines) * 1em * var(--line-height));
+                  line-height: var(--line-height);
+                  position: relative;
                 }
               }
 
@@ -305,10 +336,14 @@
 
             @media (max-width: $mobile-max) {
               flex-direction: column;
+              width: 80%;
+              align-items: center;
 
               .recent-work {
-                width: 100%;
                 margin: 2em 0;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
 
                 .image-wrapper {
                   height: 90.5vw;
