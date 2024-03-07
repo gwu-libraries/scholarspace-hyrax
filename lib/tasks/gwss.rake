@@ -20,9 +20,9 @@ namespace :gwss  do
     end
   end
 
-  desc "Queues a job to (re)generate the sitemap.xml"
+  desc "Executes (immediately) a job to (re)generate the sitemap.xml"
   task "sitemap_queue_generate" => :environment do
-    SitemapRegenerateJob.perform_later
+    SitemapRegenerateJob.perform_now
   end
 
   desc "Creates the default Admin Set if it doesn't exist"
