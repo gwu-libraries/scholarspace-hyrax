@@ -191,7 +191,7 @@
               margin: 0;
 
               #categories-container, #categories-tooltip {
-                padding: 0 0 0 0.5em
+                padding: 1em 0 0 0.5em;
               }
             }
           }
@@ -466,10 +466,6 @@
             @media (max-width: 1280px) {
               flex-direction: column;
 
-              #featured-h2 {
-                width: 100%;
-              }
-
               .home-collections {
                 margin-bottom: 1em;
               }
@@ -484,6 +480,10 @@
 
           @media (max-width: 1280px) {
             padding: 1.5em 0;
+
+            #featured-h2 {
+              width: 100%;
+            }
           }
         }
       }
