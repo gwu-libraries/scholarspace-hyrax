@@ -1,0 +1,5 @@
+<% content_for(:schoolie_meta) do %>
+  <% if @presenter.scholarly? %>
+    <%schoolie_tags(@presenter).html_safe%>
+  <% end %>
+<% end %>
