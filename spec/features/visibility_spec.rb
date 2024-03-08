@@ -10,7 +10,7 @@ RSpec.describe "View works via the UI" do
   let(:solr) { Blacklight.default_index.connection }
 
   before do
-    [public_work, auth_only_work].map { |work| solr.add(work.to_solr) }
+    [public_work, auth_only_work, private_work].map { |work| solr.add(work.to_solr) }
     solr.commit
   end
 
