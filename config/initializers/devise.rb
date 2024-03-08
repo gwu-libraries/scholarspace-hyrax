@@ -259,8 +259,8 @@ Devise.setup do |config|
       idp_slo_service_url: ENV['IDP_SLO_URL'],
       sp_entity_id: ENV.fetch('ISSUER', 'PERM_URL_BASE') + 'users/auth/saml',
       assertion_consumer_service_url: ENV.fetch('ISSUER', 'PERM_URL_BASE') + 'users/auth/saml/callback',
-      private_key: File.open(ENV['IDP_CERT_PEM'], File::RDONLY|File::CREAT) { |file| file.read },
-      certificate: File.open(ENV['IDP_CERT_PEM'], File::RDONLY|File::CREAT) { |file| file.read },
+      private_key: File.open(ENV['SP_KEY'], File::RDONLY|File::CREAT) { |file| file.read },
+      certificate: File.open(ENV['SP_CERT'], File::RDONLY|File::CREAT) { |file| file.read },
       request_attributes: {}
   else
     config.omniauth :saml,
