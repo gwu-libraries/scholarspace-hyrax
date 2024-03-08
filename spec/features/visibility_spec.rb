@@ -4,9 +4,9 @@ RSpec.describe "View works via the UI" do
 
   let(:user) { FactoryBot.create(:user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
-  let(:public_work) { FactoryBot.create(:gw_work, admin_set: admin_set) }
-  let(:auth_only_work) { FactoryBot.create(:gw_only_work, admin_set: admin_set) }
-  let(:private_work) { FactoryBot.create(:gw_private_work, admin_set: admin_set) }
+  let(:public_work) { FactoryBot.create(:gw_work, admin_set: admin_set, visibility: "public") }
+  let(:auth_only_work) { FactoryBot.create(:gw_work, admin_set: admin_set, visibility: "authenticated") }
+  let(:private_work) { FactoryBot.create(:gw_work, admin_set: admin_set, visibility: "private") }
   let(:solr) { Blacklight.default_index.connection }
 
   before do
