@@ -155,13 +155,15 @@ namespace :gwss  do
         item_attributes.delete('embargo_release_date')
         if manifest_json['degree']
           item_attributes['degree'] = manifest_json['degree'][0]
+          degree_etd_map = load_degree_etd_map
+          resource_type = etd_resource_type_from_degree(manifest_json['degree'][0], degree_etd_map)
+          if resource_type.nil?
+            item_attributes['resource_type'] = ['Thesis or Dissertation']
+          else
+            item_attributes['resource_type'] = resource_type
+          end
         end
-        # resource_type may need more logic around it, TBD
-        if manifest_json['etd_type']
-          item_attributes['resource_type'] = manifest_json['etd_type']
-        end
-        # item_attributes['resource_type'] = ['Thesis or Dissertation']
-
+      
         # dc:rights
         # Always set this license for ETDs
         item_attributes['license'] = ['http://www.europeana.eu/portal/rights/rr-r.html']
@@ -321,8 +323,7 @@ namespace :gwss  do
     ContentBlock.find_or_create_by(name: "share_page").update!(value: share_page_html.read)
   end
 
-  desc "Reassigns GwEtd resource_type values to Master's Thesis or Dissertation"
-  task "reassign_etd_resource_types" => :environment do
+  def load_degree_etd_map
     etd_degree_map = YAML.load_file('config/etd_degree_map.yml')
     degree_etd_map = {}
     degree_categories = etd_degree_map.keys
@@ -333,21 +334,52 @@ namespace :gwss  do
         # upcase each degree (just in case) and ignore "."s
         degree_etd_map[degree_name.upcase.delete('.')] = degree_category
       end
+    end 
+    return degree_etd_map
+  end
+
+  def etd_resource_type_from_degree(degree, degree_etd_map)  
+    if degree.nil?
+      return nil
+    else
+      degree_name = degree.upcase.delete('.')
+      if degree_etd_map.keys.include?(degree_name)
+        resource_type = [degree_etd_map[degree_name]]
+        return resource_type
+      else
+        return nil
+      end
     end
+  end
+
+  desc "Reassigns GwEtd resource_type values to Master's Thesis or Dissertation"
+  task "reassign_etd_resource_types" => :environment do
+    degree_etd_map = load_degree_etd_map
+    # etd_degree_map = YAML.load_file('config/etd_degree_map.yml')
+    # degree_etd_map = {}
+    # degree_categories = etd_degree_map.keys
+    # # Flip etd_degree_map to create degree_etd_map
+    # # So that for any given degree, we can get back whether it's a masters or a doctorate
+    # degree_categories.each do |degree_category|
+    #   etd_degree_map[degree_category].each do |degree_name|
+    #     # upcase each degree (just in case) and ignore "."s
+    #     degree_etd_map[degree_name.upcase.delete('.')] = degree_category
+    #   end
+    # end
 
     ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd", fl: [:id], rows: 1_000_000)
     ids["response"]["docs"].each do |doc|
       work = GwEtd.find(doc["id"])
       if work.degree.nil?
-        puts "GwEtd id=#{doc["id"]} degree is empty! Skipping"
+        puts "GwEtd id=#{doc["id"]}: Degree is empty! Skipping"
       else
         degree_name = work.degree.upcase.delete('.')
         if degree_etd_map.keys.include?(degree_name)
           work.resource_type = [degree_etd_map[degree_name]]
           work.save
-          puts "Reassigned #{degree_name} resource type to #{degree_etd_map[degree_name]}"
+          puts "GwEtd id=#{doc["id"]}: Reassigned #{degree_name} resource type to #{degree_etd_map[degree_name]}"
         else
-          puts "Degree name #{degree_name} not found! Skipping"
+          puts "GwEtd id=#{doc["id"]}: Degree name #{degree_name} not found! Skipping"
         end
       end
     end
