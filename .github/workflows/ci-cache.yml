@@ -43,7 +43,7 @@ jobs:
       - name: Create env file
         run: |
           cp docker/ci.env .env
-      - name: Cache Docker layers
+      - name: Build and cache Docker layers
         uses: docker/bake-action@master
         with:
           push: false
