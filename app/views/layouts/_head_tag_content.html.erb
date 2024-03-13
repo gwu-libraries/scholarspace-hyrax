@@ -12,8 +12,8 @@ signed in %>
 
 <!-- Twitter card metadata -->
 <%= yield :twitter_meta %>
-<!-- Google Scholar metadata -->
-<%= yield :gscholar_meta %>
+<!-- Schoolie for Google Scholar metadata (replaces :gscholar_meta) -->
+<%= yield :schoolie_meta %>
 
 <title><%= content_for?(:page_title) ? yield(:page_title) : default_page_title %></title>
 

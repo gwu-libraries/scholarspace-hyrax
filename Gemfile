@@ -9,9 +9,6 @@ gem 'rails', '~> 5.2.8.1'
 gem "sqlite3", "~> 1.3.0"
 # Use pg as the production database for Active Record
 gem 'pg'
-# Use sitemap
-# See https://github.com/viseztrance/rails-sitemap
-gem 'sitemap'
 # Use Passenger as the app server
 # Update this when we update the Passenger docker container base image version
 gem 'passenger', '6.0.17', require: "phusion_passenger/rack_handler"
@@ -87,6 +84,8 @@ gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/sa
 gem "ffi", "~> 1.15"
 
 gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonicalization/issues/2
+
+gem 'schoolie', '0.1.3'
 
 gem 'prawn'
 # SAML

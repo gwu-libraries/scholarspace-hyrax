@@ -7,14 +7,18 @@
                 <%= render_thumbnail_tag(recent_document, {alt: "#{recent_document} #{ t('hyrax.homepage.admin_sets.thumbnail')}" }, {suppress_link: true}) %>
             </div>
             <div class="recent-title">
-              <h3>
-                  <%= recent_document %>
-              </h3>
+              <div class="title-wrapper">
+                <h3>
+                    <%= recent_document %>
+                </h3>
+              </div>
             </div>
           <% end %>
         </div>
-        <p class="recent-field">
-          <span class="recent-label"><%= t('hyrax.homepage.recently_uploaded.document.keyword_label') %>:</span> <%= link_to_facet_list(recent_document.keyword, 'keyword', t('hyrax.homepage.recently_uploaded.document.keyword_missing')).html_safe %>
-        </p>
+        <div class="keyword-wrapper">
+          <p class="recent-field">
+            <span class="recent-label"><%= t('hyrax.homepage.recently_uploaded.document.keyword_label') %>:</span> <%= link_to_facet_list(recent_document.keyword, 'keyword', t('hyrax.homepage.recently_uploaded.document.keyword_missing')).html_safe %>
+          </p>
+        </div>
     </div>
 </div>

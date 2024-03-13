@@ -893,6 +893,8 @@ GEM
     sassc (2.4.0)
       ffi (~> 1.9)
     scanf (1.0.0)
+    schoolie (0.1.3)
+      actionview (~> 5)
     select2-rails (3.5.11)
     shacl (0.1.1)
       json-ld (~> 3.1, >= 3.1.7)
@@ -908,7 +910,7 @@ GEM
       rdf-xsd (~> 3.1)
       sparql (~> 3.1)
       sxp (~> 1.1)
-    sidekiq (6.5.9)
+    sidekiq (6.5.10)
       connection_pool (>= 2.2.5, < 3)
       rack (~> 2.0)
       redis (>= 4.5.0, < 5)
@@ -1076,6 +1078,7 @@ DEPENDENCIES
   rsolr (>= 1.0, < 3)
   rspec-rails
   sass-rails (~> 5.0)
+  schoolie (= 0.1.3)
   sidekiq (~> 6)
   simplecov
   sitemap

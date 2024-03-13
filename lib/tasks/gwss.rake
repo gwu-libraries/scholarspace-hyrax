@@ -20,9 +20,9 @@ namespace :gwss  do
     end
   end
 
-  desc "Queues a job to (re)generate the sitemap.xml"
+  desc "Executes (immediately) a job to (re)generate the sitemap.xml"
   task "sitemap_queue_generate" => :environment do
-    SitemapRegenerateJob.perform_later
+    SitemapRegenerateJob.perform_now
   end
 
   desc "Creates the default Admin Set if it doesn't exist"
@@ -141,6 +141,10 @@ namespace :gwss  do
       # problem that would be caused by referencing GwEtd first
       # See articles such as http://neethack.com/2015/04/rails-circular-dependency/
       GwWork
+
+      degree_hash = YAML.load_file('config/etd_degree_map.yml')
+      degree_categories = degree_hash.keys # Typically ["Master's Thesis", "Dissertation"]
+
       manifest_file = options[:mfpath]
       if File.exist?(manifest_file)
         mf = File.read(manifest_file)
@@ -153,7 +157,10 @@ namespace :gwss  do
           item_attributes['degree'] = manifest_json['degree'][0]
         end
         # resource_type may need more logic around it, TBD
-        item_attributes['resource_type'] = ['Thesis or Dissertation']
+        if manifest_json['etd_type']
+          item_attributes['resource_type'] = manifest_json['etd_type']
+        end
+        # item_attributes['resource_type'] = ['Thesis or Dissertation']
 
         # dc:rights
         # Always set this license for ETDs
@@ -312,5 +319,49 @@ namespace :gwss  do
     ContentBlock.find_or_create_by(name: "about_page").update!(value: about_page_html.read)
     ContentBlock.find_or_create_by(name: "help_page").update!(value: help_page_html.read)
     ContentBlock.find_or_create_by(name: "share_page").update!(value: share_page_html.read)
+  end
+
+  desc "Reassigns GwEtd resource_type values to Master's Thesis or Dissertation"
+  task "reassign_etd_resource_types" => :environment do
+    etd_degree_map = YAML.load_file('config/etd_degree_map.yml')
+    degree_etd_map = {}
+    degree_categories = etd_degree_map.keys
+    # Flip etd_degree_map to create degree_etd_map
+    # So that for any given degree, we can get back whether it's a masters or a doctorate
+    degree_categories.each do |degree_category|
+      etd_degree_map[degree_category].each do |degree_name|
+        # upcase each degree (just in case) and ignore "."s
+        degree_etd_map[degree_name.upcase.delete('.')] = degree_category
+      end
+    end
+
+    ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd", fl: [:id], rows: 1_000_000)
+    ids["response"]["docs"].each do |doc|
+      work = GwEtd.find(doc["id"])
+      if work.degree.nil?
+        puts "GwEtd id=#{doc["id"]} degree is empty! Skipping"
+      else
+        degree_name = work.degree.upcase.delete('.')
+        if degree_etd_map.keys.include?(degree_name)
+          work.resource_type = [degree_etd_map[degree_name]]
+          work.save
+          puts "Reassigned #{degree_name} resource type to #{degree_etd_map[degree_name]}"
+        else
+          puts "Degree name #{degree_name} not found! Skipping"
+        end
+      end
+    end
+  end
+
+  desc "Enumerates degree types present among existing GwEtd works"
+  task "enumerate_degree_types" => :environment do
+    ids = Hyrax::SolrService.new.get("has_model_ssim:GwEtd", fl: [:id], rows: 1_000_000)
+    docs = ids["response"]["docs"]
+    # Map a list of ids to a list of degree values
+    degrees = docs.map {|doc| GwEtd.find(doc["id"]).degree}
+    degree_hash = degrees.tally
+    degree_hash.keys.each do |key|
+      puts "#{key}, #{degree_hash[key]}"
+    end
   end
 end
