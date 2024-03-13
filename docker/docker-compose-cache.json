@@ -1,0 +1,15 @@
+{
+    "target": {
+      "service-name": {
+        "cache-from": [
+          "type=gha,scope=buildkit"
+        ],
+        "cache-to": [
+          "type=gha,mode=max,scope=buildkit"
+        ],
+        "output": [
+          "type=docker"
+        ]
+      }
+   }
+}

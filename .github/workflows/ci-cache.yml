@@ -43,9 +43,14 @@ jobs:
       - name: Create env file
         run: |
           cp docker/ci.env .env
-      - name: Build docker-compose
-        # Before the cache, it was "run: docker compose build".
-        run: docker buildx bake --file docker-compose.yml --load 
+      - name: Cache Docker layers
+        uses: docker/bake-action@master
+        with:
+          push: false
+          load: true
+          files: |-
+            docker-compose.yml
+            docker/docker-compose-cache.json
        # Start all of the docker containers and wait until positive response from healthchecks
       - name: Start Docker containers
         run: |
