@@ -88,6 +88,9 @@ gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonical
 gem 'schoolie', '0.1.3'
 
 gem 'prawn'
+# SAML
+gem 'omniauth-saml', '2.1.0'
+gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   gem 'pry' # temporily removing, seems to break something with sidekiq in development mode

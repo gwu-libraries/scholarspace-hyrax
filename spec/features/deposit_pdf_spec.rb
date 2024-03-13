@@ -3,14 +3,31 @@ require 'rails_helper'
 RSpec.describe "Deposit a PDF through dashboard" do
 
   let(:admin_user) { FactoryBot.create(:admin_user) }
+  let(:user) { FactoryBot.create(:user) }
   let(:pdf_path) { "#{Rails.root}/spec/fixtures/fixture_dummy.pdf" }
+  let(:solr) { Blacklight.default_index.connection }
+  let(:admin_set) { FactoryBot.create(:admin_set) }
+
+  after do
+    ActiveFedora::Cleaner.clean!
+    solr.delete_by_query("*:*")
+    solr.commit
+  end
+
+
+  it 'cannot deposit as a non-admin user' do
+
+    sign_in_user(user)
+
+    visit new_hyrax_gw_etd_path
+
+    expect(current_path).to eq(root_path)
+
+  end
 
   it 'can deposit a pdf' do
-    visit "/users/sign_in"
-
-    fill_in("user_email", with: admin_user.email)
-    fill_in("user_password", with: admin_user.password)
-    click_button("Log in")
+    
+    sign_in_user(admin_user)
 
     visit new_hyrax_gw_etd_path
 
@@ -34,6 +51,7 @@ RSpec.describe "Deposit a PDF through dashboard" do
 
     expect(page).to have_content("Your files are being processed by ScholarSpace in the background.")
     expect(page).to have_content("This is a PDF ETD")
+
   end
 
 end
