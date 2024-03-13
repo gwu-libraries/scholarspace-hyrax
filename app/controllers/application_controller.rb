@@ -11,4 +11,15 @@ class ApplicationController < ActionController::Base
   with_themed_layout '1_column'
 
   protect_from_forgery with: :exception
+
+  # Disable the I18n parameter if we are in the logout phase
+  # This prevents the locale= parameter from appearing in the auth/saml route
+  # May be due to an omniauth-saml bug?
+  def default_url_options
+    if params[:controller] && params[:controller].include?("users/sessions")
+      super.merge(locale: nil)
+    else
+      super
+    end
+  end
 end

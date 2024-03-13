@@ -2,15 +2,23 @@ require 'rails_helper'
 
 RSpec.describe "Dashboard page" do
 
+  it 'redirects to the home page if the user authenticates but lacks admin privilages' do
+    non_admin_user = FactoryBot.create(:user)
+
+    sign_in_user(non_admin_user)
+    
+    expect(current_path).to eq(root_path)
+
+    visit '/dashboard/my/works'
+
+    expect(current_path).to eq(root_path)
+
+  end
+
   it 'displays all admin controls when logged in as an admin user' do
     admin_user = FactoryBot.create(:admin_user)
 
-    visit "/users/sign_in"
-
-    fill_in("user_email", with: admin_user.email)
-    fill_in("user_password", with: admin_user.password)
-    
-    click_button("Log in")
+    sign_in_user(admin_user)
 
     within ".sidebar" do
       expect(page).to have_content("Dashboard")
@@ -44,12 +52,7 @@ RSpec.describe "Dashboard page" do
   it 'displays all content-admin controls when logged in as a content-admin user' do
     content_admin_user = FactoryBot.create(:content_admin_user)
 
-    visit "/users/sign_in"
-
-    fill_in("user_email", with: content_admin_user.email)
-    fill_in("user_password", with: content_admin_user.password)
-    
-    click_button("Log in")
+    sign_in_user(content_admin_user)
 
     within ".sidebar" do
       expect(page).to have_content("Dashboard")

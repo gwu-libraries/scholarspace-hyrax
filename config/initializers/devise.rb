@@ -251,6 +251,28 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  # for dev environments in production mode, this will create empty cert and key files
+  if Rails.env.production?
+    config.omniauth :saml,
+      idp_cert: File.open(ENV['IDP_CERT_PEM'], File::RDONLY|File::CREAT) { |file| file.read },
+      idp_sso_service_url: ENV['IDP_SSO_URL'],
+      idp_slo_service_url: ENV['IDP_SLO_URL'],
+      sp_entity_id: ENV.fetch('ISSUER', 'PERM_URL_BASE') + 'users/auth/saml',
+      assertion_consumer_service_url: ENV.fetch('ISSUER', 'PERM_URL_BASE') + 'users/auth/saml/callback',
+      private_key: File.open(ENV['SP_KEY'], File::RDONLY|File::CREAT) { |file| file.read },
+      certificate: File.open(ENV['SP_CERT'], File::RDONLY|File::CREAT) { |file| file.read },
+      request_attributes: {}
+  else
+    config.omniauth :saml,
+      idp_cert: 'cert',
+      idp_sso_service_url: 'https://www.example.com',
+      idp_slo_service_url: 'https://www.example.com',
+      sp_entity_id: ENV['PERM_URL_BASE'] + 'users/auth/saml',
+      assertion_consumer_service_url: ENV['PERM_URL_BASE'] + '/users/auth/saml/callback',
+      private_key: 'key',
+      certificate: 'cert',
+      request_attributes: {}
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or
@@ -273,5 +295,5 @@ Devise.setup do |config|
   #
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
-  # config.omniauth_path_prefix = '/my_engine/users/auth'
+  #config.omniauth_path_prefix = '/users/auth'
 end
