@@ -1,0 +1,64 @@
+name: CI testing
+
+on:
+  # allow running action manually
+  workflow_dispatch:
+  # trigger on push to test branch
+  push:
+    branches:
+      - t521-ci-cacheing
+
+# Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
+env:
+  REGISTRY: ghcr.io
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    permissions: 
+      contents: read
+      packages: write
+    steps:
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Log in to the Container registry
+        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create scholarspace folders
+        run: |
+          mkdir -p /opt/scholarspace
+          mkdir /opt/scholarspace/certs
+          mkdir /opt/scholarspace-tmp
+          mkdir /opt/scholarspace-minter
+          mkdir /opt/scholarspace/fedora-data
+          mkdir /opt/scholarspace/solr-data
+          cd /opt/scholarspace
+     # Checkout the repository code
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      # Copy the pre-filled docker/ci.env file to use as the .env file for testing
+      - name: Create env file
+        run: |
+          cp docker/ci.env .env
+      - name: Build docker-compose
+        # Before the cache, it was "run: docker compose build".
+        run: docker buildx bake --file docker-compose.yml --load --push
+       # Start all of the docker containers and wait until positive response from healthchecks
+      - name: Start Docker containers
+        run: |
+          docker compose up --wait
+
+      - name: Create dev/test databases
+        run: |
+          docker exec $(docker ps --filter 'name=app' -q) bash -lc "bundle exec rails db:create"
+      - name: Migrate dev/test databases
+        run: |
+          docker exec $(docker ps --filter 'name=app' -q) bash -lc "bundle exec rails db:migrate"
+      - name: Run RSpec tests
+        run: |
+          docker exec $(docker ps --filter 'name=app' -q) bash -lc "bundle exec rspec"
+        
+        
