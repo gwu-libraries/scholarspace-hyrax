@@ -109,23 +109,35 @@ header {
         background-color: transparent;
       }
   
-      .navbar-nav a:hover {
-        background-color: $gw-light-blue;
-        color: $gw-white;
-      }
-  
-      .navbar-nav a:focus {
-        background-color: $gw-light-blue;
-        outline: none;
-      }
-  
-      .navbar-nav li {
-        background-color: transparent;
-  
-        a {
-          color: $gw-white;
-          text-transform: none;
+      .navbar-nav {
+      
+        li {
+          background-color: transparent;
+    
+          a {
+            color: $gw-white;
+            text-transform: none;
+
+            &:active {
+              background-color: transparent;
+            }
+          }
+
+          &.navbar-item {
+            &:focus {
+              background-color: $gw-light-blue;
+              outline: none;
+            }
+
+            &:hover {
+              background-color: $gw-light-blue;
+              color: $gw-white;
+            }
+
+          }
         }
+
+
       }
   
       @media (min-width: $mobile-breakpoint) {
@@ -230,12 +242,12 @@ header {
     }
   
     .navbar-nav {
-      .open > a:hover, .open > a:focus {
+      .open > .navbar-item:hover, .open > .navbar-item:focus {
         color: $gw-white;
         background-color: $gw-light-blue;
       }
   
-      li {
+      li.navbar-item {
         background-color: transparent;
   
         a {
@@ -245,6 +257,19 @@ header {
           &:hover, &:focus {
             color: $gw-white;
             background-color: $gw-light-blue;
+          }
+        }
+      }
+
+      li.navbar-browse {
+        a {
+          &:hover, &:focus {
+            color: $gw-white;
+            background-color: $gw-hover-buff;
+          }
+
+          @media (min-width: $mobile-breakpoint) {
+            margin: 8px;
           }
         }
       }
@@ -279,10 +304,10 @@ header {
       margin: 0.5em 0;
   
       @media (min-width: $mobile-breakpoint) {
-        width: 70%;
+        width: 65%;
       }
 
-      @media (min-width: 895px) {
+      @media (min-width: 925px) {
         width: 100%;
       }
   
@@ -397,5 +422,3 @@ header {
   .navbar-right {
     margin-right: 0;
   }
-
-  
