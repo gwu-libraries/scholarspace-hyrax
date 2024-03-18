@@ -28,9 +28,18 @@ header {
       }
     }
 }
-  
+
+  .image-masthead,
   .navbar {
-    min-height: 3em;
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+  }
+
+  .navbar {
+    z-index: 98;
+    min-height: 30px;
   
     .share-header {
       width: 100%;
@@ -40,6 +49,7 @@ header {
       align-items: center;
   
       @media (min-width: $mobile-breakpoint) {
+        min-height: 3em;
         width: auto;
         flex-direction: column;
         justify-content: center;
@@ -100,6 +110,7 @@ header {
   .image-masthead {
     border-bottom: none;
     margin-bottom: 1rem;
+    z-index: 99;
   
     .navbar {
       background-color: transparent;
@@ -110,7 +121,9 @@ header {
       }
   
       .navbar-nav {
-      
+          display: flex;
+          align-items: center;
+
         li {
           background-color: transparent;
     
@@ -137,6 +150,18 @@ header {
           }
         }
 
+        .navbar-divider {
+          &::before {
+            content: "|";
+            color: #688a9c;
+            font-size: 1em;
+            width: 4px;
+            margin-left: -2px;
+            padding: 0;
+            text-align: center;
+            display: inline-block;
+          }
+        }
 
       }
   
@@ -262,13 +287,21 @@ header {
       }
 
       li.navbar-browse {
+        padding: 0 1em;
+
         a {
+          color: $gw-white;
+
           &:hover, &:focus {
-            color: $gw-white;
+            color: $gw-dark-blue;
             background-color: $gw-hover-buff;
           }
+        }
 
-          @media (min-width: $mobile-breakpoint) {
+        @media (min-width: $mobile-breakpoint) {
+          padding: 0;
+
+          a {
             margin: 8px;
           }
         }
@@ -304,10 +337,10 @@ header {
       margin: 0.5em 0;
   
       @media (min-width: $mobile-breakpoint) {
-        width: 65%;
+        width: 64%;
       }
 
-      @media (min-width: 925px) {
+      @media (min-width: 939px) {
         width: 100%;
       }
   
@@ -370,7 +403,6 @@ header {
     display: flex;
     flex-direction: row;
     margin-left: 1rem;
-    margin-top: 0;
     margin-right: 0;
   
     .dropdown a, .notify-number {
