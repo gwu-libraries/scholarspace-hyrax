@@ -3,10 +3,10 @@
 .share-header-text {
     margin-bottom: 0;
     color: $gw-light-blue;
-    font-size: 8vw;
+    font-size: 7.5vw;
     font-weight: bold;
 
-    @media (min-width: 1786) {
+    @media (min-width: 1786px) {
         font-size: 6.5em;
     }
 }
@@ -35,18 +35,28 @@
     }
 }
 
+#accordionQA {
+    button:focus {
+        outline: none;
+    }
+}
+
 // About Page Styles
 .about-header-text {
     margin-bottom: 0;
     color: $gw-light-blue;
-    font-size: 8vw;
+    font-size: 7.5vw;
     font-weight: bold;
 
     @media (min-width: $mobile-breakpoint) {
-        font-size: 5.7vw;
+        font-size: 6.4vw;
     }
 
-    @media (min-width: 1666) {
+    @media (min-width: 1105px) {
+        font-size: 5vw;
+    }
+
+    @media (min-width: 1666px) {
         font-size: 5.8em;
     }
 }
