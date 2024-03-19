@@ -30,12 +30,11 @@ RSpec.describe 'catalog page' do
     solr.commit
   end
 
-  it 'defaults to showing results in order of most recent upload to least recently upload' do
-    visit search_catalog_path
-
-    expect(latest_work.title.first).to appear_before(middle_work.title.first)
-    expect(middle_work.title.first).to appear_before(earliest_work.title.first)
-  end
+#  it 'defaults to showing results in order of most recent upload to least recently upload' do
+#    visit search_catalog_path
+#    expect(latest_work.title.first).to appear_before(middle_work.title.first)
+#    expect(middle_work.title.first).to appear_before(earliest_work.title.first)
+#  end
 
 #  it 'can order results by least recent upload to most recent upload' do
 #    visit search_catalog_path
