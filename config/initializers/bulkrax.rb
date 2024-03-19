@@ -60,7 +60,14 @@ Bulkrax.setup do |config|
   # It is given two aruguments, self at the time of call and the index of the reocrd
   #    config.fill_in_blank_source_identifiers = ->(parser, index) { "b-#{parser.importer.id}-#{index}"}
   # or use a uuid
-  #    config.fill_in_blank_source_identifiers = ->(parser, index) { SecureRandom.uuid }
+  config.fill_in_blank_source_identifiers = ->(parser, index) { SecureRandom.uuid }
+
+  # This config may seem redundant, but (as of bulkrax 6.0.1) including it
+  # seems to prevent the object from being created with a visible metadata
+  # field of Source with a value that's a big ugly uuid
+  config.field_mappings['Bulkrax::CsvParser'] = {
+    'source_identifier' => { from: ['source_identifier'], source_identifier: true }
+  }
 
   # Properties that should not be used in imports/exports. They are reserved for use by Hyrax.
   # config.reserved_properties += ['my_field']
