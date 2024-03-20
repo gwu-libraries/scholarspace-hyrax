@@ -58,6 +58,7 @@ end
 
 Hyrax::Engine.routes.draw do
   get 'share' =>'pages#show', key: 'share'
+  get '/collections', to: 'collections#index', as: 'collections'
   # Redirects non-privileged users to the application homepage
   authenticate :user, lambda { |u| !u.admin? && !u.contentadmin?} do
     namespace :dashboard do
