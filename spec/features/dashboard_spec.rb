@@ -15,6 +15,78 @@ RSpec.describe "Dashboard page" do
 
   end
 
+  it 'redirects authenticated, non-admin, user to homepage when visiting /notifications' do
+
+    non_admin_user = FactoryBot.create(:user)
+
+    sign_in_user(non_admin_user)
+
+    visit '/notifications'
+
+    expect(current_path).to eq(root_path)
+
+  end
+
+  it 'allows authenticated admin user to visit /notifications' do
+
+    admin_user = FactoryBot.create(:admin_user)
+
+    sign_in_user(admin_user)
+
+    visit '/notifications'
+
+    expect(current_path).to eq("/notifications")
+
+  end
+
+  it 'redirects authenticated, non-admin, user to homepage when visiting /importers' do
+
+    non_admin_user = FactoryBot.create(:user)
+
+    sign_in_user(non_admin_user)
+
+    visit '/importers'
+
+    expect(current_path).to eq(root_path)
+
+  end
+
+  it 'allows authenticated admin user to visit /importers' do
+
+    admin_user = FactoryBot.create(:admin_user)
+
+    sign_in_user(admin_user)
+
+    visit '/importers'
+
+    expect(current_path).to eq("/importers")
+
+  end
+
+  it 'redirects authenticated, non-admin, user to homepage when visiting /exporters' do
+
+    non_admin_user = FactoryBot.create(:user)
+
+    sign_in_user(non_admin_user)
+
+    visit '/exporters'
+
+    expect(current_path).to eq(root_path)
+
+  end
+
+  it 'allows authenticated admin user to visit /exporters' do
+
+    admin_user = FactoryBot.create(:admin_user)
+
+    sign_in_user(admin_user)
+
+    visit '/exporters'
+
+    expect(current_path).to eq("/exporters")
+
+  end
+
   it 'displays all admin controls when logged in as an admin user' do
     admin_user = FactoryBot.create(:admin_user)
 
