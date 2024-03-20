@@ -16,9 +16,9 @@ setuser scholarspace touch /opt/scholarspace/scholarspace-hyrax/log/production.l
 # Set up nginx configuration, applying environment variables
 echo "Configuring nginx"
 if [[ "$SSL_ON" = true ]]; then
-  envsubst < nginx_conf/scholarspace-ssl.conf > /etc/nginx/sites-enabled/scholarspace-ssl.conf
+  envsubst '${SERVER_NAME},${NGINX_CERTIFICATE},${NGINX_CERTIFICATE_KEY}' < nginx_conf/scholarspace-ssl.conf > /etc/nginx/sites-enabled/scholarspace-ssl.conf
 else
-  envsubst < nginx_conf/scholarspace.conf > /etc/nginx/sites-enabled/scholarspace.conf
+  envsubst '${SERVER_NAME}' < nginx_conf/scholarspace.conf > /etc/nginx/sites-enabled/scholarspace.conf
 fi
 # Add allow directives for GH pages IP ranges
 cp nginx_conf/ghpages-cidr.conf /etc/nginx/conf.d/
