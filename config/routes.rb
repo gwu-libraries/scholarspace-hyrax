@@ -58,6 +58,16 @@ end
 
 Hyrax::Engine.routes.draw do
   get 'share' =>'pages#show', key: 'share'
+
+  # overwriting collections resource
+  resources :collections, only: [:index, :show] do # public landing show page
+    member do
+      get 'page/:page', action: :index
+      get 'facet/:id', action: :facet, as: :dashboard_facet
+      get :files
+    end
+  end
+
   # Redirects non-privileged users to the application homepage
   authenticate :user, lambda { |u| !u.admin? && !u.contentadmin?} do
     namespace :dashboard do
