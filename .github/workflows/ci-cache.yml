@@ -1,15 +1,15 @@
-name: CI cache testing
+name: CI w/ cache 
 
 on:
   # allow running action manually
   workflow_dispatch:
-  # trigger on push to test branch
+  # trigger on push to master branch
   push:
     branches:
-      - t521-ci-cacheing
+      - master
 # Defines two custom environment variables for the workflow. These are used for the Container registry domain, and a name for the Docker image that this workflow builds.
-env:
-  REGISTRY: ghcr.io
+#env:
+#  REGISTRY: ghcr.io
 jobs:
   CI:
     runs-on: ubuntu-latest
@@ -19,12 +19,12 @@ jobs:
     steps:
       - name: Setup Docker Buildx
         uses: docker/setup-buildx-action@v3
-      - name: Log in to the Container registry
-        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
-        with:
-          registry: ${{ env.REGISTRY }}
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+#      - name: Log in to the Container registry
+#        uses: docker/login-action@65b78e6e13532edd9afa3aa52ac7964289d1a9c1
+#        with:
+#          registry: ${{ env.REGISTRY }}
+#          username: ${{ github.actor }}
+#          password: ${{ secrets.GITHUB_TOKEN }}
       - name: Create scholarspace folders
         run: |
           mkdir -p /opt/scholarspace
