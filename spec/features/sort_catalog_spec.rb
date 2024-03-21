@@ -3,8 +3,8 @@ require 'rails_helper'
 RSpec.describe 'catalog page' do
 
   let(:solr) { Blacklight.default_index.connection }
-  let(:admin_user) { FactoryBot.create(:admin_user) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
+  let(:admin_user) { FactoryBot.create(:admin_user) }
   let(:earliest_work) { FactoryBot.create(:gw_work, admin_set: admin_set, 
                                                     date_uploaded: "2000-01-01", 
                                                     date_modified: "2010-01-01") }
