@@ -55,6 +55,39 @@ RSpec.describe "GwIndexer" do
     
   end
 
+  context "date_created_isim field" do
+    it 'has a date_created_isim field containing a four-digit year, when date_created is filled with four digit year' do
+
+      gw_work_good_year = FactoryBot.create(:gw_work, 
+                                            admin_set: admin_set, 
+                                            visibility: "public", 
+                                            date_created: ["2001"])
+
+      expect(gw_work_good_year.to_solr['date_create_isim']).to eq(2001)
+
+    end
+
+    it 'chooses the first valid four-digit year if multiple date_created values' do
+
+      gw_work_multiple_date_created_values = FactoryBot.create(:gw_work, 
+                                            admin_set: admin_set, 
+                                            visibility: "public", 
+                                            date_created: ["august", "4", "2005"])
+
+      expect(gw_work_multiple_date_created_values.to_solr['date_create_isim']).to eq(2005)
+
+    end
+
+    it 'has a nil value if no convertable dates' do
+
+      gw_work_no_good_values = FactoryBot.create(:gw_work, 
+                                            admin_set: admin_set, 
+                                            visibility: "public", 
+                                            date_created: ["august", "4", "2005"])
+
+      expect(gw_work_no_good_values.to_solr['date_create_isim']).to eq(nil)
+    end
+  end
 end
 
 #bundle exec rspec spec/features/indexers/gw_indexer_spec.rb
