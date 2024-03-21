@@ -63,7 +63,7 @@ RSpec.describe "GwIndexer" do
                                             visibility: "public", 
                                             date_created: ["2001"])
 
-      expect(gw_work_good_year.to_solr['date_create_isim']).to eq(2001)
+      expect(gw_work_good_year.to_solr['date_created_isim']).to eq(2001)
 
     end
 
@@ -74,7 +74,7 @@ RSpec.describe "GwIndexer" do
                                             visibility: "public", 
                                             date_created: ["august", "4", "2005"])
 
-      expect(gw_work_multiple_date_created_values.to_solr['date_create_isim']).to eq(2005)
+      expect(gw_work_multiple_date_created_values.to_solr['date_created_isim']).to eq(2005)
 
     end
 
@@ -83,9 +83,9 @@ RSpec.describe "GwIndexer" do
       gw_work_no_good_values = FactoryBot.create(:gw_work, 
                                             admin_set: admin_set, 
                                             visibility: "public", 
-                                            date_created: ["august", "4", "2005"])
+                                            date_created: ["august", "4", "garbanzo"])
 
-      expect(gw_work_no_good_values.to_solr['date_create_isim']).to eq(nil)
+      expect(gw_work_no_good_values.to_solr['date_created_isim']).to eq(nil)
     end
   end
 end
