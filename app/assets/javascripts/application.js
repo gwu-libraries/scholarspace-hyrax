@@ -13,6 +13,8 @@
 //= 
 //= require turbolinks
 //
+
+//= require tether
 // Required by Blacklight
 //= require jquery
 //= require jquery_ujs
@@ -24,3 +26,9 @@
 //= require_tree .
 //= require hyrax
 //= require cookies_eu
+
+
+// For blacklight_range_limit built-in JS, if you don't want it you don't need
+// this:
+//= require 'blacklight_range_limit'
+
