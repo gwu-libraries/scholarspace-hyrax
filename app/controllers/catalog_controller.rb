@@ -62,7 +62,14 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("contributor", :facetable), label: "Contributor", limit: 5
     config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
     config.add_facet_field solr_name("subject", :facetable), label: "Subject", limit: 5
-    config.add_facet_field solr_name("date_created", :facetable), label: "Year", limit: 5
+    # config.add_facet_field solr_name("date_created", :facetable), label: "Year", limit: 5
+    config.add_facet_field "date_created_isim", label: "Date Created",
+                            range: {
+                              num_segments: 6,
+                              assumed_boundaries: [1000, Time.now.year + 2],
+                              segments: true,
+                              maxlength: 4
+                            }
 # A "vanilla" Hyrax 2.4.1 app has the following facet field, but it appears to break this (GW ScholarSpace) app:
 # TODO: Look into adding this back
 #    config.add_facet_field solr_name('member_of_collection_ids', :symbol), limit: 5, label: 'Collections', helper_method: :collection_title_by_id
@@ -101,7 +108,7 @@ class CatalogController < ApplicationController
     # config.add_index_field solr_name("language", :stored_searchable), label: "Language", itemprop: 'inLanguage', link_to_search: solr_name("language", :facetable)
     # config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), label: "Date Uploaded", itemprop: 'datePublished', helper_method: :human_readable_date
     # config.add_index_field solr_name("date_modified", :stored_sortable, type: :date), label: "Date Modified", itemprop: 'dateModified', helper_method: :human_readable_date
-    # config.add_index_field solr_name("date_created", :stored_searchable), label: "Date Created", itemprop: 'dateCreated'
+    config.add_index_field "date_created_isim", label: "Date Created", itemprop: 'dateCreated'
     # config.add_index_field solr_name("rights_statement", :stored_searchable), label: "Rights Statement", helper_method: :license_links
     # config.add_index_field solr_name("license", :stored_searchable), label: "License", helper_method: :license_links
     config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type", link_to_search: solr_name("resource_type", :facetable)
@@ -123,7 +130,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("language", :stored_searchable), label: "Language"
     config.add_show_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded"
     config.add_show_field solr_name("date_modified", :stored_searchable), label: "Date Modified"
-    config.add_show_field solr_name("date_created", :stored_searchable), label: "Date Created"
+    config.add_show_field "date_created_isim", label: "Date Created"
     config.add_show_field solr_name("rights_statement", :stored_searchable), label: "Rights Statement"
     config.add_show_field solr_name("license", :stored_searchable), label: "License"
     config.add_show_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
@@ -217,7 +224,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('date_created') do |field|
-      solr_name = solr_name("created", :stored_searchable)
+      solr_name = "date_created_isim"
       field.solr_local_parameters = {
         qf: solr_name,
         pf: solr_name
