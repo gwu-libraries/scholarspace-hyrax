@@ -67,14 +67,14 @@ RSpec.describe "GwIndexer" do
 
     end
 
-    it 'chooses the first valid four-digit year if multiple date_created values' do
+    it 'chooses the minimum valid four-digit year if multiple date_created values' do
 
       gw_work_multiple_date_created_values = FactoryBot.create(:gw_work, 
                                             admin_set: admin_set, 
                                             visibility: "public", 
-                                            date_created: ["august", "4", "2005"])
+                                            date_created: ["august", "4", "2009", "2005", "1999"])
 
-      expect(gw_work_multiple_date_created_values.to_solr['date_created_isim']).to eq(2005)
+      expect(gw_work_multiple_date_created_values.to_solr['date_created_isim']).to eq(1999)
 
     end
 
