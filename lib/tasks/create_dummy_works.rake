@@ -86,7 +86,8 @@ namespace :gwss do
                                         contributor: ["Assistant Test"],
                                         gw_affiliation: [""],
                                         advisor: ["Advisor Test"],
-                                        resource_type: ["Article"])
+                                        resource_type: ["Article"],
+                                        date_created: ["#{rand(1000...2000).to_s}"])
       
       AttachFilesToWorkJob.perform_now(public_works[index], [public_uploads[index]])
     end
