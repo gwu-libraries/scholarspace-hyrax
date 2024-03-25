@@ -22,6 +22,8 @@ Rails.application.routes.draw do
     concerns :searchable
   end
 
+  # collections
+  resources :collections, only: [:index]
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', 
                                     sessions: 'users/sessions' }

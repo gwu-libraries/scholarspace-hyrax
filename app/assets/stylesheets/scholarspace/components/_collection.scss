@@ -1,192 +1,200 @@
 // collection page styles
 
 .hyc-container {
-    .hyc-generic {
-  
-      .hyc-wrap {
-        display: flex;
-        align-items: center;
-  
-        .hyc-logos img {
-          height: 6em;
-        }
-  
-        .hyc-title .label {
-          font-weight: 400;
-          padding: .2em .6em;
-        }
+  .hyc-generic {
+
+    .hyc-wrap {
+      display: flex;
+      align-items: center;
+
+      .hyc-logos img {
+        height: 6em;
       }
-  
-      .hyc-bugs .hyc-item-count::after {
-        content: "|";
-        margin: 0 0.5em;
+
+      .hyc-title .label {
+        font-weight: 400;
+        padding: .2em .6em;
       }
     }
-  
-    .hyc-header {
+
+    .hyc-bugs .hyc-item-count::after {
+      content: "|";
+      margin: 0 0.5em;
+    }
+  }
+
+  .hyc-header {
+    margin-bottom: 0;
+  }
+
+  .edit_collection {
+    background-color: $gw-light-grey;
+    padding: 1em;
+
+    .input-group {
       margin-bottom: 0;
-    }
-  
-    .edit_collection {
-      background-color: $gw-light-grey;
-      padding: 1em;
-  
-      .input-group {
-        margin-bottom: 0;
-        display: flex;
-        flex-direction: column;
-  
-        input {
-          border-radius: 0;
-          border: 1px solid $gw-dark-grey;
-        }
-  
-        .input-group-btn {
-          margin-top: 1rem;
-          width: 100%;
-  
-          .btn, #collection_submit {
-            width: 100%;
-            border-radius: 0;
-            padding: 0.4rem;
-            margin-left: 0.3rem;
-        
-              .glyphicon-search::before {
-                font-size: 1rem;
-              }
-            }
-          }
-  
-        @media (min-width: $mobile-breakpoint) {
-          flex-direction: row;
-  
-          .input-group-btn {
-            margin-top: 0;
-            width: auto;
-  
-            .btn {
-              width: auto;
-              margin-left: 1rem;
-            }
-          }
-        }
-      }
-    }
-  
-    .hyc-blacklight {
-      select {
+      display: flex;
+      flex-direction: column;
+
+      input {
+        border-radius: 0;
         border: 1px solid $gw-dark-grey;
-        border-radius: 0;
-        background-color: $gw-white;
-        padding: 0.4rem;
       }
-  
-      .btn-group a {
-        border-radius: 0;
-        border-color: $gw-dark-grey;
-    
-        &.active {
-          box-shadow: none;
-          background-color: $gw-light-blue;
-          border-color: $gw-light-blue;
-          color: $gw-white;
-        }
-    
-        &:hover {
-          box-shadow: none;
-        }
-      }
-    }
-  
-    .hyc-bl-results {
-      padding: 0;
-    }
-  }
-  
-  .table-borderless {
-    width: 100%;
-  
-    td {
-      border: none !important;
-    }
-  
-    thead {
-      th {
-        font-weight: 200;
-      }
-    }
-  
-    tbody {
-      .file_set {
-        padding: 0.5rem;
-      }
-  
-      tr {
-        td {
-          padding: 0.5rem;
-  
-          .media-body {
-            vertical-align: middle;
+
+      .input-group-btn {
+        margin-top: 1rem;
+        width: 100%;
+
+        .btn, #collection_submit {
+          width: 100%;
+          border-radius: 0;
+          padding: 0.4rem;
+          margin-left: 0.3rem;
+      
+            .glyphicon-search::before {
+              font-size: 1rem;
+            }
           }
         }
-  
-        &:nth-child(odd) {
-          background-color: $gw-light-grey;
+
+      @media (min-width: $mobile-breakpoint) {
+        flex-direction: row;
+
+        .input-group-btn {
+          margin-top: 0;
+          width: auto;
+
+          .btn {
+            width: auto;
+            margin-left: 1rem;
+          }
         }
       }
     }
-  
-    .thumbnail {
-      background-color: transparent;
-      margin-bottom: 0;
-    }
-  
-    .file_listing_thumbnail, .thumbnail img {
-      width: 4rem;
-      height: auto;
-      margin: 0;
+  }
+
+  .hyc-blacklight {
+    select {
+      border: 1px solid $gw-dark-grey;
       border-radius: 0;
+      background-color: $gw-white;
+      padding: 0.4rem;
+    }
+
+    .btn-group a {
+      border-radius: 0;
+      border-color: $gw-dark-grey;
+  
+      &.active {
+        box-shadow: none;
+        background-color: $gw-light-blue;
+        border-color: $gw-light-blue;
+        color: $gw-white;
+      }
+  
+      &:hover {
+        box-shadow: none;
+      }
     }
   }
+
+  .hyc-bl-results {
+    padding: 0;
+  }
+}
+
+.table-borderless {
+  width: 100%;
+
+  td {
+    border: none !important;
+  }
+
+  thead {
+    th {
+      font-weight: 200;
+    }
+  }
+
+  tbody {
+    .file_set {
+      padding: 0.5rem;
+    }
+
+    tr {
+      td {
+        padding: 0.5rem;
+
+        .media-body {
+          vertical-align: middle;
+        }
+      }
+
+      &:nth-child(odd) {
+        background-color: $gw-light-grey;
+      }
+    }
+  }
+
+  .thumbnail {
+    background-color: transparent;
+    margin-bottom: 0;
+  }
+
+  .file_listing_thumbnail, .thumbnail img {
+    width: 4rem;
+    height: auto;
+    margin: 0;
+    border-radius: 0;
+  }
+}
 
 .dashboard {
-  #collection-edit-controls {
-    .nav-tabs > li {
-      margin-left: -1px;
-    }
+#collection-edit-controls {
+  .nav-tabs > li {
+    margin-left: -1px;
+  }
 
-    .input-group .form-control {
-      border-radius: 4px;
-    }
-    #s2id_collection_thumbnail_id, #s2id_collection_based_near {
-      height: unset;
-      border: none;
-      box-shadow: none;
-      -webkit-box-shadow: none;
+  .input-group .form-control {
+    border-radius: 4px;
+  }
+  #s2id_collection_thumbnail_id, #s2id_collection_based_near {
+    height: unset;
+    border: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
 
-      .select2-choice,
-      .select2-container {
-        height: 3rem;
-        background-image: none;
-        padding: 0.5rem;
+    .select2-choice,
+    .select2-container {
+      height: 3rem;
+      background-image: none;
+      padding: 0.5rem;
 
-        .select2-arrow b {
-          background-color: $gw-light-grey;
-          background-position: 0 0.5rem;
-        }
+      .select2-arrow b {
+        background-color: $gw-light-grey;
+        background-position: 0 0.5rem;
       }
     }
-
-    .additional-fields {
-      @extend .gw-btn;
-    }
-
-    #extended-terms {
-      margin-top: 1rem;
-    }
   }
 
-  #select2-drop {
-    border: none;
+  .additional-fields {
+    @extend .gw-btn;
   }
+
+  #extended-terms {
+    margin-top: 1rem;
+  }
+}
+
+#select2-drop {
+  border: none;
+}
+}
+
+// collections list page styles
+.collections-list {
+.search-result-wrapper {
+  display: flex;
+  align-items: center;
+}
 }
