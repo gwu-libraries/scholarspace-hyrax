@@ -192,9 +192,43 @@
 }
 
 // collections list page styles
-.collections-list {
-.search-result-wrapper {
-  display: flex;
-  align-items: center;
+.collections-description-wrapper {
+  padding: 1.5em 1em;
+  text-align: center;
 }
+
+.collections-list {
+  background-color: $gw-white;
+  
+  &:nth-child(odd) {
+    background-color: $gw-white;
+  }
+
+  .search-result-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    .img-container {
+      width: 10em;
+      height: 10em;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    @media (max-width: 1199px) {
+      .img-container {
+        width: 9em;
+        height: 9em;
+      }
+    }
+
+    @media (max-width: $mobile-max) {
+      flex-direction: column;
+    }
+  }
 }

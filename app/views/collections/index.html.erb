@@ -9,8 +9,12 @@
     <% @response.each do |x| %>
       <li class="document collections-list">
         <div class="row search-result-wrapper">
-          <div class="col-md-1"><%= image_tag x["thumbnail_path_ss"] %></div>
-          <div class="col-md-11 collections-title-wrapper">
+          <div class="col-md-2">
+            <div class="img-container">
+              <%= image_tag x["thumbnail_path_ss"] %>
+            </div>
+          </div>
+          <div class="col-md-10 collections-title-wrapper">
             <h2 class="h2-section-header">
               <%= link_to x["title_tesim"][0], "collections/#{x["nesting_collection__pathnames_ssim"][0]}", class: "collections-title" %>
             </h2>
