@@ -66,6 +66,8 @@ Hyrax::Engine.routes.draw do
     namespace :dashboard, &redirect_all_proc
     namespace :notifications, &redirect_all_proc
   end
+
+  resources :collections, only: :index, controller: 'collections_page' 
 end
 
 Bulkrax::Engine.routes.draw do

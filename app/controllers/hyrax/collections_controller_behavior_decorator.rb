@@ -3,6 +3,7 @@
 # Fix thanks to https://github.com/scientist-softserv/palni-palci/pull/802/files
 module Hyrax
   module CollectionsControllerBehaviorDecorator
+    
     def load_member_subcollections
       super
       return if @subcollection_docs.blank?
@@ -13,7 +14,6 @@ module Hyrax
     def show
       # OVERRIDE Hyrax 3.6.0 to initialize the works sort default field instead of using relevance
       params[:sort] ||= Hyrax::Collections::CollectionMemberSearchServiceDecorator::DEFAULT_SORT_FIELD
-
       super
     end
   end
