@@ -34,12 +34,9 @@ module Hyrax
     end
 
     def curation_concern
-      # Query Solr for the collection.
-      # run the solr query to find the collection members
+      # Query Solr for collections
       response, _docs = search_service.search_results
-      Rails.logger.warn("Inside collections page controller behavior")
-      Rails.logger.warn(response)
-      curation_concern = response.documents.first
+      curation_concern = response.documents
       raise CanCan::AccessDenied unless curation_concern
       curation_concern
     end
