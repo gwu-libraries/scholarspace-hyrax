@@ -1,0 +1,15 @@
+<div id="header" class="container text-center">
+  <h1 class="share-header-text">
+    Collections
+  </h1>
+</div>
+<div class="section-gw-darkblue">
+  <div class="collections-description-wrapper container">
+    <p>Browse all Collections in GW ScholarSpace</p>
+  </div>
+</div>
+<div id="content" class="section-gw-white container">
+  <div class="gw-white-content">
+    <%= render 'list_collections', collections: @presenter.collections %>
+  </div>
+</div>
