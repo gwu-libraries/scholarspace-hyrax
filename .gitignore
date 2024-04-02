@@ -36,3 +36,8 @@ coverage
 # Save dummy works folders, not dummy works
 spec/fixtures/dummy_works/*/*
 !spec/fixtures/dummy_works/*/.keep
+
+public/assets/*
+public/sitemaps
+public/sitemaps/*
+public/sitemap.xml

@@ -1,0 +1,26 @@
+{
+    "target": {
+      "solr": {
+        "cache-from": [
+          "type=gha,scope=solr"
+        ],
+        "cache-to": [
+          "type=gha,mode=max,scope=solr"
+        ],
+        "output": [
+          "type=docker"
+        ]
+      },
+      "sidekiq": {
+        "cache-from": [
+          "type=gha,scope=sidekiq"
+        ],
+        "cache-to": [
+          "type=gha,mode=max,scope=sidekiq"
+        ],
+        "output": [
+          "type=docker"
+        ]
+      }
+   }
+}

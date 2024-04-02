@@ -55,16 +55,26 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end
 
+
 Hyrax::Engine.routes.draw do
   get 'share' =>'pages#show', key: 'share'
 
   resources :collections, only: [:index], controller: "collections_page"
 
-  # Redirects non-privileged users to the application homepage
-  authenticate :user, lambda { |u| !u.admin? && !u.contentadmin?} do
-    namespace :dashboard do
-      match '(*any)', to: redirect('/'), via: [:get, :post]
-    end 
-  end
+  redirect_all_proc = Proc.new { match '(*any)', to: redirect('/'), via: [:get, :post] }
 
+  # Redirects non-privileged users to the application homepage
+  authenticate :user, lambda { |u| !u.admin? && !u.contentadmin? } do
+    namespace :dashboard, &redirect_all_proc
+    namespace :notifications, &redirect_all_proc
+  end
+end
+
+Bulkrax::Engine.routes.draw do
+  # Redirects non-privileged users to the application homepage
+  redirect_all_proc = Proc.new { match '(*any)', to: redirect('/'), via: [:get, :post] }
+  authenticate :user, lambda { |u| !u.admin? && !u.contentadmin? } do
+    namespace :importers, &redirect_all_proc
+    namespace :exporters, &redirect_all_proc
+  end
 end
