@@ -14,10 +14,8 @@ class Hyrax::CollectionsPageController < ApplicationController
     private
 
     # Return 5 collections
-    def collections(rows: 5)
-        Hyrax::CollectionsService.new(self).search_results do |builder|
-        builder.rows(rows)
-        end
+    def collections
+        Hyrax::CollectionsService.new(self).search_results
     rescue Blacklight::Exceptions::ECONNREFUSED, Blacklight::Exceptions::InvalidRequest
         []
     end

@@ -170,14 +170,6 @@ li.document {
       }
     }
 
-    .collection-counts-wrapper {
-      text-align: left;
-    }
-
-    .collection-counts-wrapper .collection-counts-item {
-      font-weight: 400;
-    }
-
     @media (min-width: $mobile-breakpoint) {
       text-align: start;
     }
@@ -277,6 +269,22 @@ li.document {
 
     > div {
       margin: 0 0.3em;
+    }
+  }
+}
+
+@media (max-width: 991px) {
+  .search-result-wrapper .col-md-2 {
+    margin-bottom: 0;
+  }
+
+  .search-result-wrapper .list-thumbnail,
+  .search-result-wrapper .col-md-2 {
+    text-align: center;
+    padding-bottom: 1em;
+
+    img {
+      max-height: 200px;
     }
   }
 }
