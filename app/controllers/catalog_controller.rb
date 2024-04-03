@@ -144,7 +144,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("language", :stored_searchable), label: "Language"
     config.add_show_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded"
     config.add_show_field solr_name("date_modified", :stored_searchable), label: "Date Modified"
-    config.add_show_field "date_created_isim", label: "Date Created"
+    config.add_show_field solr_name("date_created", :stored_searchable), Label: "Date Created"
     config.add_show_field solr_name("rights_statement", :stored_searchable), label: "Rights Statement"
     config.add_show_field solr_name("license", :stored_searchable), label: "License"
     config.add_show_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
