@@ -89,6 +89,3 @@ RSpec.describe "GwIndexer" do
     end
   end
 end
-
-#bundle exec rspec spec/features/indexers/gw_indexer_spec.rb
-#
