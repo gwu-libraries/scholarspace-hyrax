@@ -66,7 +66,7 @@ class CatalogController < ApplicationController
     config.add_facet_field "date_created_isim", label: "Date Created",
                             range: {
                               num_segments: 6,
-                              assumed_boundaries: [1000, Time.now.year + 2],
+                              assumed_boundaries: [1800, Time.now.year + 2],
                               segments: true,
                               maxlength: 4
                             }
@@ -108,7 +108,7 @@ class CatalogController < ApplicationController
     # config.add_index_field solr_name("language", :stored_searchable), label: "Language", itemprop: 'inLanguage', link_to_search: solr_name("language", :facetable)
     # config.add_index_field solr_name("date_uploaded", :stored_sortable, type: :date), label: "Date Uploaded", itemprop: 'datePublished', helper_method: :human_readable_date
     # config.add_index_field solr_name("date_modified", :stored_sortable, type: :date), label: "Date Modified", itemprop: 'dateModified', helper_method: :human_readable_date
-    config.add_index_field "date_created_isim", label: "Date Created", itemprop: 'dateCreated'
+    config.add_index_field "date_created_isim", label: "Date Created", itemprop: 'dateCreated', link_to_search: "date_created_isim"
     # config.add_index_field solr_name("rights_statement", :stored_searchable), label: "Rights Statement", helper_method: :license_links
     # config.add_index_field solr_name("license", :stored_searchable), label: "License", helper_method: :license_links
     config.add_index_field solr_name("resource_type", :stored_searchable), label: "Resource Type", link_to_search: solr_name("resource_type", :facetable)
@@ -130,7 +130,7 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("language", :stored_searchable), label: "Language"
     config.add_show_field solr_name("date_uploaded", :stored_searchable), label: "Date Uploaded"
     config.add_show_field solr_name("date_modified", :stored_searchable), label: "Date Modified"
-    config.add_show_field "date_created_isim", label: "Date Created"
+    config.add_show_field solr_name("date_created", :stored_searchable), Label: "Date Created"
     config.add_show_field solr_name("rights_statement", :stored_searchable), label: "Rights Statement"
     config.add_show_field solr_name("license", :stored_searchable), label: "License"
     config.add_show_field solr_name("resource_type", :stored_searchable), label: "Resource Type"
@@ -224,7 +224,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('date_created') do |field|
-      solr_name = "date_created_isim"
+      solr_name = solr_name('created', :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
         pf: solr_name
