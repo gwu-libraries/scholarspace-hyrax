@@ -267,6 +267,9 @@ header {
     }
   
     .navbar-nav {
+      display: flex;
+      align-items: center;
+
       .open > .navbar-item:hover, .open > .navbar-item:focus {
         color: $gw-white;
         background-color: $gw-light-blue;
@@ -283,6 +286,19 @@ header {
             color: $gw-white;
             background-color: $gw-light-blue;
           }
+        }
+      }
+
+      .navbar-divider {
+        &::before {
+          content: "|";
+          color: #688a9c;
+          font-size: 1em;
+          width: 4px;
+          margin-left: -2px;
+          padding: 0;
+          text-align: center;
+          display: inline-block;
         }
       }
 

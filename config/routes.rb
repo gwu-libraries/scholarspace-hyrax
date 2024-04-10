@@ -22,7 +22,6 @@ Rails.application.routes.draw do
     concerns :searchable
   end
 
-
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', 
                                     sessions: 'users/sessions' }
   mount Hydra::RoleManagement::Engine => '/'
@@ -59,6 +58,9 @@ end
 
 Hyrax::Engine.routes.draw do
   get 'share' =>'pages#show', key: 'share'
+
+  resources :collections, only: [:index], controller: "collections_page"
+
   redirect_all_proc = Proc.new { match '(*any)', to: redirect('/'), via: [:get, :post] }
 
   # Redirects non-privileged users to the application homepage

@@ -1,0 +1,24 @@
+<ul class="list-unstyled catalog">
+<% collections.each do |collection| %>
+  <li class="document collections-list">
+    <div class="row search-result-wrapper">
+      <div class="col-md-2">
+        <div class="img-container">
+          <%= link_to [hyrax, collection] do %>
+            <%= render_thumbnail_tag(collection, { class: 'file_listing_thumbnail', alt: "#{collection.title_or_label} #{ t('hyrax.homepage.admin_sets.thumbnail')}" },
+                                    { suppress_link: true }) %>
+          <% end %>
+        </div>
+      </div>
+      <div class="col-md-10 collections-title-wrapper">
+        <h2 class="h2-section-header"><%= link_to collection.title_or_label, [hyrax, collection] %></h2>
+        <% if collection.description != [] %>
+          <p><%= collection.description[0] %></p>
+        <% else %>
+          <p>Click through to learn more about this collection.</p>
+        <% end %>
+      </div>
+    </div>
+  </li>
+<% end %>
+</ul>
