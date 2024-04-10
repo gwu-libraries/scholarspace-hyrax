@@ -5,6 +5,7 @@ attributes:
   citation_author: creator
   citation_type: resource_type
   dc.type: resource_type
-  citation_date: publication_date
+  citation_publication_date: date_created
+  dc.issued: date_created
   citation_keywords: keyword
   citation_pdf_url: download_url
