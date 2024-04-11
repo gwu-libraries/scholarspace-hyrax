@@ -13,6 +13,10 @@ concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   get '/work/:id', to: redirect('concern/gw_works/%{id}')
 
   mount Blacklight::Engine => '/'
+  mount BlacklightAdvancedSearch::Engine => '/'
+
+  get 'advanced' => 'advanced#index'
+  get 'advanced/range_limit' => 'advanced#range_limit'
   
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :searchable, Blacklight::Routes::Searchable.new
