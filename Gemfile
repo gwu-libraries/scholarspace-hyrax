@@ -93,6 +93,7 @@ gem 'omniauth-saml', '2.1.0'
 gem 'omniauth-rails_csrf_protection'
 
 gem 'blacklight_range_limit'
+gem 'blacklight_advanced_search'
 
 group :development, :test do
   gem 'pry' # temporily removing, seems to break something with sidekiq in development mode

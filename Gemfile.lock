@@ -131,6 +131,9 @@ GEM
       bootstrap-sass (~> 3.0)
       openseadragon (>= 0.2.0)
       rails
+    blacklight_advanced_search (6.4.1)
+      blacklight (~> 6.0, >= 6.0.1)
+      parslet
     blacklight_oai_provider (6.1.1)
       blacklight (~> 6.0)
       oai (~> 1.0)
@@ -690,9 +693,6 @@ GEM
     orm_adapter (0.5.0)
     os (1.1.4)
     parslet (2.0.0)
-    passenger (6.0.17)
-      rack
-      rake (>= 0.8.1)
     pdf-core (0.9.0)
     pg (1.5.3)
     posix-spawn (0.3.15)
@@ -705,6 +705,8 @@ GEM
       method_source (~> 1.0)
     psych (3.3.4)
     public_suffix (5.0.3)
+    puma (6.4.2)
+      nio4r (~> 2.0)
     qa (5.10.0)
       activerecord-import
       deprecation
@@ -1044,6 +1046,7 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
+  blacklight_advanced_search
   blacklight_oai_provider (~> 6.1.1)
   blacklight_range_limit
   bootsnap (>= 1.1.0)
@@ -1073,10 +1076,10 @@ DEPENDENCIES
   omniauth-rails_csrf_protection
   omniauth-saml (= 2.1.0)
   orderly
-  passenger (= 6.0.17)
   pg
   prawn
   pry
+  puma
   rails (~> 5.2.8.1)
   recaptcha
   redis (~> 4.0)
