@@ -10,9 +10,8 @@ module Scholarspace
     def index
       blacklight_config.facet_fields.map do |_k, facet|
         # This sets the number of options for each facet shown on the advanced search page
-        # If set to -1, shows all items - but page runs slowly and/or crashes if I do so, possibly related to a facet
-        # having many options, possibly "keywords?"
-        facet.limit = 50
+        # If set to -1, shows all items - causes page to crash if there are too many options, such as "keywords"
+        facet.limit = -1
       end
 
       @response = get_advanced_search_facets unless request.method == :post

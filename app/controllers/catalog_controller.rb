@@ -25,16 +25,13 @@ class CatalogController < ApplicationController
     config.advanced_search[:url_key] ||= 'advanced'
     config.advanced_search[:query_parser] ||= 'dismax'
     config.advanced_search[:form_solr_parameters] ||= {}
-    config.advanced_search[:form_solr_parameters]['facet.field'] ||= 
-        [solr_name("resource_type", :facetable), 
-        solr_name("creator", :facetable), 
+
+    # These fields become "filters" on the advanced search page
+    config.advanced_search[:form_solr_parameters]['facet.field'] ||= [
+        solr_name("resource_type", :facetable), 
         solr_name("gw_affiliation", :facetable),
-        solr_name("degree", :facetable),
-        solr_name("advisor", :facetable),
-        solr_name("committee_member", :facetable),
-        solr_name("contributor", :facetable),
-        solr_name("keyword", :facetable),
-        solr_name("subject", :facetable)]
+        solr_name("degree", :facetable)
+        ]
 
     config.view.gallery.partials = [:index_header, :index]
     config.view.masonry.partials = [:index]
@@ -79,7 +76,6 @@ class CatalogController < ApplicationController
     config.add_facet_field solr_name("contributor", :facetable), label: "Contributor", limit: 5
     config.add_facet_field solr_name("keyword", :facetable), label: "Keyword", limit: 5
     config.add_facet_field solr_name("subject", :facetable), label: "Subject", limit: 5
-    # config.add_facet_field solr_name("date_created", :facetable), label: "Year", limit: 5
     config.add_facet_field "date_created_isim", label: "Date Created",
                             range: {
                               num_segments: 6,
@@ -194,7 +190,6 @@ class CatalogController < ApplicationController
     # creator, title, description, publisher, date_created,
     # subject, language, resource_type, format, identifier, based_near,
     config.add_search_field('contributor') do |field|
-      field.include_in_advanced_search = false
       # solr_parameters hash are sent to Solr as ordinary url query params.
 
       # :solr_local_parameters will be sent using Solr LocalParams
@@ -209,7 +204,6 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('creator') do |field|
-      field.include_in_advanced_search = false
       solr_name = solr_name("creator", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -235,6 +229,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('publisher') do |field|
+      field.include_in_advanced_search = false
       solr_name = solr_name("publisher", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -252,7 +247,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('subject') do |field|
-      field.include_in_advanced_search = false
+      # field.include_in_advanced_search = false
       solr_name = solr_name("subject", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -261,6 +256,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('language') do |field|
+      field.include_in_advanced_search = false
       solr_name = solr_name("language", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -269,6 +265,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('resource_type') do |field|
+      field.include_in_advanced_search = false
       solr_name = solr_name("resource_type", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -286,6 +283,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('identifier') do |field|
+      field.include_in_advanced_search = false
       solr_name = solr_name("id", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -304,7 +302,6 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('keyword') do |field|
-      field.include_in_advanced_search = false
       solr_name = solr_name("keyword", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -331,6 +328,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('license') do |field|
+      field.include_in_advanced_search = false
       solr_name = solr_name("license", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
