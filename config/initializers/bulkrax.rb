@@ -7,8 +7,13 @@ Bulkrax.setup do |config|
   # ]
 
   # WorkType to use as the default if none is specified in the import
-  # Default is the first returned by Hyrax.config.curation_concerns
-  config.default_work_type = 'GwWork'
+  # Default is the first returned by Hyrax.config.curation_concerns, stringified
+  # config.default_work_type = "MyWork"
+
+  # Factory Class to use when generating and saving objects
+  config.object_factory = Bulkrax::ObjectFactory
+  # Use this for a Postgres-backed Valkyrized Hyrax
+  # config.object_factory = Bulkrax::ValkyrieObjectFactory
 
   # Path to store pending imports
   # config.import_path = 'tmp/imports'
@@ -33,24 +38,6 @@ Bulkrax.setup do |config|
   #   config.field_mappings = {
   #     "Bulkrax::OaiDcParser" => { **individual field mappings go here*** }
   #   }
-  config.field_mappings['Bulkrax::CsvParser'] = {
-    "contributor" => { from: ["contributor", split: ';' ] },
-    "creator" => { from: ["creator"], split: "; " },
-    "date_created" => { from: ["date_created"], split: ';'  },
-    "description" => { from: ["description"] },
-    "identifier" => { from: ["identifier"], split: ';'  },
-    "related_url" => { from: ["related_url"] },
-    "rights_statement" => { from: ["rights_statement"] },
-    "license" => { from: ["license"], split: ';'  }, 
-    "source_identifier" => { from: ["source_identifier"] },
-    "keyword" => { from: ["keyword"], split: ';' },
-    "title" => { from: ["title"] },
-    "doi" => {from: ["doi"], split: ';'},
-    "resource_type" => { from: ["resource_type"], split: ';'  },
-    "gw_affiliation" => { from: ["gw_affiliation"], split: ';'  },
-    'parents' => { from: ['parents'], related_parents_field_mapping: true },
-    'children' => { from: ['children'], related_children_field_mapping: true }
-  }
 
   # Add to, or change existing mappings as follows
   #   e.g. to exclude date
@@ -62,7 +49,7 @@ Bulkrax.setup do |config|
   #   (For more info on importing relationships, see Bulkrax Wiki: https://github.com/samvera-labs/bulkrax/wiki/Configuring-Bulkrax#parent-child-relationship-field-mappings)
   #
   # #   e.g. to add the required source_identifier field
-  #   #   config.field_mappings["Bulkrax::CsvParser"]["source_id"] = { from: ["old_source_id"], source_identifier: true  }
+  #   #   config.field_mappings["Bulkrax::CsvParser"]["source_id"] = { from: ["old_source_id"], source_identifier: true, search_field: 'source_id_sim' }
   # If you want Bulkrax to fill in source_identifiers for you, see below
 
   # To duplicate a set of mappings from one parser to another
@@ -75,11 +62,27 @@ Bulkrax.setup do |config|
   # It is given two aruguments, self at the time of call and the index of the reocrd
   #    config.fill_in_blank_source_identifiers = ->(parser, index) { "b-#{parser.importer.id}-#{index}"}
   # or use a uuid
-  #config.fill_in_blank_source_identifiers = ->(parser, index) { SecureRandom.uuid }
+  #    config.fill_in_blank_source_identifiers = ->(parser, index) { SecureRandom.uuid }
 
   # Properties that should not be used in imports/exports. They are reserved for use by Hyrax.
   # config.reserved_properties += ['my_field']
+
+  # List of Questioning Authority properties that are controlled via YAML files in
+  # the config/authorities/ directory. For example, the :rights_statement property
+  # is controlled by the active terms in config/authorities/rights_statements.yml
+  # Defaults: 'rights_statement' and 'license'
+  # config.qa_controlled_properties += ['my_field']
+
+  # Specify the delimiter regular expression for splitting an attribute's values into a multi-value array.
+  # config.multi_value_element_split_on = /\s*[:;|]\s*/.freeze
+
+  # Specify the delimiter for joining an attribute's multi-value array into a string.  Note: the
+  # specific delimeter should likely be present in the multi_value_element_split_on expression.
+  # config.multi_value_element_join_on = ' | '
 end
 
 # Sidebar for hyrax 3+ support
-#Hyrax::DashboardController.sidebar_partials[:repository_content] << "hyrax/dashboard/sidebar/bulkrax_sidebar_additions" if Object.const_defined?(:Hyrax) && ::Hyrax::DashboardController&.respond_to?(:sidebar_partials)
+# rubocop:disable Style/IfUnlessModifier
+if Object.const_defined?(:Hyrax) && ::Hyrax::DashboardController&.respond_to?(:sidebar_partials)
+  Hyrax::DashboardController.sidebar_partials[:repository_content] << "hyrax/dashboard/sidebar/bulkrax_sidebar_additions"
+end
