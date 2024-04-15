@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   mount Bulkrax::Engine, at: '/'
   mount Riiif::Engine => 'images', as: :riiif if Hyrax.config.iiif_image_server?
 
@@ -17,6 +16,7 @@ concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :oai_provider, BlacklightOaiProvider::Routes.new
+  concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :oai_provider
@@ -60,7 +60,6 @@ end
 
 
 Hyrax::Engine.routes.draw do
-concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   get 'share' =>'pages#show', key: 'share'
 
   resources :collections, only: [:index], controller: "collections_page"
@@ -75,7 +74,6 @@ concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
 end
 
 Bulkrax::Engine.routes.draw do
-concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   # Redirects non-privileged users to the application homepage
   redirect_all_proc = Proc.new { match '(*any)', to: redirect('/'), via: [:get, :post] }
   authenticate :user, lambda { |u| !u.admin? && !u.contentadmin? } do
