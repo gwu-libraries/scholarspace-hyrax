@@ -196,6 +196,7 @@ class CatalogController < ApplicationController
       # syntax, as eg {! qf=$title_qf }. This is neccesary to use
       # Solr parameter de-referencing like $title_qf.
       # See: http://wiki.apache.org/solr/LocalParams
+      field.include_in_advanced_search = false
       solr_name = solr_name("contributor", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
@@ -247,7 +248,7 @@ class CatalogController < ApplicationController
     end
 
     config.add_search_field('subject') do |field|
-      # field.include_in_advanced_search = false
+      field.include_in_advanced_search = false
       solr_name = solr_name("subject", :stored_searchable)
       field.solr_local_parameters = {
         qf: solr_name,
