@@ -16,10 +16,13 @@ Rails.application.routes.draw do
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :oai_provider, BlacklightOaiProvider::Routes.new
+  concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :oai_provider
     concerns :searchable
+    concerns :range_searchable
+
   end
 
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks', 

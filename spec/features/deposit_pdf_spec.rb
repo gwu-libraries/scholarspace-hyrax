@@ -2,18 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "Deposit a PDF through dashboard" do
 
+  let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:admin_user) { FactoryBot.create(:admin_user) }
   let(:user) { FactoryBot.create(:user) }
   let(:pdf_path) { "#{Rails.root}/spec/fixtures/fixture_dummy.pdf" }
   let(:solr) { Blacklight.default_index.connection }
-  let(:admin_set) { FactoryBot.create(:admin_set) }
-
-  after do
-    ActiveFedora::Cleaner.clean!
-    solr.delete_by_query("*:*")
-    solr.commit
-  end
-
 
   it 'cannot deposit as a non-admin user' do
 
