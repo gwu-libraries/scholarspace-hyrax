@@ -10,38 +10,39 @@
   <%= render_hash_as_hidden_fields(advanced_search_context) %>
 
   <div class="input-criteria">
-
+    <div class="main-adv">
       <div class="query-criteria">
-        <h3 class="query-criteria-heading">
+        <h2 class="query-criteria-heading h2-section-header">
           <%= t('blacklight_advanced_search.form.query_criteria_heading_html', :select_menu =>  select_menu_for_field_operator ) %> 
-        </h3>
+        </h2>
 
         <div id="advanced_search">
           <%= render 'advanced/advanced_search_fields' %>
         </div>
-      </div>
 
-      <div>
-        <%= label_tag "date_created", :class => "col-sm-3 control-label" do %>
-          Date Created
-        <% end %>
-
-        <div>
-          <%= render_range_input("date_created_isim", :begin) %> - <%= render_range_input("date_created_isim", :end) %>
-        </div>
-      </div> 
-
-      <div class="limit-criteria">
-        <h3 class="limit-criteria-heading"><%= t('blacklight_advanced_search.form.limit_criteria_heading_html')%></h3>
-
-        <div id="advanced_search_facets" class="limit_input">
-          <% if blacklight_config.try(:advanced_search).try {|h| h[:form_facet_partial] } %>
-            <%= render blacklight_config.advanced_search[:form_facet_partial] %>
-          <% else %>
-            <%= render 'advanced_search_facets' %>
+        <div id="date-created" class="form-group advanced-search-field">
+          <%= label_tag "date_created", :class => "col-sm-3 control-label" do %>
+            Date Created
           <% end %>
-        </div>
+
+          <div class="short-input col-sm-9">
+            <%= render_range_input("date_created_isim", :begin) %> - <%= render_range_input("date_created_isim", :end) %>
+          </div>
+        </div> 
       </div>
+    </div>
+
+    <div class="limit-criteria">
+      <h2 class="limit-criteria-heading h2-section-header"><%= t('blacklight_advanced_search.form.limit_criteria_heading_html')%></h2>
+
+      <div id="advanced_search_facets" class="limit_input">
+        <% if blacklight_config.try(:advanced_search).try {|h| h[:form_facet_partial] } %>
+          <%= render blacklight_config.advanced_search[:form_facet_partial] %>
+        <% else %>
+          <%= render 'advanced_search_facets' %>
+        <% end %>
+      </div>
+    </div>
   </div>
 
   <hr>
