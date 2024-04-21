@@ -8,7 +8,7 @@ Bulkrax.setup do |config|
 
   # WorkType to use as the default if none is specified in the import
   # Default is the first returned by Hyrax.config.curation_concerns, stringified
-  # config.default_work_type = "MyWork"
+  config.default_work_type = "GwWork"
 
   # Factory Class to use when generating and saving objects
   config.object_factory = Bulkrax::ObjectFactory
@@ -39,6 +39,15 @@ Bulkrax.setup do |config|
   #     "Bulkrax::OaiDcParser" => { **individual field mappings go here*** }
   #   }
 
+  # This config may seem redundant, but (as of bulkrax 6.0.1) including it
+  # seems to prevent the object from being created with a visible metadata
+  # field of Source with a value that's a big ugly uuid
+  config.field_mappings['Bulkrax::CsvParser'] = {
+    'source_identifier' => { from: ['source_identifier'], source_identifier: true, search_field: 'source_id_sim' },
+    'keyword' => { from: ['keyword'], split: true },
+    'file' => { from: ['file'], split: '\;' }
+  }
+
   # Add to, or change existing mappings as follows
   #   e.g. to exclude date
   #   config.field_mappings["Bulkrax::OaiDcParser"]["date"] = { from: ["date"], excluded: true  }
@@ -62,7 +71,7 @@ Bulkrax.setup do |config|
   # It is given two aruguments, self at the time of call and the index of the reocrd
   #    config.fill_in_blank_source_identifiers = ->(parser, index) { "b-#{parser.importer.id}-#{index}"}
   # or use a uuid
-  #    config.fill_in_blank_source_identifiers = ->(parser, index) { SecureRandom.uuid }
+  config.fill_in_blank_source_identifiers = ->(parser, index) { SecureRandom.uuid }
 
   # Properties that should not be used in imports/exports. They are reserved for use by Hyrax.
   # config.reserved_properties += ['my_field']
@@ -74,11 +83,12 @@ Bulkrax.setup do |config|
   # config.qa_controlled_properties += ['my_field']
 
   # Specify the delimiter regular expression for splitting an attribute's values into a multi-value array.
-  # config.multi_value_element_split_on = /\s*[:;|]\s*/.freeze
+  #config.multi_value_element_split_on = /\s*[:;|]\s*/.freeze
+  config.multi_value_element_split_on = ';'.freeze
 
   # Specify the delimiter for joining an attribute's multi-value array into a string.  Note: the
   # specific delimeter should likely be present in the multi_value_element_split_on expression.
-  # config.multi_value_element_join_on = ' | '
+  config.multi_value_element_join_on = ' | '
 end
 
 # Sidebar for hyrax 3+ support
