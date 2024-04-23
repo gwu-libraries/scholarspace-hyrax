@@ -1,14 +1,14 @@
-<div class="container section-gw-white">
+<div class="section-advanced">
   <% @page_title = "More Search Options - #{application_name}" %>
 
-  <div class="advanced-search-form col-sm-12">
-
-      <h1 class="advanced page-header">
+  <div class="advanced-search-form content-container">
+    <div class="header-container">
+      <h1>
           <%= t('blacklight_advanced_search.form.title') %>
-          <%= link_to t('blacklight_advanced_search.form.start_over'), blacklight_advanced_search_engine.advanced_search_path, :class =>"btn btn-default pull-right advanced-search-start-over" %>
       </h1>
+    </div>
 
-      <div class="adv-search-container row">
+      <div class="adv-search-container">
 
           <div class="main-form">
               <%= render 'advanced_search_form' %>

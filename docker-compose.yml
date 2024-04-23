@@ -116,9 +116,9 @@ services:
      - ${NGINX_CERT_DIR}:/opt/scholarspace/certs
      - ${NGINX_KEY_DIR}:/opt/scholarspace/keys
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
-     - app-hyrax:/opt/scholarspace
+    #  - app-hyrax:/opt/scholarspace
      # Uncomment for development
-     # - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
+     - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
     networks:
       - hyrax
       - fedora
@@ -149,9 +149,9 @@ services:
      - ${NGINX_CERT_DIR}:/opt/scholarspace/certs
      - ${NGINX_KEY_DIR}:/opt/scholarspace/keys
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
-     - app-hyrax:/opt/scholarspace
+    #  - app-hyrax:/opt/scholarspace
      # Uncomment for development
-     # - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
+     - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
     restart: always
     logging: 
       <<: *logging

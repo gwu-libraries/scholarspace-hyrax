@@ -25,6 +25,7 @@ class CatalogController < ApplicationController
     config.advanced_search[:url_key] ||= 'advanced'
     config.advanced_search[:query_parser] ||= 'dismax'
     config.advanced_search[:form_solr_parameters] ||= {}
+    config.advanced_search[:form_facet_partial] = 'advanced_search_facets_as_select'
 
     # These fields become "filters" on the advanced search page
     config.advanced_search[:form_solr_parameters]['facet.field'] ||= [
