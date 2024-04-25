@@ -170,6 +170,10 @@
                         line-height: unset;
                         color: $gw-dark-blue;
                         font-size: 1rem;
+
+                        .search-choice-close {
+                            color: $gw-dark-blue;
+                        }
                       }
                     }
                 
