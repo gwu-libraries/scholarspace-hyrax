@@ -158,11 +158,17 @@
                         max-height: 6rem;
                         overflow: auto;
                       }
+
+                      li.search-field {
+                        padding: calc(0.2rem + 2px) 0;
+                      }
                 
                       li.search-choice {
-                        border: none;
-                        border-radius: 5px;
-                        background-color: $gw-hover-buff;
+                        margin: 0;
+                        padding: 0.2rem 1.4rem 0.2rem 0.4rem;
+                        border: 2px solid $gw-dark-blue;
+                        border-radius: 3px;
+                        background-color: $gw-white;
                         background-image: none;
                         background-size: unset;
                         background-repeat: unset;
@@ -172,6 +178,10 @@
                         font-size: 1rem;
 
                         .search-choice-close {
+                            top: 0;
+                            right: 0.2rem;
+                            bottom: 0;
+                            margin: auto;
                             color: $gw-dark-blue;
                         }
                       }
@@ -209,6 +219,10 @@
         .sort-buttons,
         .submit-buttons {
             margin-bottom: 1rem;
+
+            .gw-ghost-btn {
+                padding: 0.3rem 0.75rem;
+            }
         }
 
         hr {
@@ -219,7 +233,7 @@
         }
 
         div {
-            margin: 0 1em;
+            margin: 0 0.5em;
         }
 
         label {
