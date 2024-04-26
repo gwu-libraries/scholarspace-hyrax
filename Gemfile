@@ -54,6 +54,8 @@ gem 'twitter-typeahead-rails', '0.11.1.pre.corejavascript'
 
 gem 'jquery-rails'
 
+gem 'chosen-rails'
+
 gem 'devise'
 
 gem 'devise-guests', '~> 0.6'
@@ -93,6 +95,8 @@ gem 'omniauth-saml', '2.1.0'
 gem 'omniauth-rails_csrf_protection'
 
 gem 'blacklight_range_limit'
+
+gem 'blacklight_advanced_search'
 
 group :development, :test do
   gem 'pry' # temporily removing, seems to break something with sidekiq in development mode

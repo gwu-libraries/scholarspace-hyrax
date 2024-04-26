@@ -27,14 +27,15 @@
               <%= link_to t("hyrax.search.form.option.my_collections.label_long"), "#",
                   data: { "search-option" => hyrax.my_collections_path, "search-label" => t("hyrax.search.form.option.my_collections.label_short") } %>
             </li>
+            </ul>
           <% end %>
-
-          </ul>
         <button type="submit" class="btn" id="search-submit-header" value="Submit" aria-label="Search ScholarSpace">
           <%= t('hyrax.search.button.html') %>
         </button>
       </div><!-- /.input-group-btn -->
     </div><!-- /.input-group -->
-    
+    <div class="advanced-button">
+      <%= link_to t("hyrax.search.advanced"), main_app.advanced_path, class: "btn-base gw-btn", aria: current_page?(main_app.advanced_path) ? {current: "page"} : nil %>
+    </div>
   </div><!-- /.form-group -->
 <% end %>

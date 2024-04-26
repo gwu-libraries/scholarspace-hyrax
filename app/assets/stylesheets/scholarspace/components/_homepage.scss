@@ -410,20 +410,22 @@
         #collections {
           width: 100%;
           padding: 1.5em;
-          margin: 0 1em;
+          margin: 0;
           z-index: 20;
 
           #featured-h2 {
+            margin: 0 1em;
             width: 50%;
           }
 
           .content-container {
+            width: 100%;
             flex-direction: row;
             padding: 2em 0;
             justify-content: space-around;
 
             .home-collections {
-              width: 70vw;
+              width: fit-content;
               display: flex;
               flex-direction: row;
               justify-content: space-around;
@@ -470,7 +472,7 @@
               }
             }
 
-            @media (max-width: 940px) {
+            @media (max-width: 952px) {
               .home-collections {
                 flex-direction: column;
               }
@@ -481,7 +483,7 @@
             padding: 1.5em 0;
 
             #featured-h2 {
-              width: 100%;
+              width: 90%;
             }
           }
         }

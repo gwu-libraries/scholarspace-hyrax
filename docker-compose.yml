@@ -118,7 +118,7 @@ services:
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
      - app-hyrax:/opt/scholarspace
      # Uncomment for development
-     # - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
+    #  - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
     networks:
       - hyrax
       - fedora
@@ -151,7 +151,7 @@ services:
      - /opt/scholarspace/scholarspace-derivatives:/opt/scholarspace/scholarspace-derivatives
      - app-hyrax:/opt/scholarspace
      # Uncomment for development
-     # - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
+    #  - /opt/scholarspace/scholarspace-hyrax:/opt/scholarspace/scholarspace-hyrax
     restart: always
     logging: 
       <<: *logging

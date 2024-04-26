@@ -32,6 +32,7 @@ en:
     search:
       button:
         html: <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+      advanced: Advanced
       form:
         q:
           placeholder: Search ScholarSpace
