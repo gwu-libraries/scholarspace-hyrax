@@ -378,6 +378,14 @@ header {
           height: unset;
           padding: calc(0.3rem + 4px) 0.75rem;
           border-radius: 0;
+          outline: none;
+          color: $gw-dark-blue;
+
+          &:focus {
+            height: unset;
+            border: none;
+            background-color: $gw-hover-buff;
+          }
         }
       }
   
