@@ -21,6 +21,7 @@ concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   concern :exportable, Blacklight::Routes::Exportable.new
   concern :searchable, Blacklight::Routes::Searchable.new
   concern :oai_provider, BlacklightOaiProvider::Routes.new
+  concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
 
   resource :catalog, only: [:index], as: 'catalog', path: '/catalog', controller: 'catalog' do
     concerns :oai_provider
