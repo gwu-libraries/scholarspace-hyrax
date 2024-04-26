@@ -216,9 +216,12 @@
         margin-bottom: 0;
         padding: 0em 3em 1em 3em;
 
-        .sort-buttons,
         .submit-buttons {
             margin-bottom: 1rem;
+
+            .gw-btn {
+                padding: 0.3rem 2.75rem;
+            }
 
             .gw-ghost-btn {
                 padding: 0.3rem 0.75rem;
@@ -227,7 +230,7 @@
 
         hr {
             display: flex;
-            width: 13vw;
+            width: 15vw;
             margin: 0 0 1rem 0;
             border: 2px solid $gw-buff;
         }
@@ -295,10 +298,14 @@
         }
 
         .sort-submit-buttons {
-            flex-direction: column;
+            .submit-buttons {
+                .gw-btn {
+                    padding: 0.3rem 0.75rem;
+                }
+            }
 
             hr {
-                display: none;
+                width: 11vw;
             }
         }
     }
