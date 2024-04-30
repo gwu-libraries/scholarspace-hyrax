@@ -423,25 +423,25 @@ header {
 
         .input-group {
           margin-bottom: 0;
+          width: 32vw;
+
+          @media (max-width: 870px) {
+            width: 22vw;
+          }
+  
+          @media (max-width: $mobile-breakpoint) {
+            width: 50vw;
+          }
         }
       }
   
       #search-field-header {
         height: unset;
-        width: 25vw;
         border-top-left-radius: 4px;
         border-bottom-left-radius: 4px;
         border-top-right-radius: 0;
         border-bottom-right-radius: 0;
         padding: calc(0.3rem + 4px) 0.75rem;
-
-        @media (max-width: 870px) {
-          width: 15vw;
-        }
-
-        @media (max-width: $mobile-breakpoint) {
-          width: 45vw;
-        }
       }
   
       #search-submit-header {

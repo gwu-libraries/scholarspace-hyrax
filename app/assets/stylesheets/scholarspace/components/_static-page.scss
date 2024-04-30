@@ -81,10 +81,22 @@
 
   //login page
   .login-container {
+    &.main-login {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
     .login-box-container {
         width: min-content;
         margin-bottom: 1rem;
         padding: 1rem;
+
+        #user_email,
+        #user_password {
+            color: $gw-dark-blue;
+        }
     }
 
     p.or {
