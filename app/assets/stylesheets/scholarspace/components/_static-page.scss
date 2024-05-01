@@ -78,3 +78,43 @@
       width: 10em;
     }
   }
+
+  //login page
+  .login-container {
+    &.main-login {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .login-box-container {
+        width: min-content;
+        margin-bottom: 1rem;
+        padding: 1rem;
+
+        #user_email,
+        #user_password {
+            color: $gw-dark-blue;
+        }
+    }
+
+    p.or {
+        margin: 1rem 0;
+    }
+
+    .reset-actions {
+        margin-bottom: 1rem;
+    }
+
+    .login-return a {
+        text-decoration: underline;
+    }
+
+    @media (max-width: $mobile-max) {
+
+        .login-box-container {
+            margin-bottom: 2rem;
+        }
+    }
+  }
