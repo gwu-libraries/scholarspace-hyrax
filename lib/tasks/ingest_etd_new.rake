@@ -48,8 +48,10 @@ namespace :gwss do
 
     def all_keys(hash_array)
       keys_set = Set[]
-      hash_array.each |h|
-        h.keys.each { |k| keys_set << k }
+      hash_array.each do |h|
+        h.keys.each do |k|
+          keys_set << k
+        end
       end
       keys_set.to_a
     end
