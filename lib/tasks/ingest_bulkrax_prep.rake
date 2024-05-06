@@ -46,18 +46,47 @@ namespace :gwss do
       repo_metadata
     end
 
-    def all_keys(hash_array)
-      keys_set = Set[]
-      hash_array.each do |h|
-        h.keys.each do |k|
-          keys_set << k
+    def is_embargoed?(doc)
+      sales_restric = doc.xpath("//DISS_restriction/DISS_sales_restriction")
+      return false if sales_restric.empty?
+      rmv = sales_restric.attribute('remove')
+      return false if rmv.nil?
+      # else
+      true
+    end
+
+    def get_embargo_date(doc)
+      sales_restric = doc.xpath("//DISS_restriction/DISS_sales_restriction")
+      return nil if sales_restric.empty?
+      sales_restric.attribute('remove').text
+    end
+
+    def convert_to_iso(date_str)
+      date = Date.strptime(date_str, '%m/%d/%Y')
+      date.strftime('%Y-%m-%dT00:00:00')
+    end
+
+    def hash_array_to_csv_array(hash_array)
+      hash_keys = hash_array.flat_map(&:keys).uniq
+      # header row
+      csv_array = [hash_keys]
+      hash_array.each do |row|
+        csv_array << hash_keys.map {|key| row[key]}
+      end
+      csv_array
+    end
+
+    def write_csv(csv_array, csv_path)
+      CSV.open(csv_path, 'w') do |csv|
+        csv_array.each do |row|
+          csv << row
         end
       end
-      keys_set.to_a
     end
         
     # create folder for metadata.csv and files folder 
-    Dir.mkdir("#{ENV['TEMP_FILE_BASE']}/bulkrax_zip") unless File.exists?("#{ENV['TEMP_FILE_BASE']}/bulkrax_zip")
+    bulkrax_zip_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip" 
+    Dir.mkdir(bulkrax_zip_path) unless File.exists?(bulkrax_zip_path)
 
     # get all ETD zip files in the args.filepath folder
     path_to_zips = args.filepath
@@ -87,24 +116,45 @@ namespace :gwss do
       etd_md = extract_metadata(etd_doc)
       works_metadata << etd_md
 
+      # 2. extract the attachment files paths and add to the filesets metadata array
       attachment_file_paths = get_attachment_file_paths(zip_file_dir)
       attachment_file_paths.delete(xml_file_path)
       attachment_file_paths.each do |fp|
         fp_basename = File.basename(fp)
         puts "path = #{fp}, basename = #{fp_basename}"
-        file_md = {'model': 'FileSet', 'file': fp, 'title': fp_basename, 'parent': 'TBD-parentWorkID'}
+        file_md = Hash.new
+        file_md['model'] = 'FileSet'
+        file_md['file'] =  fp
+        file_md['title'] = fp_basename
+        file_md['parent'] = 'TBD-parentWorkID'
+        # Add embargo info to file_md
+        if !is_embargoed?(etd_doc)
+          # Get embargo info
+          embargo_date = get_embargo_date(etd_doc)
+          # TODO: Convert to isoformat as per Python DateTime.isoformat()
+          file_md['visibility'] = 'embargo'
+          file_md['visibility_during_embargo'] = 'restricted'
+          file_md['visibility_after_embargo'] = 'open'
+          if !embargo_date.nil?
+            file_md['embargo_release_date'] = convert_to_iso(embargo_date)
+          else
+            file_md['embargo_release_date'] = nil
+          end 
+        end
         filesets_metadata << file_md
       end
-
-      all_md = works_metadata + filesets_metadata
-
-      csv_header = all_keys(all_md)
-      # Next, get the rows
-
-      # 2. extract the embargo info
-      # 3. add files info (w/embargo info) to the filesets array
-      # 4. copy the file attachments to the 'files' folder
     end
+    
+    puts("works_metadata: #{works_metadata}")
+    puts("files_metadata: #{filesets_metadata}")
+    all_md = works_metadata + filesets_metadata
+    puts("all_md: #{all_md}")
+
+    csv_rows = hash_array_to_csv_array(all_md)
+    #bulkrax_zip_spec_path = "#{bulkrax_zip_path}/#{zip_file_basename}"
+    #Dir.mkdir(bulkrax_zip_spec_path) unless File.exists?(bulkrax_zip_spec_path)
+    bulkrax_csv_filepath = "#{bulkrax_zip_path}/metadata.csv"
+    write_csv(csv_rows, bulkrax_csv_filepath)
 
     # create metadata CSV from the works metadata array and the filesets array
     # zip up the working folder
