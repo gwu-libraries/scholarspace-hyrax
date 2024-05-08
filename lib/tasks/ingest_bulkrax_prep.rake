@@ -1,3 +1,4 @@
+require 'fileutils'
 require 'nokogiri'
 require 'rake'
 require 'zip'
@@ -14,10 +15,6 @@ namespace :gwss do
 
     def get_etd_doc(xml_file_path)
       File.open(xml_file_path) { |f| Nokogiri::XML(f) }
-    end
-
-    def get_attachment_file_paths(pq_files_dir)
-      Dir.glob("#{pq_files_dir}/**/*")
     end
 
     def get_title(doc)
@@ -104,9 +101,12 @@ namespace :gwss do
       Dir.mkdir("#{ENV['TEMP_FILE_BASE']}/etds") unless File.exists?("#{ENV['TEMP_FILE_BASE']}/etds")
       zip_file_dir = "#{ENV['TEMP_FILE_BASE']}/etds/#{zip_file_basename}" 
       Dir.mkdir(zip_file_dir) unless File.exists?(zip_file_dir)
-      zip_file.each do |component_file|
-        puts("  Extracting #{component_file.name}")
-        zip_file.extract(component_file, "#{zip_file_dir}/#{component_file.name}") 
+
+      attachment_file_paths = []
+      zip_file.each do |entry|
+        puts("  Extracting #{entry.name}")
+        zip_file.extract(entry, "#{zip_file_dir}/#{entry.name}") 
+        attachment_file_paths <<  "#{zip_file_dir}/#{entry.name}" if !entry.name_is_directory?
       end
 
       # 1. extract the work metdata and add to the works metadata array
@@ -117,7 +117,6 @@ namespace :gwss do
       works_metadata << etd_md
 
       # 2. extract the attachment files paths and add to the filesets metadata array
-      attachment_file_paths = get_attachment_file_paths(zip_file_dir)
       attachment_file_paths.delete(xml_file_path)
       attachment_file_paths.each do |fp|
         fp_basename = File.basename(fp)
@@ -142,15 +141,19 @@ namespace :gwss do
           end 
         end
         filesets_metadata << file_md
+
+        FileUtils::copy_file(fp, "#{bulkrax_zip_path}/#{fp_basename}")
       end
     end
     
-    puts("works_metadata: #{works_metadata}")
-    puts("files_metadata: #{filesets_metadata}")
+    # puts("works_metadata: #{works_metadata}")
+    # puts("files_metadata: #{filesets_metadata}")
     all_md = works_metadata + filesets_metadata
-    puts("all_md: #{all_md}")
+    # puts("all_md: #{all_md}")
 
     csv_rows = hash_array_to_csv_array(all_md)
+    # Don't delete this:  We need to resurrect it in order to put each ETD's files in a separate directory
+    # to avoid name collisions
     #bulkrax_zip_spec_path = "#{bulkrax_zip_path}/#{zip_file_basename}"
     #Dir.mkdir(bulkrax_zip_spec_path) unless File.exists?(bulkrax_zip_spec_path)
     bulkrax_csv_filepath = "#{bulkrax_zip_path}/metadata.csv"
