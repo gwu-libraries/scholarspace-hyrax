@@ -9,8 +9,8 @@ GIT
 
 GIT
   remote: https://github.com/samvera/bulkrax.git
-  revision: 091a8b9f1fdfb8101b1910d8977deb247b2d3213
-  branch: i951-false-object-bug
+  revision: 0de8ee06115ff9e6e89177d93c407826ae892a7f
+  branch: main
   specs:
     bulkrax (8.0.0)
       bagit (~> 0.4.6)

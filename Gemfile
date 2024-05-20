@@ -64,7 +64,9 @@ gem 'riiif', '~> 2.0'
 
 gem 'cookies_eu'
 
-gem 'bulkrax', git: 'https://github.com/samvera/bulkrax.git', branch: 'i951-false-object-bug'
+#gem 'bulkrax', git: 'https://github.com/samvera/bulkrax.git', branch: 'i951-false-object-bug'
+#gem 'bulkrax', git: 'https://github.com/samvera/bulkrax.git', branch: 'main'
+gem 'bulkrax', git: 'https://github.com/samvera/bulkrax.git', ref: '0de8ee06115ff9e6e89177d93c407826ae892a7f'
 
 gem 'willow_sword', github: 'notch8/willow_sword'
 
