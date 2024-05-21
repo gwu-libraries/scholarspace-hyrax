@@ -55,6 +55,7 @@ namespace :gwss do
     def get_embargo_date(doc)
       sales_restric = doc.xpath("//DISS_restriction/DISS_sales_restriction")
       return nil if sales_restric.empty?
+      return nil if sales_restric.attribute('remove').text.empty?
       sales_restric.attribute('remove').text
     end
 
@@ -114,10 +115,13 @@ namespace :gwss do
       etd_doc = get_etd_doc(xml_file_path)
       puts "xml is at: #{xml_file_path}"
       etd_md = extract_metadata(etd_doc)
+      parent_work_identifier = SecureRandom.uuid
+      etd_md['bulkrax_identifier'] = parent_work_identifier
       works_metadata << etd_md
 
       # 2. extract the attachment files paths and add to the filesets metadata array
       attachment_file_paths.delete(xml_file_path)
+      Dir.mkdir("#{bulkrax_zip_path}/#{zip_file_basename}") if !attachment_file_paths.empty?
       attachment_file_paths.each do |fp|
         fp_basename = File.basename(fp)
         puts "path = #{fp}, basename = #{fp_basename}"
@@ -125,9 +129,9 @@ namespace :gwss do
         file_md['model'] = 'FileSet'
         file_md['file'] =  fp
         file_md['title'] = fp_basename
-        file_md['parent'] = 'TBD-parentWorkID'
+        file_md['parent'] = parent_work_identifier
         # Add embargo info to file_md
-        if !is_embargoed?(etd_doc)
+        if is_embargoed?(etd_doc)
           # Get embargo info
           embargo_date = get_embargo_date(etd_doc)
           # TODO: Convert to isoformat as per Python DateTime.isoformat()
@@ -142,7 +146,7 @@ namespace :gwss do
         end
         filesets_metadata << file_md
 
-        FileUtils::copy_file(fp, "#{bulkrax_zip_path}/#{fp_basename}")
+        FileUtils::copy_file(fp, "#{bulkrax_zip_path}/#{zip_file_basename}/#{fp_basename}")
       end
     end
     
@@ -161,6 +165,7 @@ namespace :gwss do
 
     # create metadata CSV from the works metadata array and the filesets array
     # zip up the working folder
+    # Consider a system command here?  Not so simple with rubyzip
   end
 
   desc "Ingests ProQuest XML metadata for a single ETD"
