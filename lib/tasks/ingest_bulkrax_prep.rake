@@ -59,12 +59,25 @@ namespace :gwss do
       {'creators' => creators_array, 'contributors' => contributors_array}
     end
 
+    def get_department(doc)
+      doc.xpath("//DISS_description/DISS_institution/DISS_inst_contact").text
+    end
+
     def get_keywords(doc)
       keyword_array = []
       doc.xpath("//DISS_description/DISS_categorization/DISS_keyword").text.split(',') do |k|
         keyword_array << k.strip()
       end
       keyword_array
+    end
+
+    def get_date_created(doc)
+      comp_date = doc.xpath("//DISS_description/DISS_dates/DISS_comp_date").text 
+      if !comp_date.empty? and comp_date.length >= 4
+        comp_date[0..3]
+      else
+        nil
+      end
     end
 
     def extract_metadata(doc) 
@@ -79,6 +92,9 @@ namespace :gwss do
       repo_metadata['keyword'] = get_keywords(doc).join(';')
       repo_metadata['degree'] = get_degree(doc)
       repo_metadata['advisor'] = get_advisors(doc).join(';')
+      repo_metadata['gw_affiliation'] = get_department(doc)
+      etd_date_created = get_date_created(doc)
+      repo_metadata['date_created'] = etd_date_created unless etd_date_created.nil?
       repo_metadata['committee_member'] = get_committee_members(doc).join(';')
       repo_metadata
     end
