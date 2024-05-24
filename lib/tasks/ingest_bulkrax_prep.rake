@@ -33,22 +33,26 @@ namespace :gwss do
       abstract_text = Nokogiri::HTML(abstract_text_array.join("\n")).text
     end
 
+    def fullname(person_node)
+      lastname = person_node.xpath("DISS_name/DISS_surname").text
+      firstname = person_node.xpath("DISS_name/DISS_fname").text
+      middlename = person_node.xpath("DISS_name/DISS_middle").text
+
+      fullname = lastname + ", " + firstname
+      fullname = fullname + " " + middlename unless middlename.empty?
+      fullname
+    end
+
     def get_creators(doc)
       creators_array = []
       contributors_array = []
-      doc.xpath("//DISS_authorship/DISS_author").each do |a|
-        author_type = a.attribute('type').text
-        lastname = a.xpath("DISS_name/DISS_surname").text
-        firstname = a.xpath("DISS_name/DISS_fname").text
-        middlename = a.xpath("DISS_name/DISS_middle").text
-
-        fullname = lastname + ", " + firstname
-        fullname = fullname + " " + middlename unless middlename.empty?
+      doc.xpath("//DISS_authorship/DISS_author").each do |author_node|
+        author_type = author_node.attribute('type').text
 
         if author_type == 'primary'
-          creators_array << fullname
+          creators_array << fullname(author_node)
         else
-          contributors_array << fullname
+          contributors_array << fullname(author_node)
         end 
       end
 
@@ -73,6 +77,9 @@ namespace :gwss do
       repo_metadata['language'] = get_language(doc)
       repo_metadata['description'] = get_abstract(doc)
       repo_metadata['keyword'] = get_keywords(doc).join(';')
+      repo_metadata['degree'] = get_degree(doc)
+      repo_metadata['advisor'] = get_advisors(doc).join(';')
+      repo_metadata['committee_member'] = get_committee_members(doc).join(';')
       repo_metadata
     end
 
@@ -90,6 +97,26 @@ namespace :gwss do
       return nil if sales_restric.empty?
       return nil if sales_restric.attribute('remove').text.empty?
       sales_restric.attribute('remove').text
+    end
+
+    def get_degree(doc)
+      doc.xpath("//DISS_description/DISS_degree").text
+    end
+
+    def get_advisors(doc)
+      advisors = []
+      doc.xpath("//DISS_description/DISS_advisor").each do |advisor_node|
+        advisors << fullname(advisor_node)
+      end
+      advisors
+    end
+    
+    def get_committee_members(doc)
+      committee_members = []
+      doc.xpath("//DISS_description/DISS_cmte_member").each do |committee_member_node|
+        committee_members << fullname(committee_member_node)
+      end
+      committee_members
     end
 
     def convert_to_iso(date_str)
