@@ -26,7 +26,6 @@ namespace :gwss do
     end
 
     def get_abstract(doc)
-      # TODO: 
       abstract_text_array = []
       doc.xpath("//DISS_content/DISS_abstract/DISS_para").each do |p|
         abstract_text_array << p.text
@@ -34,12 +33,46 @@ namespace :gwss do
       abstract_text = Nokogiri::HTML(abstract_text_array.join("\n")).text
     end
 
+    def get_creators(doc)
+      creators_array = []
+      contributors_array = []
+      doc.xpath("//DISS_authorship/DISS_author").each do |a|
+        author_type = a.attribute('type').type
+        lastname = a.xpath("DISS_name/DISS_surname").text
+        firstname = a.xpath("DISS_name/DISS_fname").text
+        middlename = a.xpath("DISS_name/DISS_middle").text
+
+        fullname = lastname + ", " + firstname
+        fullname = fullname + " " + middlename unless middlename.empty?
+
+        if author_type == 'primary'
+          creators_array << fullname
+        else
+          contributors_array << fullname
+        end 
+      end
+
+      {'creators' => creators_array, 'contributors' => contributors_array}
+    end
+
+    def get_keywords(doc)
+      keyword_array = []
+      doc.xpath("//DISS_description/DISS_categorization/DISS_keyword").text.split(',') do |k|
+        keyword_array << k.strip()
+      end
+      keyword_array
+    end
+
     def extract_metadata(doc) 
       repo_metadata = Hash.new  
       repo_metadata['model'] = 'GwEtd'
       repo_metadata['title'] = get_title(doc)
+      creators = get_creators(doc)
+      repo_metadata['creator'] = creators['creators'].join(';')
+      repo_metadata['contributor'] = creators['contributors'].join(';')
       repo_metadata['language'] = get_language(doc)
       repo_metadata['description'] = get_abstract(doc)
+      repo_metadata['keyword'] = get_keywords(doc).join(';')
       repo_metadata
     end
 
@@ -84,7 +117,9 @@ namespace :gwss do
         
     # create folder for metadata.csv and files folder 
     bulkrax_zip_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip" 
-    Dir.mkdir(bulkrax_zip_path) unless File.exists?(bulkrax_zip_path)
+    bulkrax_files_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip/files" 
+    puts "File.exists?(bulkrax_zip_path) = #{File.exists?(bulkrax_zip_path)}"
+    FileUtils.makedirs("#{bulkrax_files_path}") unless File.exists?(bulkrax_zip_path)
 
     # get all ETD zip files in the args.filepath folder
     path_to_zips = args.filepath
@@ -98,16 +133,18 @@ namespace :gwss do
       # for each ETD zip file:
       puts("Processing #{zip_path}")
       zip_file = Zip::File.open(zip_path)
-      zip_file_basename = File.basename(zip_path, '.zip')
-      Dir.mkdir("#{ENV['TEMP_FILE_BASE']}/etds") unless File.exists?("#{ENV['TEMP_FILE_BASE']}/etds")
-      zip_file_dir = "#{ENV['TEMP_FILE_BASE']}/etds/#{zip_file_basename}" 
+      zip_file_basename = File.basename(zip_path, '.zip') # e.g. etdadmin_upload_353614
+      # Dir.mkdir("#{ENV['TEMP_FILE_BASE']}/etds") unless File.exists?("#{ENV['TEMP_FILE_BASE']}/etds")
+      # zip_file_dir = "#{ENV['TEMP_FILE_BASE']}/etds/#{zip_file_basename}" 
+      zip_file_dir = "#{bulkrax_files_path}/#{zip_file_basename}" # e.g. bulkrax_zip/files/etdadmin_upload_353614
       Dir.mkdir(zip_file_dir) unless File.exists?(zip_file_dir)
 
       attachment_file_paths = []
       zip_file.each do |entry|
         puts("  Extracting #{entry.name}")
         zip_file.extract(entry, "#{zip_file_dir}/#{entry.name}") 
-        attachment_file_paths <<  "#{zip_file_dir}/#{entry.name}" if !entry.name_is_directory?
+        # attachment_file_paths <<  "#{zip_file_dir}/#{entry.name}" if !entry.name_is_directory?
+        attachment_file_paths <<  "#{entry.name}" if !entry.name_is_directory?
       end
 
       # 1. extract the work metdata and add to the works metadata array
@@ -117,19 +154,23 @@ namespace :gwss do
       etd_md = extract_metadata(etd_doc)
       parent_work_identifier = SecureRandom.uuid
       etd_md['bulkrax_identifier'] = parent_work_identifier
+      puts etd_md
       works_metadata << etd_md
 
       # 2. extract the attachment files paths and add to the filesets metadata array
-      attachment_file_paths.delete(xml_file_path)
-      Dir.mkdir("#{bulkrax_zip_path}/#{zip_file_basename}") if !attachment_file_paths.empty?
+      attachment_file_paths.delete(File.basename(xml_file_path))
+      # Dir.mkdir("#{bulkrax_zip_path}/#{zip_file_basename}") if !attachment_file_paths.empty?
       attachment_file_paths.each do |fp|
         fp_basename = File.basename(fp)
         puts "path = #{fp}, basename = #{fp_basename}"
         file_md = Hash.new
         file_md['model'] = 'FileSet'
-        file_md['file'] =  fp
+        # safe_fp = File.dirname("#{zip_file_basename}/#{fp}") + '/"' + File.basename(fp) + '"'
+        safe_fp = "#{zip_file_basename}/#{fp}"
+        file_md['file'] =  safe_fp
         file_md['title'] = fp_basename
-        file_md['parent'] = parent_work_identifier
+        file_md['bulkrax_identifier'] = SecureRandom.uuid
+        file_md['parents'] = parent_work_identifier
         # Add embargo info to file_md
         if is_embargoed?(etd_doc)
           # Get embargo info
@@ -146,7 +187,7 @@ namespace :gwss do
         end
         filesets_metadata << file_md
 
-        FileUtils::copy_file(fp, "#{bulkrax_zip_path}/#{zip_file_basename}/#{fp_basename}")
+        # FileUtils::copy_file(fp, "#{bulkrax_zip_path}/#{zip_file_basename}/#{fp_basename}")
       end
     end
     
@@ -231,3 +272,4 @@ namespace :gwss do
     puts repo_metadata
   end
 end
+
