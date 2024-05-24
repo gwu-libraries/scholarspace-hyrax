@@ -37,7 +37,7 @@ namespace :gwss do
       creators_array = []
       contributors_array = []
       doc.xpath("//DISS_authorship/DISS_author").each do |a|
-        author_type = a.attribute('type').type
+        author_type = a.attribute('type').text
         lastname = a.xpath("DISS_name/DISS_surname").text
         firstname = a.xpath("DISS_name/DISS_fname").text
         middlename = a.xpath("DISS_name/DISS_middle").text
@@ -114,6 +114,15 @@ namespace :gwss do
         end
       end
     end
+
+    def repair_filename(filepath)
+      # translate spaces in the filename portion to _ 
+      if File.dirname(filepath) == '.'
+        File.basename(filepath).tr(' ', '_')
+      else
+        File.join(File.dirname(filepath), File.basename(filepath).tr(' ', '_'))
+      end
+    end
         
     # create folder for metadata.csv and files folder 
     bulkrax_zip_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip" 
@@ -142,9 +151,10 @@ namespace :gwss do
       attachment_file_paths = []
       zip_file.each do |entry|
         puts("  Extracting #{entry.name}")
-        zip_file.extract(entry, "#{zip_file_dir}/#{entry.name}") 
+        entry_name_clean = repair_filename(entry.name)
+        zip_file.extract(entry, "#{zip_file_dir}/#{entry_name_clean}") 
         # attachment_file_paths <<  "#{zip_file_dir}/#{entry.name}" if !entry.name_is_directory?
-        attachment_file_paths <<  "#{entry.name}" if !entry.name_is_directory?
+        attachment_file_paths <<  "#{entry_name_clean}" if !entry.name_is_directory?
       end
 
       # 1. extract the work metdata and add to the works metadata array
@@ -154,7 +164,6 @@ namespace :gwss do
       etd_md = extract_metadata(etd_doc)
       parent_work_identifier = SecureRandom.uuid
       etd_md['bulkrax_identifier'] = parent_work_identifier
-      puts etd_md
       works_metadata << etd_md
 
       # 2. extract the attachment files paths and add to the filesets metadata array
