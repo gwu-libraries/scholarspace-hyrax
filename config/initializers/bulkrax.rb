@@ -14,6 +14,9 @@ Bulkrax.setup do |config|
   config.object_factory = Bulkrax::ObjectFactory
   # Use this for a Postgres-backed Valkyrized Hyrax
   # config.object_factory = Bulkrax::ValkyrieObjectFactory
+  
+  # Queue name for imports
+  config.ingest_queue_name = :import
 
   # Path to store pending imports
   # config.import_path = 'tmp/imports'
@@ -39,11 +42,9 @@ Bulkrax.setup do |config|
   #     "Bulkrax::OaiDcParser" => { **individual field mappings go here*** }
   #   }
 
-  # This config may seem redundant, but (as of bulkrax 6.0.1) including it
-  # seems to prevent the object from being created with a visible metadata
-  # field of Source with a value that's a big ugly uuid
   config.field_mappings['Bulkrax::CsvParser'] = {
-  #  'source_identifier' => { from: ['source_identifier'], source_identifier: true, search_field: 'source_id_sim' },
+    # Setting source_identifier: true makes bulkrax_identifier a mandatory field,
+    # so it MUST be present in the CSV row for EVERY item (regardless of type, so this includes FileSets as well)
     'bulkrax_identifier' => { from: ['bulkrax_identifier'], source_identifier: true },
     'keyword' => { from: ['keyword'], split: true },
     'advisor' => { from: ['advisor'], split: true },

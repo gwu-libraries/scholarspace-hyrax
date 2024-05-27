@@ -224,4 +224,21 @@ namespace :gwss do
             file_md['embargo_release_date'] = nil
           end 
         end
-        filesets_metad
+        filesets_metadata << file_md
+      end
+    end
+    
+    # puts("works_metadata: #{works_metadata}")
+    # puts("files_metadata: #{filesets_metadata}")
+    all_md = works_metadata + filesets_metadata
+    # puts("all_md: #{all_md}")
+
+    csv_rows = hash_array_to_csv_array(all_md)
+    bulkrax_csv_filepath = "#{bulkrax_zip_path}/metadata.csv"
+    write_csv(csv_rows, bulkrax_csv_filepath)
+
+    # create metadata CSV from the works metadata array and the filesets array
+    # zip up the working folder
+    # Consider a system command here?  Not so simple with rubyzip
+  end
+end
