@@ -106,7 +106,7 @@ namespace :gwss do
 
     def convert_to_iso(date_str)
       date = Date.strptime(date_str, '%m/%d/%Y')
-      date.strftime('%Y-%m-%d') #T00:00:00')
+      date.strftime('%Y-%m-%d')
     end
 
     def extract_metadata(doc) 
@@ -158,7 +158,7 @@ namespace :gwss do
         
     # create folder for metadata.csv and files folder 
     bulkrax_zip_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip" 
-    bulkrax_files_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip/files" 
+    bulkrax_files_path = "#{bulkrax_zip_path}/files" 
     puts "File.exists?(bulkrax_zip_path) = #{File.exists?(bulkrax_zip_path)}"
     FileUtils.makedirs("#{bulkrax_files_path}") unless File.exists?(bulkrax_zip_path)
 
@@ -196,6 +196,17 @@ namespace :gwss do
       etd_md['bulkrax_identifier'] = parent_work_identifier
       works_metadata << etd_md
 
+      # Set up embargo info that will be applied below to all file attachments
+      etd_is_embargoed = is_embargoed?(etd_doc)
+      if etd_is_embargoed
+        embargo_date = get_embargo_date(etd_doc) 
+        if !embargo_date.nil?
+          embargo_release_date = convert_to_iso(embargo_date)
+        else
+          embargo_release_date = nil
+        end 
+      end
+
       # 2. extract the attachment files paths and add to the filesets metadata array
       # Remove the metadata xml file so we don't go and attach it to thw work
       attachment_file_paths.delete(File.basename(xml_file_path))
@@ -210,34 +221,24 @@ namespace :gwss do
         file_md['bulkrax_identifier'] = SecureRandom.uuid
         file_md['parents'] = parent_work_identifier
 
-        # Add embargo info to file_md
-        if is_embargoed?(etd_doc)
-          # Get embargo info
-          embargo_date = get_embargo_date(etd_doc)
-          # TODO: Convert to isoformat as per Python DateTime.isoformat()
+        # Add embargo info and 
+        if etd_is_embargoed
           file_md['visibility'] = 'embargo'
           file_md['visibility_during_embargo'] = 'restricted'
           file_md['visibility_after_embargo'] = 'open'
-          if !embargo_date.nil?
-            file_md['embargo_release_date'] = convert_to_iso(embargo_date)
-          else
-            file_md['embargo_release_date'] = nil
-          end 
+          file_md['embargo_release_date'] = embargo_release_date
         end
         filesets_metadata << file_md
       end
     end
     
-    # puts("works_metadata: #{works_metadata}")
-    # puts("files_metadata: #{filesets_metadata}")
     all_md = works_metadata + filesets_metadata
-    # puts("all_md: #{all_md}")
 
     csv_rows = hash_array_to_csv_array(all_md)
     bulkrax_csv_filepath = "#{bulkrax_zip_path}/metadata.csv"
     write_csv(csv_rows, bulkrax_csv_filepath)
 
-    # create metadata CSV from the works metadata array and the filesets array
+    # FUTURE EXPANSION:  Zip up the bulkrax ingest manifest and files
     # zip up the working folder
     # Consider a system command here?  Not so simple with rubyzip
   end
