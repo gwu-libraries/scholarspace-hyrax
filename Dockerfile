@@ -41,6 +41,7 @@ RUN mkdir -p /opt/scholarspace/scholarspace-hyrax \
     && mkdir -p /opt/scholarspace/scholarspace-tmp \
     && mkdir -p /opt/scholarspace/scholarspace-minter \
     && mkdir -p /opt/scholarspace/scholarspace-derivatives \
+    && mkdir -p /opt/scholarspace/scholarspace-ingest \
     && chmod 775 -R /opt/scholarspace/scholarspace-derivatives
 
 WORKDIR /opt/scholarspace/scholarspace-hyrax
