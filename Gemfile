@@ -64,10 +64,7 @@ gem 'riiif', '~> 2.0'
 
 gem 'cookies_eu'
 
-# When the next Bulkrax release *after* 8.0.0 is available, change this to:
-#   gem 'bulkrax', '8.0.1' # or whatever the new version is
-# and re-test. 
-gem 'bulkrax', git: 'https://github.com/samvera/bulkrax.git', ref: 'd8f9b85a9064b352a252c5deb590a430ca4a738e'
+gem 'bulkrax', '8.1.0'
 
 gem 'willow_sword', github: 'notch8/willow_sword'
 
