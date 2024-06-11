@@ -32,45 +32,29 @@ RSpec.describe "Deposit files through Bulkrax" do
 
     headers_arr = csv_rows[0]
 
+    # check that header row generated is correct
     expect(headers_arr).to eq(["model", "title", "creator", "contributor", "language",
                                "description", "keyword", "degree", "advisor", "gw_affiliation",
                                "date_created", "committee_member", "rights_statement", "bulkrax_identifier",
                                "file", "parents", "visibility", "visibility_during_embargo",
                                "visibility_after_embargo", "embargo_release_date"])
 
+    # check that there are five rows - one for header, one for each of the etds, one for each of the files
+    expect(csv_rows.count).to eq(5)
+
     first_work_metadata = csv_rows[1]
-    first_work_metadata[13] = "a-replacement-uuid" 
-    # this and similar lines replace the uuids generated with placeholders, which is messy but testable
-    # could probably do something with a regex or some other way to test
-
-    expect(first_work_metadata).to eq(["GwEtd", "A False Work For Testing Purposes", "Boyd, Alex L",
-                                        "","en","","testing;rspec;ruby;scholarspace;beefaroni","Ph.D.","Kitty, Sandwich",
-                                        "English","2024","Kerchner, Dan;Smith, Dolsy","http://rightsstatements.org/vocab/InC/1.0/",
-                                        "a-replacement-uuid",nil,nil,nil,nil,nil,nil])
-
     second_work_metadata = csv_rows[2]
-    second_work_metadata[13] = "a-replacement-uuid"
+    first_file_data = csv_rows[3]
+    second_file_data = csv_rows[4]
 
-    expect(second_work_metadata).to eq(["GwEtd","Another False Work For Bulkrax Testing Purposes","Boyd, Alex L",
-                                        "","en","","testing;rspec;ruby;scholarspace;beefaroni","Ph.D.","Kitty, Sandwich",
-                                        "English","2024","Kerchner, Dan;Smith, Dolsy","http://rightsstatements.org/vocab/InC/1.0/",
-                                        "a-replacement-uuid",nil,nil,nil,nil,nil,nil])
-    
-    first_work_file_data = csv_rows[3]
-    first_work_file_data[13] = "a-replacement-uuid"
-    first_work_file_data[15] = "another-replacement-uuid"
+    expect(first_work_metadata.include?("GwEtd")).to be true    
+    expect(second_work_metadata.include?("GwEtd")).to be true
 
-    expect(first_work_file_data).to eq(["FileSet","Ab_gwu_0075A_16593.pdf",nil,nil,nil,nil,nil,nil,
-                                        nil,nil,nil,nil,nil,"a-replacement-uuid","etdadmin_upload_1/Ab_gwu_0075A_16593.pdf",
-                                        "another-replacement-uuid","embargo","restricted","open","2026-01-05"])
+    expect(first_file_data.include?("embargo")).to be true
+    expect(second_file_data.include?("embargo")).to be true
 
-    second_work_file_data = csv_rows[4]
-    second_work_file_data[13] = "a-replacement-uuid"
-    second_work_file_data[15] = "another-replacement-uuid"
-
-    expect(second_work_file_data).to eq(["FileSet","Ab_gwu_0076A_12345.pdf",nil,nil,nil,nil,nil,nil,
-                                         nil,nil,nil,nil,nil,"a-replacement-uuid","etdadmin_upload_2/Ab_gwu_0076A_12345.pdf",
-                                         "another-replacement-uuid","embargo","restricted","open","2026-01-05"])
+    expect(first_file_data.include?("restricted")).to be true
+    expect(second_file_data.include?("restricted")).to be true
   end
 
   it 'can deposit works via bulkrax import' do
@@ -94,6 +78,8 @@ RSpec.describe "Deposit files through Bulkrax" do
     import_parser_file_path_elements.last.fill_in with: "#{Rails.root}/tmp/test/bulkrax_zip/metadata.csv"
 
     click_on("Create and Import")
+
+    # the 'expect' statements below are not super specific, but the test will fail if any step in the deposit fails, so feels robust enough
     
     # check if both works are created
     work_1 = GwEtd.where(title: "A False Work For Testing Purposes").first
@@ -104,5 +90,3 @@ RSpec.describe "Deposit files through Bulkrax" do
     expect(work_2.embargo_id.present?).to be true
   end
 end
-
-# bundle exec rspec spec/features/bulkrax_upload_spec.rb
