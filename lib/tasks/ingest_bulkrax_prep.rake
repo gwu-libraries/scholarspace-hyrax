@@ -156,8 +156,15 @@ namespace :gwss do
       end
     end
         
-    # create folder for metadata.csv and files folder 
-    bulkrax_zip_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip" 
+    # create folder for metadata.csv and files folder
+
+    # if running spec tests, add /test/ to the tmp file path to prevent filling /tmp/bulkrax_zip when tests are run
+    if Rails.env.test?
+      bulkrax_zip_path = "#{ENV['TEMP_FILE_BASE']}/test/bulkrax_zip"
+    else
+      bulkrax_zip_path = "#{ENV['TEMP_FILE_BASE']}/bulkrax_zip"
+    end
+
     bulkrax_files_path = "#{bulkrax_zip_path}/files" 
     puts "File.exists?(bulkrax_zip_path) = #{File.exists?(bulkrax_zip_path)}"
     FileUtils.makedirs("#{bulkrax_files_path}") unless File.exists?(bulkrax_zip_path)
