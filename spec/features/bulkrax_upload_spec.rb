@@ -32,9 +32,8 @@ RSpec.describe "Deposit files through Bulkrax" do
 
     headers_arr = csv_rows[0]
 
-    # check that header row generated is correct
     expect(headers_arr).to eq(["model", "title", "creator", "contributor", "language",
-                               "description", "keyword", "degree", "advisor", "gw_affiliation",
+                               "description", "keyword", "degree", "resource_type", "advisor", "gw_affiliation",
                                "date_created", "committee_member", "rights_statement", "bulkrax_identifier",
                                "file", "parents", "visibility", "visibility_during_embargo",
                                "visibility_after_embargo", "embargo_release_date"])
