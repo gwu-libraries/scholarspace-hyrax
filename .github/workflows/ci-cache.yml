@@ -33,6 +33,7 @@ jobs:
           mkdir /opt/scholarspace-minter
           mkdir /opt/scholarspace/fedora-data
           mkdir /opt/scholarspace/solr-data
+          mkdir /opt/scholarspace/scholarspace-ingest
           cd /opt/scholarspace
      # Checkout the repository code
       - name: Check out repository code

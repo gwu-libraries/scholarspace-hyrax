@@ -66,6 +66,7 @@ a separate user for the app, but it is not necessary.  That user will need to ow
       /opt/scholarspace/certs 
       /opt/scholarspace/scholarspace-tmp 
       /opt/scholarspace/scholarspace-minter 
+      /opt/scholarspace/scholarspace-ingest 
       ```
 6. In `/opt/scholarspace/scholarspace-hyrax` run `cp example.env .env` to create the local environment file.
 7. Edit `.env` to add the following values:
@@ -173,16 +174,6 @@ echo $CR_PAT | docker login ghcr.io -u [USERNAME] --password-stdin
 
 
 ## Setting up a new production instance
-
-### (Optional) Install etd-loader
-
-* Install the **etd-loader** application in `/opt/etd-loader` as per instructions at https://github.com/gwu-libraries/etd-loader
-
-* When configuring `config.py`, ensure that it contains the following values:
-  ```
-  ingest_path = "/opt/scholarspace/scholarspace-hyrax"
-  ingest_command = "rake RAILS_ENV=production gwss:ingest_etd"
-  ```
 
 ### Migrating Production Database
 

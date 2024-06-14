@@ -42,4 +42,15 @@ class Ability
     can :index, Hydra::AccessControls::Embargo
     can :index, Hydra::AccessControls::Lease
   end
+
+  # Added for Bulkrax 5.0.0+
+  def can_import_works?
+    # can_create_any_work?
+    admin? or contentadmin_user?
+  end
+
+  def can_export_works?
+    # can_create_any_work?
+    admin? or contentadmin_user?
+  end
 end

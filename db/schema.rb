@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2024_02_08_142942) do
+ActiveRecord::Schema.define(version: 2024_03_07_053156) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,10 @@ ActiveRecord::Schema.define(version: 2024_02_08_142942) do
     t.datetime "last_succeeded_at"
     t.string "importerexporter_type", default: "Bulkrax::Importer"
     t.integer "import_attempts", default: 0
+    t.string "status_message", default: "Pending"
+    t.index ["identifier", "importerexporter_id", "importerexporter_type"], name: "bulkrax_identifier_idx"
+    t.index ["importerexporter_id", "importerexporter_type"], name: "bulkrax_entries_importerexporter_idx"
+    t.index ["type"], name: "index_bulkrax_entries_on_type"
   end
 
   create_table "bulkrax_exporter_runs", force: :cascade do |t|
@@ -70,6 +74,9 @@ ActiveRecord::Schema.define(version: 2024_02_08_142942) do
     t.date "finish_date"
     t.string "work_visibility"
     t.string "workflow_status"
+    t.boolean "include_thumbnails", default: false
+    t.boolean "generated_metadata", default: false
+    t.string "status_message", default: "Pending"
     t.index ["user_id"], name: "index_bulkrax_exporters_on_user_id"
   end
 
@@ -110,7 +117,20 @@ ActiveRecord::Schema.define(version: 2024_02_08_142942) do
     t.boolean "validate_only"
     t.datetime "last_error_at"
     t.datetime "last_succeeded_at"
+    t.string "status_message", default: "Pending"
     t.index ["user_id"], name: "index_bulkrax_importers_on_user_id"
+  end
+
+  create_table "bulkrax_pending_relationships", force: :cascade do |t|
+    t.bigint "importer_run_id", null: false
+    t.string "parent_id", null: false
+    t.string "child_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "order", default: 0
+    t.index ["child_id"], name: "index_bulkrax_pending_relationships_on_child_id"
+    t.index ["importer_run_id"], name: "index_bulkrax_pending_relationships_on_importer_run_id"
+    t.index ["parent_id"], name: "index_bulkrax_pending_relationships_on_parent_id"
   end
 
   create_table "bulkrax_statuses", force: :cascade do |t|
@@ -124,6 +144,9 @@ ActiveRecord::Schema.define(version: 2024_02_08_142942) do
     t.string "runnable_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["error_class"], name: "index_bulkrax_statuses_on_error_class"
+    t.index ["runnable_id", "runnable_type"], name: "bulkrax_statuses_runnable_idx"
+    t.index ["statusable_id", "statusable_type"], name: "bulkrax_statuses_statusable_idx"
   end
 
   create_table "checksum_audit_logs", id: :serial, force: :cascade do |t|
@@ -682,6 +705,7 @@ ActiveRecord::Schema.define(version: 2024_02_08_142942) do
 
   add_foreign_key "bulkrax_exporter_runs", "bulkrax_exporters", column: "exporter_id"
   add_foreign_key "bulkrax_importer_runs", "bulkrax_importers", column: "importer_id"
+  add_foreign_key "bulkrax_pending_relationships", "bulkrax_importer_runs", column: "importer_run_id"
   add_foreign_key "collection_type_participants", "hyrax_collection_types"
   add_foreign_key "curation_concerns_operations", "users"
   add_foreign_key "mailboxer_conversation_opt_outs", "mailboxer_conversations", column: "conversation_id", name: "mb_opt_outs_on_conversations_id"

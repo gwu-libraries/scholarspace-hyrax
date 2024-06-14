@@ -16,5 +16,9 @@ class GwWork < ActiveFedora::Base
     index.as :stored_searchable
   end
 
+  property :bulkrax_identifier, predicate: ::RDF::URI("https://iro.bl.uk/resource#bulkraxIdentifier"), multiple: false do |index|
+    index.as :stored_searchable, :facetable
+  end
+
   include ::Hyrax::BasicMetadata
 end

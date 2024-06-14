@@ -4,4 +4,8 @@ class Collection < ActiveFedora::Base
   # You can replace these metadata if they're not suitable
   include Hyrax::BasicMetadata
   self.indexer = Hyrax::CollectionWithBasicMetadataIndexer
+
+  property :bulkrax_identifier, predicate: ::RDF::URI("https://iro.bl.uk/resource#bulkraxIdentifier"), multiple: false do |index|
+    index.as :stored_searchable, :facetable
+  end
 end
