@@ -7,6 +7,8 @@ namespace :gwss do
   desc "Creates a bulkrax zip for all of the ProQuest ETD zip files in a folder"
   task :ingest_pq_etds, [:filepath] do |t, args|
 
+    @degree_etd_map = {}
+
     def get_metadata_doc_path(pq_files_dir)
       xml_paths = Dir.glob("#{pq_files_dir}/*_DATA.xml")
       pq_xml_file_path = xml_paths.first
@@ -109,6 +111,20 @@ namespace :gwss do
       date.strftime('%Y-%m-%d')
     end
 
+    def build_resource_type_degree_mapping
+      etd_degree_map = YAML.load_file('config/etd_degree_map.yml')
+      @degree_etd_map = {}
+      degree_categories = etd_degree_map.keys
+      # Flip etd_degree_map to create degree_etd_map
+      # So that for any given degree, we can get back whether it's a masters or a doctorate
+      degree_categories.each do |degree_category|
+        etd_degree_map[degree_category].each do |degree_name|
+        # upcase each degree (just in case) and ignore "."s
+          @degree_etd_map[degree_name.upcase.delete('.')] = degree_category
+        end
+      end
+    end
+
     def extract_metadata(doc) 
       work_metadata = Hash.new  
       work_metadata['model'] = 'GwEtd'
@@ -119,13 +135,20 @@ namespace :gwss do
       work_metadata['language'] = get_node_value(doc, "//DISS_description/DISS_categorization/DISS_language")
       work_metadata['description'] = get_abstract(doc)
       work_metadata['keyword'] = get_keywords(doc).join(';')
-      work_metadata['degree'] = get_node_value(doc, "//DISS_description/DISS_degree")
+      degree = get_node_value(doc, "//DISS_description/DISS_degree")
+      work_metadata['degree'] = degree
+      work_metadata['resource_type'] = @degree_etd_map[degree.upcase.delete('.')]
       work_metadata['advisor'] = get_advisors(doc).join(';')
       work_metadata['gw_affiliation'] = get_node_value(doc, "//DISS_description/DISS_institution/DISS_inst_contact")
       etd_date_created = get_date_created(doc)
       work_metadata['date_created'] = etd_date_created unless etd_date_created.nil?
       work_metadata['committee_member'] = get_committee_members(doc).join(';')
       work_metadata['rights_statement'] = 'http://rightsstatements.org/vocab/InC/1.0/'
+      # Can't currently load this license because this Bulkrax code
+      # https://github.com/samvera/bulkrax/blob/v8.1.0/app/models/concerns/bulkrax/import_behavior.rb#L145-L146
+      # will try to match it with http://www.europeana.eu/portal/rights/rr-r.html/ (slash-terminated)
+      # -- not finding a match, Bulkrax will throw an error.
+      # work_metadata['license'] = 'http://www.europeana.eu/portal/rights/rr-r.html'
       work_metadata
     end
 
@@ -155,6 +178,10 @@ namespace :gwss do
         File.join(File.dirname(filepath), File.basename(filepath).tr(' ', '_'))
       end
     end
+
+    build_resource_type_degree_mapping
+    puts "build_resource_type_degree_mapping: "
+    puts @degree_etd_map
         
     # create folder for metadata.csv and files folder
 
