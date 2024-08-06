@@ -64,12 +64,7 @@ gem 'riiif', '~> 2.0'
 
 gem 'cookies_eu'
 
-<<<<<<< HEAD
 gem 'bulkrax', '8.1.0'
-=======
-#gem 'bulkrax', git: 'https://github.com/samvera-labs/bulkrax.git'
-gem 'bulkrax', '6.0.1'
->>>>>>> Upgrade bulkrax to 6.0.1
 
 gem 'willow_sword', github: 'notch8/willow_sword'
 
