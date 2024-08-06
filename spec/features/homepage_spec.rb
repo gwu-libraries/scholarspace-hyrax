@@ -159,15 +159,9 @@ RSpec.describe "Homepage" do
       end
     end
 
-    it 'has a link to "A-Z Index"' do
+    it 'has a link to "Report a Barrier to Accessibility"' do
       within "#footer-links" do
-        expect(page).to have_content("A-Z Index")
-      end
-    end
-    
-    it 'has a link to "Accessibility Feedback Form"' do
-      within "#footer-links" do
-        expect(page).to have_content("Accessibility Feedback Form")
+        expect(page).to have_content("Report a Barrier to Accessibility")
       end
     end
   end
