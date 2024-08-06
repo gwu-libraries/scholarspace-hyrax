@@ -42,5 +42,9 @@ terms:
       term: CC0 1.0 Universal
       active: true
     - id: http://www.europeana.eu/portal/rights/rr-r.html
+      term: All rights reserved (deprecated)
+      active: false
+    - id: All rights reserved
       term: All rights reserved
       active: true
+
