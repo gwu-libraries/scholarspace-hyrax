@@ -1,5 +1,7 @@
 require 'rails_helper'
 
+
+#bundle exec rspec spec/features/dashboard_spec.rb  
 RSpec.describe "Dashboard page" do
 
   it 'redirects to the home page if the user authenticates but lacks admin privilages' do
@@ -29,7 +31,7 @@ RSpec.describe "Dashboard page" do
 
   it 'allows authenticated admin user to visit /notifications' do
 
-    admin_user = FactoryBot.create(:admin_user)
+    admin_user = FactoryBot.create(:admin)
 
     sign_in_user(admin_user)
 
@@ -53,7 +55,7 @@ RSpec.describe "Dashboard page" do
 
   it 'allows authenticated admin user to visit /importers' do
 
-    admin_user = FactoryBot.create(:admin_user)
+    admin_user = FactoryBot.create(:admin)
 
     sign_in_user(admin_user)
 
@@ -77,7 +79,7 @@ RSpec.describe "Dashboard page" do
 
   it 'allows authenticated admin user to visit /exporters' do
 
-    admin_user = FactoryBot.create(:admin_user)
+    admin_user = FactoryBot.create(:admin)
 
     sign_in_user(admin_user)
 
@@ -88,7 +90,7 @@ RSpec.describe "Dashboard page" do
   end
 
   it 'displays all admin controls when logged in as an admin user' do
-    admin_user = FactoryBot.create(:admin_user)
+    admin_user = FactoryBot.create(:admin)
 
     sign_in_user(admin_user)
 
@@ -122,7 +124,7 @@ RSpec.describe "Dashboard page" do
   end
 
   it 'displays all content-admin controls when logged in as a content-admin user' do
-    content_admin_user = FactoryBot.create(:content_admin_user)
+    content_admin_user = FactoryBot.create(:content_admin)
 
     sign_in_user(content_admin_user)
 
