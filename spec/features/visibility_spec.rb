@@ -6,20 +6,17 @@ RSpec.describe "View works via the UI" do
   let(:admin_set) { FactoryBot.create(:admin_set) }
 
   let(:basic_user) { FactoryBot.create(:user) }
-  let(:admin_user) { FactoryBot.create(:admin_user) }
-  let(:content_admin_user) { FactoryBot.create(:content_admin_user) }
+  let(:admin_user) { FactoryBot.create(:admin) }
+  let(:content_admin_user) { FactoryBot.create(:content_admin) }
 
-  let(:public_work) { FactoryBot.create(:gw_work, 
+  let(:public_work) { FactoryBot.create(:public_work, 
                                         admin_set: admin_set, 
-                                        visibility: "public",
                                         user: admin_user) }
-  let(:auth_only_work) { FactoryBot.create(:gw_work, 
+  let(:auth_only_work) { FactoryBot.create(:authenticated_work, 
                                         admin_set: admin_set, 
-                                        visibility: "authenticated",
                                         user: admin_user) }
-  let(:private_work) { FactoryBot.create(:gw_work, 
+  let(:private_work) { FactoryBot.create(:private_work, 
                                         admin_set: admin_set, 
-                                        visibility: "private",
                                         user: admin_user) }
 
 

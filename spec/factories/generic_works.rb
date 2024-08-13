@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 FactoryBot.define do
-  factory :work, aliases: [:generic_work, :private_generic_work], class: 'GenericWork' do
+  factory :work, aliases: [:generic_work, :private_generic_work], class: 'GwWork' do
     transient do
       user { FactoryBot.create(:user) }
       # Set to true (or a hash) if you want to create an admin set
@@ -34,6 +34,12 @@ FactoryBot.define do
 
     trait :public do
       visibility { Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_PUBLIC }
+    end
+
+    factory :authenticated_generic_work, aliases: [:authenticated_work], traits: [:authenticated]
+
+    trait :authenticated do
+      visibility { Hydra::AccessControls::AccessRight::VISIBILITY_TEXT_VALUE_AUTHENTICATED }
     end
 
     factory :invalid_generic_work do

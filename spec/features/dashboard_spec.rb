@@ -1,7 +1,5 @@
 require 'rails_helper'
 
-
-#bundle exec rspec spec/features/dashboard_spec.rb  
 RSpec.describe "Dashboard page" do
 
   it 'redirects to the home page if the user authenticates but lacks admin privilages' do

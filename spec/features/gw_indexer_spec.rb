@@ -2,12 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "GwIndexer" do
 
-  let(:admin_user) { FactoryBot.create(:admin_user) }
+  let(:admin_user) { FactoryBot.create(:admin) }
   let(:admin_set) { FactoryBot.create(:admin_set) }
   let(:solr) { Blacklight.default_index.connection }
-  let(:gw_work) { FactoryBot.create(:gw_work, 
+  let(:gw_work) { FactoryBot.create(:public_work, 
                                     admin_set: admin_set, 
-                                    visibility: "public",
                                     user: admin_user) }
   let(:solr_doc) { gw_work.to_solr }
 
@@ -58,9 +57,8 @@ RSpec.describe "GwIndexer" do
   context "date_created_isim field" do
     it 'has a date_created_isim field containing a four-digit year, when date_created is filled with four digit year' do
 
-      gw_work_good_year = FactoryBot.create(:gw_work, 
+      gw_work_good_year = FactoryBot.create(:public_work, 
                                             admin_set: admin_set, 
-                                            visibility: "public", 
                                             date_created: ["2001"])
 
       expect(gw_work_good_year.to_solr['date_created_isim']).to eq(2001)
@@ -69,9 +67,8 @@ RSpec.describe "GwIndexer" do
 
     it 'chooses the minimum valid four-digit year if multiple date_created values' do
 
-      gw_work_multiple_date_created_values = FactoryBot.create(:gw_work, 
+      gw_work_multiple_date_created_values = FactoryBot.create(:public_work, 
                                             admin_set: admin_set, 
-                                            visibility: "public", 
                                             date_created: ["august", "4", "2009", "2005", "1999"])
 
       expect(gw_work_multiple_date_created_values.to_solr['date_created_isim']).to eq(1999)
@@ -80,9 +77,8 @@ RSpec.describe "GwIndexer" do
 
     it 'has a nil value if no convertable dates' do
 
-      gw_work_no_good_values = FactoryBot.create(:gw_work, 
+      gw_work_no_good_values = FactoryBot.create(:public_work, 
                                             admin_set: admin_set, 
-                                            visibility: "public", 
                                             date_created: ["august", "4", "garbanzo"])
 
       expect(gw_work_no_good_values.to_solr['date_created_isim']).to eq(nil)
