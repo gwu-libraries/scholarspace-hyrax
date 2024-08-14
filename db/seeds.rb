@@ -10,8 +10,13 @@ non_admin_user = FactoryBot.create(:user, email: "nonadminuser@example.com")
 # admin sets and collection types
 default_admin_set_id = AdminSet.find_or_create_default_admin_set_id
 admin_set_collection_type = FactoryBot.create(:admin_set_collection_type)
-gw_etds_admin_set = FactoryBot.create(:admin_set, title: ["ETDs"])
+gw_etds_admin_set = FactoryBot.create(:admin_set, title: ["ETDs"],edit_users: [admin_user.user_key, content_admin_user.user_key])
 
+FactoryBot.create(:permission_template_access,
+                  :deposit,
+                  permission_template: FactoryBot.create(:permission_template, source_id: gw_etds_admin_set.id, with_admin_set: true, with_active_workflow: true),
+                  agent_type: 'user',
+                  agent_id: admin_user.user_key)
 # collections
 5.times do
   FactoryBot.create(:collection, user: admin_user)
@@ -40,9 +45,7 @@ FactoryBot.create(:work_with_two_children, user: admin_user, title: ["A Work wit
                     abstract: ["Ey I'm abstracting here"],
                     keyword: ["Testing", "Examining", "Prodding"],
                     license: ["http://www.europeana.eu/portal/rights/rr-r.html"], 
-                    rights_notes: [], 
                     rights_statement: ["http://rightsstatements.org/vocab/InC/1.0/"], 
-                    access_right: [], 
                     publisher: ["A Pretty Cool Publisher"], 
                     date_created: [rand(1900..2010).to_s], 
                     subject: ["Automated Testing"], 
