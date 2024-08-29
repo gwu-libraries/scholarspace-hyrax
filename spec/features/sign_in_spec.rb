@@ -2,8 +2,8 @@ require 'rails_helper'
 
 RSpec.describe 'user sign-in' do
 
-  let(:admin_user) { FactoryBot.create(:admin_user) }
-  let(:content_admin_user) { FactoryBot.create(:content_admin_user) }
+  let(:admin_user) { FactoryBot.create(:admin) }
+  let(:content_admin_user) { FactoryBot.create(:content_admin) }
 
   it 'has link to login page on homepage' do
     visit root_path

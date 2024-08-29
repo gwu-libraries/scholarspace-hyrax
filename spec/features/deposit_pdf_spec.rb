@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Deposit a PDF through dashboard" do
 
   let(:admin_set) { FactoryBot.create(:admin_set) }
-  let(:admin_user) { FactoryBot.create(:admin_user) }
+  let(:admin_user) { FactoryBot.create(:admin) }
   let(:user) { FactoryBot.create(:user) }
   let(:pdf_path) { "#{Rails.root}/spec/fixtures/fixture_dummy.pdf" }
   let(:solr) { Blacklight.default_index.connection }
