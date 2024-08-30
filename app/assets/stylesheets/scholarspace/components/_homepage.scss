@@ -30,7 +30,7 @@
       margin-bottom: 0.5em;
       color: $gw-light-blue;
       font-size: 10.5vw;
-      font-weight: bold;
+      font-weight: 200;
       line-height: 0.8em;
 
       @media (min-width: $mobile-breakpoint) {
@@ -270,6 +270,7 @@
                     h3 {
                       font-size: 1em;
                       text-decoration: underline;
+                      font-weight: 200;
                       --max-lines: 4;
                       --line-height: 1.2;
                       max-height: calc(var(--max-lines) * 1em * var(--line-height));
@@ -446,7 +447,7 @@
                   border-radius: 50%;
                   background-color: $gw-dark-blue;
                   color: $gw-white;
-                  font-weight: bold;
+                  font-weight: 200;
                   font-size: 1.5em;
                   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out;
     
