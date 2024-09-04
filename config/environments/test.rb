@@ -41,5 +41,5 @@ Rails.application.configure do
   # config.action_view.raise_on_missing_translations = true
   config.permanent_url_base = "https://scholarspace-etds.library.gwu.edu/"
 
-  config.active_job.queue_adapter = :test
+  config.active_job.queue_adapter = :sidekiq
 end

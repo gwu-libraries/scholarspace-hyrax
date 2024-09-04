@@ -24,6 +24,10 @@ class GwJournalIssue < ActiveFedora::Base
     index.as :stored_searchable
   end
 
+  property :bulkrax_identifier, predicate: ::RDF::URI("https://iro.bl.uk/resource#bulkraxIdentifier"), multiple: false do |index|
+    index.as :stored_searchable, :facetable
+  end
+
   # This must be included at the end, because it finalizes the metadata
   # schema (by adding accepts_nested_attributes)
   include ::Hyrax::BasicMetadata
