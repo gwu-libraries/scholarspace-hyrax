@@ -1,21 +1,63 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :user do
-    email { Faker::Internet.email }
-    password { Faker::Internet.password }
-    #display_name { Faker::Name.name }
+    sequence(:email) { |n| "user#{n}@example.com" }
+    password { 'password' }
 
-    factory :admin_user do
-      after :create do |user|
-        admin_role = Role.find_or_create_by(name: 'admin')
-        admin_role.users << user
-      end
+    transient do
+      # Allow for custom groups when a user is instantiated.
+      # @example create(:user, groups: 'avacado')
+      groups { [] }
     end
 
-    factory :content_admin_user do
-      after :create do |user|
-        content_admin_role = Role.find_or_create_by(name: 'content-admin')
-        content_admin_role.users << user
+    after(:build) do |user, evaluator|
+      evaluator.groups.each do |group|
+        user.roles << Role.find_or_create_by(name: group)
+      end
+      # This line below is directly from hyrax, but was unable to get it to 
+      # work with the creating admin/content-admin users. Above seems to work though.
+
+      # User.group_service.add(user: user, groups: evaluator.groups)
+    end
+
+    factory :admin do
+      groups { ['admin'] }
+    end
+
+    factory :content_admin do
+      groups { ['content-admin'] }
+    end
+
+    factory :user_with_mail do
+      after(:create) do |user|
+        # Create examples of single file successes and failures
+        (1..10).each do |number|
+          file = MockFile.new(number.to_s, "Single File #{number}")
+          User.batch_user.send_message(user, 'File 1 could not be updated. You do not have sufficient privileges to edit it.', file.to_s, false)
+          User.batch_user.send_message(user, 'File 1 has been saved', file.to_s, false)
+        end
+
+        # Create examples of mulitple file successes and failures
+        files = []
+        (1..50).each do |number|
+          files << MockFile.new(number.to_s, "File #{number}")
+        end
+        User.batch_user.send_message(user, 'These files could not be updated. You do not have sufficient privileges to edit them.', 'Batch upload permission denied', false)
+        User.batch_user.send_message(user, 'These files have been saved', 'Batch upload complete', false)
       end
     end
+  end
+
+  trait :guest do
+    guest { true }
+  end
+end
+
+class MockFile
+  attr_accessor :to_s, :id
+  def initialize(id, string)
+    self.id = id
+    self.to_s = string
   end
 end

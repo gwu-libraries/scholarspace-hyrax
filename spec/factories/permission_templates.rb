@@ -1,24 +1,22 @@
 # frozen_string_literal: true
-# From https://github.com/samvera/hyrax/blob/v2.9.6/spec/factories/permission_templates.rb
 FactoryBot.define do
   factory :permission_template, class: Hyrax::PermissionTemplate do
     # Given that there is a one to one strong relation between permission_template and admin_set,
     # with a unique index on the source_id, I don't want to have duplication in source_id
-    sequence(:source_id) { |n| format('%010d', n) }
+    sequence(:source_id) { |n| format("%010d", n) }
+
+    trait :with_immediate_release do
+      release_period { Hyrax::PermissionTemplate::RELEASE_TEXT_VALUE_NO_DELAY }
+    end
+
+    trait :with_delayed_release do
+      release_period { Hyrax::PermissionTemplate::RELEASE_TEXT_VALUE_6_MONTHS }
+    end
 
     before(:create) do |permission_template, evaluator|
       if evaluator.with_admin_set
         source_id = permission_template.source_id
-        admin_set =
-          if source_id.present?
-            begin
-              AdminSet.find(source_id)
-            rescue ActiveFedora::ObjectNotFoundError
-              create(:admin_set, id: source_id)
-            end
-          else
-            create(:admin_set)
-          end
+        admin_set = SourceFinder.find_or_create_admin_set(source_id)
         permission_template.source_id = admin_set.id
       elsif evaluator.with_collection
         source_id = permission_template.source_id
@@ -39,7 +37,7 @@ FactoryBot.define do
     after(:create) do |permission_template, evaluator|
       if evaluator.with_workflows
         Hyrax::Workflow::WorkflowImporter.load_workflow_for(permission_template: permission_template)
-        Sipity::Workflow.activate!(permission_template: permission_template, workflow_id: permission_template.available_workflows.pluck(:id).first)
+        Sipity::Workflow.activate!(permission_template: permission_template, workflow_id: permission_template.available_workflows.pick(:id))
       end
       if evaluator.with_active_workflow
         workflow = create(:workflow, active: true, permission_template: permission_template)
@@ -67,22 +65,6 @@ FactoryBot.define do
     end
   end
 
-  factory :permission_template_access, class: Hyrax::PermissionTemplateAccess do
-    permission_template
-    trait :manage do
-      access { 'manage' }
-    end
-
-    trait :deposit do
-      access { 'deposit' }
-    end
-
-    trait :view do
-      access { 'view' }
-    end
-  end
-
-  # rubocop:disable Lint/ConstantDefinitionInBlock
   class AccessHelper
     def self.create_access(permission_template_id, agent_type, access, agent_ids)
       agent_ids.each do |agent_id|
@@ -94,5 +76,36 @@ FactoryBot.define do
       end
     end
   end
-  # rubocop:enable Lint/ConstantDefinitionInBlock
+
+  class SourceFinder
+    def self.find_or_create_admin_set(source_id)
+      Hyrax.config.use_valkyrie? ? find_or_create_admin_set_valkyrie(source_id) : find_or_create_admin_set_active_fedora(source_id)
+    end
+
+    def self.find_or_create_admin_set_active_fedora(source_id)
+      if source_id.present?
+        begin
+          AdminSet.find(source_id)
+        rescue ActiveFedora::ObjectNotFoundError
+          FactoryBot.create(:admin_set, id: source_id)
+        end
+      else
+        FactoryBot.create(:admin_set)
+      end
+    end
+
+    def self.find_or_create_admin_set_valkyrie(source_id)
+      if source_id.present?
+        begin
+          Hyrax.query_service.find_by(id: source_id)
+        rescue Valkyrie::Persistence::ObjectNotFoundError
+          # Creating an Administrative set with a pre-determined id will not work for all adapters
+          # so we're letting the adapter assign the id
+          FactoryBot.valkyrie_create(:hyrax_admin_set)
+        end
+      else
+        FactoryBot.valkyrie_create(:hyrax_admin_set)
+      end
+    end
+  end
 end

@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe "Sidekiq Dashboard Access" do
 
   it 'loads sidekiq dashboard for a logged in admin user' do
-    admin_user = FactoryBot.create(:admin_user)
+    admin_user = FactoryBot.create(:admin)
 
     visit "/users/sign_in"
 
