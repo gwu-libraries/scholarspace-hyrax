@@ -34,10 +34,10 @@ RSpec.describe "Deposit files through Bulkrax" do
     csv_rows = CSV.read("#{@temp_dir}/metadata.csv")
 
     headers_arr = csv_rows[0]
-
+    print headers_arr
     expect(headers_arr).to eq(["model", "title", "creator", "contributor", "language",
                                "description", "keyword", "degree", "resource_type", "advisor", "gw_affiliation",
-                               "date_created", "committee_member", "rights_statement", "bulkrax_identifier",
+                               "date_created", "committee_member", "rights_statement", "license", "bulkrax_identifier",
                                "file", "parents", "visibility", "visibility_during_embargo",
                                "visibility_after_embargo", "embargo_release_date"])
 

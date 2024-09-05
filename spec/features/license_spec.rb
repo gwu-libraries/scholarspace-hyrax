@@ -5,11 +5,10 @@ RSpec.describe "View and edit license field" do
   let(:solr) { Blacklight.default_index.connection }
   let(:admin_set) { FactoryBot.create(:admin_set) }
 
-  let(:content_admin_user) { FactoryBot.create(:content_admin_user) }
+  let(:content_admin_user) { FactoryBot.create(:content_admin) }
 
-  let(:work_with_license) { FactoryBot.create(:gw_work, 
+  let(:work_with_license) { FactoryBot.create(:public_work, 
                                         admin_set: admin_set, 
-                                        visibility: "public",
                                         user: content_admin_user) }
   
   let(:another_license_value) { Hyrax::QaSelectService.new('licenses').select_active_options.first.first }
@@ -35,7 +34,7 @@ RSpec.describe "View and edit license field" do
             expect(page).to have_content(work_with_license.license.first)
         end
     end
-=begin    context 'as a content-admin user' do
+    context 'as a content-admin user' do
         before :each do
           sign_in_user(content_admin_user)
         end
@@ -44,12 +43,8 @@ RSpec.describe "View and edit license field" do
           visit "/concern/gw_works/#{work_with_license.id}/edit"
           page.select another_license_value, :from => "gw_work_license"
           page.click_on("Save changes")
-        end
-
-        it 'can see the changes' do
-          visit "/concern/gw_works/#{work_with_license.id}"
           expect(page).to have_content(another_license_value)
         end
     end
-=end
+
 end
