@@ -144,11 +144,7 @@ namespace :gwss do
       work_metadata['date_created'] = etd_date_created unless etd_date_created.nil?
       work_metadata['committee_member'] = get_committee_members(doc).join(';')
       work_metadata['rights_statement'] = 'http://rightsstatements.org/vocab/InC/1.0/'
-      # Can't currently load this license because this Bulkrax code
-      # https://github.com/samvera/bulkrax/blob/v8.1.0/app/models/concerns/bulkrax/import_behavior.rb#L145-L146
-      # will try to match it with http://www.europeana.eu/portal/rights/rr-r.html/ (slash-terminated)
-      # -- not finding a match, Bulkrax will throw an error.
-      # work_metadata['license'] = 'http://www.europeana.eu/portal/rights/rr-r.html'
+      work_metadata['license'] = 'All rights reserved'
       work_metadata
     end
 
@@ -193,7 +189,6 @@ namespace :gwss do
     end
 
     bulkrax_files_path = "#{bulkrax_zip_path}/files" 
-    puts "File.exists?(bulkrax_zip_path) = #{File.exists?(bulkrax_zip_path)}"
     FileUtils.makedirs("#{bulkrax_files_path}") unless File.exists?(bulkrax_zip_path)
 
     # get all ETD zip files in the args.filepath folder

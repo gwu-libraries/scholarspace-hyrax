@@ -20,7 +20,11 @@ FactoryBot.define do
       end
     end
 
-    after(:create) do |work, _evaluator|
+    after(:create) do |work, options|
+    # Add the user's ability to the work -> necessary for enabling access to Edit pages
+      actor = Hyrax::CurationConcern.actor
+      actor_environment = Hyrax::Actors::Environment.new(work, Ability.new(options.user), {})
+      actor.create(actor_environment)
       work.save! if work.try(:member_of_collections) && work.member_of_collections.present?
     end
 
