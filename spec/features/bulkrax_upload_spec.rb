@@ -7,28 +7,31 @@ RSpec.describe "Deposit files through Bulkrax" do
 
   before :all do
     # remove the folder so it doesn't repeatedly add new works when ingest task is run
-    FileUtils.rm_rf("#{Rails.root}/tmp/test/bulkrax_zip")
+    @temp_dir = "#{ENV['TEMP_FILE_BASE']}/test/bulkrax_zip"
+    if File.directory?(@temp_dir)
+      FileUtils.rm_rf(@temp_dir)
+    end
 
     Rake::Task["gwss:ingest_pq_etds"].invoke("#{Rails.root}/spec/fixtures/etd_zips")
   end
   
   it 'generates deposit file structure via gwss:ingest_pq_etds task' do
-    expect(File.directory?("#{Rails.root}/tmp/test/bulkrax_zip")).to be true
-    expect(File.directory?("#{Rails.root}/tmp/test/bulkrax_zip/files")).to be true
+    expect(File.directory?(@temp_dir)).to be true
+    expect(File.directory?("#{@temp_dir}/files")).to be true
     
-    expect(File.directory?("#{Rails.root}/tmp/test/bulkrax_zip/files/etdadmin_upload_1")).to be true
-    expect(File.file?("#{Rails.root}/tmp/test/bulkrax_zip/files/etdadmin_upload_1/Ab_gwu_0075A_16593_DATA.xml")).to be true
-    expect(File.file?("#{Rails.root}/tmp/test/bulkrax_zip/files/etdadmin_upload_1/Ab_gwu_0075A_16593.pdf")).to be true
+    expect(File.directory?("#{@temp_dir}/files/etdadmin_upload_1")).to be true
+    expect(File.file?("#{@temp_dir}/files/etdadmin_upload_1/Ab_gwu_0075A_16593_DATA.xml")).to be true
+    expect(File.file?("#{@temp_dir}/files/etdadmin_upload_1/Ab_gwu_0075A_16593.pdf")).to be true
 
-    expect(File.directory?("#{Rails.root}/tmp/test/bulkrax_zip/files/etdadmin_upload_2")).to be true
-    expect(File.file?("#{Rails.root}/tmp/test/bulkrax_zip/files/etdadmin_upload_2/Ab_gwu_0076A_12345_DATA.xml")).to be true
-    expect(File.file?("#{Rails.root}/tmp/test/bulkrax_zip/files/etdadmin_upload_2/Ab_gwu_0076A_12345.pdf")).to be true
+    expect(File.directory?("#{@temp_dir}/files/etdadmin_upload_2")).to be true
+    expect(File.file?("#{@temp_dir}/files/etdadmin_upload_2/Ab_gwu_0076A_12345_DATA.xml")).to be true
+    expect(File.file?("#{@temp_dir}/files/etdadmin_upload_2/Ab_gwu_0076A_12345.pdf")).to be true
 
-    expect(File.file?("#{Rails.root}/tmp/test/bulkrax_zip/metadata.csv")).to be true
+    expect(File.file?("#{@temp_dir}/metadata.csv")).to be true
   end
 
   it 'generates accurate CSV file for import' do
-    csv_rows = CSV.read("#{Rails.root}/tmp/test/bulkrax_zip/metadata.csv")
+    csv_rows = CSV.read("#{@temp_dir}/metadata.csv")
 
     headers_arr = csv_rows[0]
 
@@ -57,7 +60,7 @@ RSpec.describe "Deposit files through Bulkrax" do
   end
 
   it 'can deposit works via bulkrax import' do
-    admin_user = FactoryBot.create(:admin_user)
+    admin_user = FactoryBot.create(:admin)
     etds_admin_set = Hyrax::AdministrativeSet.new(title: ['ETDs'])
     etds_admin_set = Hyrax.persister.save(resource: etds_admin_set)
     Hyrax::AdminSetCreateService.call!(admin_set: etds_admin_set, creating_user: admin_user)
@@ -74,7 +77,7 @@ RSpec.describe "Deposit files through Bulkrax" do
     import_parser_radio_button_elements.last.click
     
     import_parser_file_path_elements = page.all('//*[@id="importer_parser_fields_import_file_path"]')
-    import_parser_file_path_elements.last.fill_in with: "#{Rails.root}/tmp/test/bulkrax_zip/metadata.csv"
+    import_parser_file_path_elements.last.fill_in with: "#{@temp_dir}/metadata.csv"
 
     click_on("Create and Import")
 

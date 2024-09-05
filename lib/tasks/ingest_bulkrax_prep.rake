@@ -193,7 +193,6 @@ namespace :gwss do
     end
 
     bulkrax_files_path = "#{bulkrax_zip_path}/files" 
-    puts "File.exists?(bulkrax_zip_path) = #{File.exists?(bulkrax_zip_path)}"
     FileUtils.makedirs("#{bulkrax_files_path}") unless File.exists?(bulkrax_zip_path)
 
     # get all ETD zip files in the args.filepath folder
