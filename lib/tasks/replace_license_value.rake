@@ -23,10 +23,10 @@ def solr_results(old_value)
     params = {:q => "license_tesim:\"http://www.europeana.eu/portal/rights/rr-r.html\"", fl:'id,license_tesim'}
     r = ActiveFedora::SolrService.instance.conn.paginate(1, 1000, 'select', :params => params)
     puts "Found #{r['response']['numFound']} documents with the old license value #{old_value}."
-    if r['response']['numFound'] > 0
-        puts "Updating docs..." 
-        return
+    if r['response']['numFound'] == 0
+        return []
     end
+    puts "Updating docs..." 
     docs = r.dig('response', 'docs')
     page_num = 2
     while (next_page =  ActiveFedora::SolrService.instance.conn.paginate(page_num, 1000, 'select', :params => params).dig('response', 'docs')) != []
