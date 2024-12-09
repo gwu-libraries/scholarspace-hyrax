@@ -189,7 +189,7 @@ namespace :gwss do
     end
 
     bulkrax_files_path = "#{bulkrax_zip_path}/files" 
-    FileUtils.makedirs("#{bulkrax_files_path}") unless File.exists?(bulkrax_zip_path)
+    FileUtils.makedirs("#{bulkrax_files_path}") unless File.exists?(bulkrax_files_path)
 
     # get all ETD zip files in the args.filepath folder
     path_to_zips = args.filepath
@@ -221,6 +221,7 @@ namespace :gwss do
       etd_doc = get_etd_doc(xml_file_path)
       puts "xml is located at: #{xml_file_path}"
       etd_md = extract_metadata(etd_doc)
+      etd_md['proquest_zipfile'] = zip_file_basename + '.zip'
       parent_work_identifier = SecureRandom.uuid
       etd_md['bulkrax_identifier'] = parent_work_identifier
       works_metadata << etd_md
