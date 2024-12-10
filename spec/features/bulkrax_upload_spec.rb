@@ -37,8 +37,8 @@ RSpec.describe "Deposit files through Bulkrax" do
     print headers_arr
     expect(headers_arr).to eq(["model", "title", "creator", "contributor", "language",
                                "description", "keyword", "degree", "resource_type", "advisor", "gw_affiliation",
-                               "date_created", "committee_member", "rights_statement", "license", "bulkrax_identifier",
-                               "file", "parents", "visibility", "visibility_during_embargo",
+                               "date_created", "committee_member", "rights_statement", "license", "proquest_zipfile",
+                               "bulkrax_identifier", "file", "parents", "visibility", "visibility_during_embargo",
                                "visibility_after_embargo", "embargo_release_date"])
 
     # check that there are five rows - one for header, one for each of the etds, one for each of the files
