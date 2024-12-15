@@ -97,6 +97,8 @@ gem 'blacklight_range_limit'
 
 gem 'blacklight_advanced_search'
 
+gem 'aws-sdk-s3', '~> 1'
+
 group :development, :test do
   gem 'pry' # temporily removing, seems to break something with sidekiq in development mode
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

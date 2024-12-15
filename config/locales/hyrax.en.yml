@@ -77,6 +77,7 @@ en:
         volume:                 "Volume Number"
         issue:                  "Issue Number"
         permanent_url:          "Persistent URL"
+        proquest_zipfile:       "ProQuest ZIP file name"
     hints:
       defaults:
         title: 'The name of the work.'

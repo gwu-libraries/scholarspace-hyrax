@@ -32,5 +32,9 @@ class GwEtd < ActiveFedora::Base
     index.as :stored_searchable, :facetable
   end
 
+  property :proquest_zipfile, predicate: ::RDF::URI("http://scholarspace.library.gwu.edu/ns#proquest_zipfile"), multiple: false do |index|
+    index.as :stored_searchable
+  end
+
   include ::Hyrax::BasicMetadata
 end
