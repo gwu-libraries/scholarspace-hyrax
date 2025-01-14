@@ -1,4 +1,4 @@
-# scholarspace-hyrax [![Build Status](https://travis-ci.org/gwu-libraries/scholarspace-hyrax.png?branch=master)](https://travis-ci.org/gwu-libraries/scholarspace-hyrax)
+# scholarspace-hyrax 
 
 A Hyrax app for GW Libraries with:
 - two item types: GwWork and GwEtd
