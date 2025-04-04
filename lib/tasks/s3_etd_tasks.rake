@@ -55,7 +55,7 @@ namespace :gwss do
         etd_id = etd.id
         fsets = etd.file_sets
         fn_list = fsets.map(&:label)
-        pattern = /\w*_gwu_0075A_\w*\.pdf/
+        pattern = /\w*_(?:gwu|corcoran)_(?:0075|0501)[A-Z]_\d+\.pdf/
         matching_files = fn_list.select { |filename| filename.match?(pattern) }
 
         etd_pdf_hash[etd_id] = matching_files[0]
