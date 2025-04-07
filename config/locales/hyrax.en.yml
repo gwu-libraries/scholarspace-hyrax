@@ -17,7 +17,7 @@ en:
       search_form:
         button_label: Search
     product_name:           "ScholarSpace"
-    local_product_version:  "2.2.2"
+    local_product_version:  "2.2.3"
     product_twitter_handle: ""
     institution_name:       "The George Washington University"
     institution_name_full:  "George Washington University"
