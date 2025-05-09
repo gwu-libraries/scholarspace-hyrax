@@ -48,7 +48,7 @@ Bulkrax.setup do |config|
     'bulkrax_identifier' => { from: ['bulkrax_identifier'], source_identifier: true },
     'keyword' => { from: ['keyword'], split: true },
     'advisor' => { from: ['advisor'], split: true },
-    'doi' => { from: ['doi'], split: true },
+    'doi' => { from: ['doi'], split: '\|' },
     'committee_member' => { from: ['committee_member'], split: true },
     'gw_affiliation' => { from: ['gw_affiliation'], split: true },
     'file' => { from: ['file'], split: '\;' },
