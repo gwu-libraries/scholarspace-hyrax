@@ -45,12 +45,50 @@ Bulkrax.setup do |config|
   config.field_mappings['Bulkrax::CsvParser'] = {
     # Setting source_identifier: true makes bulkrax_identifier a mandatory field,
     # so it MUST be present in the CSV row for EVERY item (regardless of type, so this includes FileSets as well)
-    'bulkrax_identifier' => { from: ['bulkrax_identifier'], source_identifier: true },
+    # 
+    # from Hyrax::BasicMetadata
+    'label' => { from: ['label'], split: true },
+    'relative_path' => { from: ['relative_path'], split: true },
+    'import_url' => { from: ['import_url'], split: true },
+    'resource_type' => {from: ['resource_type'], split: true },
+    'creator' => { from: ['creator'], split: true },
+    'contributor' => { from: ['contributor'], split: true },
+    'description' => { from: ['description'], split: true },
+    'abstract' => { from: ['abstract'], split: true },
     'keyword' => { from: ['keyword'], split: true },
-    'advisor' => { from: ['advisor'], split: true },
-    'doi' => { from: ['doi'], split: '\|' },
-    'committee_member' => { from: ['committee_member'], split: true },
+    'license' => { from: ['license'], split: true },
+    'rights_notes' => { from: ['rights_notes'], split: true },
+    'rights_statement' => { from: ['rights_statement'], split: true },
+    'access_right' => { from: ['access_right'], split: true },
+    'publisher' => { from: ['publisher'], split: true },
+    'date_created' => { from: ['date_created'], split: true },
+    'subject' => { from: ['subject'], split: true },
+    'language' => { from: ['language'], split: true },
+    'identifier' => { from: ['identifier'], split: true },
+    'based_near' => { from: ['based_near'], split: true },
+    'related_url' => { from: ['related_url'], split: true },
+    'bibliographic_citation' => { from: ['bibliographic_citation'], split: true },
+    'source' => {from: ['source'], split: true },
+    # from Hyrax::CoreMetadata
+    'title' => { from: ['title'], split: true },
+    'depositor' => { from: ['depositor'], split: true },
+    'date_uploaded' => { from: ['date_uploaded'], split: true },
+    'date_modified' => { from: ['date_modified'], split: true },
+    # from Hyrax::AdminSet
+    'alternative_title' => { from: ['alternative_title'], split: true },
+    # from GwWork
+    'bulkrax_identifier' => { from: ['bulkrax_identifier'], source_identifier: true },
     'gw_affiliation' => { from: ['gw_affiliation'], split: true },
+    'doi' => { from: ['doi'], split: '\|' },
+    # from GwEtd
+    'degree' => { from: ['advisor'], split: true },
+    'advisor' => { from: ['advisor'], split: true },
+    'committee_member' => { from: ['committee_member'], split: true },
+    # from GwJournalIssue
+    'proquest_zipfile' => {from: ['proquest_zipfile'], split: true },
+    'volume' => {from: ['volume'], split: true },
+    'issue' => {from: ['issue'], split: true },
+    # needed for Bulkrax
     'file' => { from: ['file'], split: '\;' },
     'parents' => { from: ['parents'], split: '\;', related_parents_field_mapping: true },
   }
