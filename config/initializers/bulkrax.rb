@@ -58,7 +58,7 @@ Bulkrax.setup do |config|
     'keyword' => { from: ['keyword'], split: true },
     'license' => { from: ['license'], split: true },
     'rights_notes' => { from: ['rights_notes'], split: true },
-    'rights_statement' => { from: ['rights_statement'], split: true },
+    'rights_statement' => { from: ['rights_statement'], split: '\|' },
     'access_right' => { from: ['access_right'], split: true },
     'publisher' => { from: ['publisher'], split: true },
     'date_created' => { from: ['date_created'], split: true },
