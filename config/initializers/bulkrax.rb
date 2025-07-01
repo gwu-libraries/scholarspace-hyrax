@@ -81,7 +81,7 @@ Bulkrax.setup do |config|
     'gw_affiliation' => { from: ['gw_affiliation'], split: true },
     'doi' => { from: ['doi'], split: '\|' },
     # from GwEtd
-    'degree' => { from: ['advisor'], split: true },
+    'degree' => { from: ['degree'], split: true },
     'advisor' => { from: ['advisor'], split: true },
     'committee_member' => { from: ['committee_member'], split: true },
     # from GwJournalIssue
