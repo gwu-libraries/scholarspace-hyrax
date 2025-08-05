@@ -11,6 +11,8 @@ concern :range_searchable, BlacklightRangeLimit::Routes::RangeSearchable.new
   get '/files/:id', to: redirect('concern/gw_works/%{id}')
   get '/works/:id', to: redirect('concern/gw_works/%{id}')
   get '/work/:id', to: redirect('concern/gw_works/%{id}')
+  get '/isisfiles_artifact/:id', to: redirect('concern/isisfiles_artifacts/%{id}')
+  get '/isisfiles_artifacts/:id', to: redirect('concern/isisfiles_artifacts/%{id}')
 
   mount Blacklight::Engine => '/'
   mount BlacklightAdvancedSearch::Engine => '/'

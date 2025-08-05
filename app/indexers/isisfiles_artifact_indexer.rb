@@ -1,0 +1,2 @@
+class IsisfilesArtifactIndexer < GwIndexer
+end

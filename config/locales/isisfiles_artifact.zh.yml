@@ -1,0 +1,10 @@
+zh:
+  hyrax:
+    icons:
+      isisfiles_artifact:     'fa fa-file-text-o'
+    select_type:
+      isisfiles_artifact:
+        # TODO: translate `human_name` into Chinese
+        description:        "Isisfiles artifact 作品"
+        name:               "Isisfiles Artifact"
+        # TODO: translate `human_name` into Chinese

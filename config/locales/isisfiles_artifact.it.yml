@@ -1,0 +1,8 @@
+it:
+  hyrax:
+    icons:
+      isisfiles_artifact:     'fa fa-file-text-o'
+    select_type:
+      isisfiles_artifact:
+        description:        "Isisfiles artifact opere"
+        name:               "Isisfiles Artifact"
