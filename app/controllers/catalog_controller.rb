@@ -158,6 +158,11 @@ class CatalogController < ApplicationController
     config.add_show_field solr_name("degree", :stored_searchable), label: "Degree"
     config.add_show_field solr_name("advisor", :stored_searchable), label: "Advisor"
     config.add_show_field solr_name("committee_member", :stored_searchable), label: "Committee Member"
+    config.add_show_field solr_name("title_romanized", :stored_searchable), label: "Title (Romanized)"
+    config.add_show_field solr_name("contributor_romanized", :stored_searchable), label: "Contributor (Romanized)"
+    config.add_show_field solr_name("corporate_contributor", :stored_searchable), label: "Corporate Contributor"
+    config.add_show_field solr_name("corporate_contributor_romanized", :stored_searchable), label: "Corporate Contributor (Romanized)"
+    config.add_show_field solr_name("date_created_islamic", :stored_searchable), label: "Date, Hijri"
 
     # "fielded" search configuration. Used by pulldown among other places.
     # For supported keys in hash, see rdoc for Blacklight::SearchFields

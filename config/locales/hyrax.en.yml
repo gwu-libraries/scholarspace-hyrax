@@ -78,6 +78,11 @@ en:
         issue:                  "Issue Number"
         permanent_url:          "Persistent URL"
         proquest_zipfile:       "ProQuest ZIP file name"
+        date_created_islamic:   Date, Hijri
+        corporate_contributor:  Corporate Contributor
+        corporate_contributor_romanized: Corporate Contributor (Romanized)
+        contributor_romanized:  Contributor (Romanized)
+        title_romanized:        Title (Romanized)
     hints:
       defaults:
         title: 'The name of the work.'
@@ -90,17 +95,21 @@ en:
         language: "The language of the work."
         keyword: "Words or phrases you select to describe what the work is about. These are used to search for content.  Use the Add button to enter additional terms."
         date_created: "The year [YYYY] in which the work was generated, e.g. 2015."
-        related_url: "A link to a website or other specific content (audio, video, PDF document) related to the work. An example is the URL of a research
-project from which the work was derived."
+        related_url: "A link to a website or other specific content (audio, video, PDF document) related to the work. An example is the URL of a research project from which the work was derived."
         degree: "Degree earned"
         advisor: "Thesis/Dissertation advisor(s)"
         committee_member: "Thesis/Dissertation committee member(s)"
         volume: "Volume number"
         issue: "Issue number"
+        contributor: A person or group you want to recognize for playing a role in the creation of the work, but not the primary role. <strong style='color:red'>For ISIS FIles Artifacts, do not add PII data here!</strong>
+        contributor_romanized: <strong style='color:red'>For ISIS FIles Artifacts, do not add PII data here!</strong> 
+        date_created_islamic: Enter as Romanized Date / Arabic Date
+        identifier: A unique handle identifying the work. An example would be a DOI for a journal article, or an ISBN or OCLC number for a book.  For ISIS Files artifacts, this is the source Document Identifier.
   activefedora:
     models:
       gw_work: GW Work
       gw_etd: Electronic Thesis/Dissertation
+      isisfiles_artifact: ISIS Files Artifact
   blacklight:
     search:
       per_page:
@@ -121,6 +130,11 @@ project from which the work was derived."
           issue:                        Issue Number
           bibliographic_citation:       Previous Publication Information
           permanent_url:                Persistent URL
+          date_created_islamic:         Date, Hijri
+          corporate_contributor:        Corporate Contributor
+          corporate_contributor_romanized: Corporate Contributor (Romanized)
+          contributor_romanized:        Contributor (Romanized)
+          title_romanized:              Title (Romanized)
         facet:
           gw_affiliation_sim:   GW Unit
           doi_sim:              DOI

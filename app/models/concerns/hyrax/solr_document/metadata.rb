@@ -68,6 +68,11 @@ module Hyrax
         attribute :date_created, Solr::Array, solr_name('date_created')
         attribute :rights_statement, Solr::Array, solr_name('rights_statement')
         attribute :bibliographic_citation, Solr::Array, solr_name('bibliographic_citation')
+        attribute :title_romanized, Solr::Array, solr_name('title_romanized')
+        attribute :contributor_romanized, Solr::Array, solr_name('contributor_romanized')
+        attribute :corporate_contributor, Solr::Array, solr_name('corporate_contributor')
+        attribute :corporate_contributor_romanized, Solr::Array, solr_name('corporate_contributor_romanized')
+        attribute :date_created_islamic, Solr::Array, solr_name('date_created_islamic')
 
         attribute :mime_type, Solr::String, solr_name('mime_type', :stored_sortable)
         attribute :workflow_state, Solr::String, solr_name('workflow_state_name', :symbol)

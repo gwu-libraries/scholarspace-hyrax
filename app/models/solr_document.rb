@@ -55,6 +55,8 @@ class SolrDocument
     self[ActiveFedora.index_field_mapper.solr_name('doi')]
   end
 
+  # ETD
+
   def degree
     self[ActiveFedora.index_field_mapper.solr_name('degree')]
   end
@@ -67,11 +69,31 @@ class SolrDocument
     self[ActiveFedora.index_field_mapper.solr_name('committee_member')]
   end
 
+  # Journal Issue
+
   def volume
     self[ActiveFedora.index_field_mapper.solr_name('volume')]
   end
 
   def issue
     self[ActiveFedora.index_field_mapper.solr_name('issue')]
+  end
+
+  # ISIS Files Artifact
+
+  def title_romanized
+    self[ActiveFedora.index_field_mapper.solr_name('title_romanized')]
+  end
+
+  def corporate_contributor
+    self[ActiveFedora.index_field_mapper.solr_name('corporate_contributor')]
+  end
+  
+  def corporate_contributor_romanized
+    self[ActiveFedora.index_field_mapper.solr_name('corporate_contributor_romanized')]
+  end
+  
+  def date_created_islamic
+    self[ActiveFedora.index_field_mapper.solr_name('date_created_islamic')]
   end
 end
