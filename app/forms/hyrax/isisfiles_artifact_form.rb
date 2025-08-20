@@ -3,7 +3,7 @@ module Hyrax
     self.model_class = ::IsisfilesArtifact
     self.terms += [:title_romanized, :contributor_romanized, :corporate_contributor,
                    :corporate_contributor_romanized, :date_created_islamic]
-    self.required_fields = [:title, :rights_statement]
+    self.required_fields = [:title]
 
 #    def secondary_terms
 #      super + [:title_romanized, :contributor_romanized, :corporate_contributor,
