@@ -130,6 +130,11 @@ class CatalogController < ApplicationController
     # config.add_index_field solr_name("identifier", :stored_searchable), label: "Identifier", helper_method: :index_field_link, field_name: 'identifier'
     config.add_index_field solr_name("embargo_release_date", :stored_sortable, type: :date), label: "Embargo release date", helper_method: :human_readable_date
     config.add_index_field solr_name("lease_expiration_date", :stored_sortable, type: :date), label: "Lease expiration date", helper_method: :human_readable_date
+    config.add_index_field solr_name("title_romanized", :stored_searchable), label: "Title (Romanized)"
+    config.add_index_field solr_name("contributor_romanized", :stored_searchable), label: "Contributor (Romanized)"
+    config.add_index_field solr_name("corporate_contributor", :stored_searchable), label: "Corporate Contributor"
+    config.add_index_field solr_name("corporate_contributor_romanized", :stored_searchable), label: "Corporate Contributor (Romanized)"
+    config.add_index_field solr_name("date_created_islamic", :stored_searchable), label: "Date, Hijri"
 
     # solr fields to be displayed in the show (single result) view
     #   The ordering of the field names is the order of the display
