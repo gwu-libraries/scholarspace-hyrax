@@ -281,6 +281,9 @@ terms:
   - id: Emergency Medicine
     term: Emergency Medicine
     active: true
+  - id: Engineering Management
+    term: Engineering Management
+    active: true
   - id: Engineering Management & Systems Engineering
     term: Engineering Management & Systems Engineering
     active: true
@@ -874,6 +877,9 @@ terms:
     active: true
   - id: Sustainable Urban Planning
     term: Sustainable Urban Planning
+    active: true
+  - id: Systems Engineering
+    term: Systems Engineering
     active: true
   - id: Taiwan Education and Research Program
     term: Taiwan Education and Research Program
