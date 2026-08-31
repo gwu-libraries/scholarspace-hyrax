@@ -896,6 +896,9 @@ terms:
   - id: Undergraduate Public Health
     term: Undergraduate Public Health
     active: true
+  - id: University Honors Program
+    term: University Honors Program
+    active: true
   - id: University Human Resources
     term: University Human Resources
     active: true
