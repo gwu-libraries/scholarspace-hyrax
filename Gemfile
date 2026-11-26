@@ -3,6 +3,8 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.7.3'
 
+gem 'rake', '~> 12.3.3'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.8.1'
 # Use sqlite3 as the database for Active Record
@@ -11,7 +13,7 @@ gem "sqlite3", "~> 1.3.0"
 gem 'pg'
 # Use Passenger as the app server
 # Update this when we update the Passenger docker container base image version
-gem 'passenger', '6.0.17', require: "phusion_passenger/rack_handler"
+gem 'passenger', '6.0.18', require: "phusion_passenger/rack_handler"
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
@@ -81,6 +83,8 @@ gem 'invisible_captcha'
 gem 'redlock', '>= 0.1.2', '< 2.0' # redis/sidekiq fix per https://github.com/samvera/hyrax/pull/5961
 
 gem "ffi", "~> 1.15"
+
+gem 'json', '~> 2.6'
 
 gem 'json-canonicalization', '0.3.1' # https://github.com/dryruby/json-canonicalization/issues/2
 
